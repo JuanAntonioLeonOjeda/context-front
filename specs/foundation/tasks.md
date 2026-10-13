@@ -12,4 +12,4 @@
 
 ## Defend
 
-_Date, result and gaps of `/defend foundation`._
+_2026-10-13: started and stopped by the author after the first question; not done. Pending, together with the `/defend` of the backend `foundation`._
