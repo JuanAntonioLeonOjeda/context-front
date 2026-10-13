@@ -5,3 +5,4 @@ src/api/schema.d.ts
 # Docs keep their hand-made layout (tables, wrapped lines); Prettier formats code only.
 *.md
 .claude
+src/api/openapi.json

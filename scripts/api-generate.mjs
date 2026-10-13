@@ -25,11 +25,6 @@ if (typeof contract.openapi !== "string" || typeof contract.paths !== "object") 
 }
 
 writeFileSync("src/api/openapi.json", `${JSON.stringify(contract, null, 2)}\n`);
-execFileSync(
-  "pnpm",
-  ["exec", "openapi-typescript", "src/api/openapi.json", "-o", "src/api/schema.d.ts"],
-  {
-    stdio: "inherit",
-  },
-);
+// One definition of how types are generated: the `api:types` script (also run by CI).
+execFileSync("pnpm", ["run", "api:types"], { stdio: "inherit" });
 console.log(`Contract from ${url}: ${Object.keys(contract.paths).length} paths`);

@@ -35,7 +35,9 @@
     },
     "/territories": {
       "get": {
-        "tags": ["territories"],
+        "tags": [
+          "territories"
+        ],
         "summary": "Territories",
         "operationId": "territories_territories_get",
         "parameters": [
@@ -79,7 +81,9 @@
     },
     "/map/geometry": {
       "get": {
-        "tags": ["territories"],
+        "tags": [
+          "territories"
+        ],
         "summary": "Map Geometry",
         "operationId": "map_geometry_map_geometry_get",
         "responses": {
@@ -96,7 +100,9 @@
     },
     "/communities/{territory_id}/governments": {
       "get": {
-        "tags": ["governments"],
+        "tags": [
+          "governments"
+        ],
         "summary": "Government",
         "operationId": "government_communities__territory_id__governments_get",
         "parameters": [
@@ -153,7 +159,9 @@
     },
     "/map/governments": {
       "get": {
-        "tags": ["governments"],
+        "tags": [
+          "governments"
+        ],
         "summary": "Government Map",
         "operationId": "government_map_map_governments_get",
         "parameters": [
@@ -201,7 +209,9 @@
     },
     "/parties": {
       "get": {
-        "tags": ["governments"],
+        "tags": [
+          "governments"
+        ],
         "summary": "Parties",
         "operationId": "parties_parties_get",
         "responses": {
@@ -224,7 +234,9 @@
     },
     "/communities/{territory_id}/indicators": {
       "get": {
-        "tags": ["indicators"],
+        "tags": [
+          "indicators"
+        ],
         "summary": "Community",
         "operationId": "community_communities__territory_id__indicators_get",
         "parameters": [
@@ -292,12 +304,20 @@
           }
         },
         "type": "object",
-        "required": ["territory_id", "governing_party_ids", "is_caretaker", "has_data"],
+        "required": [
+          "territory_id",
+          "governing_party_ids",
+          "is_caretaker",
+          "has_data"
+        ],
         "title": "CommunityOnMapOut"
       },
       "ComponentStatus": {
         "type": "string",
-        "enum": ["up", "down"],
+        "enum": [
+          "up",
+          "down"
+        ],
         "title": "ComponentStatus"
       },
       "GovernmentMapOut": {
@@ -316,7 +336,10 @@
           }
         },
         "type": "object",
-        "required": ["date", "communities"],
+        "required": [
+          "date",
+          "communities"
+        ],
         "title": "GovernmentMapOut"
       },
       "GovernmentOut": {
@@ -335,7 +358,11 @@
           }
         },
         "type": "object",
-        "required": ["territory_id", "date", "term"],
+        "required": [
+          "territory_id",
+          "date",
+          "term"
+        ],
         "title": "GovernmentOut"
       },
       "HTTPValidationError": {
@@ -358,7 +385,9 @@
           }
         },
         "type": "object",
-        "required": ["database"],
+        "required": [
+          "database"
+        ],
         "title": "HealthResponse"
       },
       "IndicatorOut": {
@@ -401,12 +430,24 @@
           }
         },
         "type": "object",
-        "required": ["indicator_id", "name", "unit", "periodicity", "latest", "series", "source"],
+        "required": [
+          "indicator_id",
+          "name",
+          "unit",
+          "periodicity",
+          "latest",
+          "series",
+          "source"
+        ],
         "title": "IndicatorOut"
       },
       "Level": {
         "type": "string",
-        "enum": ["state", "ccaa", "province"],
+        "enum": [
+          "state",
+          "ccaa",
+          "province"
+        ],
         "title": "Level"
       },
       "PartyOut": {
@@ -429,12 +470,20 @@
           }
         },
         "type": "object",
-        "required": ["id", "name", "short_name", "colour_hex"],
+        "required": [
+          "id",
+          "name",
+          "short_name",
+          "colour_hex"
+        ],
         "title": "PartyOut"
       },
       "PartyRole": {
         "type": "string",
-        "enum": ["governing", "external_support"],
+        "enum": [
+          "governing",
+          "external_support"
+        ],
         "title": "PartyRole"
       },
       "PointOut": {
@@ -465,7 +514,12 @@
           }
         },
         "type": "object",
-        "required": ["period_start", "year", "quarter", "value"],
+        "required": [
+          "period_start",
+          "year",
+          "quarter",
+          "value"
+        ],
         "title": "PointOut"
       },
       "SourceOut": {
@@ -507,7 +561,13 @@
           }
         },
         "type": "object",
-        "required": ["publisher", "table_id", "table_url", "series_code", "fetched_at"],
+        "required": [
+          "publisher",
+          "table_id",
+          "table_url",
+          "series_code",
+          "fetched_at"
+        ],
         "title": "SourceOut"
       },
       "TermOut": {
@@ -538,7 +598,13 @@
           }
         },
         "type": "object",
-        "required": ["president_name", "valid_from", "is_caretaker", "source_url", "parties"],
+        "required": [
+          "president_name",
+          "valid_from",
+          "is_caretaker",
+          "source_url",
+          "parties"
+        ],
         "title": "TermOut"
       },
       "TermPartyOut": {
@@ -560,7 +626,12 @@
           }
         },
         "type": "object",
-        "required": ["party_id", "short_name", "role", "source_url"],
+        "required": [
+          "party_id",
+          "short_name",
+          "role",
+          "source_url"
+        ],
         "title": "TermPartyOut"
       },
       "TerritoryOut": {
@@ -586,7 +657,11 @@
           }
         },
         "type": "object",
-        "required": ["id", "ine_code", "name"],
+        "required": [
+          "id",
+          "ine_code",
+          "name"
+        ],
         "title": "TerritoryOut"
       },
       "ValidationError": {
@@ -622,7 +697,11 @@
           }
         },
         "type": "object",
-        "required": ["loc", "msg", "type"],
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
         "title": "ValidationError"
       }
     }
