@@ -18,6 +18,19 @@ Dev: `vite`, `typescript`, `@vitejs/plugin-react`, `openapi-typescript`, `eslint
 
 Exact versions are pinned when installing, after checking the current releases.
 
+Approved by the author on 2026-10-13, after checking versions and peer dependencies:
+
+- `react-router` **v8** (8.4): the current major since 2026-06-17. Every v8 change was
+  already available in v7 behind future flags, so ADR-0004 (React Router, server
+  rendering later) is unchanged; only the major version moved.
+- `typescript` **5.9**, not 7: `typescript-eslint` needs < 6.1 and `openapi-typescript`
+  needs 5.x.
+- `eslint` **9**, not 10: `eslint-plugin-jsx-a11y` supports up to 9.
+- `axe-core` directly with a small test helper, instead of `vitest-axe` (unmaintained
+  since 2022).
+- Plus `d3-geo` for the map (approved in `map-governments`), `@testing-library/jest-dom`,
+  `@eslint/js`, `globals` and the type packages.
+
 ## Decisions
 
 | Decision | Choice | Record |

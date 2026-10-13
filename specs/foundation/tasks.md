@@ -1,6 +1,6 @@
 # Phase 0 — foundation: tasks (web app)
 
-- [ ] 1. Dependencies approved by the author
+- [x] 1. Dependencies approved by the author (React Router 8, TypeScript 5.9, ESLint 9, axe-core; see plan)
 - [ ] 2. Vite + React + TypeScript strict, pnpm scripts, `@/` alias
 - [ ] 3. ESLint, Prettier, Vitest + Testing Library + MSW + axe setup
 - [ ] 4. Design tokens (light/dark), base styles, `src/i18n/es.ts`

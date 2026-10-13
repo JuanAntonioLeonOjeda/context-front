@@ -7,7 +7,8 @@ description: Testing conventions — Vitest and Testing Library, API fixtures, a
 ## Tools
 
 - **Vitest** with **Testing Library** (`@testing-library/react`, `user-event`), queries by
-  role and accessible name. **axe** checks on rendered views (`vitest-axe`).
+  role and accessible name. **axe** checks on rendered views (`axe-core` through a small helper in `src/test/`;
+  `vitest-axe` is unmaintained since 2022).
 - **MSW** to serve API fixtures; fixtures are real API responses captured from the backend
   (`src/test/fixtures/`), never invented shapes.
 - No snapshot tests of whole pages.
