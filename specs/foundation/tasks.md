@@ -8,7 +8,7 @@
 - [x] 6. `pnpm api:generate` from the backend's OpenAPI; health hook with zod and TanStack Query
 - [x] 7. Shell shows health status; error state when the backend is down; tests + axe in both themes
 - [x] 8. CI: lint, typecheck, tests, build
-- [ ] 9. `AGENTS.md` statuses updated; review with `ts-reviewer` and `accessibility-reviewer`
+- [x] 9. `AGENTS.md` statuses updated; review with `ts-reviewer` and `accessibility-reviewer` criteria → `specs/foundation/review.md`
 
 ## Defend
 

@@ -15,20 +15,22 @@ Update the status column when a phase creates or finishes a path.
 
 | Path | Content | Status |
 |---|---|---|
-| `package.json`, `pnpm-lock.yaml`, `vite.config.ts`, `tsconfig.json` | pnpm project, Vite, strict TypeScript | ⏳ |
-| `src/api/` | typed client generated from the backend's OpenAPI; thin fetch wrapper | ⏳ |
-| `src/design/` | tokens (light and dark), `parties.ts`, shared primitives | ⏳ |
-| `src/i18n/es.ts` | every user-facing string (Spanish) | ⏳ |
+| `package.json`, `pnpm-lock.yaml`, `vite.config.ts`, `tsconfig.json` | pnpm project, Vite, strict TypeScript; `/api` dev proxy | ✅ |
+| `src/api/` | typed client generated from the backend's OpenAPI (`pnpm api:generate`; `openapi.json` and `schema.d.ts` are generated, never edited by hand); `client.ts`, `config.ts` | ✅ |
+| `src/design/` | tokens (light and dark), base styles, contrast helper; `parties.ts` pending (`map-governments`) | 🚧 |
+| `src/i18n/es.ts` | every user-facing string (Spanish) | ✅ |
 | `src/features/map/` | Spain map, community selection, coalition rendering | ⏳ |
 | `src/features/community/` | community page: government, indicators | ⏳ |
 | `src/features/stories/` | news by outlet, story page, timeline | ⏳ |
 | `src/features/voters/` | voter profiles | ⏳ |
-| `src/routes/` | React Router route modules (composition, loading and error states) | ⏳ |
-| `src/test/` | fixtures (real API responses), MSW handlers | ⏳ |
-| `.env.example` | public configuration (`VITE_API_BASE_URL`) | ⏳ |
-| `.github/workflows/ci.yml` | lint, typecheck, tests, build | ⏳ |
+| `src/routes/` | React Router route tree (`buildRoutes`), root layout, home, not found, error boundaries | 🚧 |
+| `src/features/health/` | backend health: validated fetch, hook, status shown in the footer | ✅ |
+| `src/test/` | fixtures (real API responses), MSW server, axe helper, health and query helpers | ✅ |
+| `.env.example` | public configuration (`VITE_API_BASE_URL`, `API_PROXY_TARGET`) | ✅ |
+| `scripts/` | `api-generate.mjs`: downloads the backend contract and generates the types | ✅ |
+| `.github/workflows/ci.yml` | format, lint, typecheck, generated types in sync, tests, build | ✅ |
 | `docs/adr/` | front-only ADRs (project-wide ones are in `../back/docs/adr/`) | ⏳ |
-| `specs/<phase>/` | `spec.md`, `plan.md`, `tasks.md` for each phase (workflow `spec-driven-phase`) | ⏳ |
+| `specs/<phase>/` | `spec.md`, `plan.md`, `tasks.md` for each phase (workflow `spec-driven-phase`); `foundation` also has `review.md` | 🚧 |
 
 Dependency rules: `.claude/rules/architecture.md` and `.claude/rules/import-conventions.md`.
 
