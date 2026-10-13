@@ -18,7 +18,8 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "api:generate": "node scripts/api-generate.mjs"
+    "api:generate": "node scripts/api-generate.mjs",
+    "api:types": "openapi-typescript src/api/openapi.json -o src/api/schema.d.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "5.104.0",

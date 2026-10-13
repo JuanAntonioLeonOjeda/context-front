@@ -7,7 +7,7 @@
 - [x] 5. React Router v7 root layout and index route with error boundary
 - [x] 6. `pnpm api:generate` from the backend's OpenAPI; health hook with zod and TanStack Query
 - [x] 7. Shell shows health status; error state when the backend is down; tests + axe in both themes
-- [ ] 8. CI: lint, typecheck, tests, build
+- [x] 8. CI: lint, typecheck, tests, build
 - [ ] 9. `AGENTS.md` statuses updated; review with `ts-reviewer` and `accessibility-reviewer`
 
 ## Defend
