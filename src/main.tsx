@@ -3,17 +3,21 @@ import "@/design/base.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
 
-import { es } from "@/i18n/es";
+import { routes } from "@/routes/routes";
 
 const root = document.getElementById("root");
 if (root === null) {
   throw new Error("index.html has no #root element");
 }
 
-// Placeholder until the root layout and routes exist (task 5).
+// A data router is created once, outside React: it must not live in component state.
+const router = createBrowserRouter(routes);
+
 createRoot(root).render(
   <StrictMode>
-    <h1>{es.app.shell.name}</h1>
+    <RouterProvider router={router} />
   </StrictMode>,
 );
