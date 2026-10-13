@@ -29,6 +29,19 @@ a {
   color: var(--color-accent);
 }
 
+/* Buttons: tokens, and a target of at least 44 px (WCAG 2.5.8 asks for 24 px; 44 is the
+   comfortable size on touch). The browser default is about 21 px high. */
+button {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
 /* Visible focus for every interactive element, for keyboard users (WCAG 2.4.7, 2.4.11). */
 :focus-visible {
   outline: var(--focus-ring-width) solid var(--color-focus);
