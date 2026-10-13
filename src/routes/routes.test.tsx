@@ -2,17 +2,24 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, type RouteObject } from "react-router";
 import { RouterProvider } from "react-router/dom";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { es } from "@/i18n/es";
 import { axeViolations } from "@/test/axe";
+import { serveHealth, type BackendState } from "@/test/health";
+import { queryWrapper } from "@/test/query";
 
 import { ErrorMessage } from "./ErrorMessage";
 import { buildRoutes, routes } from "./routes";
 
-function renderAt(path: string, tree: RouteObject[] = routes): HTMLElement {
+function renderAt(
+  path: string,
+  tree: RouteObject[] = routes,
+  backend: BackendState = "up",
+): HTMLElement {
+  serveHealth(backend);
   const router = createMemoryRouter(tree, { initialEntries: [path] });
-  return render(<RouterProvider router={router} />).container;
+  return render(<RouterProvider router={router} />, { wrapper: queryWrapper() }).container;
 }
 
 function Boom(): never {
@@ -100,4 +107,51 @@ describe("a layout that fails", () => {
     expect(screen.queryByRole("banner")).not.toBeInTheDocument();
     expect(await axeViolations(container)).toEqual([]);
   });
+});
+
+describe("backend status in the shell", () => {
+  it("shows that the data is available when the backend answers", async () => {
+    renderAt("/");
+
+    expect(await screen.findByText(es.health.status.up)).toBeVisible();
+    expect(screen.getByRole("status")).toHaveTextContent(es.health.status.up);
+  });
+
+  it("starts by saying it is checking", () => {
+    renderAt("/");
+
+    expect(screen.getByRole("status")).toHaveTextContent(es.health.status.checking);
+  });
+
+  it.each<BackendState>(["database-down", "unreachable"])(
+    "shows the written error state, not a crash, when the backend is %s",
+    async (backend) => {
+      const container = renderAt("/", routes, backend);
+
+      expect(await screen.findByText(es.health.status.down)).toBeVisible();
+      expect(screen.getByRole("heading", { level: 1, name: es.app.shell.name })).toBeVisible();
+      expect(await axeViolations(container)).toEqual([]);
+    },
+  );
+});
+
+// axe runs in jsdom, which computes no colours: the contrast rule is off there and the colour
+// pairs are checked on the tokens (src/design/tokens.test.ts). What this checks in each theme
+// is the structure the theme leaves in place: landmarks, names, roles.
+describe.each(["light", "dark"] as const)("accessibility in the %s theme", (theme) => {
+  afterEach(() => {
+    document.documentElement.removeAttribute("data-theme");
+  });
+
+  it.each<BackendState>(["up", "unreachable"])(
+    "has no axe violations with the backend %s",
+    async (backend) => {
+      document.documentElement.setAttribute("data-theme", theme);
+      const container = renderAt("/", routes, backend);
+      await screen.findByText(backend === "up" ? es.health.status.up : es.health.status.down);
+
+      expect(document.documentElement).toHaveAttribute("data-theme", theme);
+      expect(await axeViolations(container)).toEqual([]);
+    },
+  );
 });

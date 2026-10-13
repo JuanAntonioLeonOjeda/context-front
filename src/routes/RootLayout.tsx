@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Outlet } from "react-router";
 
+import { HealthStatus } from "@/features/health";
 import { es } from "@/i18n/es";
 
 import styles from "./RootLayout.module.css";
@@ -29,6 +30,9 @@ export function RootLayout(): React.JSX.Element {
       <main id="contenido" ref={main} className={styles.main} tabIndex={-1}>
         <Outlet />
       </main>
+      <footer className={styles.footer}>
+        <HealthStatus />
+      </footer>
     </div>
   );
 }

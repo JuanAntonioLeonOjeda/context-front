@@ -15,6 +15,12 @@
   font-size: var(--text-lg);
 }
 
+.footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
 .main {
   flex: 1;
   width: 100%;
