@@ -30,7 +30,7 @@ export default defineConfig(
   },
   {
     // This file is plain JS outside tsconfig, and jsx-a11y ships no types.
-    files: ["eslint.config.js"],
+    files: ["eslint.config.js", "scripts/**/*.mjs"],
     extends: [tseslint.configs.disableTypeChecked],
     languageOptions: { globals: { ...globals.node } },
   },

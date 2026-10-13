@@ -1,0 +1,630 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "datos",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/territories": {
+      "get": {
+        "tags": ["territories"],
+        "summary": "Territories",
+        "operationId": "territories_territories_get",
+        "parameters": [
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Level",
+              "default": "ccaa"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TerritoryOut"
+                  },
+                  "title": "Response Territories Territories Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/map/geometry": {
+      "get": {
+        "tags": ["territories"],
+        "summary": "Map Geometry",
+        "operationId": "map_geometry_map_geometry_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/communities/{territory_id}/governments": {
+      "get": {
+        "tags": ["governments"],
+        "summary": "Government",
+        "operationId": "government_communities__territory_id__governments_get",
+        "parameters": [
+          {
+            "name": "territory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Territory Id"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GovernmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/map/governments": {
+      "get": {
+        "tags": ["governments"],
+        "summary": "Government Map",
+        "operationId": "government_map_map_governments_get",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GovernmentMapOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parties": {
+      "get": {
+        "tags": ["governments"],
+        "summary": "Parties",
+        "operationId": "parties_parties_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PartyOut"
+                  },
+                  "type": "array",
+                  "title": "Response Parties Parties Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/communities/{territory_id}/indicators": {
+      "get": {
+        "tags": ["indicators"],
+        "summary": "Community",
+        "operationId": "community_communities__territory_id__indicators_get",
+        "parameters": [
+          {
+            "name": "territory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Territory Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IndicatorOut"
+                  },
+                  "title": "Response Community Communities  Territory Id  Indicators Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CommunityOnMapOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "governing_party_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Governing Party Ids"
+          },
+          "is_caretaker": {
+            "type": "boolean",
+            "title": "Is Caretaker"
+          },
+          "has_data": {
+            "type": "boolean",
+            "title": "Has Data"
+          }
+        },
+        "type": "object",
+        "required": ["territory_id", "governing_party_ids", "is_caretaker", "has_data"],
+        "title": "CommunityOnMapOut"
+      },
+      "ComponentStatus": {
+        "type": "string",
+        "enum": ["up", "down"],
+        "title": "ComponentStatus"
+      },
+      "GovernmentMapOut": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "communities": {
+            "items": {
+              "$ref": "#/components/schemas/CommunityOnMapOut"
+            },
+            "type": "array",
+            "title": "Communities"
+          }
+        },
+        "type": "object",
+        "required": ["date", "communities"],
+        "title": "GovernmentMapOut"
+      },
+      "GovernmentOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "term": {
+            "$ref": "#/components/schemas/TermOut"
+          }
+        },
+        "type": "object",
+        "required": ["territory_id", "date", "term"],
+        "title": "GovernmentOut"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "database": {
+            "$ref": "#/components/schemas/ComponentStatus"
+          }
+        },
+        "type": "object",
+        "required": ["database"],
+        "title": "HealthResponse"
+      },
+      "IndicatorOut": {
+        "properties": {
+          "indicator_id": {
+            "type": "string",
+            "title": "Indicator Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit"
+          },
+          "periodicity": {
+            "type": "string",
+            "title": "Periodicity"
+          },
+          "latest": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PointOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/PointOut"
+            },
+            "type": "array",
+            "title": "Series"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceOut"
+          }
+        },
+        "type": "object",
+        "required": ["indicator_id", "name", "unit", "periodicity", "latest", "series", "source"],
+        "title": "IndicatorOut"
+      },
+      "Level": {
+        "type": "string",
+        "enum": ["state", "ccaa", "province"],
+        "title": "Level"
+      },
+      "PartyOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "short_name": {
+            "type": "string",
+            "title": "Short Name"
+          },
+          "colour_hex": {
+            "type": "string",
+            "title": "Colour Hex"
+          }
+        },
+        "type": "object",
+        "required": ["id", "name", "short_name", "colour_hex"],
+        "title": "PartyOut"
+      },
+      "PartyRole": {
+        "type": "string",
+        "enum": ["governing", "external_support"],
+        "title": "PartyRole"
+      },
+      "PointOut": {
+        "properties": {
+          "period_start": {
+            "type": "string",
+            "format": "date",
+            "title": "Period Start"
+          },
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "quarter": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quarter"
+          },
+          "value": {
+            "type": "number",
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": ["period_start", "year", "quarter", "value"],
+        "title": "PointOut"
+      },
+      "SourceOut": {
+        "properties": {
+          "publisher": {
+            "type": "string",
+            "title": "Publisher"
+          },
+          "table_id": {
+            "type": "string",
+            "title": "Table Id"
+          },
+          "table_url": {
+            "type": "string",
+            "title": "Table Url"
+          },
+          "series_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Series Code"
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At"
+          }
+        },
+        "type": "object",
+        "required": ["publisher", "table_id", "table_url", "series_code", "fetched_at"],
+        "title": "SourceOut"
+      },
+      "TermOut": {
+        "properties": {
+          "president_name": {
+            "type": "string",
+            "title": "President Name"
+          },
+          "valid_from": {
+            "type": "string",
+            "format": "date",
+            "title": "Valid From"
+          },
+          "is_caretaker": {
+            "type": "boolean",
+            "title": "Is Caretaker"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "parties": {
+            "items": {
+              "$ref": "#/components/schemas/TermPartyOut"
+            },
+            "type": "array",
+            "title": "Parties"
+          }
+        },
+        "type": "object",
+        "required": ["president_name", "valid_from", "is_caretaker", "source_url", "parties"],
+        "title": "TermOut"
+      },
+      "TermPartyOut": {
+        "properties": {
+          "party_id": {
+            "type": "string",
+            "title": "Party Id"
+          },
+          "short_name": {
+            "type": "string",
+            "title": "Short Name"
+          },
+          "role": {
+            "$ref": "#/components/schemas/PartyRole"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          }
+        },
+        "type": "object",
+        "required": ["party_id", "short_name", "role", "source_url"],
+        "title": "TermPartyOut"
+      },
+      "TerritoryOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "ine_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ine Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": ["id", "ine_code", "name"],
+        "title": "TerritoryOut"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
