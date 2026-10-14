@@ -1,0 +1,71 @@
+/* A text page: one narrow column, so a line stays under about 70 characters. */
+.page {
+  display: grid;
+  gap: var(--space-8);
+  max-width: 46rem;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-3xl);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+
+.lead {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+.section {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.section h2,
+.section h3,
+.section p {
+  margin: 0;
+}
+
+.section h3 {
+  margin-top: var(--space-3);
+  font-size: var(--text-md);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-6);
+}
+
+.terms {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.terms div {
+  display: grid;
+  gap: 0 var(--space-4);
+  grid-template-columns: 9rem minmax(0, 1fr);
+}
+
+.terms dt {
+  font-weight: 700;
+}
+
+.terms dd {
+  margin: 0;
+}
+
+@media (max-width: 30rem) {
+  .terms div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
