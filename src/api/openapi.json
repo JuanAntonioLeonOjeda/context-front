@@ -277,10 +277,181 @@
           }
         }
       }
+    },
+    "/communities/{territory_id}/news": {
+      "get": {
+        "tags": [
+          "news"
+        ],
+        "summary": "Community",
+        "description": "The news of the last 30 days (today included, Spain time) that the active classifier\nplaced in this community and sector, at most 5 per outlet (its newest).\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nEach item carries its attribution, computed on read from the competence table and the\ngovernment in force on the publication date in Spain (ADR-0014): one entry per government\nlevel the article names, or a single `not_determined` entry with its reason.",
+        "operationId": "community_communities__territory_id__news_get",
+        "parameters": [
+          {
+            "name": "territory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Territory Id"
+            }
+          },
+          {
+            "name": "sector",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "A sector id: education, health or housing",
+              "title": "Sector"
+            },
+            "description": "A sector id: education, health or housing"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityNewsOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AttributionOut": {
+        "properties": {
+          "level": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CompetenceLevel"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "territory_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Territory Id"
+          },
+          "confidence": {
+            "$ref": "#/components/schemas/Confidence"
+          },
+          "party_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Party Ids"
+          },
+          "is_caretaker": {
+            "type": "boolean",
+            "title": "Is Caretaker"
+          },
+          "competences": {
+            "items": {
+              "$ref": "#/components/schemas/CompetenceOut"
+            },
+            "type": "array",
+            "title": "Competences"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Reason"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "level",
+          "territory_id",
+          "confidence",
+          "party_ids",
+          "is_caretaker",
+          "competences",
+          "reason"
+        ],
+        "title": "AttributionOut"
+      },
+      "ClassifierOut": {
+        "properties": {
+          "model_id": {
+            "type": "string",
+            "title": "Model Id"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "model_id",
+          "model_version"
+        ],
+        "title": "ClassifierOut"
+      },
+      "CommunityNewsOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "sector_id": {
+            "type": "string",
+            "title": "Sector Id"
+          },
+          "since": {
+            "type": "string",
+            "format": "date",
+            "title": "Since"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/NewsItemOut"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "territory_id",
+          "sector_id",
+          "since",
+          "items"
+        ],
+        "title": "CommunityNewsOut"
+      },
       "CommunityOnMapOut": {
         "properties": {
           "territory_id": {
@@ -312,6 +483,57 @@
         ],
         "title": "CommunityOnMapOut"
       },
+      "CompetenceFunction": {
+        "type": "string",
+        "enum": [
+          "legislation",
+          "basic_legislation",
+          "development_legislation",
+          "execution"
+        ],
+        "title": "CompetenceFunction"
+      },
+      "CompetenceLevel": {
+        "type": "string",
+        "enum": [
+          "state",
+          "ccaa",
+          "local"
+        ],
+        "title": "CompetenceLevel"
+      },
+      "CompetenceOut": {
+        "properties": {
+          "activity": {
+            "type": "string",
+            "title": "Activity"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "function": {
+            "$ref": "#/components/schemas/CompetenceFunction"
+          },
+          "legal_basis": {
+            "type": "string",
+            "title": "Legal Basis"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "activity",
+          "description",
+          "function",
+          "legal_basis",
+          "source_url"
+        ],
+        "title": "CompetenceOut"
+      },
       "ComponentStatus": {
         "type": "string",
         "enum": [
@@ -319,6 +541,15 @@
           "down"
         ],
         "title": "ComponentStatus"
+      },
+      "Confidence": {
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "not_determined"
+        ],
+        "title": "Confidence"
       },
       "GovernmentMapOut": {
         "properties": {
@@ -450,6 +681,52 @@
         ],
         "title": "Level"
       },
+      "NewsItemOut": {
+        "properties": {
+          "outlet_id": {
+            "type": "string",
+            "title": "Outlet Id"
+          },
+          "outlet_name": {
+            "type": "string",
+            "title": "Outlet Name"
+          },
+          "headline": {
+            "type": "string",
+            "title": "Headline"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Published At"
+          },
+          "classified_by": {
+            "$ref": "#/components/schemas/ClassifierOut"
+          },
+          "attribution": {
+            "items": {
+              "$ref": "#/components/schemas/AttributionOut"
+            },
+            "type": "array",
+            "title": "Attribution"
+          }
+        },
+        "type": "object",
+        "required": [
+          "outlet_id",
+          "outlet_name",
+          "headline",
+          "url",
+          "published_at",
+          "classified_by",
+          "attribution"
+        ],
+        "title": "NewsItemOut"
+      },
       "PartyOut": {
         "properties": {
           "id": {
@@ -521,6 +798,16 @@
           "value"
         ],
         "title": "PointOut"
+      },
+      "Reason": {
+        "type": "string",
+        "enum": [
+          "no_level_named",
+          "no_competence",
+          "local_not_modelled",
+          "no_government_on_date"
+        ],
+        "title": "Reason"
       },
       "SourceOut": {
         "properties": {
