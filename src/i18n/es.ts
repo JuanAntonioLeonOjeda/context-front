@@ -91,11 +91,13 @@ export const es = {
       window: "Noticias desde el {date}: hasta 5 por medio, de la más reciente a la más antigua.",
       method:
         "Las noticias se clasifican con reglas automáticas que todavía no se han medido, y pueden contener errores.",
+      sharedCompetences:
+        "En educación, sanidad y vivienda las competencias están repartidas entre el Estado, la comunidad y los ayuntamientos: si una noticia no nombra un gobierno, no podemos decir cuál es el responsable.",
       empty: "No hay noticias de {sector} en este periodo.",
       loading: "Cargando las noticias…",
       error: "No hemos podido cargar las noticias.",
       retry: "Volver a intentarlo",
-      outletAndDate: "{outlet}, {date}",
+      outletAndTime: "{outlet}, {time}",
       responsible: "Responsable: {government}, {parties}",
       caretaker: "en funciones",
       confidence: "Confianza: {confidence}",
@@ -107,8 +109,7 @@ export const es = {
         local: "Gobierno local",
       },
       reasons: {
-        no_level_named:
-          "la noticia no nombra ningún gobierno y las competencias del sector las comparten varios niveles",
+        no_level_named: "la noticia no nombra ningún gobierno",
         no_competence: "la noticia nombra un gobierno sin competencias en este sector",
         local_not_modelled: "la noticia nombra un gobierno local, que todavía no recogemos",
         no_government_on_date: "no hay datos de gobierno en la fecha de la noticia",

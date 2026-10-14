@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useSearchParams } from "react-router";
 
 import { partyTable } from "@/design/parties";
-import { fetchParties } from "@/features/map";
+import { cssBackground, fetchParties } from "@/features/map";
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
-import { newsRows, type NewsRow } from "./news-card";
+import { groupByDay, newsRows, type NewsRow } from "./news-card";
 import { SECTORS, type Sector } from "./news-api";
 import { useCommunityNews } from "./useCommunityNews";
 
@@ -70,14 +70,26 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
           <p>
             {formatMessage(es.community.news.window, { date: formatLongDate(news.news.since) })}
           </p>
+          {news.news.items.some((item) =>
+            item.attribution.some((a) => a.reason === "no_level_named"),
+          ) && <p>{es.community.news.sharedCompetences}</p>}
           {news.news.items.length === 0 ? (
             <p>{formatMessage(es.community.news.empty, { sector: sectorName.toLowerCase() })}</p>
           ) : (
-            <ol className={styles.news}>
-              {newsRows(news.news.items, partyTable(parties.data)).map((row) => (
-                <NewsItemView key={row.key} row={row} />
+            <div className={styles.timeline}>
+              {groupByDay(newsRows(news.news.items, partyTable(parties.data))).map((day) => (
+                <section key={day.day} aria-labelledby={`news-day-${day.day}`}>
+                  <h3 id={`news-day-${day.day}`} className={styles.newsDay}>
+                    {day.label}
+                  </h3>
+                  <ol className={styles.news}>
+                    {day.rows.map((row) => (
+                      <NewsItemView key={row.key} row={row} />
+                    ))}
+                  </ol>
+                </section>
               ))}
-            </ol>
+            </div>
           )}
         </>
       )}
@@ -88,6 +100,11 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
 function NewsItemView({ row }: { row: NewsRow }): React.JSX.Element {
   return (
     <li className={styles.newsItem}>
+      <span
+        className={styles.stripe}
+        style={{ background: cssBackground(row.stripe) }}
+        aria-hidden="true"
+      />
       <a href={row.url}>{row.headline}</a>
       <small className={styles.downloaded}>{row.outlet}</small>
       <ul className={styles.attribution}>

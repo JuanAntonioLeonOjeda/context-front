@@ -19,16 +19,33 @@ describe("news of a community", () => {
 
     const section = await newsSection();
     await within(section).findByText(/Noticias desde el/);
-    const list = section.querySelector("ol");
-    expect(list).not.toBeNull();
-    expect(list?.children).toHaveLength(11); // one per article; the nested lists are theirs
+    // One <li> per article, in lists by day; the lists nested in each article are not counted.
+    expect(section.querySelectorAll("ol > li")).toHaveLength(11);
     const link = within(section).getByRole("link", {
       name: /El Parlamento rechaza tramitar la ley del PSOE/,
     });
     expect(link).toHaveAttribute("href", expect.stringContaining("rtvc.es"));
-    expect(
-      within(section).getByText(/Radio Televisión Canaria, 14 de octubre de 2026/),
-    ).toBeVisible();
+    expect(within(section).getAllByText(/Radio Televisión Canaria, \d\d:\d\d/)).not.toHaveLength(0);
+  });
+
+  it("groups the news by day, newest day first, each day under its own heading", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+
+    const section = await newsSection();
+    await within(section).findByText(/Noticias desde el/);
+    const days = within(section).getAllByRole("heading", { level: 3 });
+    expect(days.length).toBeGreaterThan(1);
+    expect(days[0]).toHaveTextContent("14 de octubre de 2026");
+    const labels = days.map((d) => d.textContent);
+    expect(new Set(labels).size).toBe(labels.length); // a day appears once
+  });
+
+  it("draws a stripe on each article that no screen reader reads: the words say the same", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+
+    const section = await newsSection();
+    await within(section).findByText(/Noticias desde el/);
+    expect(section.querySelectorAll("li > span[aria-hidden='true']")).toHaveLength(11);
   });
 
   it("says who is responsible, with the confidence, or why it cannot say", async () => {
@@ -110,6 +127,22 @@ describe("news of a community", () => {
 
     expect(await screen.findByText(/No hay noticias de educación en este periodo/)).toBeVisible();
     expect(screen.getByText(/Noticias desde el 15 de septiembre de 2026/)).toBeVisible();
+  });
+
+  it("explains once, above the list, why an article that names no government has no responsible", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+
+    const section = await newsSection();
+    await within(section).findByText(/Noticias desde el/);
+    expect(within(section).getAllByText(es.community.news.sharedCompetences)).toHaveLength(1);
+    expect(section).not.toHaveTextContent(/las competencias del sector las comparten/);
+  });
+
+  it("does not repeat that explanation when every article names a government", async () => {
+    renderApp("/comunidades/ccaa-09", { community: "cataluna" });
+
+    await screen.findByText(/No hay noticias de educación/);
+    expect(screen.queryByText(es.community.news.sharedCompetences)).not.toBeInTheDocument();
   });
 
   it("says how the news are classified", async () => {

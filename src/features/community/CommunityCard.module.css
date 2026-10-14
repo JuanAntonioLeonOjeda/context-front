@@ -97,11 +97,37 @@
   list-style: none;
 }
 
+.timeline {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 46rem;
+}
+
+.newsDay {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+}
+
 .newsItem {
+  position: relative;
   display: grid;
   gap: var(--space-1);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-1) 0 var(--space-4) var(--space-4);
+}
+
+/* The stripe on the left: the colours of the responsible parties, as the map draws them. */
+.stripe {
+  position: absolute;
+  inset-block: var(--space-1) var(--space-4);
+  left: 0;
+  width: 0.5rem;
+  border-radius: 2px;
+  border: 1px solid var(--color-border-strong);
+}
+
+.newsItem a {
+  font-weight: 700;
 }
 
 .attribution {
@@ -110,7 +136,6 @@
   margin: var(--space-2) 0 0;
   padding: 0;
   list-style: none;
-  position: relative;
   font-size: var(--text-sm);
 }
 

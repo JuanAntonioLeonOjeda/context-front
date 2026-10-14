@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { partyTable } from "@/design/parties";
 
 import type { Attribution, NewsItem } from "./news-api";
-import { formatNewsDate, newsRows } from "./news-card";
+import { formatNewsTime, groupByDay, newsDay, newsRows } from "./news-card";
 
 const parties = partyTable([
   { id: "coalicion-canaria", name: "Coalición Canaria", short_name: "CC", colour_hex: "#019e4c" },
@@ -89,8 +89,7 @@ describe("newsRows", () => {
 
     expect(row?.attribution[0]).toEqual({
       responsible: null,
-      confidence:
-        "Confianza: Sin determinar: la noticia no nombra ningún gobierno y las competencias del sector las comparten varios niveles",
+      confidence: "Confianza: Sin determinar: la noticia no nombra ningún gobierno",
       basis: [],
     });
   });
@@ -119,27 +118,83 @@ describe("newsRows", () => {
     expect(() => newsRows([item([{ ...high, partyIds: ["nuevo"] }])], parties)).toThrow(/nuevo/);
   });
 
-  it("puts the outlet and the date in one line, with no lead", () => {
+  it("puts the outlet and the time in Spain on one line, with no lead", () => {
     const [row] = newsRows([item([undetermined])], parties);
 
-    expect(row?.outlet).toBe("Radio Televisión Canaria, 14 de octubre de 2026");
+    expect(row?.outlet).toBe("Radio Televisión Canaria, 11:44");
     expect(Object.keys(row ?? {}).sort()).toEqual([
       "attribution",
+      "day",
       "headline",
       "key",
       "outlet",
+      "stripe",
       "url",
     ]);
   });
+
+  it("draws the stripe with the colours of the parties named, and the hatch when nobody is", () => {
+    const state: Attribution = { ...high, level: "state", partyIds: ["pp"] };
+    const rows = newsRows([item([high]), item([state]), item([undetermined])], parties);
+
+    expect(rows[0]?.stripe).toMatchObject({ kind: "stripes", colours: ["#019e4c", "#0056a8"] });
+    expect(rows[1]?.stripe).toEqual({ kind: "solid", colour: "#0056a8" });
+    expect(rows[2]?.stripe).toEqual({ kind: "no-data" });
+  });
+
+  it("does not colour an attribution that is not high, even when it lists parties", () => {
+    const odd: Attribution = { ...high, confidence: "not_determined", reason: "no_competence" };
+
+    expect(newsRows([item([odd])], parties)[0]?.stripe).toEqual({ kind: "no-data" });
+  });
+
+  it("merges the parties of several governments into one stripe, in alphabetical order", () => {
+    const state: Attribution = { ...high, level: "state", partyIds: ["pp"] };
+    const [row] = newsRows([item([state, high])], parties);
+
+    expect(row?.stripe).toMatchObject({ kind: "stripes", colours: ["#019e4c", "#0056a8"] });
+  });
 });
 
-describe("formatNewsDate", () => {
-  it("shows the day in Spain, not in UTC", () => {
+describe("the day and the hour in Spain", () => {
+  it("is the Spanish calendar day, not the UTC one", () => {
     // 23:30 UTC on the 13th is already the 14th in Spain (CEST, UTC+2).
-    expect(formatNewsDate("2026-10-13T23:30:00Z")).toBe("14 de octubre de 2026");
+    expect(newsDay("2026-10-13T23:30:00Z")).toBe("2026-10-14");
+    expect(formatNewsTime("2026-10-13T23:30:00Z")).toBe("01:30");
+  });
+
+  it("follows winter time too (UTC+1)", () => {
+    expect(formatNewsTime("2026-12-01T08:05:00Z")).toBe("09:05");
   });
 
   it("refuses something that is not an instant", () => {
-    expect(() => formatNewsDate("ayer")).toThrow(/not an ISO instant/);
+    expect(() => newsDay("ayer")).toThrow(/not an ISO instant/);
+  });
+});
+
+describe("groupByDay", () => {
+  const at = (publishedAt: string): ReturnType<typeof newsRows>[number] =>
+    newsRows([item([undetermined], publishedAt)], parties)[0] as never;
+
+  it("groups consecutive rows of the same day and keeps the order it was given", () => {
+    const rows = [
+      at("2026-10-14T09:00:00Z"),
+      at("2026-10-14T07:00:00Z"),
+      at("2026-10-13T20:00:00Z"),
+    ];
+
+    const days = groupByDay(rows);
+
+    expect(days.map((d) => [d.day, d.rows.length])).toEqual([
+      ["2026-10-14", 2],
+      ["2026-10-13", 1],
+    ]);
+    expect(days[0]?.label).toBe("14 de octubre de 2026");
+  });
+
+  it("puts an article published just after midnight in Spain on the new day", () => {
+    const [day] = groupByDay([at("2026-10-13T22:30:00Z")]);
+
+    expect(day?.day).toBe("2026-10-14");
   });
 });

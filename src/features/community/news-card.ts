@@ -4,8 +4,9 @@
  * adjective about a party, a government or an outlet (.claude/rules/project-policies.md).
  */
 import { partiesById, type Party } from "@/design/parties";
+import { stripesPatternId, type Fill } from "@/features/map";
 import { es } from "@/i18n/es";
-import { formatMessage, listInSpanish } from "@/i18n/format";
+import { formatLongDate, formatMessage, listInSpanish } from "@/i18n/format";
 
 import type { Attribution, NewsItem } from "./news-api";
 
@@ -22,24 +23,54 @@ export interface AttributionRow {
 
 export interface NewsRow {
   key: string;
-  outlet: string; // "Outlet, 14 de octubre de 2026"
+  day: string; // ISO date in Spain, for grouping
+  outlet: string; // "Outlet, 11:44"
+  /** The colours of the responsible parties, as on the map; the hatch when nobody is named. */
+  stripe: Fill;
   headline: string;
   url: string;
   attribution: AttributionRow[];
 }
 
-// A government changes on a Spanish calendar date, so the date shown is the Spanish one.
-const spainDate = new Intl.DateTimeFormat("es", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
+// A government changes on a Spanish calendar date, so the day and the hour are the Spanish ones.
+const spainDay = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Madrid" }); // 2026-10-14
+const spainTime = new Intl.DateTimeFormat("es", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
   timeZone: "Europe/Madrid",
 });
 
-export function formatNewsDate(isoInstant: string): string {
+function instant(isoInstant: string): Date {
   const parsed = new Date(isoInstant);
   if (Number.isNaN(parsed.getTime())) throw new Error(`not an ISO instant: "${isoInstant}"`);
-  return spainDate.format(parsed);
+  return parsed;
+}
+
+/** "2026-10-14": the calendar day in Spain of an instant. */
+export function newsDay(isoInstant: string): string {
+  return spainDay.format(instant(isoInstant));
+}
+
+export function formatNewsTime(isoInstant: string): string {
+  return spainTime.format(instant(isoInstant));
+}
+
+export interface NewsDay {
+  day: string;
+  label: string; // "14 de octubre de 2026"
+  rows: NewsRow[];
+}
+
+/** The rows in the order they come (newest first), grouped by the day they were published. */
+export function groupByDay(rows: readonly NewsRow[]): NewsDay[] {
+  const days: NewsDay[] = [];
+  for (const row of rows) {
+    const last = days.at(-1);
+    if (last?.day === row.day) last.rows.push(row);
+    else days.push({ day: row.day, label: formatLongDate(row.day), rows: [row] });
+  }
+  return days;
 }
 
 export function newsRows(
@@ -48,14 +79,33 @@ export function newsRows(
 ): NewsRow[] {
   return items.map((item) => ({
     key: item.url,
-    outlet: formatMessage(es.community.news.outletAndDate, {
+    day: newsDay(item.publishedAt),
+    outlet: formatMessage(es.community.news.outletAndTime, {
       outlet: item.outletName,
-      date: formatNewsDate(item.publishedAt),
+      time: formatNewsTime(item.publishedAt),
     }),
+    stripe: stripeOf(item.attribution, parties),
     headline: item.headline,
     url: item.url,
     attribution: item.attribution.map((a) => attributionRow(a, parties)),
   }));
+}
+
+/**
+ * The same visual vocabulary as the map: one party, its colour; several, stripes; nobody named,
+ * the grey hatch. The words next to it say the same, so the colour is never the only signal.
+ */
+function stripeOf(attribution: readonly Attribution[], parties: ReadonlyMap<string, Party>): Fill {
+  const ids = [...new Set(attribution.flatMap((a) => (a.confidence === "high" ? a.partyIds : [])))];
+  const named = partiesById(parties, ids.sort());
+  const [only, ...others] = named;
+  if (only === undefined) return { kind: "no-data" };
+  if (others.length === 0) return { kind: "solid", colour: only.colour };
+  return {
+    kind: "stripes",
+    patternId: stripesPatternId(named),
+    colours: named.map((p) => p.colour),
+  };
 }
 
 function attributionRow(a: Attribution, parties: ReadonlyMap<string, Party>): AttributionRow {
