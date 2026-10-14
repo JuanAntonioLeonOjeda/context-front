@@ -41,7 +41,7 @@ const PAGES: PageCase[] = [
     name: "a community card",
     path: "/comunidades/ccaa-05",
     loaded: async () => {
-      await screen.findByRole("table");
+      await screen.findByRole("heading", { name: "Tasa de paro" });
       return screen.findByText(/Noticias desde el/);
     },
   },

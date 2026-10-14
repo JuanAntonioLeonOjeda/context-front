@@ -6,7 +6,11 @@
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
-import type { Government, Indicator, Point, TermParty } from "./community-api";
+import type { Government, Indicator, TermParty } from "./community-api";
+import { chartModel, extremes, type ChartModel } from "./indicator-chart";
+import { formatPeriod, formatValue, formatValueParts } from "./indicator-format";
+
+export { formatPeriod, formatValue };
 
 export interface GovernmentView {
   president: string;
@@ -21,10 +25,16 @@ export interface IndicatorRow {
   id: string;
   name: string;
   value: string | null; // null: no data, never 0
+  figure: string | null; // the number alone, to set it large
+  unit: string | null;
   period: string | null;
   tableLabel: string;
   tableUrl: string;
   downloaded: string | null;
+  chart: ChartModel | null; // null: too few points for a trend, the value is shown alone
+  chartLabel: string | null; // the accessible name of the chart: what it shows, in words
+  range: string | null; // the lowest and highest value, so the scale is written down
+  data: { period: string; value: string }[]; // every point of the series, for the table
 }
 
 export function governmentView(government: Government): GovernmentView {
@@ -43,9 +53,13 @@ export function governmentView(government: Government): GovernmentView {
 
 export function indicatorRows(indicators: readonly Indicator[]): IndicatorRow[] {
   return indicators.map((indicator) => ({
+    ...chartParts(indicator),
     id: indicator.id,
     name: indicator.name,
     value: indicator.latest ? formatValue(indicator.latest.value, indicator.unit) : null,
+    ...(indicator.latest
+      ? formatValueParts(indicator.latest.value, indicator.unit)
+      : { figure: null, unit: null }),
     period: indicator.latest ? formatPeriod(indicator.latest) : null,
     tableLabel: formatMessage(es.community.indicators.sourceLink, { id: indicator.tableId }),
     tableUrl: indicator.tableUrl,
@@ -57,20 +71,30 @@ export function indicatorRows(indicators: readonly Indicator[]): IndicatorRow[] 
   }));
 }
 
-const number = new Intl.NumberFormat("es", { maximumFractionDigits: 3 });
-const UNITS = new Map(Object.entries(es.community.indicators.units));
-
-/** "11,6 %", "2.277.705 personas", "110,44 (base 2025 = 100)": the number as the INE gave it.
- *  A unit with no Spanish text yet is shown as the API names it, never dropped. */
-export function formatValue(value: number, unit: string): string {
-  return `${number.format(value)} ${UNITS.get(unit) ?? unit}`;
-}
-
-export function formatPeriod(point: Pick<Point, "year" | "quarter">): string {
-  return point.quarter === null
-    ? String(point.year)
-    : formatMessage(es.community.indicators.quarter, {
-        quarter: String(point.quarter),
-        year: String(point.year),
-      });
+function chartParts(
+  indicator: Indicator,
+): Pick<IndicatorRow, "chart" | "chartLabel" | "range" | "data"> {
+  const { series, unit, name } = indicator;
+  const data = series.map((p) => ({ period: formatPeriod(p), value: formatValue(p.value, unit) }));
+  const chart = chartModel(series, unit);
+  const [first] = series;
+  const last = series.at(-1);
+  if (chart === null || first === undefined || last === undefined) {
+    return { chart: null, chartLabel: null, range: null, data };
+  }
+  const from = formatPeriod(first);
+  const to = formatPeriod(last);
+  const { low, high } = extremes(series, unit);
+  return {
+    chart,
+    chartLabel: formatMessage(es.community.indicators.chartLabel, {
+      name,
+      from,
+      to,
+      first: formatValue(first.value, unit),
+      last: formatValue(last.value, unit),
+    }),
+    range: formatMessage(es.community.indicators.range, { from, to, low, high }),
+    data,
+  };
 }

@@ -77,6 +77,7 @@ export interface Indicator {
   name: string;
   unit: string;
   latest: Point | null; // null: the INE publishes no value for this community
+  series: Point[]; // oldest first
   tableId: string;
   tableUrl: string;
   fetchedAt: string | null; // ISO instant of the download that produced the value
@@ -119,6 +120,9 @@ export async function fetchIndicators(territoryId: string): Promise<Indicator[]>
       latest: i.latest
         ? { year: i.latest.year, quarter: i.latest.quarter, value: i.latest.value }
         : null,
+      series: i.series
+        .map((p) => ({ year: p.year, quarter: p.quarter, value: p.value }))
+        .sort((a, b) => a.year - b.year || (a.quarter ?? 0) - (b.quarter ?? 0)),
       tableId: i.source.table_id,
       tableUrl: i.source.table_url,
       fetchedAt: i.source.fetched_at,

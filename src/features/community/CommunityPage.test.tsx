@@ -66,33 +66,31 @@ describe("community page", () => {
     expect(screen.getByText(/Presidencia: Ángel Víctor Torres Pérez/)).toBeVisible();
   });
 
-  it("shows the five INE indicators with value, period and source link", async () => {
+  it("shows the five INE indicators as cards with value, period, chart and source link", async () => {
     renderAt("/comunidades/ccaa-05");
 
-    const table = await screen.findByRole("table", { name: /Indicadores de Canarias/ });
-    expect(
-      within(table)
-        .getAllByRole("columnheader")
-        .map((h) => h.textContent),
-    ).toEqual(["Indicador", "Valor", "Periodo", "Fuente"]);
-    const rows = within(table).getAllByRole("row").slice(1);
-    expect(rows).toHaveLength(5);
-    const unemployment = rows.find((r) =>
-      within(r).queryByRole("rowheader", { name: "Tasa de paro" }),
+    const section = await screen.findByRole("region", { name: es.community.indicators.title });
+    const cards = within(section).getAllByRole("article");
+    expect(cards).toHaveLength(5);
+    const unemployment = cards.find((c) =>
+      within(c).queryByRole("heading", { name: "Tasa de paro" }),
     );
-    if (unemployment === undefined) throw new Error("no unemployment row");
-    const [value, period, source] = within(unemployment).getAllByRole("cell");
-    if (value === undefined || period === undefined || source === undefined) {
-      throw new Error("the row lacks cells");
-    }
-    expect(value).toHaveTextContent("11,6 %");
-    expect(period).toHaveTextContent("2.º trimestre de 2026");
-    expect(within(source).getByRole("link", { name: "Tabla 14506 del INE" })).toHaveAttribute(
+    if (unemployment === undefined) throw new Error("no unemployment card");
+    expect(within(unemployment).getByText("11,6", { selector: "p" })).toHaveTextContent("11,6 %");
+    expect(
+      within(unemployment).getByText("2.º trimestre de 2026", { selector: "p" }),
+    ).toBeVisible();
+    expect(within(unemployment).getByRole("img")).toHaveAccessibleName(/Evolución de Tasa de paro/);
+    expect(within(unemployment).getByRole("link", { name: "Tabla 14506 del INE" })).toHaveAttribute(
       "href",
       "https://www.ine.es/jaxiT3/Tabla.htm?t=14506",
     );
-    expect(within(table).getByText("2.277.705 personas")).toBeVisible();
-    expect(within(table).getByText("110,44 (base 2025 = 100)")).toBeVisible();
+    expect(within(section).getByText("2.277.705", { selector: "p" })).toHaveTextContent(
+      "2.277.705 personas",
+    );
+    expect(within(section).getByText("110,44", { selector: "p" })).toHaveTextContent(
+      "110,44 (base 2025 = 100)",
+    );
   });
 
   it("answers not found for a community that does not exist, without asking for its data", async () => {
@@ -169,7 +167,7 @@ describe("community page", () => {
 
   it("has no axe violations", async () => {
     const container = renderAt("/comunidades/ccaa-05");
-    await screen.findByRole("table");
+    await screen.findByRole("heading", { name: "Tasa de paro" });
 
     expect(await axeViolations(container)).toEqual([]);
   });
