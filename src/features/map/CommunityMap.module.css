@@ -149,3 +149,15 @@
   font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
+
+/* A community left out of the highlighted party: faded, never hidden or removed. */
+.dimmed {
+  opacity: 0.22;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .community,
+  .marker {
+    transition: opacity 0.15s ease-out;
+  }
+}

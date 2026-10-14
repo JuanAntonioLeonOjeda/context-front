@@ -35,3 +35,11 @@ export function formatLongDate(isoDate: string): string {
   }
   return longDate.format(parsed);
 }
+
+const plural = new Intl.PluralRules("es");
+
+/** "1 comunidad", "14 comunidades": the form of `forms` that Spanish uses for `count`. */
+export function formatCount(forms: { one: string; other: string }, count: number): string {
+  const template = plural.select(count) === "one" ? forms.one : forms.other;
+  return formatMessage(template, { count: String(count) });
+}

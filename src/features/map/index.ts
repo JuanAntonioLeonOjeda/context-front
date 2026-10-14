@@ -1,4 +1,5 @@
 export { CommunityMap } from "@/features/map/CommunityMap";
+export { GovernmentOverview } from "@/features/map/GovernmentOverview";
 export type { CommunityMapProps } from "@/features/map/CommunityMap";
 export { communityLook } from "@/features/map/community-look";
 export type { CommunityGovernment, CommunityLook } from "@/features/map/community-look";

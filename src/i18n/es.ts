@@ -27,6 +27,14 @@ export const es = {
     list: {
       title: "Comunidades",
     },
+    panel: {
+      title: "Quién gobierna hoy",
+      hint: "Elige un partido para resaltar en el mapa las comunidades donde gobierna.",
+      row: "{party}: gobierna en {communities}",
+      communities: { one: "{count} comunidad", other: "{count} comunidades" },
+      coalitions: "{coalitions} de {total} gobiernos son de coalición.",
+      caretakers: "{caretakers} en funciones.",
+    },
     figure: {
       caption: "Gobiernos autonómicos a {date}",
       boundaries: "Límites: {attribution}",
