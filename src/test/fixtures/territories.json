@@ -1,0 +1,21 @@
+[
+  { "id": "ccaa-01", "ine_code": "01", "name": "Andalucía" },
+  { "id": "ccaa-02", "ine_code": "02", "name": "Aragón" },
+  { "id": "ccaa-03", "ine_code": "03", "name": "Principado de Asturias" },
+  { "id": "ccaa-04", "ine_code": "04", "name": "Illes Balears" },
+  { "id": "ccaa-05", "ine_code": "05", "name": "Canarias" },
+  { "id": "ccaa-06", "ine_code": "06", "name": "Cantabria" },
+  { "id": "ccaa-07", "ine_code": "07", "name": "Castilla y León" },
+  { "id": "ccaa-08", "ine_code": "08", "name": "Castilla-La Mancha" },
+  { "id": "ccaa-09", "ine_code": "09", "name": "Cataluña" },
+  { "id": "ccaa-10", "ine_code": "10", "name": "Comunitat Valenciana" },
+  { "id": "ccaa-11", "ine_code": "11", "name": "Extremadura" },
+  { "id": "ccaa-12", "ine_code": "12", "name": "Galicia" },
+  { "id": "ccaa-13", "ine_code": "13", "name": "Comunidad de Madrid" },
+  { "id": "ccaa-14", "ine_code": "14", "name": "Región de Murcia" },
+  { "id": "ccaa-15", "ine_code": "15", "name": "Comunidad Foral de Navarra" },
+  { "id": "ccaa-16", "ine_code": "16", "name": "País Vasco" },
+  { "id": "ccaa-17", "ine_code": "17", "name": "La Rioja" },
+  { "id": "ccaa-18", "ine_code": "18", "name": "Ceuta" },
+  { "id": "ccaa-19", "ine_code": "19", "name": "Melilla" }
+]

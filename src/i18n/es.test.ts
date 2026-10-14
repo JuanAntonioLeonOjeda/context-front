@@ -17,7 +17,8 @@ describe("es", () => {
     for (const [key, value] of all) {
       expect(typeof value, key).toBe("string");
       expect((value as string).trim(), key).not.toBe("");
-      expect(key.split("."), key).toHaveLength(3);
+      // feature.screen.element at least; a group of related texts (table columns, units) may nest one more.
+      expect(key.split(".").length, key).toBeGreaterThanOrEqual(3);
     }
   });
 });

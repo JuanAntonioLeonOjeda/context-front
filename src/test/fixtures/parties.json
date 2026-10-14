@@ -1,0 +1,131 @@
+[
+  {
+    "id": "ahi",
+    "name": "Agrupación Herreña Independiente",
+    "short_name": "AHI",
+    "colour_hex": "#019e4c"
+  },
+  {
+    "id": "asg",
+    "name": "Agrupación Socialista Gomera",
+    "short_name": "ASG",
+    "colour_hex": "#d21111"
+  },
+  {
+    "id": "bng",
+    "name": "Bloque Nacionalista Galego",
+    "short_name": "BNG",
+    "colour_hex": "#a2c7e4"
+  },
+  { "id": "cha", "name": "Chunta Aragonesista", "short_name": "CHA", "colour_hex": "#ad0017" },
+  {
+    "id": "coalicion-canaria",
+    "name": "Coalición Canaria",
+    "short_name": "CC",
+    "colour_hex": "#ffd700"
+  },
+  {
+    "id": "coalicion-por-melilla",
+    "name": "Coalición por Melilla",
+    "short_name": "CpM",
+    "colour_hex": "#298642"
+  },
+  { "id": "compromis", "name": "Compromís", "short_name": "Compromís", "colour_hex": "#ec8953" },
+  { "id": "comuns", "name": "Comuns Sumar", "short_name": "Comuns", "colour_hex": "#a6214b" },
+  {
+    "id": "contigo-zurekin",
+    "name": "Contigo Navarra-Zurekin Nafarroa",
+    "short_name": "Contigo-Zurekin",
+    "colour_hex": "#65bc7b"
+  },
+  {
+    "id": "convocatoria-por-asturias",
+    "name": "Convocatoria por Asturias (IU-Más País-IAS)",
+    "short_name": "CxA",
+    "colour_hex": "#9e9e9e"
+  },
+  {
+    "id": "cs",
+    "name": "Ciudadanos-Partido de la Ciudadanía",
+    "short_name": "Cs",
+    "colour_hex": "#eb6109"
+  },
+  {
+    "id": "cup",
+    "name": "Candidatura d'Unitat Popular",
+    "short_name": "CUP",
+    "colour_hex": "#ffed00"
+  },
+  {
+    "id": "eh-bildu",
+    "name": "Euskal Herria Bildu",
+    "short_name": "EH Bildu",
+    "colour_hex": "#00ac8e"
+  },
+  {
+    "id": "erc",
+    "name": "Esquerra Republicana de Catalunya",
+    "short_name": "ERC",
+    "colour_hex": "#ffb232"
+  },
+  {
+    "id": "gent-per-formentera",
+    "name": "Gent per Formentera",
+    "short_name": "GxF",
+    "colour_hex": "#d5006e"
+  },
+  { "id": "geroa-bai", "name": "Geroa Bai", "short_name": "GBai", "colour_hex": "#f75e42" },
+  { "id": "iu", "name": "Izquierda Unida", "short_name": "IU", "colour_hex": "#732021" },
+  { "id": "junts", "name": "Junts per Catalunya", "short_name": "Junts", "colour_hex": "#00c4b2" },
+  { "id": "mas-pais", "name": "Más País", "short_name": "Más País", "colour_hex": "#0fdec4" },
+  {
+    "id": "mes-per-mallorca",
+    "name": "Més per Mallorca",
+    "short_name": "Més",
+    "colour_hex": "#d8de40"
+  },
+  {
+    "id": "mes-per-menorca",
+    "name": "Més per Menorca",
+    "short_name": "MxMe",
+    "colour_hex": "#005151"
+  },
+  { "id": "nueva-canarias", "name": "Nueva Canarias", "short_name": "NC", "colour_hex": "#639e42" },
+  { "id": "par", "name": "Partido Aragonés", "short_name": "PAR", "colour_hex": "#ffcc66" },
+  {
+    "id": "pnv",
+    "name": "Euzko Alderdi Jeltzalea-Partido Nacionalista Vasco",
+    "short_name": "EAJ-PNV",
+    "colour_hex": "#4aae4a"
+  },
+  { "id": "podemos", "name": "Podemos", "short_name": "Podemos", "colour_hex": "#9269f5" },
+  { "id": "pp", "name": "Partido Popular", "short_name": "PP", "colour_hex": "#1d84ce" },
+  {
+    "id": "prc",
+    "name": "Partido Regionalista de Cantabria",
+    "short_name": "PRC",
+    "colour_hex": "#b7bf10"
+  },
+  {
+    "id": "psc",
+    "name": "Partit dels Socialistes de Catalunya",
+    "short_name": "PSC",
+    "colour_hex": "#e73b39"
+  },
+  {
+    "id": "psoe",
+    "name": "Partido Socialista Obrero Español",
+    "short_name": "PSOE",
+    "colour_hex": "#ef1c27"
+  },
+  {
+    "id": "sa-unio-de-formentera",
+    "name": "Sa Unió de Formentera",
+    "short_name": "Sa Unió",
+    "colour_hex": "#008d8a"
+  },
+  { "id": "sumar", "name": "Sumar", "short_name": "Sumar", "colour_hex": "#e61455" },
+  { "id": "teruel-existe", "name": "Teruel Existe", "short_name": "TE", "colour_hex": "#037252" },
+  { "id": "unidas-podemos", "name": "Unidas Podemos", "short_name": "UP", "colour_hex": "#7f00ff" },
+  { "id": "vox", "name": "Vox", "short_name": "Vox", "colour_hex": "#63be21" }
+]

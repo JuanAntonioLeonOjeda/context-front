@@ -1,0 +1,36 @@
+{
+  "territory_id": "ccaa-05",
+  "date": "2026-10-14",
+  "term": {
+    "president_name": "Fernando Clavijo Batlle",
+    "valid_from": "2023-07-14",
+    "is_caretaker": false,
+    "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-16293",
+    "parties": [
+      {
+        "party_id": "ahi",
+        "short_name": "AHI",
+        "role": "external_support",
+        "source_url": "https://www.parcan.es/files/pub/diarios/11l/004/ds004.pdf"
+      },
+      {
+        "party_id": "asg",
+        "short_name": "ASG",
+        "role": "external_support",
+        "source_url": "https://www.parcan.es/files/pub/diarios/11l/004/ds004.pdf"
+      },
+      {
+        "party_id": "coalicion-canaria",
+        "short_name": "CC",
+        "role": "governing",
+        "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-16293"
+      },
+      {
+        "party_id": "pp",
+        "short_name": "PP",
+        "role": "governing",
+        "source_url": "https://idpbarcelona.net/docs/public/iccaa/2023/canarias_2023.pdf"
+      }
+    ]
+  }
+}

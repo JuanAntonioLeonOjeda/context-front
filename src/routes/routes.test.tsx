@@ -7,6 +7,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { es } from "@/i18n/es";
 import { axeViolations } from "@/test/axe";
 import { serveHealth, type BackendState } from "@/test/health";
+import { findMapLink, serveMapData, type MapEndpoint } from "@/test/map";
 import { queryWrapper } from "@/test/query";
 
 import { ErrorMessage } from "./ErrorMessage";
@@ -16,8 +17,10 @@ function renderAt(
   path: string,
   tree: RouteObject[] = routes,
   backend: BackendState = "up",
+  failingMapData: MapEndpoint[] = [],
 ): HTMLElement {
   serveHealth(backend);
+  serveMapData(failingMapData);
   const router = createMemoryRouter(tree, { initialEntries: [path] });
   return render(<RouterProvider router={router} />, { wrapper: queryWrapper() }).container;
 }
@@ -114,13 +117,16 @@ describe("backend status in the shell", () => {
     renderAt("/");
 
     expect(await screen.findByText(es.health.status.up)).toBeVisible();
-    expect(screen.getByRole("status")).toHaveTextContent(es.health.status.up);
+    expect(within(screen.getByRole("contentinfo")).getByRole("status")).toHaveTextContent(
+      es.health.status.up,
+    );
   });
 
   it("starts by saying it is checking", () => {
     renderAt("/");
 
-    expect(screen.getByRole("status")).toHaveTextContent(es.health.status.checking);
+    const footer = screen.getByRole("contentinfo");
+    expect(within(footer).getByRole("status")).toHaveTextContent(es.health.status.checking);
   });
 
   it.each<BackendState>(["database-down", "unreachable"])(
@@ -154,4 +160,34 @@ describe.each(["light", "dark"] as const)("accessibility in the %s theme", (them
       expect(await axeViolations(container)).toEqual([]);
     },
   );
+});
+
+describe("the map on the home page", () => {
+  it("shows a loading state, then the map of today with a link per community", async () => {
+    renderAt("/");
+
+    expect(screen.getByText(es.map.state.loading)).toBeVisible();
+    expect(
+      await screen.findByRole("group", { name: "Gobiernos autonómicos a 14 de octubre de 2026" }),
+    ).toBeInTheDocument();
+    expect(await findMapLink("Galicia: gobierna PP")).toHaveAttribute(
+      "href",
+      "/comunidades/ccaa-12",
+    );
+  });
+
+  it("shows a written error with a retry when the data cannot be loaded", async () => {
+    const user = userEvent.setup();
+    const container = renderAt("/", routes, "up", ["/map/geometry"]);
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent(es.map.state.error);
+    expect(screen.getByRole("heading", { level: 1, name: es.app.shell.name })).toBeVisible();
+    expect(await axeViolations(container)).toEqual([]);
+
+    serveMapData();
+    await user.click(within(alert).getByRole("button", { name: es.map.state.retry }));
+
+    expect(await findMapLink("Galicia: gobierna PP")).toBeInTheDocument();
+  });
 });

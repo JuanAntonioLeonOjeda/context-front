@@ -17,10 +17,10 @@ Update the status column when a phase creates or finishes a path.
 |---|---|---|
 | `package.json`, `pnpm-lock.yaml`, `vite.config.ts`, `tsconfig.json` | pnpm project, Vite, strict TypeScript; `/api` dev proxy | ✅ |
 | `src/api/` | typed client generated from the backend's OpenAPI (`pnpm api:generate`; `openapi.json` and `schema.d.ts` are generated, never edited by hand); `client.ts`, `config.ts` | ✅ |
-| `src/design/` | tokens (light and dark), base styles, contrast helper; `parties.ts` pending (`map-governments`) | 🚧 |
+| `src/design/` | tokens (light and dark, including the map's), base styles, contrast helper, `parties.ts` (the only place that turns parties into colours and names; colours come from the API) | ✅ |
 | `src/i18n/es.ts` | every user-facing string (Spanish) | ✅ |
-| `src/features/map/` | Spain map, community selection, coalition rendering | ⏳ |
-| `src/features/community/` | community page: government, indicators | ⏳ |
+| `src/features/map/` | the map (ADR-0013): projection with the Canary Islands inset, each community's fill and accessible name, SVG links, stripes for coalitions, HTML markers for Ceuta and Melilla, legend, data hook | ✅ |
+| `src/features/community/` | community page: government with sources, caretaker note, parties that govern and that only supported the investiture, table of the five INE indicators | ✅ |
 | `src/features/stories/` | news by outlet, story page, timeline | ⏳ |
 | `src/features/voters/` | voter profiles | ⏳ |
 | `src/routes/` | React Router route tree (`buildRoutes`), root layout, home, not found, error boundaries | 🚧 |
@@ -28,9 +28,10 @@ Update the status column when a phase creates or finishes a path.
 | `src/test/` | fixtures (real API responses), MSW server, axe helper, health and query helpers | ✅ |
 | `.env.example` | public configuration (`VITE_API_BASE_URL`, `API_PROXY_TARGET`) | ✅ |
 | `scripts/` | `api-generate.mjs`: downloads the backend contract and generates the types | ✅ |
+| `Dockerfile`, `nginx.conf`, `.dockerignore` | production-style image: pnpm build, then nginx serving the app and forwarding `/api` to the backend; built by the compose file in `../back` (project `datos`, service `front`, profile `app`) | ✅ |
 | `.github/workflows/ci.yml` | format, lint, typecheck, generated types in sync, tests, build | ✅ |
-| `docs/adr/` | front-only ADRs (project-wide ones are in `../back/docs/adr/`) | ⏳ |
-| `specs/<phase>/` | `spec.md`, `plan.md`, `tasks.md` for each phase (workflow `spec-driven-phase`); `foundation` also has `review.md` | 🚧 |
+| `docs/adr/` | front-only ADRs: 0013 (the map as an SVG with d3-geo); project-wide ones are in `../back/docs/adr/` | 🚧 |
+| `specs/<phase>/` | `spec.md`, `plan.md`, `tasks.md` for each phase (workflow `spec-driven-phase`); `foundation` and `map-governments` also have `review.md` (the latter in `../back/specs/` for both repos) | 🚧 |
 
 Dependency rules: `.claude/rules/architecture.md` and `.claude/rules/import-conventions.md`.
 
