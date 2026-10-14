@@ -55,6 +55,6 @@ Dependency rules: `.claude/rules/architecture.md` and `.claude/rules/import-conv
 | `.claude/commands/create-pr.md` | `/create-pr`: PR with `gh`, conventional commit, generated description |
 | `.claude/commands/new-adr.md` | `/new-adr <title>`: ADR skeleton that the author fills in |
 | `.claude/commands/defend.md` | `/defend <path or topic>`: interview-style questions on a piece of the system |
-| `.claude/workflows/spec-driven-phase.md` | plan (and wait) → spec → plan → tasks → implementation → tests → review → ADR → defend |
+| `.claude/workflows/spec-driven-phase.md` | plan (and wait) → spec → plan → tasks → implementation → tests → review → ADR (`/defend` optional) |
 | `.claude/workflows/git-workflow.md` | `main`/`develop`, branch naming, Conventional Commits, small atomic commits |
 | `.claude/workflows/architecture-decision.md` | when an ADR is needed and how to write one together |

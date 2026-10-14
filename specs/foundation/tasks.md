@@ -12,4 +12,4 @@
 
 ## Defend
 
-_2026-10-13: started and stopped by the author after the first question; not done. Pending, together with the `/defend` of the backend `foundation`._
+_2026-10-13: started and stopped by the author after the first question; not done. Optional; it does not block the merge._
