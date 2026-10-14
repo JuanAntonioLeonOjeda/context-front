@@ -28,6 +28,7 @@ Update the status column when a phase creates or finishes a path.
 | `src/test/` | fixtures (real API responses), MSW server, axe helper, health and query helpers | ✅ |
 | `.env.example` | public configuration (`VITE_API_BASE_URL`, `API_PROXY_TARGET`) | ✅ |
 | `scripts/` | `api-generate.mjs`: downloads the backend contract and generates the types | ✅ |
+| `Dockerfile`, `nginx.conf`, `.dockerignore` | production-style image: pnpm build, then nginx serving the app and forwarding `/api` to the backend; built by the compose file in `../back` (profile `app`) | ✅ |
 | `.github/workflows/ci.yml` | format, lint, typecheck, generated types in sync, tests, build | ✅ |
 | `docs/adr/` | front-only ADRs (project-wide ones are in `../back/docs/adr/`) | ⏳ |
 | `specs/<phase>/` | `spec.md`, `plan.md`, `tasks.md` for each phase (workflow `spec-driven-phase`); `foundation` also has `review.md` | 🚧 |
