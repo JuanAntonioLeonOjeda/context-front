@@ -7,6 +7,16 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* The sticky header must never cover what has the focus (WCAG 2.4.11): when the browser
+     scrolls an element into view, it leaves the header's height free at the top. The header
+     has two rows on a phone and one from 40rem (src/features/shell/Shell.module.css). */
+  scroll-padding-top: 7.5rem;
+}
+
+@media (min-width: 40rem) {
+  html {
+    scroll-padding-top: 5rem;
+  }
 }
 
 body {
