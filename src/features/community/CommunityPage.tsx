@@ -4,6 +4,7 @@ import { es } from "@/i18n/es";
 
 import { GovernmentSection } from "./GovernmentSection";
 import { IndicatorsSection } from "./IndicatorsSection";
+import { NewsSection } from "./NewsSection";
 import { useCommunityCard } from "./useCommunityCard";
 
 /** The page of one community: who governs it and the INE data, each with its source. */
@@ -37,6 +38,7 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
           <h1>{card.name}</h1>
           <GovernmentSection government={card.government} />
           <IndicatorsSection community={card.name} rows={card.indicators} />
+          <NewsSection territoryId={territoryId} />
         </>
       )}
     </>

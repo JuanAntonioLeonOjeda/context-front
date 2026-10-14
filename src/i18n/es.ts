@@ -73,6 +73,36 @@ export const es = {
       error: "No hemos podido cargar esta comunidad.",
       retry: "Volver a intentarlo",
     },
+    news: {
+      title: "Noticias",
+      sectorNav: "Sector de las noticias",
+      sectors: { education: "Educación", health: "Sanidad", housing: "Vivienda" },
+      window: "Noticias desde el {date}: hasta 5 por medio, de la más reciente a la más antigua.",
+      method:
+        "Las noticias se clasifican con reglas automáticas que todavía no se han medido, y pueden contener errores.",
+      empty: "No hay noticias de {sector} en este periodo.",
+      loading: "Cargando las noticias…",
+      error: "No hemos podido cargar las noticias.",
+      retry: "Volver a intentarlo",
+      outletAndDate: "{outlet}, {date}",
+      responsible: "Responsable: {government}, {parties}",
+      caretaker: "en funciones",
+      confidence: "Confianza: {confidence}",
+      confidenceWords: { high: "Alta", medium: "Media", not_determined: "Sin determinar" },
+      basis: "Base de la atribución",
+      levels: {
+        state: "Gobierno de España",
+        ccaa: "Gobierno autonómico",
+        local: "Gobierno local",
+      },
+      reasons: {
+        no_level_named:
+          "la noticia no nombra ningún gobierno y las competencias del sector las comparten varios niveles",
+        no_competence: "la noticia nombra un gobierno sin competencias en este sector",
+        local_not_modelled: "la noticia nombra un gobierno local, que todavía no recogemos",
+        no_government_on_date: "no hay datos de gobierno en la fecha de la noticia",
+      },
+    },
   },
   health: {
     status: {

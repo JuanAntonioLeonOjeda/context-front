@@ -6,4 +6,4 @@ export { layoutMap } from "@/features/map/projection";
 export type { CommunitiesGeometry, MapLayout } from "@/features/map/projection";
 export { useGovernmentMap } from "@/features/map/useGovernmentMap";
 export type { GovernmentMapState } from "@/features/map/useGovernmentMap";
-export { fetchCommunities } from "@/features/map/map-api";
+export { fetchCommunities, fetchParties } from "@/features/map/map-api";

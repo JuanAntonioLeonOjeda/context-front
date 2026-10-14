@@ -20,7 +20,7 @@ Update the status column when a phase creates or finishes a path.
 | `src/design/` | tokens (light and dark, including the map's), base styles, contrast helper, `parties.ts` (the only place that turns parties into colours and names; colours come from the API) | ✅ |
 | `src/i18n/es.ts` | every user-facing string (Spanish) | ✅ |
 | `src/features/map/` | the map (ADR-0013): projection with the Canary Islands inset, each community's fill and accessible name, SVG links, stripes for coalitions, HTML markers for Ceuta and Melilla, legend, data hook | ✅ |
-| `src/features/community/` | community page: government with sources, caretaker note, parties that govern and that only supported the investiture, table of the five INE indicators | ✅ |
+| `src/features/community/` | community page: government with sources, caretaker note, parties that govern and that only supported the investiture, table of the five INE indicators; news by sector (`?sector=`) with who is responsible, the basis and the confidence in words | ✅ |
 | `src/features/stories/` | news by outlet, story page, timeline | ⏳ |
 | `src/features/voters/` | voter profiles | ⏳ |
 | `src/routes/` | React Router route tree (`buildRoutes`), root layout, home, not found, error boundaries | 🚧 |
