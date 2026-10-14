@@ -30,6 +30,7 @@ export interface ProjectedCommunity {
   id: string;
   path: string; // SVG path data
   centroid: readonly [number, number];
+  bounds: Box;
 }
 
 export interface MapLayout {
@@ -83,7 +84,13 @@ export function layoutMap(geometry: CommunitiesGeometry): MapLayout {
 function project(feature: CommunityFeature, projection: GeoProjection): ProjectedCommunity {
   const path = geoPath(projection);
   const [x, y] = path.centroid(feature);
-  return { id: feature.id, path: path(feature) ?? "", centroid: [x, y] };
+  const [[x0, y0], [x1, y1]] = path.bounds(feature);
+  return {
+    id: feature.id,
+    path: path(feature) ?? "",
+    centroid: [x, y],
+    bounds: { x: x0, y: y0, width: x1 - x0, height: y1 - y0 },
+  };
 }
 
 function collection(features: CommunityFeature[]): FeatureCollection<MultiPolygon> {

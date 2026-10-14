@@ -1,0 +1,130 @@
+.figure {
+  margin: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.caption {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+/* The markers are positioned in % over the SVG, so both must share this box. */
+.canvas {
+  position: relative;
+  width: 100%;
+  max-width: 50rem;
+}
+
+.map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Double outline (ADR-0013): a wide outer line and a thin inner line of opposite lightness,
+   so the edge of a community is visible whatever its colour, in both themes. */
+.outer {
+  stroke: var(--color-map-outline-outer);
+  stroke-width: 2.4px;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+}
+
+.inner {
+  fill: none;
+  stroke: var(--color-map-outline-inner);
+  stroke-width: 0.8px;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.community {
+  cursor: pointer;
+}
+
+/* SVG links have no reliable outline across browsers: the focus ring is the outline itself. */
+.community:focus {
+  outline: none;
+}
+
+.community:focus-visible .outer,
+.community:hover .outer {
+  stroke: var(--color-focus);
+  stroke-width: 4px;
+}
+
+.separator {
+  fill: var(--color-map-separator);
+}
+
+.noData {
+  fill: var(--color-map-no-data);
+}
+
+.hatch {
+  fill: var(--color-map-no-data-hatch);
+}
+
+.inset {
+  fill: none;
+  stroke: var(--color-border-strong);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Ceuta and Melilla: a real 32 px target whatever the screen width (WCAG 2.5.8). */
+.marker {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 3px solid var(--color-map-outline-outer);
+  box-shadow: 0 0 0 1px var(--color-map-outline-inner);
+}
+
+.legend {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.legendTitle {
+  margin: 0;
+  font-size: var(--text-md);
+}
+
+.legendList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legendList li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legendList abbr {
+  text-decoration: none;
+}
+
+.swatch {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+}
+
+.legendNote,
+.attribution {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}

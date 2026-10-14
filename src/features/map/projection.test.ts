@@ -20,16 +20,6 @@ function community(id: string): ProjectedCommunity {
   return found;
 }
 
-/** Bounding box of an SVG path made of absolute M/L/Z commands, as d3-geo writes them. */
-function boundsOf(path: string): Box {
-  const numbers = (path.match(/-?\d+(?:\.\d+)?(?:e-?\d+)?/g) ?? []).map(Number);
-  const xs = numbers.filter((_, i) => i % 2 === 0);
-  const ys = numbers.filter((_, i) => i % 2 === 1);
-  const x = Math.min(...xs);
-  const y = Math.min(...ys);
-  return { x, y, width: Math.max(...xs) - x, height: Math.max(...ys) - y };
-}
-
 function overlaps(a: Box, b: Box): boolean {
   return a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
 }
@@ -50,7 +40,7 @@ describe("layoutMap", () => {
 
   it("draws the Canary Islands inside their inset", () => {
     const canary = community(CANARY_ISLANDS_ID);
-    const bounds = boundsOf(canary.path);
+    const bounds = canary.bounds;
 
     expect(inside(canary.centroid, layout.canaryInset)).toBe(true);
     expect(bounds.x).toBeGreaterThanOrEqual(layout.canaryInset.x);
@@ -63,7 +53,7 @@ describe("layoutMap", () => {
     const others = layout.communities.filter((c) => c.id !== CANARY_ISLANDS_ID);
 
     for (const c of others) {
-      expect(overlaps(boundsOf(c.path), layout.canaryInset), c.id).toBe(false);
+      expect(overlaps(c.bounds, layout.canaryInset), c.id).toBe(false);
     }
   });
 
