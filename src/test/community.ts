@@ -4,6 +4,8 @@ import caretaker from "@/test/fixtures/community-ccaa-05-governments-2023-06-01.
 import canarias from "@/test/fixtures/community-ccaa-05-governments.json";
 import cataluna from "@/test/fixtures/community-ccaa-09-governments.json";
 import canariasIndicators from "@/test/fixtures/community-ccaa-05-indicators.json";
+import canariasNews from "@/test/fixtures/community-ccaa-05-news-health.json";
+import catalunaNews from "@/test/fixtures/community-ccaa-09-news-health.json";
 import unknown from "@/test/fixtures/community-unknown-governments.json";
 import territories from "@/test/fixtures/territories.json";
 import { server } from "@/test/server";
@@ -27,6 +29,9 @@ export function serveCommunity(scenario: Scenario = "canarias"): void {
     }),
     http.get("*/api/communities/:territoryId/indicators", () =>
       HttpResponse.json(canariasIndicators),
+    ),
+    http.get("*/api/communities/:territoryId/news", ({ params }) =>
+      HttpResponse.json(params.territoryId === "ccaa-09" ? catalunaNews : canariasNews),
     ),
   );
 }
