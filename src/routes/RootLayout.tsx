@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { Outlet } from "react-router";
+import { useEffect, useRef } from "react";
+import { Outlet, useLocation } from "react-router";
 
 import { HealthStatus } from "@/features/health";
 import { es } from "@/i18n/es";
@@ -9,6 +9,19 @@ import styles from "./RootLayout.module.css";
 /** Frame of every page: skip link, banner and the `main` landmark that holds the route. */
 export function RootLayout(): React.JSX.Element {
   const main = useRef<HTMLElement>(null);
+  const { pathname } = useLocation();
+  const isFirstPage = useRef(true);
+
+  // After a navigation inside the app the focus would stay on the link just used, and a screen
+  // reader would not know the page changed. Moving it to `main` starts reading the new page,
+  // as a full page load would. Not on the first page: there the skip link is the first stop.
+  useEffect(() => {
+    if (isFirstPage.current) {
+      isFirstPage.current = false;
+      return;
+    }
+    main.current?.focus();
+  }, [pathname]);
 
   return (
     <div className={styles.page}>

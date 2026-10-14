@@ -55,6 +55,7 @@ export const es = {
       caption: "Indicadores de {community}, con el periodo y la fuente de cada dato",
       columns: { indicator: "Indicador", value: "Valor", period: "Periodo", source: "Fuente" },
       noValue: "Sin dato",
+      noPeriod: "—",
       sourceLink: "Tabla {id} del INE",
       downloaded: "Descargado el {date}.",
       quarter: "{quarter}.º trimestre de {year}",

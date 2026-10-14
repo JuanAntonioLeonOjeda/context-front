@@ -31,7 +31,7 @@ Update the status column when a phase creates or finishes a path.
 | `Dockerfile`, `nginx.conf`, `.dockerignore` | production-style image: pnpm build, then nginx serving the app and forwarding `/api` to the backend; built by the compose file in `../back` (project `datos`, service `front`, profile `app`) | ✅ |
 | `.github/workflows/ci.yml` | format, lint, typecheck, generated types in sync, tests, build | ✅ |
 | `docs/adr/` | front-only ADRs: 0013 (the map as an SVG with d3-geo); project-wide ones are in `../back/docs/adr/` | 🚧 |
-| `specs/<phase>/` | `spec.md`, `plan.md`, `tasks.md` for each phase (workflow `spec-driven-phase`); `foundation` also has `review.md` | 🚧 |
+| `specs/<phase>/` | `spec.md`, `plan.md`, `tasks.md` for each phase (workflow `spec-driven-phase`); `foundation` and `map-governments` also have `review.md` (the latter in `../back/specs/` for both repos) | 🚧 |
 
 Dependency rules: `.claude/rules/architecture.md` and `.claude/rules/import-conventions.md`.
 

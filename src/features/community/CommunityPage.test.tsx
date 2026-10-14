@@ -142,6 +142,21 @@ describe("community page", () => {
     expect(await screen.findByRole("link", { name: es.community.page.back })).toBeVisible();
   });
 
+  it("moves the focus to the new page after a navigation, but not on the first page", async () => {
+    const user = userEvent.setup();
+    renderAt("/");
+    const canarias = await screen.findByRole("link", { name: "Canarias: gobiernan CC y PP" });
+    expect(screen.getByRole("main")).not.toHaveFocus();
+
+    await user.click(canarias);
+    await screen.findByRole("heading", { level: 1, name: "Canarias" });
+    expect(screen.getByRole("main")).toHaveFocus();
+
+    await user.click(screen.getByRole("link", { name: es.community.page.back }));
+    await screen.findByRole("link", { name: "Galicia: gobierna PP" });
+    expect(screen.getByRole("main")).toHaveFocus();
+  });
+
   it("has no axe violations", async () => {
     const container = renderAt("/comunidades/ccaa-05");
     await screen.findByRole("table");

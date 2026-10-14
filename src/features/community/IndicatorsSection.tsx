@@ -32,7 +32,7 @@ export function IndicatorsSection(props: {
               <tr key={row.id}>
                 <th scope="row">{row.name}</th>
                 <td>{row.value ?? es.community.indicators.noValue}</td>
-                <td>{row.period ?? "—"}</td>
+                <td>{row.period ?? es.community.indicators.noPeriod}</td>
                 <td>
                   <a href={row.tableUrl}>{row.tableLabel}</a>
                   {row.downloaded && <small className={styles.downloaded}> {row.downloaded}</small>}
