@@ -132,6 +132,7 @@ export const es = {
       error: "No hemos podido cargar esta comunidad.",
       retry: "Volver a intentarlo",
     },
+    locator: { caption: "Dónde está {community}" },
     views: { nav: "Qué ver de la comunidad", data: "Datos", news: "Noticias" },
     news: {
       title: "Noticias",

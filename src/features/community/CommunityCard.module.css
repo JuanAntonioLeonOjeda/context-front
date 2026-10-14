@@ -260,3 +260,30 @@
 .indicatorData .table {
   min-width: 0;
 }
+
+/* The government is the header of the community page: the president is the line to read, the
+   parties are chips a little larger than elsewhere, the headings step back. */
+.government {
+  margin-block: var(--space-4) 0;
+  gap: var(--space-3);
+}
+
+.government h2 {
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+}
+
+.government h3 {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.president {
+  font-size: var(--text-lg);
+  line-height: 1.4;
+}
+
+.government .party {
+  padding: var(--space-2) var(--space-4);
+}

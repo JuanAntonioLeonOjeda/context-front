@@ -113,10 +113,10 @@ describe("community page", () => {
     it("shows the news when the address says so, and the data otherwise", async () => {
       renderAt("/comunidades/ccaa-05?view=news");
 
-      const government = await screen.findByRole("heading", {
-        name: es.community.government.title,
+      const indicators = await screen.findByRole("heading", {
+        name: es.community.indicators.title,
       });
-      expect(paneOf(government)).toHaveAttribute("data-active", "false");
+      expect(paneOf(indicators)).toHaveAttribute("data-active", "false");
       expect(
         paneOf(screen.getByRole("heading", { name: es.community.news.title })),
       ).toHaveAttribute("data-active", "true");
@@ -129,10 +129,10 @@ describe("community page", () => {
     it("falls back to the data when the view in the address does not exist", async () => {
       renderAt("/comunidades/ccaa-05?view=otra");
 
-      const government = await screen.findByRole("heading", {
-        name: es.community.government.title,
+      const indicators = await screen.findByRole("heading", {
+        name: es.community.indicators.title,
       });
-      expect(paneOf(government)).toHaveAttribute("data-active", "true");
+      expect(paneOf(indicators)).toHaveAttribute("data-active", "true");
     });
 
     it("keeps the chosen sector when changing view, and the view when changing sector", async () => {

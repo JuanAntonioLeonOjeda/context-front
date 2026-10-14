@@ -2,6 +2,7 @@ import { Link, useSearchParams } from "react-router";
 
 import { es } from "@/i18n/es";
 
+import { CommunityLocator } from "./CommunityLocator";
 import { viewOf } from "./community-view";
 import { GovernmentSection } from "./GovernmentSection";
 import { IndicatorsSection } from "./IndicatorsSection";
@@ -41,11 +42,16 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
       {card.state === "ready" && (
         <>
           <title>{`${card.name} · ${es.app.shell.name}`}</title>
-          <h1 className={styles.title}>{card.name}</h1>
+          <div className={styles.hero}>
+            <div className={styles.heroText}>
+              <h1 className={styles.title}>{card.name}</h1>
+              <GovernmentSection government={card.government} />
+            </div>
+            <CommunityLocator territoryId={territoryId} name={card.name} />
+          </div>
           <ViewTabs />
           <div className={styles.columns}>
             <div className={styles.pane} data-active={view === "data"}>
-              <GovernmentSection government={card.government} />
               <IndicatorsSection community={card.name} rows={card.indicators} />
             </div>
             <div className={styles.pane} data-active={view === "news"}>
