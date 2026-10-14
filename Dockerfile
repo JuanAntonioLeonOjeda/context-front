@@ -1,6 +1,6 @@
 # The web app: built once, served as static files by nginx, which also forwards `/api` to the
 # backend so the browser talks to one origin (no CORS). Built by the compose file in `../back`
-# (profile `app`).
+# (service `front`, profile `app`).
 
 FROM node:24-alpine AS build
 WORKDIR /app
