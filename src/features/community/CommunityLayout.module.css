@@ -48,3 +48,10 @@
     align-items: start;
   }
 }
+
+.title {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-3xl);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}

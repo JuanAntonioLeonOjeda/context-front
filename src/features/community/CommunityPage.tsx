@@ -41,7 +41,7 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
       {card.state === "ready" && (
         <>
           <title>{`${card.name} · ${es.app.shell.name}`}</title>
-          <h1>{card.name}</h1>
+          <h1 className={styles.title}>{card.name}</h1>
           <ViewTabs />
           <div className={styles.columns}>
             <div className={styles.pane} data-active={view === "data"}>
