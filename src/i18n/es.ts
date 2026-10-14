@@ -9,6 +9,39 @@ export const es = {
       name: "Contexto autonómico",
       description: "Noticias políticas de las comunidades autónomas, con su contexto.",
       skipToContent: "Saltar al contenido",
+      nav: { label: "Principal", map: "Mapa", about: "Cómo funciona" },
+      theme: {
+        label: "Tema de color: {current}. Pulsa para cambiar a {next}.",
+        system: "según el sistema",
+        light: "claro",
+        dark: "oscuro",
+      },
+    },
+    footer: {
+      sources: {
+        title: "Datos y fuentes",
+        items: [
+          "Indicadores: tablas del INE, enlazadas en cada dato.",
+          "Gobiernos: decretos del BOE y de los boletines autonómicos, con la fuente de cada dato.",
+          "Límites de las comunidades: IGN, licencia CC BY 4.0.",
+          "Colores de los partidos: Wikidata.",
+        ],
+      },
+      method: {
+        title: "Cómo se hace",
+        items: [
+          "Las noticias se clasifican con reglas automáticas todavía sin medir, y pueden contener errores.",
+          "De cada noticia solo se publican el titular y el enlace al medio.",
+          "El responsable se deriva de una regla única, igual para todos los partidos.",
+        ],
+        link: "Leer cómo funciona",
+      },
+      project: {
+        title: "Proyecto",
+        about: "Proyecto personal de portfolio, desarrollado con asistencia de Claude Code.",
+        back: "Código del backend",
+        front: "Código de la web",
+      },
     },
   },
   map: {
