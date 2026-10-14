@@ -161,3 +161,19 @@
     transition: opacity 0.15s ease-out;
   }
 }
+
+/* The ring round the one community singled out; it sits on top and takes no pointer. */
+.ring {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.markerSpotlight {
+  box-shadow:
+    0 0 0 1px var(--color-map-outline-inner),
+    0 0 0 4px var(--color-accent);
+}
