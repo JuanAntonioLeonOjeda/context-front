@@ -1,0 +1,30 @@
+{
+  "territory_id": "ccaa-09",
+  "date": "2026-10-14",
+  "term": {
+    "president_name": "Salvador Illa Roca",
+    "valid_from": "2024-08-10",
+    "is_caretaker": false,
+    "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-16602",
+    "parties": [
+      {
+        "party_id": "comuns",
+        "short_name": "Comuns",
+        "role": "external_support",
+        "source_url": "https://naciodigital.cat/politica/salvador-illa-investit-133e-president-generalitat.html"
+      },
+      {
+        "party_id": "erc",
+        "short_name": "ERC",
+        "role": "external_support",
+        "source_url": "https://naciodigital.cat/politica/salvador-illa-investit-133e-president-generalitat.html"
+      },
+      {
+        "party_id": "psc",
+        "short_name": "PSC",
+        "role": "governing",
+        "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-16602"
+      }
+    ]
+  }
+}

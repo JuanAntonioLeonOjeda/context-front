@@ -1,5 +1,6 @@
 import type { RouteObject } from "react-router";
 
+import { CommunityRoute } from "./CommunityRoute";
 import { ErrorMessage } from "./ErrorMessage";
 import { HomeRoute } from "./HomeRoute";
 import { NotFoundRoute } from "./NotFoundRoute";
@@ -27,4 +28,7 @@ export function buildRoutes(children: RouteObject[]): RouteObject[] {
   ];
 }
 
-export const routes = buildRoutes([{ index: true, Component: HomeRoute }]);
+export const routes = buildRoutes([
+  { index: true, Component: HomeRoute },
+  { path: "comunidades/:territoryId", Component: CommunityRoute },
+]);
