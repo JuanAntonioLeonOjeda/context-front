@@ -9,8 +9,9 @@ import type { Point } from "./community-api";
 
 const number = new Intl.NumberFormat("es", { maximumFractionDigits: 3 });
 const UNITS = new Map(Object.entries(es.community.indicators.units));
+const BASES = new Map(Object.entries(es.community.indicators.bases));
 
-/** "11,6 %", "2.277.705 personas", "110,44 (base 2025 = 100)": the number as the INE gave it.
+/** "11,6 %", "2.277.705 personas", "110,44 puntos": the number as the INE gave it.
  *  A unit with no Spanish text yet is shown as the API names it, never dropped. */
 export function formatValue(value: number, unit: string): string {
   const parts = formatValueParts(value, unit);
@@ -28,4 +29,11 @@ export function formatPeriod(point: Pick<Point, "year" | "quarter">): string {
         quarter: String(point.quarter),
         year: String(point.year),
       });
+}
+
+/** The indicator's name, with the base of an index when it has one:
+ *  "Índice de Precios de Vivienda (base 2025 = 100)". */
+export function formatName(name: string, unit: string): string {
+  const base = BASES.get(unit);
+  return base === undefined ? name : `${name} (${base})`;
 }

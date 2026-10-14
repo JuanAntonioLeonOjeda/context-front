@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import type { Government, Indicator } from "./community-api";
 import { formatPeriod, formatValue, governmentView, indicatorRows } from "./community-card";
+import { formatName } from "./indicator-format";
 
 const government: Government = {
   date: "2026-10-14",
@@ -42,7 +43,7 @@ describe("formatValue", () => {
     [11.6, "%", "11,6 %"],
     [22.41, "%", "22,41 %"],
     [2277705, "persons", "2.277.705 personas"],
-    [110.44, "index (2025 = 100)", "110,44 (base 2025 = 100)"],
+    [110.44, "index (2025 = 100)", "110,44 puntos"],
     [3, "unknown unit", "3 unknown unit"],
   ])("%s %s → %s", (value, unit, expected) => {
     expect(formatValue(value, unit)).toBe(expected);
@@ -114,5 +115,42 @@ describe("indicatorRows", () => {
     expect(row?.value).toBeNull();
     expect(row?.period).toBeNull();
     expect(row?.downloaded).toBeNull();
+  });
+});
+
+describe("formatName", () => {
+  it("adds the base to the name of an index, and leaves other names alone", () => {
+    expect(formatName("Índice de Precios de Vivienda", "index (2025 = 100)")).toBe(
+      "Índice de Precios de Vivienda (base 2025 = 100)",
+    );
+    expect(formatName("Tasa de paro", "%")).toBe("Tasa de paro");
+  });
+});
+
+describe("an index in its card", () => {
+  const index: Indicator = {
+    id: "housing_price_index",
+    name: "Índice de Precios de Vivienda",
+    unit: "index (2025 = 100)",
+    latest: { year: 2026, quarter: 2, value: 110.44 },
+    series: [
+      { year: 2025, quarter: 3, value: 99.1 },
+      { year: 2025, quarter: 4, value: 101.2 },
+      { year: 2026, quarter: 1, value: 105.3 },
+      { year: 2026, quarter: 2, value: 110.44 },
+    ],
+    tableId: "80270",
+    tableUrl: "https://www.ine.es/jaxiT3/Tabla.htm?t=80270",
+    fetchedAt: "2026-10-13T15:48:00Z",
+  };
+
+  it("names its base once, in the title, and measures the values and the axis in points", () => {
+    const [row] = indicatorRows([index]);
+
+    expect(row?.name).toBe("Índice de Precios de Vivienda (base 2025 = 100)");
+    expect(row).toMatchObject({ figure: "110,44", unit: "puntos" });
+    expect(row?.axes?.y).toBe("puntos");
+    expect(row?.range).toContain("el valor más bajo fue 99,1 puntos y el más alto, 110,44 puntos");
+    expect(JSON.stringify(row?.axes)).not.toContain("base");
   });
 });
