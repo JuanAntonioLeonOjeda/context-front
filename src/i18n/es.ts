@@ -11,6 +11,15 @@ export const es = {
       skipToContent: "Saltar al contenido",
     },
   },
+  map: {
+    community: {
+      // "{community}" and "{parties}" are filled by formatMessage; parties come as a list.
+      governedBy: "{community}: gobierna {parties}",
+      governedByCoalition: "{community}: gobiernan {parties}",
+      caretaker: "{label} (en funciones)",
+      noData: "{community}: sin datos de gobierno en esta fecha",
+    },
+  },
   health: {
     status: {
       checking: "Comprobando la conexión con los datos…",
