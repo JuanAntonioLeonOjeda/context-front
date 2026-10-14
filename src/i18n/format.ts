@@ -18,3 +18,20 @@ const conjunction = new Intl.ListFormat("es", { style: "long", type: "conjunctio
 export function listInSpanish(items: readonly string[]): string {
   return conjunction.format(items);
 }
+
+const longDate = new Intl.DateTimeFormat("es", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+/** "2026-10-14" → "14 de octubre de 2026". The date is a calendar day: read and shown in UTC,
+ *  so no time zone can move it to the day before. */
+export function formatLongDate(isoDate: string): string {
+  const parsed = new Date(`${isoDate}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error(`not an ISO date: "${isoDate}"`);
+  }
+  return longDate.format(parsed);
+}

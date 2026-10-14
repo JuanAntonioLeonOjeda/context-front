@@ -25,7 +25,13 @@ export const es = {
       noData: "Sin datos de gobierno",
     },
     figure: {
+      caption: "Gobiernos autonómicos a {date}",
       boundaries: "Límites: {attribution}",
+    },
+    state: {
+      loading: "Cargando el mapa…",
+      error: "No hemos podido cargar el mapa.",
+      retry: "Volver a intentarlo",
     },
   },
   health: {
