@@ -1,0 +1,77 @@
+/*
+ * Design tokens (semantic names, never `--blue-500` in components).
+ *
+ * Light is the base; dark applies when the system asks for it, unless the root says
+ * `data-theme="light"`, and always when the root says `data-theme="dark"`. The two dark
+ * blocks must stay identical: tokens.test.ts checks it, and checks the WCAG contrast of
+ * every text and control pair in both themes (jsdom cannot compute colours, so axe cannot).
+ *
+ * Party colours are not here: they live in parties.ts, the only place that names a party.
+ */
+:root {
+  color-scheme: light;
+
+  --color-bg: #f6f8f9;
+  --color-surface: #ffffff;
+  --color-text: #14202a;
+  --color-text-muted: #4a5b68;
+  --color-border: #d5dde3;
+  --color-border-strong: #6f7f8b;
+  --color-accent: #0b5cad;
+  --color-on-accent: #ffffff;
+  --color-focus: #0b5cad;
+  --color-danger: #a8201a;
+  --color-danger-surface: #fdecea;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale (rem) and spacing (4px grid). */
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --focus-ring-width: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-bg: #0f1a22;
+    --color-surface: #16252f;
+    --color-text: #e7edf1;
+    --color-text-muted: #a3b3bf;
+    --color-border: #2b3d49;
+    --color-border-strong: #7c909e;
+    --color-accent: #7db8f0;
+    --color-on-accent: #0f1a22;
+    --color-focus: #7db8f0;
+    --color-danger: #ff9b94;
+    --color-danger-surface: #3a1a18;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #0f1a22;
+  --color-surface: #16252f;
+  --color-text: #e7edf1;
+  --color-text-muted: #a3b3bf;
+  --color-border: #2b3d49;
+  --color-border-strong: #7c909e;
+  --color-accent: #7db8f0;
+  --color-on-accent: #0f1a22;
+  --color-focus: #7db8f0;
+  --color-danger: #ff9b94;
+  --color-danger-surface: #3a1a18;
+}

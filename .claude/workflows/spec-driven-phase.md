@@ -1,6 +1,6 @@
 ---
 name: spec-driven-phase
-description: Full process for each project phase (or any non-trivial change) — branch, short plan and wait, spec, plan, tasks, implementation in small commits, tests, review, ADRs and a defend check. Use it when starting a phase from the brief or a substantial change to an existing one.
+description: Full process for each project phase (or any non-trivial change) — branch, short plan and wait, spec, plan, tasks, implementation in small commits, tests, review, ADRs and an optional defend. Use it when starting a phase from the brief or a substantial change to an existing one.
 ---
 
 # Spec-driven phase workflow
@@ -27,7 +27,7 @@ Code is not written directly from a request. Each phase of the brief
 
 4. **Tasks.** `specs/<phase>/tasks.md`: ordered checklist, small enough that **each task
    is one or a few commits**. Mark core-zone tasks with `[core]`: those follow the
-   collaborative mode of `ai-collaboration.md`. End the file with a "Defend" section
+   collaborative mode of `ai-collaboration.md`. End the file with an optional "Defend" section
    (step 8).
 
 5. **Implement task by task**, committing as you go (Conventional Commits, small). If
@@ -43,9 +43,10 @@ Code is not written directly from a request. Each phase of the brief
    large. Fix
    or explicitly accept each finding.
 
-8. **Defend.** Run `/defend <phase>`. Record in the "Defend" section of `tasks.md` the
-   date, the result and the gaps. A phase is closed when the author can explain its core
-   decisions without the assistant. Update `AGENTS.md` statuses.
+8. **Close.** Update `AGENTS.md` statuses. A phase is closed when its tasks are done and CI
+   is green. `/defend <phase>` is **optional**: the author runs it when they want interview
+   practice, and it never blocks a merge or the next phase. If run, record the date, result
+   and gaps in the "Defend" section of `tasks.md`.
 
 9. **PR** with `/create-pr` into `develop`.
 
@@ -56,7 +57,7 @@ Code is not written directly from a request. Each phase of the brief
 - **map-governments**: the map and the community page; the party-colour table is the
   only source of colours.
 - **polish**: README (description, screenshots, how to run, links to the ADRs in `../back`, known
-  limitations, data attributions, Claude Code note) and a final `/defend` over the whole
+  limitations, data attributions, Claude Code note) and, optionally, a final `/defend` over the whole
   system.
 
 ## When to skip steps
