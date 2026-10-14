@@ -1,6 +1,6 @@
 # ADR-0013: The map is an SVG drawn with d3-geo, one link per community
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-13
 - **Phase:** map-governments
 

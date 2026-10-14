@@ -6,4 +6,4 @@ Process: `.claude/workflows/architecture-decision.md`.
 
 | ADR | Title | Status |
 |---|---|---|
-| [0013](0013-svg-map.md) | The map is an SVG drawn with d3-geo, one link per community | Proposed |
+| [0013](0013-svg-map.md) | The map is an SVG drawn with d3-geo, one link per community | Accepted |
