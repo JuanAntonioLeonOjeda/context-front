@@ -19,8 +19,8 @@ Update the status column when a phase creates or finishes a path.
 | `src/api/` | typed client generated from the backend's OpenAPI (`pnpm api:generate`; `openapi.json` and `schema.d.ts` are generated, never edited by hand); `client.ts`, `config.ts` | ✅ |
 | `src/design/` | tokens (light and dark, including the map's), base styles, contrast helper, `parties.ts` (the only place that turns parties into colours and names; colours come from the API) | ✅ |
 | `src/i18n/es.ts` | every user-facing string (Spanish) | ✅ |
-| `src/features/map/` | the map (ADR-0013): projection with the Canary Islands inset, each community's fill and accessible name, SVG links, stripes for coalitions, HTML markers for Ceuta and Melilla, legend, data hook | ✅ |
-| `src/features/community/` | community page: government with sources, caretaker note, parties that govern and that only supported the investiture, table of the five INE indicators; news by sector (`?sector=`) with who is responsible, the basis and the confidence in words | ✅ |
+| `src/features/map/` | the map (ADR-0013): projection with the Canary Islands inset, each community's fill and accessible name, SVG links, stripes for coalitions, HTML markers for Ceuta and Melilla, legend, data hook; the party panel beside the map (a row per party with a square per community, ordered by name, highlights its communities) | ✅ |
+| `src/features/community/` | community page: government with sources, caretaker note, parties that govern and that only supported the investiture, the five INE indicators as cards with an SVG line chart (no library), its extremes in words and its data in a table; news by sector (`?sector=`) as a timeline by day with the stripe of the responsible parties, who is responsible, the basis and the confidence in words | ✅ |
 | `src/features/stories/` | news by outlet, story page, timeline | ⏳ |
 | `src/features/voters/` | voter profiles | ⏳ |
 | `src/routes/` | React Router route tree (`buildRoutes`), root layout, home, not found, error boundaries | 🚧 |
