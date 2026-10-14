@@ -22,6 +22,7 @@ export interface CommunityLook {
   territoryId: string;
   fill: Fill;
   label: string; // accessible name of the community link, also its tooltip
+  isCaretaker: boolean;
   parties: readonly Party[]; // for the legend
 }
 
@@ -35,6 +36,7 @@ export function communityLook(
     territoryId: government.territoryId,
     fill: fillOf(parties),
     label: labelOf(communityName, parties, government.isCaretaker),
+    isCaretaker: government.hasData && government.isCaretaker,
     parties,
   };
 }

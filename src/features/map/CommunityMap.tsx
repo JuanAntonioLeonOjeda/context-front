@@ -23,11 +23,19 @@ export interface CommunityMapProps {
   looks: ReadonlyMap<string, CommunityLook>;
   attribution: string;
   hrefOf: (territoryId: string) => string;
+  /** The communities to emphasise (the others fade); null or absent: all the same. */
+  highlight?: ReadonlySet<string> | null;
+  /** The party legend and the list of communities. Off where the page draws its own. */
+  showLegend?: boolean;
+  showList?: boolean;
 }
 
 /** The map of the communities: one link per community, coloured by who governs (ADR-0013). */
 export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
-  const { caption, layout, looks, attribution, hrefOf } = props;
+  const { caption, layout, looks, attribution, hrefOf, highlight = null } = props;
+  const { showLegend = true, showList = true } = props;
+  const classOf = (id: string, base: string): string =>
+    highlight !== null && !highlight.has(id) ? `${base} ${styles.dimmed ?? ""}` : base;
   const captionId = useId();
   const drawn = layout.communities.map((c) => ({ shape: c, look: lookOf(looks, c.id) }));
   const isSmall = (c: ProjectedCommunity): boolean =>
@@ -53,12 +61,18 @@ export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
           />
           {drawn.map(({ shape, look }) =>
             isSmall(shape) ? (
-              <path key={shape.id} d={shape.path} fill={svgFill(look.fill)} aria-hidden="true" />
+              <path
+                key={shape.id}
+                d={shape.path}
+                fill={svgFill(look.fill)}
+                className={classOf(shape.id, "")}
+                aria-hidden="true"
+              />
             ) : (
               <Link
                 key={shape.id}
                 to={hrefOf(shape.id)}
-                className={styles.community}
+                className={classOf(shape.id, styles.community ?? "")}
                 aria-label={look.label}
               >
                 <title>{look.label}</title>
@@ -74,7 +88,7 @@ export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
             <Link
               key={shape.id}
               to={hrefOf(shape.id)}
-              className={styles.marker}
+              className={classOf(shape.id, styles.marker ?? "")}
               aria-label={look.label}
               title={look.label}
               style={{
@@ -85,8 +99,8 @@ export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
             />
           ))}
       </div>
-      <MapLegend looks={drawn.map((d) => d.look)} />
-      <CommunityList looks={[...looks.values()]} hrefOf={hrefOf} />
+      {showLegend && <MapLegend looks={drawn.map((d) => d.look)} />}
+      {showList && <CommunityList looks={[...looks.values()]} hrefOf={hrefOf} />}
       <p className={styles.attribution}>
         {formatMessage(es.map.figure.boundaries, { attribution })}
       </p>

@@ -4,9 +4,35 @@
   margin-block: var(--space-6);
 }
 
+/* Parties as chips: the colour is the party's own, the name is always written. */
 .parties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
   margin: 0;
-  padding-left: var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.party {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: var(--color-surface);
+}
+
+.partySwatch {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+}
+
+.section > * {
+  margin-block: 0;
 }
 
 .tableScroll {
@@ -45,4 +71,192 @@
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+.sectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sectors a[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-accent);
+}
+
+.news {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 46rem;
+}
+
+.newsDay {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+}
+
+.newsItem {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-1) 0 var(--space-4) var(--space-4);
+}
+
+/* The stripe on the left: the colours of the responsible parties, as the map draws them. */
+.stripe {
+  position: absolute;
+  inset-block: var(--space-1) var(--space-4);
+  left: 0;
+  width: 0.5rem;
+  border-radius: 2px;
+  border: 1px solid var(--color-border-strong);
+}
+
+.newsItem a {
+  font-weight: 700;
+}
+
+.attribution {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.attribution p {
+  margin: 0;
+}
+
+/* The indicators: small multiples, one card each, as many per row as fit. Equal cards in a
+   grid are the right shape here: the five measures are peers, none leads. */
+.indicatorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.indicator {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  height: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.indicatorName {
+  margin: 0;
+  font-size: var(--text-md);
+}
+
+.indicatorValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.indicatorPeriod,
+.indicatorRange,
+.indicatorSource {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Ink on paper: the chart takes no colour, which belongs to the parties. */
+.chart {
+  display: block;
+  width: 100%;
+  max-width: 22rem; /* the labels are drawn for a card of about 240 px: not blown up on a phone */
+  height: auto;
+  margin-block: var(--space-2);
+}
+
+.chartLine {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartArea {
+  fill: var(--color-text);
+  fill-opacity: 0.07;
+}
+
+.chartDot {
+  fill: var(--color-surface);
+  stroke: var(--color-text);
+  stroke-width: 2px;
+}
+
+.chartGrid {
+  stroke: var(--color-border);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartAxis {
+  stroke: var(--color-border-strong);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.axisLabel {
+  fill: var(--color-text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.axisTitle {
+  fill: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.indicatorData summary {
+  display: list-item;
+  list-style-position: inside;
+  padding-block: var(--space-3);
+  cursor: pointer;
+}
+
+.indicatorUnit {
+  white-space: nowrap;
+  font-size: var(--text-md);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.indicatorData .table {
+  min-width: 0;
 }

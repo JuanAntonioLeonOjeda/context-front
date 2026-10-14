@@ -6,3 +6,6 @@ src/api/schema.d.ts
 *.md
 .claude
 src/api/openapi.json
+# Installed agent skills (npx skills) are third-party code: not formatted here.
+.agents
+skills-lock.json

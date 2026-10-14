@@ -1,9 +1,11 @@
 export { CommunityMap } from "@/features/map/CommunityMap";
+export { GovernmentOverview } from "@/features/map/GovernmentOverview";
 export type { CommunityMapProps } from "@/features/map/CommunityMap";
-export { communityLook } from "@/features/map/community-look";
-export type { CommunityGovernment, CommunityLook } from "@/features/map/community-look";
+export { cssBackground } from "@/features/map/fill-style";
+export { communityLook, stripesPatternId } from "@/features/map/community-look";
+export type { CommunityGovernment, CommunityLook, Fill } from "@/features/map/community-look";
 export { layoutMap } from "@/features/map/projection";
 export type { CommunitiesGeometry, MapLayout } from "@/features/map/projection";
 export { useGovernmentMap } from "@/features/map/useGovernmentMap";
 export type { GovernmentMapState } from "@/features/map/useGovernmentMap";
-export { fetchCommunities } from "@/features/map/map-api";
+export { fetchCommunities, fetchParties } from "@/features/map/map-api";

@@ -1,0 +1,138 @@
+/* Phone first: map, then the party panel, then the list of communities, in one column.
+   From 64rem the panel moves beside the map and follows the scroll while the list is read.
+   The areas keep the reading order of the DOM, so the tab order is the visual order. */
+.overview {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "map"
+    "panel"
+    "list";
+}
+
+.mapArea {
+  grid-area: map;
+  min-width: 0;
+}
+
+.panelArea {
+  grid-area: panel;
+  min-width: 0;
+}
+
+.listArea {
+  grid-area: list;
+  min-width: 0;
+}
+
+@media (min-width: 64rem) {
+  .overview {
+    grid-template-columns: minmax(0, 1fr) 23rem;
+    grid-template-areas:
+      "map panel"
+      "list panel";
+    align-items: start;
+  }
+
+  .panelArea {
+    position: sticky;
+    top: var(--space-4);
+  }
+}
+
+.panel {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.hint,
+.facts,
+.note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.facts {
+  color: var(--color-text);
+}
+
+.rows {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: var(--space-1) var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A row is one button; its three parts sit on a grid so every party's squares start at the
+   same x, and the ends line up as a plain bar chart would. */
+.row {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr) 2rem;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-1) var(--space-2);
+  border-color: transparent;
+  background: transparent;
+  text-align: left;
+}
+
+.row[aria-pressed="true"] {
+  border-color: var(--color-border-strong);
+  background: var(--color-bg);
+}
+
+.row:hover {
+  background: var(--color-bg);
+}
+
+.partyName {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.units {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.unit {
+  width: 0.6875rem;
+  height: 0.6875rem;
+  border-radius: 2px;
+  border: 1px solid var(--color-border-strong);
+}
+
+.count {
+  font-size: var(--text-lg);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The one entrance of the page: the squares appear as the panel does. */
+  .unit {
+    animation: unit-in 0.35s ease-out;
+  }
+
+  @keyframes unit-in {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+  }
+}

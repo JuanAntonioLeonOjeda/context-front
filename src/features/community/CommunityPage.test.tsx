@@ -66,33 +66,101 @@ describe("community page", () => {
     expect(screen.getByText(/Presidencia: Ángel Víctor Torres Pérez/)).toBeVisible();
   });
 
-  it("shows the five INE indicators with value, period and source link", async () => {
+  it("shows the five INE indicators as cards with value, period, chart and source link", async () => {
     renderAt("/comunidades/ccaa-05");
 
-    const table = await screen.findByRole("table", { name: /Indicadores de Canarias/ });
-    expect(
-      within(table)
-        .getAllByRole("columnheader")
-        .map((h) => h.textContent),
-    ).toEqual(["Indicador", "Valor", "Periodo", "Fuente"]);
-    const rows = within(table).getAllByRole("row").slice(1);
-    expect(rows).toHaveLength(5);
-    const unemployment = rows.find((r) =>
-      within(r).queryByRole("rowheader", { name: "Tasa de paro" }),
+    const section = await screen.findByRole("region", { name: es.community.indicators.title });
+    const cards = within(section).getAllByRole("article");
+    expect(cards).toHaveLength(5);
+    const unemployment = cards.find((c) =>
+      within(c).queryByRole("heading", { name: "Tasa de paro" }),
     );
-    if (unemployment === undefined) throw new Error("no unemployment row");
-    const [value, period, source] = within(unemployment).getAllByRole("cell");
-    if (value === undefined || period === undefined || source === undefined) {
-      throw new Error("the row lacks cells");
-    }
-    expect(value).toHaveTextContent("11,6 %");
-    expect(period).toHaveTextContent("2.º trimestre de 2026");
-    expect(within(source).getByRole("link", { name: "Tabla 14506 del INE" })).toHaveAttribute(
+    if (unemployment === undefined) throw new Error("no unemployment card");
+    expect(within(unemployment).getByText("11,6", { selector: "p" })).toHaveTextContent("11,6 %");
+    expect(
+      within(unemployment).getByText("2.º trimestre de 2026", { selector: "p" }),
+    ).toBeVisible();
+    expect(within(unemployment).getByRole("img")).toHaveAccessibleName(/Evolución de Tasa de paro/);
+    expect(within(unemployment).getByRole("link", { name: "Tabla 14506 del INE" })).toHaveAttribute(
       "href",
       "https://www.ine.es/jaxiT3/Tabla.htm?t=14506",
     );
-    expect(within(table).getByText("2.277.705 personas")).toBeVisible();
-    expect(within(table).getByText("110,44 (base 2025 = 100)")).toBeVisible();
+    expect(within(section).getByText("2.277.705", { selector: "p" })).toHaveTextContent(
+      "2.277.705 personas",
+    );
+    expect(within(section).getByText("110,44", { selector: "p" })).toHaveTextContent(
+      "110,44 (base 2025 = 100)",
+    );
+  });
+
+  describe("views for a small screen", () => {
+    const paneOf = (heading: HTMLElement): HTMLElement => {
+      const pane = heading.closest("[data-active]");
+      if (!(pane instanceof HTMLElement)) throw new Error("no pane");
+      return pane;
+    };
+
+    it("offers Datos and Noticias as two links, with the data first", async () => {
+      renderAt("/comunidades/ccaa-05");
+
+      const nav = await screen.findByRole("navigation", { name: es.community.views.nav });
+      const links = within(nav).getAllByRole("link");
+      expect(links.map((l) => l.textContent)).toEqual(["Datos", "Noticias"]);
+      expect(links[0]).toHaveAttribute("aria-current", "page");
+      expect(links[1]).not.toHaveAttribute("aria-current");
+    });
+
+    it("shows the news when the address says so, and the data otherwise", async () => {
+      renderAt("/comunidades/ccaa-05?view=news");
+
+      const government = await screen.findByRole("heading", {
+        name: es.community.government.title,
+      });
+      expect(paneOf(government)).toHaveAttribute("data-active", "false");
+      expect(
+        paneOf(screen.getByRole("heading", { name: es.community.news.title })),
+      ).toHaveAttribute("data-active", "true");
+      expect(screen.getByRole("link", { name: "Noticias" })).toHaveAttribute(
+        "aria-current",
+        "page",
+      );
+    });
+
+    it("falls back to the data when the view in the address does not exist", async () => {
+      renderAt("/comunidades/ccaa-05?view=otra");
+
+      const government = await screen.findByRole("heading", {
+        name: es.community.government.title,
+      });
+      expect(paneOf(government)).toHaveAttribute("data-active", "true");
+    });
+
+    it("keeps the chosen sector when changing view, and the view when changing sector", async () => {
+      renderAt("/comunidades/ccaa-05?view=news&sector=health");
+
+      const tab = await screen.findByRole("link", { name: "Datos" });
+      expect(tab.getAttribute("href")).toContain("sector=health");
+      expect(tab.getAttribute("href")).toContain("view=data");
+      const sector = screen.getByRole("link", { name: "Vivienda" });
+      expect(sector.getAttribute("href")).toContain("view=news");
+      expect(sector.getAttribute("href")).toContain("sector=housing");
+    });
+
+    it("changes view with a click and keeps the data on the page for the wide layout", async () => {
+      const user = userEvent.setup();
+      renderAt("/comunidades/ccaa-05");
+
+      await user.click(await screen.findByRole("link", { name: "Noticias" }));
+
+      expect(screen.getByRole("link", { name: "Noticias" })).toHaveAttribute(
+        "aria-current",
+        "page",
+      );
+      // Both panes stay in the page: from 64rem the two are shown side by side.
+      expect(
+        screen.getByRole("heading", { name: es.community.government.title }),
+      ).toBeInTheDocument();
+    });
   });
 
   it("answers not found for a community that does not exist, without asking for its data", async () => {
@@ -169,7 +237,7 @@ describe("community page", () => {
 
   it("has no axe violations", async () => {
     const container = renderAt("/comunidades/ccaa-05");
-    await screen.findByRole("table");
+    await screen.findByRole("heading", { name: "Tasa de paro" });
 
     expect(await axeViolations(container)).toEqual([]);
   });

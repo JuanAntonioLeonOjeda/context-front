@@ -123,10 +123,73 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/communities/{territory_id}/news": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Community
+         * @description The news of the last 30 days (today included, Spain time) that the active classifier
+         *     placed in this community and sector, at most 5 per outlet (its newest).
+         *
+         *     **Order:** publication time, newest first; ties by outlet id. The order never depends on an
+         *     outlet's size, audience or line.
+         *
+         *     Each item carries its attribution, computed on read from the competence table and the
+         *     government in force on the publication date in Spain (ADR-0014): one entry per government
+         *     level the article names, or a single `not_determined` entry with its reason.
+         */
+        get: operations["community_communities__territory_id__news_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AttributionOut */
+        AttributionOut: {
+            level: components["schemas"]["CompetenceLevel"] | null;
+            /** Territory Id */
+            territory_id: string | null;
+            confidence: components["schemas"]["Confidence"];
+            /** Party Ids */
+            party_ids: string[];
+            /** Is Caretaker */
+            is_caretaker: boolean;
+            /** Competences */
+            competences: components["schemas"]["CompetenceOut"][];
+            reason: components["schemas"]["Reason"] | null;
+        };
+        /** ClassifierOut */
+        ClassifierOut: {
+            /** Model Id */
+            model_id: string;
+            /** Model Version */
+            model_version: string;
+        };
+        /** CommunityNewsOut */
+        CommunityNewsOut: {
+            /** Territory Id */
+            territory_id: string;
+            /** Sector Id */
+            sector_id: string;
+            /**
+             * Since
+             * Format: date
+             */
+            since: string;
+            /** Items */
+            items: components["schemas"]["NewsItemOut"][];
+        };
         /** CommunityOnMapOut */
         CommunityOnMapOut: {
             /** Territory Id */
@@ -139,10 +202,37 @@ export interface components {
             has_data: boolean;
         };
         /**
+         * CompetenceFunction
+         * @enum {string}
+         */
+        CompetenceFunction: "legislation" | "basic_legislation" | "development_legislation" | "execution";
+        /**
+         * CompetenceLevel
+         * @enum {string}
+         */
+        CompetenceLevel: "state" | "ccaa" | "local";
+        /** CompetenceOut */
+        CompetenceOut: {
+            /** Activity */
+            activity: string;
+            /** Description */
+            description: string;
+            function: components["schemas"]["CompetenceFunction"];
+            /** Legal Basis */
+            legal_basis: string;
+            /** Source Url */
+            source_url: string;
+        };
+        /**
          * ComponentStatus
          * @enum {string}
          */
         ComponentStatus: "up" | "down";
+        /**
+         * Confidence
+         * @enum {string}
+         */
+        Confidence: "high" | "medium" | "not_determined";
         /** GovernmentMapOut */
         GovernmentMapOut: {
             /**
@@ -193,6 +283,25 @@ export interface components {
          * @enum {string}
          */
         Level: "state" | "ccaa" | "province";
+        /** NewsItemOut */
+        NewsItemOut: {
+            /** Outlet Id */
+            outlet_id: string;
+            /** Outlet Name */
+            outlet_name: string;
+            /** Headline */
+            headline: string;
+            /** Url */
+            url: string;
+            /**
+             * Published At
+             * Format: date-time
+             */
+            published_at: string;
+            classified_by: components["schemas"]["ClassifierOut"];
+            /** Attribution */
+            attribution: components["schemas"]["AttributionOut"][];
+        };
         /** PartyOut */
         PartyOut: {
             /** Id */
@@ -223,6 +332,11 @@ export interface components {
             /** Value */
             value: number;
         };
+        /**
+         * Reason
+         * @enum {string}
+         */
+        Reason: "no_level_named" | "no_competence" | "local_not_modelled" | "no_government_on_date";
         /** SourceOut */
         SourceOut: {
             /** Publisher */
@@ -475,6 +589,40 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["IndicatorOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    community_communities__territory_id__news_get: {
+        parameters: {
+            query: {
+                /** @description A sector id: education, health or housing */
+                sector: string;
+            };
+            header?: never;
+            path: {
+                territory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunityNewsOut"];
                 };
             };
             /** @description Validation Error */

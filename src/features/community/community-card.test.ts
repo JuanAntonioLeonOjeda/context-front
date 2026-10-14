@@ -62,6 +62,7 @@ describe("indicatorRows", () => {
     name: "Tasa de paro",
     unit: "%",
     latest: { year: 2026, quarter: 2, value: 11.6 },
+    series: [],
     tableId: "14506",
     tableUrl: "https://www.ine.es/jaxiT3/Tabla.htm?t=14506",
     fetchedAt: "2026-10-13T15:48:00Z",
@@ -70,7 +71,7 @@ describe("indicatorRows", () => {
   it("gives the value, its period and its source with the download date", () => {
     const [row] = indicatorRows([rate]);
 
-    expect(row).toEqual({
+    expect(row).toMatchObject({
       id: "unemployment_rate",
       name: "Tasa de paro",
       value: "11,6 %",
@@ -79,6 +80,32 @@ describe("indicatorRows", () => {
       tableUrl: "https://www.ine.es/jaxiT3/Tabla.htm?t=14506",
       downloaded: "Descargado el 13 de octubre de 2026.",
     });
+  });
+
+  it("describes the chart in words, and gives the lowest and highest value and every point", () => {
+    const series = [
+      { year: 2025, quarter: 4, value: 12.1 },
+      { year: 2026, quarter: 1, value: 13.4 },
+      { year: 2026, quarter: 2, value: 11.6 },
+      { year: 2026, quarter: 3, value: 11.9 },
+    ];
+    const [row] = indicatorRows([{ ...rate, series }]);
+
+    expect(row?.chartLabel).toBe(
+      "Evolución de Tasa de paro entre 4.º trimestre de 2025 y 3.º trimestre de 2026: de 12,1 % a 11,9 %.",
+    );
+    expect(row?.range).toBe(
+      "Entre 4.º trimestre de 2025 y 3.º trimestre de 2026: el valor más bajo fue 11,6 % y el más alto, 13,4 %.",
+    );
+    expect(row?.data).toHaveLength(4);
+    expect(row?.data[0]).toEqual({ period: "4.º trimestre de 2025", value: "12,1 %" });
+  });
+
+  it("draws no chart for a short series, but still lists its points", () => {
+    const [row] = indicatorRows([{ ...rate, series: [{ year: 2025, quarter: null, value: 20 }] }]);
+
+    expect(row).toMatchObject({ chart: null, chartLabel: null, range: null });
+    expect(row?.data).toEqual([{ period: "2025", value: "20 %" }]);
   });
 
   it("keeps an indicator without data as no value, never as zero", () => {

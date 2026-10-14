@@ -1,4 +1,4 @@
-import { CommunityMap, useGovernmentMap } from "@/features/map";
+import { GovernmentOverview, useGovernmentMap } from "@/features/map";
 import { es } from "@/i18n/es";
 
 /** The home page: the map of who governs each community today. */
@@ -20,7 +20,7 @@ export function HomeRoute(): React.JSX.Element {
         </div>
       )}
       {map.state === "ready" && (
-        <CommunityMap
+        <GovernmentOverview
           caption={map.caption}
           layout={map.layout}
           looks={map.looks}
