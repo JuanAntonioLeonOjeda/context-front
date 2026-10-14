@@ -173,7 +173,7 @@ export const es = {
     page: {
       title: "Cómo funciona",
       intro:
-        "Contexto autonómico reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de 14 medios, y dice quién es responsable de lo que cuenta cada noticia, con su base y su confianza.",
+        "Contexto autonómico reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, y dice quién es responsable de lo que cuenta cada noticia, con su base y su confianza.",
     },
     responsible: {
       title: "Quién es el responsable de una noticia",
@@ -205,7 +205,7 @@ export const es = {
         "Competencias: la Constitución, los estatutos de autonomía y las leyes. La base legal se ve en las noticias que tienen un responsable.",
         "Límites de las comunidades: Instituto Geográfico Nacional, licencia CC BY 4.0.",
         "Colores de los partidos: Wikidata.",
-        "Noticias: los canales públicos (RSS, mapas de noticias y secciones) de 14 medios nacionales y regionales, respetando sus normas de acceso.",
+        "Noticias: los canales públicos (RSS, mapas de noticias y secciones) de los medios nacionales y regionales seleccionados, respetando sus normas de acceso.",
       ],
     },
     published: {
