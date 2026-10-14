@@ -1,23 +1,14 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { createMemoryRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
 import { describe, expect, it } from "vitest";
 
 import { es } from "@/i18n/es";
-import { routes } from "@/routes/routes";
+import { renderApp } from "@/test/app";
 import { axeViolations } from "@/test/axe";
 import { serveCommunity, type Scenario } from "@/test/community";
-import { serveHealth } from "@/test/health";
-import { serveMapData } from "@/test/map";
-import { queryWrapper } from "@/test/query";
 
-function renderAt(path: string, scenario: Scenario = "canarias"): HTMLElement {
-  serveHealth("up");
-  serveMapData();
-  serveCommunity(scenario);
-  const router = createMemoryRouter(routes, { initialEntries: [path] });
-  return render(<RouterProvider router={router} />, { wrapper: queryWrapper() }).container;
+function renderAt(path: string, community: Scenario = "canarias"): HTMLElement {
+  return renderApp(path, { community });
 }
 
 /** The `<ul>` that follows a heading of the card. */
@@ -135,6 +126,20 @@ describe("community page", () => {
 
     await user.click(screen.getByRole("link", { name: es.community.page.back }));
     expect(await screen.findByRole("link", { name: "Galicia: gobierna PP" })).toBeVisible();
+  });
+
+  // user-event activates only HTML anchors with Enter, not the <a> inside an SVG (browsers do),
+  // so the keyboard is exercised on the HTML marker of Ceuta; the SVG links are reached by Tab
+  // in the map tests, and their Enter activation is part of the real-browser check.
+  it("opens a community with the keyboard: Enter on its focused marker", async () => {
+    const user = userEvent.setup();
+    renderAt("/");
+
+    (await screen.findByRole("link", { name: "Ceuta: gobierna PP" })).focus();
+    await user.keyboard("{Enter}");
+
+    // The community page is the only one with a way back to the map.
+    expect(await screen.findByRole("link", { name: es.community.page.back })).toBeVisible();
   });
 
   it("has no axe violations", async () => {

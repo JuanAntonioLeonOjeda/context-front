@@ -132,8 +132,8 @@ describe("CommunityMap", () => {
     expect(within(legend).getByText(es.map.legend.coalition)).toBeVisible();
   });
 
-  it("shows a date without data as such, in the map and in the legend", () => {
-    renderMap(before);
+  it("shows a date without data as such, in the map and in the legend", async () => {
+    const container = renderMap(before);
 
     expect(
       screen.getByRole("link", { name: "Galicia: sin datos de gobierno en esta fecha" }),
@@ -145,6 +145,7 @@ describe("CommunityMap", () => {
         .map((li) => li.textContent),
     ).toEqual([es.map.legend.noData]);
     expect(within(legend).queryByText(es.map.legend.coalition)).not.toBeInTheDocument();
+    expect(await axeViolations(container)).toEqual([]);
   });
 
   it("draws the Canary Islands inset and credits the IGN", () => {
