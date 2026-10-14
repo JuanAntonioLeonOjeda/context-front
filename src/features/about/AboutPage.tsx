@@ -1,9 +1,7 @@
+import { REPOSITORIES } from "@/features/shell";
 import { es } from "@/i18n/es";
 
 import styles from "./AboutPage.module.css";
-
-const BACK_REPOSITORY = "https://github.com/JuanAntonioLeonOjeda/context-back";
-const FRONT_REPOSITORY = "https://github.com/JuanAntonioLeonOjeda/context-front";
 
 function Section(props: {
   id: string;
@@ -76,10 +74,10 @@ export function AboutPage(): React.JSX.Element {
         <p>{about.project.text}</p>
         <ul className={styles.list}>
           <li>
-            <a href={BACK_REPOSITORY}>{about.project.back}</a>
+            <a href={REPOSITORIES.back}>{about.project.back}</a>
           </li>
           <li>
-            <a href={FRONT_REPOSITORY}>{about.project.front}</a>
+            <a href={REPOSITORIES.front}>{about.project.front}</a>
           </li>
         </ul>
       </Section>
