@@ -34,6 +34,42 @@ export const es = {
       retry: "Volver a intentarlo",
     },
   },
+  community: {
+    page: {
+      back: "Volver al mapa",
+      notFound: "No existe esa comunidad.",
+    },
+    government: {
+      title: "Gobierno",
+      president: "Presidencia: {name}",
+      since: "Desde el {date}",
+      caretaker: "Gobierno en funciones.",
+      governing: "Partidos que gobiernan",
+      support: "Partidos que apoyaron la investidura sin entrar en el gobierno",
+      source: "Fuente",
+      sourceOf: "Fuente: {party}",
+      sourceOfTerm: "Fuente del nombramiento",
+    },
+    indicators: {
+      title: "Datos del INE",
+      caption: "Indicadores de {community}, con el periodo y la fuente de cada dato",
+      columns: { indicator: "Indicador", value: "Valor", period: "Periodo", source: "Fuente" },
+      noValue: "Sin dato",
+      sourceLink: "Tabla {id} del INE",
+      downloaded: "Descargado el {date}.",
+      quarter: "{quarter}.º trimestre de {year}",
+      units: {
+        persons: "personas",
+        "%": "%",
+        "index (2025 = 100)": "(base 2025 = 100)",
+      },
+    },
+    state: {
+      loading: "Cargando la comunidad…",
+      error: "No hemos podido cargar esta comunidad.",
+      retry: "Volver a intentarlo",
+    },
+  },
   health: {
     status: {
       checking: "Comprobando la conexión con los datos…",
