@@ -34,7 +34,7 @@ export interface CommunityMapProps {
 export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
   const { caption, layout, looks, attribution, hrefOf, highlight = null } = props;
   const { showLegend = true, showList = true } = props;
-  // One community singled out (a locator, a party that governs only one): a ring round it, so
+  // One community singled out (a party that governs only one): a ring round it, so
   // a small one, such as the Canary Islands, is not lost among its faded neighbours.
   const spotlight = highlight !== null && highlight.size === 1;
   const classOf = (id: string, base: string): string =>

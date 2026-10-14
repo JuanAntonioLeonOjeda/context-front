@@ -163,6 +163,18 @@ describe("community page", () => {
     });
   });
 
+  it("puts the government in the header, above the data and the news, and draws no map", async () => {
+    renderApp("/comunidades/ccaa-05");
+
+    const government = await screen.findByRole("region", { name: es.community.government.title });
+    const indicators = screen.getByRole("region", { name: es.community.indicators.title });
+    expect(
+      government.compareDocumentPosition(indicators) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(within(government).getByText(/Presidencia: Fernando Clavijo Batlle/)).toBeVisible();
+    expect(screen.queryByRole("figure")).not.toBeInTheDocument();
+  });
+
   it("answers not found for a community that does not exist, without asking for its data", async () => {
     const container = renderAt("/comunidades/ccaa-99");
 

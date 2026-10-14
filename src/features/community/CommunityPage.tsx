@@ -2,7 +2,6 @@ import { Link, useSearchParams } from "react-router";
 
 import { es } from "@/i18n/es";
 
-import { CommunityLocator } from "./CommunityLocator";
 import { viewOf } from "./community-view";
 import { GovernmentSection } from "./GovernmentSection";
 import { IndicatorsSection } from "./IndicatorsSection";
@@ -42,12 +41,9 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
       {card.state === "ready" && (
         <>
           <title>{`${card.name} · ${es.app.shell.name}`}</title>
-          <div className={styles.hero}>
-            <div className={styles.heroText}>
-              <h1 className={styles.title}>{card.name}</h1>
-              <GovernmentSection government={card.government} />
-            </div>
-            <CommunityLocator territoryId={territoryId} name={card.name} />
+          <div className={styles.header}>
+            <h1 className={styles.title}>{card.name}</h1>
+            <GovernmentSection government={card.government} />
           </div>
           <ViewTabs />
           <div className={styles.columns}>
