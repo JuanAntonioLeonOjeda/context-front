@@ -19,6 +19,14 @@ export const es = {
       caretaker: "{label} (en funciones)",
       noData: "{community}: sin datos de gobierno en esta fecha",
     },
+    legend: {
+      title: "Partidos que gobiernan",
+      coalition: "Las franjas indican un gobierno de coalición, con un color por partido.",
+      noData: "Sin datos de gobierno",
+    },
+    figure: {
+      boundaries: "Límites: {attribution}",
+    },
   },
   health: {
     status: {
