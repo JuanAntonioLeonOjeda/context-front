@@ -40,7 +40,16 @@ const PAGES: PageCase[] = [
   {
     name: "a community card",
     path: "/comunidades/ccaa-05",
-    loaded: () => screen.findByRole("table"),
+    loaded: async () => {
+      await screen.findByRole("table");
+      return screen.findByText(/Noticias desde el/);
+    },
+  },
+  {
+    name: "a community card whose sector has no news",
+    path: "/comunidades/ccaa-09",
+    scenario: { community: "cataluna" },
+    loaded: () => screen.findByText(/No hay noticias de educación/),
   },
   {
     name: "a community with a caretaker government",
