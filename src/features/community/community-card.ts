@@ -35,6 +35,7 @@ export interface IndicatorRow {
   chartLabel: string | null; // the accessible name of the chart: what it shows, in words
   range: string | null; // the lowest and highest value, so the scale is written down
   data: { period: string; value: string }[]; // every point of the series, for the table
+  axes: { x: string; y: string } | null; // the titles of the chart's axes
 }
 
 export function governmentView(government: Government): GovernmentView {
@@ -73,14 +74,14 @@ export function indicatorRows(indicators: readonly Indicator[]): IndicatorRow[] 
 
 function chartParts(
   indicator: Indicator,
-): Pick<IndicatorRow, "chart" | "chartLabel" | "range" | "data"> {
+): Pick<IndicatorRow, "chart" | "chartLabel" | "range" | "data" | "axes"> {
   const { series, unit, name } = indicator;
   const data = series.map((p) => ({ period: formatPeriod(p), value: formatValue(p.value, unit) }));
-  const chart = chartModel(series, unit);
+  const chart = chartModel(series);
   const [first] = series;
   const last = series.at(-1);
   if (chart === null || first === undefined || last === undefined) {
-    return { chart: null, chartLabel: null, range: null, data };
+    return { chart: null, chartLabel: null, range: null, data, axes: null };
   }
   const from = formatPeriod(first);
   const to = formatPeriod(last);
@@ -96,5 +97,12 @@ function chartParts(
     }),
     range: formatMessage(es.community.indicators.range, { from, to, low, high }),
     data,
+    axes: {
+      x:
+        last.quarter === null
+          ? es.community.indicators.axes.timeAnnual
+          : es.community.indicators.axes.time,
+      y: formatValueParts(0, unit).unit,
+    },
   };
 }

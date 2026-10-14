@@ -67,6 +67,7 @@ export const es = {
       columns: { indicator: "Indicador", value: "Valor", period: "Periodo", source: "Fuente" },
       chartLabel: "Evolución de {name} entre {from} y {to}: de {first} a {last}.",
       range: "Entre {from} y {to}: el valor más bajo fue {low} y el más alto, {high}.",
+      axes: { time: "Año (un punto por trimestre)", timeAnnual: "Año (un punto por año)" },
       viewData: "Ver los datos de la gráfica",
       noValue: "Sin dato",
       noPeriod: "—",

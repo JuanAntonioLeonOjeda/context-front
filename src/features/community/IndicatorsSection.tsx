@@ -2,7 +2,7 @@ import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
 import type { IndicatorRow } from "./community-card";
-import { HEIGHT, WIDTH } from "./indicator-chart";
+import { HEIGHT, PLOT, WIDTH } from "./indicator-chart";
 
 import styles from "./CommunityCard.module.css";
 
@@ -50,23 +50,74 @@ function IndicatorCard({
         )}
       </p>
       <p className={styles.indicatorPeriod}>{row.period ?? indicators.noPeriod}</p>
-      {row.chart !== null && (
+      {row.chart !== null && row.axes !== null && (
         <svg
           className={styles.chart}
           viewBox={`0 0 ${String(WIDTH)} ${String(HEIGHT)}`}
           role="img"
           aria-label={row.chartLabel ?? undefined}
         >
-          <path d={row.chart.area} className={styles.chartArea} />
-          <path d={row.chart.line} className={styles.chartLine} />
-          {[row.chart.first, row.chart.last].map((end) => (
-            <g key={end.anchor}>
-              <circle cx={end.cx} cy={end.cy} r="3.5" className={styles.chartDot} />
-              <text x={end.x} y={end.y} textAnchor={end.anchor} className={styles.chartLabel}>
-                {end.text}
+          {/* Vertical axis: a reference line and its value at each round step. */}
+          {row.chart.yMarks.map((mark) => (
+            <g key={mark.position}>
+              <line
+                x1={PLOT.left}
+                x2={PLOT.right}
+                y1={mark.position}
+                y2={mark.position}
+                className={styles.chartGrid}
+              />
+              <text
+                x={PLOT.left - 6}
+                y={mark.position + 4}
+                textAnchor="end"
+                className={styles.axisLabel}
+              >
+                {mark.label}
               </text>
             </g>
           ))}
+          <text x={0} y={11} className={styles.axisTitle}>
+            {row.axes.y}
+          </text>
+          {/* Horizontal axis: time, a mark where each year begins. */}
+          <line
+            x1={PLOT.left}
+            x2={PLOT.right}
+            y1={PLOT.bottom}
+            y2={PLOT.bottom}
+            className={styles.chartAxis}
+          />
+          {row.chart.xMarks.map((mark) => (
+            <g key={mark.label}>
+              <line
+                x1={mark.position}
+                x2={mark.position}
+                y1={PLOT.bottom}
+                y2={PLOT.bottom + 4}
+                className={styles.chartAxis}
+              />
+              <text
+                x={mark.position}
+                y={PLOT.bottom + 17}
+                textAnchor="middle"
+                className={styles.axisLabel}
+              >
+                {mark.label}
+              </text>
+            </g>
+          ))}
+          <text x={PLOT.right} y={HEIGHT - 2} textAnchor="end" className={styles.axisTitle}>
+            {row.axes.x}
+          </text>
+          <path d={row.chart.area} className={styles.chartArea} />
+          <path d={row.chart.line} className={styles.chartLine} />
+          <circle
+            cx={row.chart.last.cx}
+            cy={row.chart.last.cy}
+            r="3.5"
+            className={styles.chartDot}
+          />
         </svg>
       )}
       {row.range !== null && <p className={styles.indicatorRange}>{row.range}</p>}
