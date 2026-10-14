@@ -89,7 +89,7 @@ describe("community page", () => {
       "2.277.705 personas",
     );
     expect(within(section).getByText("110,44", { selector: "p" })).toHaveTextContent(
-      "110,44 (base 2025 = 100)",
+      "110,44 puntos",
     );
   });
 

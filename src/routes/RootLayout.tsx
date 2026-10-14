@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Outlet, useLocation } from "react-router";
+import { Outlet, ScrollRestoration, useLocation } from "react-router";
 
 import { SiteFooter, SiteHeader } from "@/features/shell";
 import { es } from "@/i18n/es";
@@ -15,16 +15,21 @@ export function RootLayout(): React.JSX.Element {
   // After a navigation inside the app the focus would stay on the link just used, and a screen
   // reader would not know the page changed. Moving it to `main` starts reading the new page,
   // as a full page load would. Not on the first page: there the skip link is the first stop.
+  // Without `preventScroll` the browser would scroll `main` to the very top of the window,
+  // under the sticky header; where the page starts is ScrollRestoration's job (below).
   useEffect(() => {
     if (isFirstPage.current) {
       isFirstPage.current = false;
       return;
     }
-    main.current?.focus();
+    main.current?.focus({ preventScroll: true });
   }, [pathname]);
 
   return (
     <div className={styles.page}>
+      {/* A new page starts at the top, as a full load would; back and forward return to where
+          the reader was; links with `preventScrollReset` (the sectors) keep the position. */}
+      <ScrollRestoration />
       {/* Focus is moved by code: following a #fragment does not reliably focus its target
           in every browser (Safari) or in jsdom. The href stays for when scripts do not run. */}
       <a

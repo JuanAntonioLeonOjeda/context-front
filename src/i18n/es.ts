@@ -129,8 +129,10 @@ export const es = {
       units: {
         persons: "personas",
         "%": "%",
-        "index (2025 = 100)": "(base 2025 = 100)",
+        "index (2025 = 100)": "puntos",
       },
+      // The base of an index goes with its name ("… (base 2025 = 100)"), not with each value.
+      bases: { "index (2025 = 100)": "base 2025 = 100" },
     },
     state: {
       loading: "Cargando la comunidad…",

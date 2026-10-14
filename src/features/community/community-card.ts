@@ -8,7 +8,7 @@ import { formatLongDate, formatMessage } from "@/i18n/format";
 
 import type { Government, Indicator, TermParty } from "./community-api";
 import { chartModel, extremes, type ChartModel } from "./indicator-chart";
-import { formatPeriod, formatValue, formatValueParts } from "./indicator-format";
+import { formatName, formatPeriod, formatValue, formatValueParts } from "./indicator-format";
 
 export { formatPeriod, formatValue };
 
@@ -56,7 +56,7 @@ export function indicatorRows(indicators: readonly Indicator[]): IndicatorRow[] 
   return indicators.map((indicator) => ({
     ...chartParts(indicator),
     id: indicator.id,
-    name: indicator.name,
+    name: formatName(indicator.name, indicator.unit),
     value: indicator.latest ? formatValue(indicator.latest.value, indicator.unit) : null,
     ...(indicator.latest
       ? formatValueParts(indicator.latest.value, indicator.unit)
@@ -75,7 +75,8 @@ export function indicatorRows(indicators: readonly Indicator[]): IndicatorRow[] 
 function chartParts(
   indicator: Indicator,
 ): Pick<IndicatorRow, "chart" | "chartLabel" | "range" | "data" | "axes"> {
-  const { series, unit, name } = indicator;
+  const { series, unit } = indicator;
+  const name = formatName(indicator.name, unit);
   const data = series.map((p) => ({ period: formatPeriod(p), value: formatValue(p.value, unit) }));
   const chart = chartModel(series);
   const [first] = series;

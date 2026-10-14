@@ -192,3 +192,22 @@ describe("the map on the home page", () => {
     expect(await findMapLink("Galicia: gobierna PP")).toBeInTheDocument();
   });
 });
+
+describe("moving between pages", () => {
+  it("starts the new page at the top and moves the focus to it without scrolling", async () => {
+    const scrollTo = vi.spyOn(window, "scrollTo");
+    const focus = vi.spyOn(HTMLElement.prototype, "focus");
+    const user = userEvent.setup();
+    renderAt("/");
+    const nav = await screen.findByRole("navigation", { name: es.app.shell.nav.label });
+
+    await user.click(within(nav).getByRole("link", { name: "Cómo funciona" }));
+
+    expect(await screen.findByRole("heading", { level: 1, name: "Cómo funciona" })).toBeVisible();
+    expect(scrollTo).toHaveBeenCalledWith(0, 0);
+    expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+    expect(screen.getByRole("main")).toHaveFocus();
+    scrollTo.mockRestore();
+    focus.mockRestore();
+  });
+});
