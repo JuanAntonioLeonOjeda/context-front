@@ -12,6 +12,7 @@ import today from "@/test/fixtures/map-governments-2026-10-14.json";
 import geometryResponse from "@/test/fixtures/map-geometry.json";
 import parties from "@/test/fixtures/parties.json";
 import territories from "@/test/fixtures/territories.json";
+import { mapLink } from "@/test/map";
 
 import { CommunityMap } from "./CommunityMap";
 import { communityLook, type CommunityLook } from "./community-look";
@@ -64,31 +65,26 @@ describe("CommunityMap", () => {
   it("links every community to its page, named with who governs", () => {
     renderMap();
 
-    const links = screen.getAllByRole("link");
-    expect(links).toHaveLength(19);
-    expect(screen.getByRole("link", { name: "Galicia: gobierna PP" })).toHaveAttribute(
-      "href",
-      "/comunidades/ccaa-12",
-    );
-    expect(screen.getByRole("link", { name: "Canarias: gobiernan CC y PP" })).toBeInTheDocument();
+    const onMap = screen.getAllByRole("link").filter((link) => link.closest("nav") === null);
+    expect(onMap).toHaveLength(19);
+    expect(mapLink("Galicia: gobierna PP")).toHaveAttribute("href", "/comunidades/ccaa-12");
+    expect(mapLink("Canarias: gobiernan CC y PP")).toBeInTheDocument();
   });
 
   it("gives the very small territories an HTML marker instead of an SVG shape", () => {
     renderMap();
 
-    const ceuta = screen.getByRole("link", { name: "Ceuta: gobierna PP" });
-    const melilla = screen.getByRole("link", { name: "Melilla: gobierna PP" });
+    const ceuta = mapLink("Ceuta: gobierna PP");
+    const melilla = mapLink("Melilla: gobierna PP");
     expect(ceuta.closest("svg")).toBeNull();
     expect(melilla.closest("svg")).toBeNull();
-    expect(
-      screen.getByRole("link", { name: "Galicia: gobierna PP" }).closest("svg"),
-    ).not.toBeNull();
+    expect(mapLink("Galicia: gobierna PP").closest("svg")).not.toBeNull();
   });
 
   it("draws a coalition with one stripe pattern shared by every community with the same partners", () => {
     const { length } = renderMap().querySelectorAll("pattern");
-    const andalucia = screen.getByRole("link", { name: "Andalucía: gobiernan PP y Vox" });
-    const aragon = screen.getByRole("link", { name: "Aragón: gobiernan PP y Vox" });
+    const andalucia = mapLink("Andalucía: gobiernan PP y Vox");
+    const aragon = mapLink("Aragón: gobiernan PP y Vox");
     const fillOf = (link: HTMLElement): string | null | undefined =>
       link.querySelector("path")?.getAttribute("fill");
 
@@ -135,9 +131,7 @@ describe("CommunityMap", () => {
   it("shows a date without data as such, in the map and in the legend", async () => {
     const container = renderMap(before);
 
-    expect(
-      screen.getByRole("link", { name: "Galicia: sin datos de gobierno en esta fecha" }),
-    ).toBeInTheDocument();
+    expect(mapLink("Galicia: sin datos de gobierno en esta fecha")).toBeInTheDocument();
     const legend = screen.getByRole("region", { name: es.map.legend.title });
     expect(
       within(legend)
@@ -166,6 +160,20 @@ describe("CommunityMap", () => {
     }
 
     expect(new Set(visited).size).toBe(19);
+  });
+
+  it("lists every community under the map as a link that writes who governs, in INE order", () => {
+    renderMap();
+
+    const list = screen.getByRole("navigation", { name: es.map.list.title });
+    const links = within(list).getAllByRole("link");
+    expect(links).toHaveLength(19);
+    expect(links[0]).toHaveTextContent("Andalucía: gobiernan PP y Vox");
+    expect(links[18]).toHaveTextContent("Melilla: gobierna PP");
+    expect(within(list).getByRole("link", { name: "Canarias: gobiernan CC y PP" })).toHaveAttribute(
+      "href",
+      "/comunidades/ccaa-05",
+    );
   });
 
   it("has no axe violations", async () => {

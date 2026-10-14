@@ -24,6 +24,9 @@ export const es = {
       coalition: "Las franjas indican un gobierno de coalición, con un color por partido.",
       noData: "Sin datos de gobierno",
     },
+    list: {
+      title: "Comunidades",
+    },
     figure: {
       caption: "Gobiernos autonómicos a {date}",
       boundaries: "Límites: {attribution}",

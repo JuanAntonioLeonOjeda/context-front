@@ -5,6 +5,7 @@ import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
 import type { CommunityLook } from "./community-look";
+import { CommunityList } from "./CommunityList";
 import { cssBackground, svgFill } from "./fill-style";
 import { MapLegend } from "./MapLegend";
 import { MapPatterns } from "./MapPatterns";
@@ -85,6 +86,7 @@ export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
           ))}
       </div>
       <MapLegend looks={drawn.map((d) => d.look)} />
+      <CommunityList looks={[...looks.values()]} hrefOf={hrefOf} />
       <p className={styles.attribution}>
         {formatMessage(es.map.figure.boundaries, { attribution })}
       </p>

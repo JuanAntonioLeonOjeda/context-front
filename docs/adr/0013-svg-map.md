@@ -48,6 +48,11 @@ colours can look alike (PSOE and Geroa Bai in Navarra).
 - **Links:** each community is an `<a>` to its card with an accessible name that states the
   facts: "Canarias: gobiernan CC y PP", "Galicia: gobierna PP (en funciones)".
 - **Legend:** always visible, listing every party shown with its colour and name.
+- **List of communities:** under the map, every community as a link with the same text as its
+  name on the map ("Canarias: gobiernan CC y PP"), in INE order. It is the equivalent control
+  that keeps every community reachable with a 44 px target on a phone, where La Rioja, Asturias
+  and Cantabria measure about 20 px on the map (WCAG 2.5.8), and it writes down who governs.
+  Added after the phase review (2026-10-14).
 - **Attribution:** the IGN attribution from the geometry file is shown at the foot of the map
   (CC BY 4.0 requires it).
 

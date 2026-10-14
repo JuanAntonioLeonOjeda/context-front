@@ -122,6 +122,27 @@
   border: 1px solid var(--color-border-strong);
 }
 
+/* Each link on its own row, at least 44 px high: the touch-friendly way to every community. */
+.list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.listItems {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0 var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItems a {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
 .legendNote,
 .attribution {
   margin: 0;

@@ -6,6 +6,7 @@ import { es } from "@/i18n/es";
 import { renderApp } from "@/test/app";
 import { axeViolations } from "@/test/axe";
 import { serveCommunity, type Scenario } from "@/test/community";
+import { findMapLink } from "@/test/map";
 
 function renderAt(path: string, community: Scenario = "canarias"): HTMLElement {
   return renderApp(path, { community });
@@ -121,21 +122,30 @@ describe("community page", () => {
     const user = userEvent.setup();
     renderAt("/");
 
-    await user.click(await screen.findByRole("link", { name: "Canarias: gobiernan CC y PP" }));
+    await user.click(await findMapLink("Canarias: gobiernan CC y PP"));
     expect(await screen.findByRole("heading", { level: 1, name: "Canarias" })).toBeVisible();
 
     await user.click(screen.getByRole("link", { name: es.community.page.back }));
-    expect(await screen.findByRole("link", { name: "Galicia: gobierna PP" })).toBeVisible();
+    expect(await findMapLink("Galicia: gobierna PP")).toBeVisible();
   });
 
   // user-event activates only HTML anchors with Enter, not the <a> inside an SVG (browsers do),
-  // so the keyboard is exercised on the HTML marker of Ceuta; the SVG links are reached by Tab
-  // in the map tests, and their Enter activation is part of the real-browser check.
-  it("opens a community with the keyboard: Enter on its focused marker", async () => {
+  // so the keyboard is exercised on HTML links: Ceuta's marker on the map and the list under
+  // it. The SVG links are reached by Tab in the map tests; their Enter is a real-browser check.
+  it.each([
+    ["the marker of a small territory", () => findMapLink("Ceuta: gobierna PP")],
+    [
+      "a community in the list under the map",
+      async () => {
+        const list = await screen.findByRole("navigation", { name: es.map.list.title });
+        return within(list).getByRole("link", { name: "Ceuta: gobierna PP" });
+      },
+    ],
+  ])("opens a community with the keyboard: Enter on %s", async (_where, find) => {
     const user = userEvent.setup();
     renderAt("/");
 
-    (await screen.findByRole("link", { name: "Ceuta: gobierna PP" })).focus();
+    (await find()).focus();
     await user.keyboard("{Enter}");
 
     // The community page is the only one with a way back to the map.
@@ -145,7 +155,7 @@ describe("community page", () => {
   it("moves the focus to the new page after a navigation, but not on the first page", async () => {
     const user = userEvent.setup();
     renderAt("/");
-    const canarias = await screen.findByRole("link", { name: "Canarias: gobiernan CC y PP" });
+    const canarias = await findMapLink("Canarias: gobiernan CC y PP");
     expect(screen.getByRole("main")).not.toHaveFocus();
 
     await user.click(canarias);
@@ -153,7 +163,7 @@ describe("community page", () => {
     expect(screen.getByRole("main")).toHaveFocus();
 
     await user.click(screen.getByRole("link", { name: es.community.page.back }));
-    await screen.findByRole("link", { name: "Galicia: gobierna PP" });
+    await findMapLink("Galicia: gobierna PP");
     expect(screen.getByRole("main")).toHaveFocus();
   });
 

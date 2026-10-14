@@ -7,7 +7,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { es } from "@/i18n/es";
 import { axeViolations } from "@/test/axe";
 import { serveHealth, type BackendState } from "@/test/health";
-import { serveMapData, type MapEndpoint } from "@/test/map";
+import { findMapLink, serveMapData, type MapEndpoint } from "@/test/map";
 import { queryWrapper } from "@/test/query";
 
 import { ErrorMessage } from "./ErrorMessage";
@@ -170,7 +170,7 @@ describe("the map on the home page", () => {
     expect(
       await screen.findByRole("group", { name: "Gobiernos autonómicos a 14 de octubre de 2026" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Galicia: gobierna PP" })).toHaveAttribute(
+    expect(await findMapLink("Galicia: gobierna PP")).toHaveAttribute(
       "href",
       "/comunidades/ccaa-12",
     );
@@ -188,6 +188,6 @@ describe("the map on the home page", () => {
     serveMapData();
     await user.click(within(alert).getByRole("button", { name: es.map.state.retry }));
 
-    expect(await screen.findByRole("link", { name: "Galicia: gobierna PP" })).toBeInTheDocument();
+    expect(await findMapLink("Galicia: gobierna PP")).toBeInTheDocument();
   });
 });
