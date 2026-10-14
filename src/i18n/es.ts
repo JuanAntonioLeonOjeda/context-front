@@ -85,6 +85,7 @@ export const es = {
       error: "No hemos podido cargar esta comunidad.",
       retry: "Volver a intentarlo",
     },
+    views: { nav: "Qué ver de la comunidad", data: "Datos", news: "Noticias" },
     news: {
       title: "Noticias",
       sectorNav: "Sector de las noticias",

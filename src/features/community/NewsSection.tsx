@@ -6,6 +6,7 @@ import { cssBackground, fetchParties } from "@/features/map";
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
+import { searchWith } from "./community-view";
 import { groupByDay, newsRows, type NewsRow } from "./news-card";
 import { SECTORS, type Sector } from "./news-api";
 import { useCommunityNews } from "./useCommunityNews";
@@ -39,7 +40,7 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
           {SECTORS.map((s) => (
             <li key={s}>
               <Link
-                to={{ search: `?sector=${s}` }}
+                to={{ search: searchWith(params, { sector: s }) }}
                 preventScrollReset
                 aria-current={s === sector ? "page" : undefined}
               >

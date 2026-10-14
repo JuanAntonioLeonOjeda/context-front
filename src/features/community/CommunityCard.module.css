@@ -147,7 +147,7 @@
    grid are the right shape here: the five measures are peers, none leads. */
 .indicatorGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
   gap: var(--space-4);
   margin: 0;
   padding: 0;

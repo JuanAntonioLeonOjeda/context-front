@@ -93,6 +93,76 @@ describe("community page", () => {
     );
   });
 
+  describe("views for a small screen", () => {
+    const paneOf = (heading: HTMLElement): HTMLElement => {
+      const pane = heading.closest("[data-active]");
+      if (!(pane instanceof HTMLElement)) throw new Error("no pane");
+      return pane;
+    };
+
+    it("offers Datos and Noticias as two links, with the data first", async () => {
+      renderAt("/comunidades/ccaa-05");
+
+      const nav = await screen.findByRole("navigation", { name: es.community.views.nav });
+      const links = within(nav).getAllByRole("link");
+      expect(links.map((l) => l.textContent)).toEqual(["Datos", "Noticias"]);
+      expect(links[0]).toHaveAttribute("aria-current", "page");
+      expect(links[1]).not.toHaveAttribute("aria-current");
+    });
+
+    it("shows the news when the address says so, and the data otherwise", async () => {
+      renderAt("/comunidades/ccaa-05?view=news");
+
+      const government = await screen.findByRole("heading", {
+        name: es.community.government.title,
+      });
+      expect(paneOf(government)).toHaveAttribute("data-active", "false");
+      expect(
+        paneOf(screen.getByRole("heading", { name: es.community.news.title })),
+      ).toHaveAttribute("data-active", "true");
+      expect(screen.getByRole("link", { name: "Noticias" })).toHaveAttribute(
+        "aria-current",
+        "page",
+      );
+    });
+
+    it("falls back to the data when the view in the address does not exist", async () => {
+      renderAt("/comunidades/ccaa-05?view=otra");
+
+      const government = await screen.findByRole("heading", {
+        name: es.community.government.title,
+      });
+      expect(paneOf(government)).toHaveAttribute("data-active", "true");
+    });
+
+    it("keeps the chosen sector when changing view, and the view when changing sector", async () => {
+      renderAt("/comunidades/ccaa-05?view=news&sector=health");
+
+      const tab = await screen.findByRole("link", { name: "Datos" });
+      expect(tab.getAttribute("href")).toContain("sector=health");
+      expect(tab.getAttribute("href")).toContain("view=data");
+      const sector = screen.getByRole("link", { name: "Vivienda" });
+      expect(sector.getAttribute("href")).toContain("view=news");
+      expect(sector.getAttribute("href")).toContain("sector=housing");
+    });
+
+    it("changes view with a click and keeps the data on the page for the wide layout", async () => {
+      const user = userEvent.setup();
+      renderAt("/comunidades/ccaa-05");
+
+      await user.click(await screen.findByRole("link", { name: "Noticias" }));
+
+      expect(screen.getByRole("link", { name: "Noticias" })).toHaveAttribute(
+        "aria-current",
+        "page",
+      );
+      // Both panes stay in the page: from 64rem the two are shown side by side.
+      expect(
+        screen.getByRole("heading", { name: es.community.government.title }),
+      ).toBeInTheDocument();
+    });
+  });
+
   it("answers not found for a community that does not exist, without asking for its data", async () => {
     const container = renderAt("/comunidades/ccaa-99");
 
