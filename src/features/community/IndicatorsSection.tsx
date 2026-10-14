@@ -2,6 +2,7 @@ import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
 import type { IndicatorRow } from "./community-card";
+import { Carousel } from "./Carousel";
 import { HEIGHT, PLOT, WIDTH } from "./indicator-chart";
 
 import styles from "./CommunityCard.module.css";
@@ -17,14 +18,20 @@ export function IndicatorsSection(props: {
 }): React.JSX.Element {
   return (
     <section aria-labelledby="indicators-title" className={styles.section}>
-      <h2 id="indicators-title">{es.community.indicators.title}</h2>
-      <ul className={styles.indicatorGrid}>
-        {props.rows.map((row) => (
-          <li key={row.id}>
-            <IndicatorCard row={row} community={props.community} />
-          </li>
-        ))}
-      </ul>
+      <Carousel
+        heading={<h2 id="indicators-title">{es.community.indicators.title}</h2>}
+        label={formatMessage(es.community.indicators.carousel.label, {
+          community: props.community,
+        })}
+      >
+        <ul className={styles.indicatorRow}>
+          {props.rows.map((row) => (
+            <li key={row.id}>
+              <IndicatorCard row={row} community={props.community} />
+            </li>
+          ))}
+        </ul>
+      </Carousel>
     </section>
   );
 }

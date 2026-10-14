@@ -21,7 +21,7 @@ function PartyList({
 }): React.JSX.Element | null {
   if (parties.length === 0) return null;
   return (
-    <>
+    <div>
       <h3>{title}</h3>
       <ul className={styles.parties}>
         {parties.map((party) => (
@@ -44,7 +44,7 @@ function PartyList({
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 

@@ -115,6 +115,11 @@ export const es = {
       chartLabel: "Evolución de {name} entre {from} y {to}: de {first} a {last}.",
       range: "Entre {from} y {to}: el valor más bajo fue {low} y el más alto, {high}.",
       axes: { time: "Año (un punto por trimestre)", timeAnnual: "Año (un punto por año)" },
+      carousel: {
+        label: "Indicadores de {community}",
+        previous: "Indicadores anteriores",
+        next: "Indicadores siguientes",
+      },
       viewData: "Ver los datos de la gráfica",
       noValue: "Sin dato",
       noPeriod: "—",
@@ -132,7 +137,6 @@ export const es = {
       error: "No hemos podido cargar esta comunidad.",
       retry: "Volver a intentarlo",
     },
-    views: { nav: "Qué ver de la comunidad", data: "Datos", news: "Noticias" },
     news: {
       title: "Noticias",
       sectorNav: "Sector de las noticias",
