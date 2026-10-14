@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { CommunityList } from "./CommunityList";
 import { CommunityMap, type CommunityMapProps } from "./CommunityMap";
+import { HomeIntro } from "./HomeIntro";
 import { summarise } from "./party-summary";
 import { PartyPanel } from "./PartyPanel";
 
@@ -12,7 +13,9 @@ import styles from "./GovernmentOverview.module.css";
  * or pointing at it, highlights its communities on the map: a communication between the two
  * that the page owns, so the map stays a map and the panel a summary.
  */
-export function GovernmentOverview(props: CommunityMapProps): React.JSX.Element {
+export function GovernmentOverview(
+  props: CommunityMapProps & { onChoose: (territoryId: string) => void },
+): React.JSX.Element {
   const looks = [...props.looks.values()];
   const summary = summarise(looks);
   const [pressedId, setPressedId] = useState<string | null>(null);
@@ -25,6 +28,9 @@ export function GovernmentOverview(props: CommunityMapProps): React.JSX.Element 
 
   return (
     <div className={styles.overview}>
+      <div className={styles.introArea}>
+        <HomeIntro looks={looks} summary={summary} onChoose={props.onChoose} />
+      </div>
       <div className={styles.mapArea}>
         <CommunityMap {...props} highlight={highlight} showLegend={false} showList={false} />
       </div>

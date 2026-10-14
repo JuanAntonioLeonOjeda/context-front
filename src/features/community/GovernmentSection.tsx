@@ -21,7 +21,7 @@ function PartyList({
 }): React.JSX.Element | null {
   if (parties.length === 0) return null;
   return (
-    <>
+    <div>
       <h3>{title}</h3>
       <ul className={styles.parties}>
         {parties.map((party) => (
@@ -44,7 +44,7 @@ function PartyList({
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
@@ -62,9 +62,12 @@ export function GovernmentSection({
   });
   const table = parties.data ? partyTable(parties.data) : undefined;
   return (
-    <section aria-labelledby="government-title" className={styles.section}>
+    <section
+      aria-labelledby="government-title"
+      className={`${styles.section ?? ""} ${styles.government ?? ""}`}
+    >
       <h2 id="government-title">{es.community.government.title}</h2>
-      <p>
+      <p className={styles.president}>
         {government.president}. {government.since}.{" "}
         <a href={government.sourceUrl}>{es.community.government.sourceOfTerm}</a>
       </p>

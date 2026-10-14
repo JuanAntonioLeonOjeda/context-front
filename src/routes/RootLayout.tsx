@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router";
 
-import { HealthStatus } from "@/features/health";
+import { SiteFooter, SiteHeader } from "@/features/shell";
 import { es } from "@/i18n/es";
 
 import styles from "./RootLayout.module.css";
@@ -37,15 +37,11 @@ export function RootLayout(): React.JSX.Element {
       >
         {es.app.shell.skipToContent}
       </a>
-      <header className={styles.header}>
-        <p className={styles.name}>{es.app.shell.name}</p>
-      </header>
+      <SiteHeader />
       <main id="contenido" ref={main} className={styles.main} tabIndex={-1}>
         <Outlet />
       </main>
-      <footer className={styles.footer}>
-        <HealthStatus />
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

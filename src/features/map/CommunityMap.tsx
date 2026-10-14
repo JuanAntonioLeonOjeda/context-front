@@ -34,6 +34,9 @@ export interface CommunityMapProps {
 export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
   const { caption, layout, looks, attribution, hrefOf, highlight = null } = props;
   const { showLegend = true, showList = true } = props;
+  // One community singled out (a party that governs only one): a ring round it, so
+  // a small one, such as the Canary Islands, is not lost among its faded neighbours.
+  const spotlight = highlight !== null && highlight.size === 1;
   const classOf = (id: string, base: string): string =>
     highlight !== null && !highlight.has(id) ? `${base} ${styles.dimmed ?? ""}` : base;
   const captionId = useId();
@@ -81,6 +84,17 @@ export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
               </Link>
             ),
           )}
+          {spotlight &&
+            drawn
+              .filter(({ shape }) => highlight.has(shape.id))
+              .map(({ shape }) => (
+                <path
+                  key={`ring-${shape.id}`}
+                  d={shape.path}
+                  className={styles.ring}
+                  aria-hidden="true"
+                />
+              ))}
         </svg>
         {drawn
           .filter(({ shape }) => isSmall(shape))
@@ -88,7 +102,10 @@ export function CommunityMap(props: CommunityMapProps): React.JSX.Element {
             <Link
               key={shape.id}
               to={hrefOf(shape.id)}
-              className={classOf(shape.id, styles.marker ?? "")}
+              className={classOf(
+                shape.id,
+                `${styles.marker ?? ""} ${spotlight && highlight.has(shape.id) ? (styles.markerSpotlight ?? "") : ""}`,
+              )}
               aria-label={look.label}
               title={look.label}
               style={{

@@ -16,6 +16,7 @@ const [cc, pp, psoe, vox] = [party("cc"), party("pp"), party("psoe"), party("vox
 function look(territoryId: string, parties: Party[], isCaretaker = false): CommunityLook {
   return {
     territoryId,
+    name: territoryId,
     fill: { kind: "no-data" },
     label: territoryId,
     parties,

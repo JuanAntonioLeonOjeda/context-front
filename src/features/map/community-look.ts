@@ -20,6 +20,7 @@ export type Fill =
 
 export interface CommunityLook {
   territoryId: string;
+  name: string; // the community's name, for the selector
   fill: Fill;
   label: string; // accessible name of the community link, also its tooltip
   isCaretaker: boolean;
@@ -34,6 +35,7 @@ export function communityLook(
   const parties = government.hasData ? partiesById(partyTable, government.governingPartyIds) : [];
   return {
     territoryId: government.territoryId,
+    name: communityName,
     fill: fillOf(parties),
     label: labelOf(communityName, parties, government.isCaretaker),
     isCaretaker: government.hasData && government.isCaretaker,

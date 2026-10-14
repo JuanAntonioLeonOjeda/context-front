@@ -6,7 +6,7 @@ import { cssBackground, fetchParties } from "@/features/map";
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
-import { searchWith } from "./community-view";
+import { searchWith } from "./search-params";
 import { groupByDay, newsRows, type NewsRow } from "./news-card";
 import { SECTORS, type Sector } from "./news-api";
 import { useCommunityNews } from "./useCommunityNews";
@@ -50,7 +50,7 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
           ))}
         </ul>
       </nav>
-      <p>{es.community.news.method}</p>
+      <p className={styles.newsNote}>{es.community.news.method}</p>
       {(news.state === "error" || parties.isError) && (
         <div role="alert">
           <p>{es.community.news.error}</p>
@@ -68,12 +68,12 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
       {news.state === "loading" && <p role="status">{es.community.news.loading}</p>}
       {news.state === "ready" && parties.data && (
         <>
-          <p>
+          <p className={styles.newsNote}>
             {formatMessage(es.community.news.window, { date: formatLongDate(news.news.since) })}
           </p>
           {news.news.items.some((item) =>
             item.attribution.some((a) => a.reason === "no_level_named"),
-          ) && <p>{es.community.news.sharedCompetences}</p>}
+          ) && <p className={styles.newsNote}>{es.community.news.sharedCompetences}</p>}
           {news.news.items.length === 0 ? (
             <p>{formatMessage(es.community.news.empty, { sector: sectorName.toLowerCase() })}</p>
           ) : (

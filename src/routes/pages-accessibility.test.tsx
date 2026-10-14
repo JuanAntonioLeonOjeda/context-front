@@ -69,6 +69,11 @@ const PAGES: PageCase[] = [
     loaded: () => screen.findByText(es.community.page.notFound),
   },
   {
+    name: "the how-it-works page",
+    path: "/como-funciona",
+    loaded: () => screen.findByRole("heading", { level: 1, name: es.about.page.title }),
+  },
+  {
     name: "an address that does not exist",
     path: "/no-existe",
     loaded: () => screen.findByText(es.errors.notFound.message),

@@ -102,4 +102,16 @@ describe("party panel on the home page", () => {
     const list = screen.getByRole("navigation", { name: es.map.list.title });
     expect(within(list).getAllByRole("link")).toHaveLength(19);
   });
+
+  it("rings a party that governs one community only, and not one that governs several", async () => {
+    const user = userEvent.setup();
+    const container = renderApp("/");
+    await findMapLink("Cataluña: gobierna PSC");
+
+    await user.click(within(await panel()).getByRole("button", { name: /^Coalición Canaria/ }));
+    expect(container.querySelectorAll("[class*='ring']")).toHaveLength(1);
+
+    await user.click(within(await panel()).getByRole("button", { name: /^Partido Popular/ }));
+    expect(container.querySelectorAll("[class*='ring']")).toHaveLength(0);
+  });
 });
