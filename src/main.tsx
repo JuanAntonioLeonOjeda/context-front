@@ -1,3 +1,4 @@
+import "@fontsource-variable/atkinson-hyperlegible-next";
 import "@/design/tokens.css";
 import "@/design/base.css";
 
