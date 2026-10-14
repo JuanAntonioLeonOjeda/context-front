@@ -35,12 +35,13 @@ function silenceRenderErrors(): void {
 }
 
 describe("home route", () => {
-  it("shows the app name as the page heading inside a main landmark", async () => {
+  it("shows the headline inside a main landmark, between a banner and a footer", async () => {
     const container = renderAt("/");
 
-    expect(await screen.findByRole("heading", { level: 1, name: es.app.shell.name })).toBeVisible();
-    expect(within(screen.getByRole("main")).getByText(es.app.shell.description)).toBeVisible();
+    expect(await screen.findByRole("heading", { level: 1, name: es.map.hero.title })).toBeVisible();
+    expect(within(screen.getByRole("main")).getByText(es.map.hero.lead)).toBeVisible();
     expect(screen.getByRole("banner")).toBeVisible();
+    expect(screen.getByRole("contentinfo")).toBeVisible();
     expect(await axeViolations(container)).toEqual([]);
   });
 
@@ -135,7 +136,7 @@ describe("backend status in the shell", () => {
       const container = renderAt("/", routes, backend);
 
       expect(await screen.findByText(es.health.status.down)).toBeVisible();
-      expect(screen.getByRole("heading", { level: 1, name: es.app.shell.name })).toBeVisible();
+      expect(screen.getByRole("heading", { level: 1, name: es.map.hero.title })).toBeVisible();
       expect(await axeViolations(container)).toEqual([]);
     },
   );
@@ -182,7 +183,7 @@ describe("the map on the home page", () => {
 
     const alert = await screen.findByRole("alert");
     expect(alert).toHaveTextContent(es.map.state.error);
-    expect(screen.getByRole("heading", { level: 1, name: es.app.shell.name })).toBeVisible();
+    expect(screen.getByRole("heading", { level: 1, name: es.map.hero.title })).toBeVisible();
     expect(await axeViolations(container)).toEqual([]);
 
     serveMapData();

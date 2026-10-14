@@ -43,3 +43,8 @@ export function formatCount(forms: { one: string; other: string }, count: number
   const template = plural.select(count) === "one" ? forms.one : forms.other;
   return formatMessage(template, { count: String(count) });
 }
+
+/** "comunidad" or "comunidades": the form of `forms` that Spanish uses for `count`, no number. */
+export function pluralForm(forms: { one: string; other: string }, count: number): string {
+  return plural.select(count) === "one" ? forms.one : forms.other;
+}

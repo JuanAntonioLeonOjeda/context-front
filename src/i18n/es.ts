@@ -7,7 +7,6 @@ export const es = {
   app: {
     shell: {
       name: "Contexto autonómico",
-      description: "Noticias políticas de las comunidades autónomas, con su contexto.",
       skipToContent: "Saltar al contenido",
       nav: { label: "Principal", map: "Mapa", about: "Cómo funciona" },
       theme: {
@@ -59,6 +58,21 @@ export const es = {
     },
     list: {
       title: "Comunidades",
+    },
+    hero: {
+      title: "Quién gobierna cada comunidad y qué cuentan los medios de ella",
+      lead: "El mapa de los gobiernos autonómicos, los datos del INE y las noticias de cada comunidad, con quién es responsable de lo que se cuenta y por qué.",
+      select: {
+        label: "Ir a una comunidad",
+        placeholder: "Elige una comunidad",
+        submit: "Ver comunidad",
+      },
+      facts: {
+        label: "El mapa en cifras",
+        communities: { one: "comunidad", other: "comunidades" },
+        parties: { one: "partido en algún gobierno", other: "partidos en algún gobierno" },
+        coalitions: { one: "gobierno de coalición", other: "gobiernos de coalición" },
+      },
     },
     panel: {
       title: "Quién gobierna hoy",

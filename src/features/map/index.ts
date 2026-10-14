@@ -1,5 +1,6 @@
 export { CommunityMap } from "@/features/map/CommunityMap";
 export { GovernmentOverview } from "@/features/map/GovernmentOverview";
+export { HomeIntro } from "@/features/map/HomeIntro";
 export type { CommunityMapProps } from "@/features/map/CommunityMap";
 export { cssBackground } from "@/features/map/fill-style";
 export { communityLook, stripesPatternId } from "@/features/map/community-look";
