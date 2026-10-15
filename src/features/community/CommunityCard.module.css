@@ -109,20 +109,9 @@
 }
 
 .newsItem {
-  position: relative;
   display: grid;
   gap: var(--space-1);
-  padding: var(--space-1) 0 var(--space-4) var(--space-4);
-}
-
-/* The stripe on the left: the colours of the responsible parties, as the map draws them. */
-.stripe {
-  position: absolute;
-  inset-block: var(--space-1) var(--space-4);
-  left: 0;
-  width: 0.5rem;
-  border-radius: 2px;
-  border: 1px solid var(--color-border-strong);
+  padding: var(--space-1) 0 var(--space-4);
 }
 
 .newsItem a {
@@ -132,44 +121,6 @@
 /* The explanations above the list stay a readable line; the list itself uses the width. */
 .newsNote {
   max-width: 46rem;
-}
-
-/* On a wide screen the headline and its outlet on the left, who is responsible on the right. */
-@media (min-width: 48rem) {
-  .newsItem {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    grid-template-areas:
-      "headline attribution"
-      "meta attribution";
-    column-gap: var(--space-8);
-    align-items: start;
-  }
-
-  .newsItem > a {
-    grid-area: headline;
-  }
-
-  .newsItem > small {
-    grid-area: meta;
-  }
-
-  .newsItem > .attribution {
-    grid-area: attribution;
-    margin-top: 0;
-  }
-}
-
-.attribution {
-  display: grid;
-  gap: var(--space-2);
-  margin: var(--space-2) 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: var(--text-sm);
-}
-
-.attribution p {
-  margin: 0;
 }
 
 /* The indicators: a row of cards, one per measure, each wide enough for its chart to be read. The
