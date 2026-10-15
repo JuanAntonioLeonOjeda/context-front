@@ -29,26 +29,7 @@ describe("useCommunityNews", () => {
     expect(times).toEqual([...times].sort().reverse());
   });
 
-  it("maps the attribution: parties and basis when high, the reason when not determined", async () => {
-    serveCommunity();
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
-      wrapper: queryWrapper(),
-    });
-
-    await waitFor(() => {
-      expect(result.current.state).toBe("ready");
-    });
-    if (result.current.state !== "ready") throw new Error("not ready");
-    const entries = result.current.news.items.flatMap((i) => i.attribution);
-    const high = entries.find((a) => a.confidence === "high");
-    const undetermined = entries.find((a) => a.confidence === "not_determined");
-    expect(high).toMatchObject({ level: "ccaa", partyIds: ["coalicion-canaria", "pp"] });
-    expect(high?.competences[0]?.legalBasis).toBeTruthy();
-    expect(high?.reason).toBeNull();
-    expect(undetermined).toMatchObject({ reason: "no_level_named", partyIds: [] });
-  });
-
-  it("never carries a lead: the mapped items hold only headline, link, date and attribution", async () => {
+  it("never carries a lead or a party: the mapped items hold only outlet, headline, link and date", async () => {
     serveCommunity();
     const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
       wrapper: queryWrapper(),
@@ -59,7 +40,6 @@ describe("useCommunityNews", () => {
     });
     if (result.current.state !== "ready") throw new Error("not ready");
     expect(Object.keys(result.current.news.items[0] ?? {}).sort()).toEqual([
-      "attribution",
       "headline",
       "outletId",
       "outletName",

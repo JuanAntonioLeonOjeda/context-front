@@ -9,18 +9,10 @@
       "headline": "EN DIRECTO | El Parlamento rechaza tramitar la ley del PSOE que regula la residencialización en zonas turísticas",
       "url": "https://rtvc.es/pleno-del-parlamento-de-canarias-sesion-miercoles-14-octubre-2026/",
       "published_at": "2026-10-14T09:44:08Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": null,
-          "territory_id": null,
-          "confidence": "not_determined",
-          "party_ids": [],
-          "is_caretaker": false,
-          "competences": [],
-          "reason": "no_level_named"
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "abc",
@@ -28,40 +20,10 @@
       "headline": "Condenan al Servicio Canario de Salud por enviar a casa sin hacer pruebas a una mujer que murió horas después por un ictus",
       "url": "https://www.abc.es/espana/canarias/condenan-servicio-canario-salud-enviar-casa-pruebas-20261014100740-nt.html",
       "published_at": "2026-10-14T08:07:40Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": "ccaa",
-          "territory_id": "ccaa-05",
-          "confidence": "high",
-          "party_ids": ["coalicion-canaria", "pp"],
-          "is_caretaker": false,
-          "competences": [
-            {
-              "activity": "healthcare-services",
-              "description": "Regional health legislation developing the state bases",
-              "function": "development_legislation",
-              "legal_basis": "LGS; statutes of autonomy",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10499"
-            },
-            {
-              "activity": "healthcare-services",
-              "description": "Hospitals, primary care, waiting lists and health staff (regional health service)",
-              "function": "execution",
-              "legal_basis": "LGS art. 50",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10499#a50"
-            },
-            {
-              "activity": "public-health",
-              "description": "Public health surveillance and protection",
-              "function": "execution",
-              "legal_basis": "Ley 33/2011 General de Salud Pública",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2011-15623"
-            }
-          ],
-          "reason": null
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "diario-de-avisos",
@@ -69,40 +31,10 @@
       "headline": "Condenan al Servicio Canario de la Salud por la muerte de una mujer tras no activarse el ‘código ictus’",
       "url": "https://diariodeavisos.elespanol.com/2026/10/servicio-canario-salud-condena-fallo-informatico-ictus/",
       "published_at": "2026-10-13T20:30:19Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": "ccaa",
-          "territory_id": "ccaa-05",
-          "confidence": "high",
-          "party_ids": ["coalicion-canaria", "pp"],
-          "is_caretaker": false,
-          "competences": [
-            {
-              "activity": "healthcare-services",
-              "description": "Regional health legislation developing the state bases",
-              "function": "development_legislation",
-              "legal_basis": "LGS; statutes of autonomy",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10499"
-            },
-            {
-              "activity": "healthcare-services",
-              "description": "Hospitals, primary care, waiting lists and health staff (regional health service)",
-              "function": "execution",
-              "legal_basis": "LGS art. 50",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10499#a50"
-            },
-            {
-              "activity": "public-health",
-              "description": "Public health surveillance and protection",
-              "function": "execution",
-              "legal_basis": "Ley 33/2011 General de Salud Pública",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2011-15623"
-            }
-          ],
-          "reason": null
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "rtvc",
@@ -110,40 +42,10 @@
       "headline": "Canarias refuerza su colaboración con entidades financieras para garantizar las ayudas a los canarios en Venezuela",
       "url": "https://rtvc.es/canarias-refuerza-su-colaboracion-con-entidades-financieras-para-garantizar-las-ayudas-a-los-canarios-en-venezuela/",
       "published_at": "2026-10-13T16:52:43Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": "ccaa",
-          "territory_id": "ccaa-05",
-          "confidence": "high",
-          "party_ids": ["coalicion-canaria", "pp"],
-          "is_caretaker": false,
-          "competences": [
-            {
-              "activity": "healthcare-services",
-              "description": "Regional health legislation developing the state bases",
-              "function": "development_legislation",
-              "legal_basis": "LGS; statutes of autonomy",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10499"
-            },
-            {
-              "activity": "healthcare-services",
-              "description": "Hospitals, primary care, waiting lists and health staff (regional health service)",
-              "function": "execution",
-              "legal_basis": "LGS art. 50",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10499#a50"
-            },
-            {
-              "activity": "public-health",
-              "description": "Public health surveillance and protection",
-              "function": "execution",
-              "legal_basis": "Ley 33/2011 General de Salud Pública",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2011-15623"
-            }
-          ],
-          "reason": null
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "rtvc",
@@ -151,40 +53,10 @@
       "headline": "Canarias impulsa programas sociales, asistenciales y sanitarios en Venezuela",
       "url": "https://rtvc.es/gobierno-canarias-impulsa-programas-venezuela-13-octubre-2026/",
       "published_at": "2026-10-13T14:11:30Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": "ccaa",
-          "territory_id": "ccaa-05",
-          "confidence": "high",
-          "party_ids": ["coalicion-canaria", "pp"],
-          "is_caretaker": false,
-          "competences": [
-            {
-              "activity": "healthcare-services",
-              "description": "Regional health legislation developing the state bases",
-              "function": "development_legislation",
-              "legal_basis": "LGS; statutes of autonomy",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10499"
-            },
-            {
-              "activity": "healthcare-services",
-              "description": "Hospitals, primary care, waiting lists and health staff (regional health service)",
-              "function": "execution",
-              "legal_basis": "LGS art. 50",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10499#a50"
-            },
-            {
-              "activity": "public-health",
-              "description": "Public health surveillance and protection",
-              "function": "execution",
-              "legal_basis": "Ley 33/2011 General de Salud Pública",
-              "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2011-15623"
-            }
-          ],
-          "reason": null
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "el-confidencial",
@@ -192,18 +64,10 @@
       "headline": "Herido tras sufrir un accidente de tráfico en la TF-1, a la altura de Arona (Tenerife)",
       "url": "https://www.elconfidencial.com/espana/2026-10-13/motorista-herido-accidente-arona-1tps-1tna_4444034/",
       "published_at": "2026-10-13T14:09:00Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": null,
-          "territory_id": null,
-          "confidence": "not_determined",
-          "party_ids": [],
-          "is_caretaker": false,
-          "competences": [],
-          "reason": "no_level_named"
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "canarias7",
@@ -211,18 +75,10 @@
       "headline": "Muere un hombre apuñalado por su compañero de piso en Lanzarote",
       "url": "https://www.canarias7.es/sucesos/muere-apunalado-hombre-reyerta-companero-piso-lanzarote-20261013093223-nt.html",
       "published_at": "2026-10-13T08:53:00Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": null,
-          "territory_id": null,
-          "confidence": "not_determined",
-          "party_ids": [],
-          "is_caretaker": false,
-          "competences": [],
-          "reason": "no_level_named"
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "canarias7",
@@ -230,18 +86,10 @@
       "headline": "Asamblea7Islas denuncia la presencia de palomas en la cafetería del Hospital Doctor Negrín de Gran Canaria",
       "url": "https://www.canarias7.es/sociedad/salud/asamblea7islas-denuncia-presencia-palomas-cafeteria-hospital-doctor-20261013103357-nt.html",
       "published_at": "2026-10-13T08:33:58Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": null,
-          "territory_id": null,
-          "confidence": "not_determined",
-          "party_ids": [],
-          "is_caretaker": false,
-          "competences": [],
-          "reason": "no_level_named"
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "canarias7",
@@ -249,18 +97,10 @@
       "headline": "La pintura enseña su carácter terapéutico en la sexta edición de la exposición 'Arte y Salud Mental'",
       "url": "https://www.canarias7.es/sociedad/salud/pintura-ensena-caracter-terapeutico-sexta-edicion-exposicion-20261013094417-nt.html",
       "published_at": "2026-10-13T07:44:18Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": null,
-          "territory_id": null,
-          "confidence": "not_determined",
-          "party_ids": [],
-          "is_caretaker": false,
-          "competences": [],
-          "reason": "no_level_named"
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "diario-de-avisos",
@@ -268,18 +108,10 @@
       "headline": "Médicos y enfermeros de Atención Primaria en Tenerife usan sus coches para atender a pacientes: “No es admisible”",
       "url": "https://diariodeavisos.elespanol.com/2026/10/medicos-enfermeros-tenerife-falta-medios/",
       "published_at": "2026-10-12T23:00:00Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": null,
-          "territory_id": null,
-          "confidence": "not_determined",
-          "party_ids": [],
-          "is_caretaker": false,
-          "competences": [],
-          "reason": "no_level_named"
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     },
     {
       "outlet_id": "rtvc",
@@ -287,18 +119,10 @@
       "headline": "Un herido tras caerse del ‘quad’ en el que circulaba en Lanzarote",
       "url": "https://rtvc.es/herido-caerse-quad-circulaba-lanzarote-11-octubre-2026/",
       "published_at": "2026-10-11T17:38:07Z",
-      "classified_by": { "model_id": "rules", "model_version": "d74a59205b94" },
-      "attribution": [
-        {
-          "level": null,
-          "territory_id": null,
-          "confidence": "not_determined",
-          "party_ids": [],
-          "is_caretaker": false,
-          "competences": [],
-          "reason": "no_level_named"
-        }
-      ]
+      "classified_by": {
+        "model_id": "rules",
+        "model_version": "d74a59205b94"
+      }
     }
   ]
 }

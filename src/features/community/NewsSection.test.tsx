@@ -40,37 +40,13 @@ describe("news of a community", () => {
     expect(new Set(labels).size).toBe(labels.length); // a day appears once
   });
 
-  it("draws a stripe on each article that no screen reader reads: the words say the same", async () => {
+  it("names no party next to a news item: no responsible, no confidence, no colour stripe", async () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
     await within(section).findByText(/Noticias desde el/);
-    expect(section.querySelectorAll("li > span[aria-hidden='true']")).toHaveLength(11);
-  });
-
-  it("says who is responsible, with the confidence, or why it cannot say", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
-
-    const section = await newsSection();
-    expect(await within(section).findAllByText(/Confianza: Sin determinar: /)).not.toHaveLength(0);
-    expect(within(section).getAllByText(/Confianza: Alta/)).not.toHaveLength(0);
-    expect(
-      within(section).getAllByText("Responsable: Gobierno autonómico, CC y PP").length,
-    ).toBeGreaterThan(0);
-  });
-
-  it("offers the legal basis of an attribution, with its sources", async () => {
-    const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05?sector=health");
-
-    const section = await newsSection();
-    const [summary] = await within(section).findAllByText(es.community.news.basis);
-    if (summary === undefined) throw new Error("no basis");
-    await user.click(summary);
-
-    const links = within(summary.closest("details") as HTMLElement).getAllByRole("link");
-    expect(links.length).toBeGreaterThan(0);
-    for (const l of links) expect(l).toHaveAttribute("href", expect.stringMatching(/^https:/));
+    expect(section).not.toHaveTextContent(/Responsable|Confianza|Base de la atribución/);
+    expect(section.querySelectorAll("li > span[aria-hidden='true']")).toHaveLength(0);
   });
 
   it("starts with the first sector and marks the chosen one, from the URL", async () => {
@@ -127,22 +103,6 @@ describe("news of a community", () => {
 
     expect(await screen.findByText(/No hay noticias de educación en este periodo/)).toBeVisible();
     expect(screen.getByText(/Noticias desde el 15 de septiembre de 2026/)).toBeVisible();
-  });
-
-  it("explains once, above the list, why an article that names no government has no responsible", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
-
-    const section = await newsSection();
-    await within(section).findByText(/Noticias desde el/);
-    expect(within(section).getAllByText(es.community.news.sharedCompetences)).toHaveLength(1);
-    expect(section).not.toHaveTextContent(/las competencias del sector las comparten/);
-  });
-
-  it("does not repeat that explanation when every article names a government", async () => {
-    renderApp("/comunidades/ccaa-09", { community: "cataluna" });
-
-    await screen.findByText(/No hay noticias de educación/);
-    expect(screen.queryByText(es.community.news.sharedCompetences)).not.toBeInTheDocument();
   });
 
   it("says how the news are classified", async () => {

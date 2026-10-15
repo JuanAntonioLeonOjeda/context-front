@@ -138,9 +138,8 @@ export interface paths {
          *     **Order:** publication time, newest first; ties by outlet id. The order never depends on an
          *     outlet's size, audience or line.
          *
-         *     Each item carries its attribution, computed on read from the competence table and the
-         *     government in force on the publication date in Spain (ADR-0014): one entry per government
-         *     level the article names, or a single `not_determined` entry with its reason.
+         *     No item names a party (ADR-0018): who governs the community is in
+         *     `/communities/{territory_id}/governments`.
          */
         get: operations["community_communities__territory_id__news_get"];
         put?: never;
@@ -155,20 +154,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** AttributionOut */
-        AttributionOut: {
-            level: components["schemas"]["CompetenceLevel"] | null;
-            /** Territory Id */
-            territory_id: string | null;
-            confidence: components["schemas"]["Confidence"];
-            /** Party Ids */
-            party_ids: string[];
-            /** Is Caretaker */
-            is_caretaker: boolean;
-            /** Competences */
-            competences: components["schemas"]["CompetenceOut"][];
-            reason: components["schemas"]["Reason"] | null;
-        };
         /** ClassifierOut */
         ClassifierOut: {
             /** Model Id */
@@ -202,37 +187,10 @@ export interface components {
             has_data: boolean;
         };
         /**
-         * CompetenceFunction
-         * @enum {string}
-         */
-        CompetenceFunction: "legislation" | "basic_legislation" | "development_legislation" | "execution";
-        /**
-         * CompetenceLevel
-         * @enum {string}
-         */
-        CompetenceLevel: "state" | "ccaa" | "local";
-        /** CompetenceOut */
-        CompetenceOut: {
-            /** Activity */
-            activity: string;
-            /** Description */
-            description: string;
-            function: components["schemas"]["CompetenceFunction"];
-            /** Legal Basis */
-            legal_basis: string;
-            /** Source Url */
-            source_url: string;
-        };
-        /**
          * ComponentStatus
          * @enum {string}
          */
         ComponentStatus: "up" | "down";
-        /**
-         * Confidence
-         * @enum {string}
-         */
-        Confidence: "high" | "medium" | "not_determined";
         /** GovernmentMapOut */
         GovernmentMapOut: {
             /**
@@ -299,8 +257,6 @@ export interface components {
              */
             published_at: string;
             classified_by: components["schemas"]["ClassifierOut"];
-            /** Attribution */
-            attribution: components["schemas"]["AttributionOut"][];
         };
         /** PartyOut */
         PartyOut: {
@@ -332,11 +288,6 @@ export interface components {
             /** Value */
             value: number;
         };
-        /**
-         * Reason
-         * @enum {string}
-         */
-        Reason: "no_level_named" | "no_competence" | "local_not_modelled" | "no_government_on_date";
         /** SourceOut */
         SourceOut: {
             /** Publisher */
