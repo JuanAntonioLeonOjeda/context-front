@@ -31,7 +31,6 @@ export const es = {
         items: [
           "Las noticias se clasifican con reglas automáticas todavía sin medir, y pueden contener errores.",
           "De cada noticia solo se publican el titular y el enlace al medio.",
-          "El responsable se deriva de una regla única, igual para todos los partidos.",
         ],
         link: "Leer cómo funciona",
       },
@@ -61,7 +60,7 @@ export const es = {
     },
     hero: {
       title: "Quién gobierna cada comunidad y qué cuentan los medios de ella",
-      lead: "El mapa de los gobiernos autonómicos, los datos del INE y las noticias de cada comunidad, con quién es responsable de lo que se cuenta y por qué.",
+      lead: "El mapa de los gobiernos autonómicos, los datos del INE y las noticias recientes de cada comunidad.",
       select: {
         label: "Ir a una comunidad",
         placeholder: "Elige una comunidad",
@@ -146,65 +145,24 @@ export const es = {
       window: "Noticias desde el {date}: hasta 5 por medio, de la más reciente a la más antigua.",
       method:
         "Las noticias se clasifican con reglas automáticas que todavía no se han medido, y pueden contener errores.",
-      sharedCompetences:
-        "En educación, sanidad y vivienda las competencias están repartidas entre el Estado, la comunidad y los ayuntamientos: si una noticia no nombra un gobierno, no podemos decir cuál es el responsable.",
       empty: "No hay noticias de {sector} en este periodo.",
       loading: "Cargando las noticias…",
       error: "No hemos podido cargar las noticias.",
       retry: "Volver a intentarlo",
       outletAndTime: "{outlet}, {time}",
-      responsible: "Responsable: {government}, {parties}",
-      caretaker: "en funciones",
-      confidence: "Confianza: {confidence}",
-      confidenceWords: { high: "Alta", medium: "Media", not_determined: "Sin determinar" },
-      basis: "Base de la atribución",
-      levels: {
-        state: "Gobierno de España",
-        ccaa: "Gobierno autonómico",
-        local: "Gobierno local",
-      },
-      reasons: {
-        no_level_named: "la noticia no nombra ningún gobierno",
-        no_competence: "la noticia nombra un gobierno sin competencias en este sector",
-        local_not_modelled: "la noticia nombra un gobierno local, que todavía no recogemos",
-        no_government_on_date: "no hay datos de gobierno en la fecha de la noticia",
-      },
     },
   },
   about: {
     page: {
       title: "Cómo funciona",
       intro:
-        "Contexto autonómico reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, y dice quién es responsable de lo que cuenta cada noticia, con su base y su confianza.",
-    },
-    responsible: {
-      title: "Quién es el responsable de una noticia",
-      steps: [
-        "Cada noticia se clasifica por comunidad, por sector (educación, sanidad o vivienda) y por los gobiernos que nombra: el del Estado, el de la comunidad o uno local.",
-        "El responsable no lo decide un modelo ni se escribe a mano: sale de una regla única, la misma para todos los partidos y todos los medios.",
-        "Si la noticia nombra un gobierno y ese nivel tiene alguna competencia en el sector, son responsables los partidos que gobernaban ese nivel el día de la publicación, en hora de España. Los partidos que solo apoyaron la investidura no cuentan.",
-        "Si no se cumple, la noticia aparece como «Sin determinar» y se dice por qué.",
-      ],
-      reasonsTitle: "Por qué una noticia puede quedar sin determinar",
-      reasons: [
-        "No nombra ningún gobierno, y en educación, sanidad y vivienda las competencias están repartidas entre el Estado, la comunidad y los ayuntamientos.",
-        "Nombra un gobierno que no tiene competencias en ese sector.",
-        "Nombra un gobierno local (ayuntamiento, cabildo), que todavía no recogemos.",
-        "No hay datos del gobierno en la fecha de la noticia.",
-      ],
-      confidenceTitle: "La confianza",
-      confidence: [
-        ["Alta", "la noticia nombra un gobierno con competencias en el sector."],
-        ["Media", "todavía no se usa."],
-        ["Sin determinar", "no se puede decir quién es responsable, con el motivo."],
-      ],
+        "Contexto autonómico reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, clasificadas por sector.",
     },
     data: {
       title: "De dónde salen los datos",
       items: [
         "Indicadores: tablas del INE. Cada dato enlaza a su tabla y dice cuándo se descargó.",
         "Gobiernos: decretos del BOE y de los boletines autonómicos. Cada gobierno y cada partido enlaza a su fuente.",
-        "Competencias: la Constitución, los estatutos de autonomía y las leyes. La base legal se ve en las noticias que tienen un responsable.",
         "Límites de las comunidades: Instituto Geográfico Nacional, licencia CC BY 4.0.",
         "Colores de los partidos: Wikidata.",
         "Noticias: los canales públicos (RSS, mapas de noticias y secciones) de los medios nacionales y regionales seleccionados, respetando sus normas de acceso.",

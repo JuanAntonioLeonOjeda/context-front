@@ -35,25 +35,6 @@ export function AboutPage(): React.JSX.Element {
       <h1 className={styles.title}>{about.page.title}</h1>
       <p className={styles.lead}>{about.page.intro}</p>
 
-      <Section id="about-responsible" title={about.responsible.title}>
-        <ol className={styles.list}>
-          {about.responsible.steps.map((step) => (
-            <li key={step}>{step}</li>
-          ))}
-        </ol>
-        <h3>{about.responsible.reasonsTitle}</h3>
-        <List items={about.responsible.reasons} />
-        <h3>{about.responsible.confidenceTitle}</h3>
-        <dl className={styles.terms}>
-          {about.responsible.confidence.map(([word, meaning]) => (
-            <div key={word}>
-              <dt>{word}</dt>
-              <dd>{meaning}</dd>
-            </div>
-          ))}
-        </dl>
-      </Section>
-
       <Section id="about-data" title={about.data.title}>
         <List items={about.data.items} />
       </Section>
