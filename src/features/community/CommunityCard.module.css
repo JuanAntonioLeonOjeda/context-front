@@ -1,0 +1,335 @@
+.section {
+  display: grid;
+  gap: var(--space-2);
+  margin-block: var(--space-6);
+}
+
+/* Parties as chips: the colour is the party's own, the name is always written. */
+.parties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.party {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: var(--color-surface);
+}
+
+.partySwatch {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+}
+
+.section > * {
+  margin-block: 0;
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead th {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.downloaded {
+  display: block;
+  color: var(--color-text-muted);
+}
+
+/* Visible to screen readers only: the table caption repeats the section heading. */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.sectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sectors a[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-accent);
+}
+
+.news {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.newsDay {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+}
+
+.newsItem {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-1) 0 var(--space-4) var(--space-4);
+}
+
+/* The stripe on the left: the colours of the responsible parties, as the map draws them. */
+.stripe {
+  position: absolute;
+  inset-block: var(--space-1) var(--space-4);
+  left: 0;
+  width: 0.5rem;
+  border-radius: 2px;
+  border: 1px solid var(--color-border-strong);
+}
+
+.newsItem a {
+  font-weight: 700;
+}
+
+/* The explanations above the list stay a readable line; the list itself uses the width. */
+.newsNote {
+  max-width: 46rem;
+}
+
+/* On a wide screen the headline and its outlet on the left, who is responsible on the right. */
+@media (min-width: 48rem) {
+  .newsItem {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-areas:
+      "headline attribution"
+      "meta attribution";
+    column-gap: var(--space-8);
+    align-items: start;
+  }
+
+  .newsItem > a {
+    grid-area: headline;
+  }
+
+  .newsItem > small {
+    grid-area: meta;
+  }
+
+  .newsItem > .attribution {
+    grid-area: attribution;
+    margin-top: 0;
+  }
+}
+
+.attribution {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.attribution p {
+  margin: 0;
+}
+
+/* The indicators: a row of cards, one per measure, each wide enough for its chart to be read. The
+   cards keep their width and the row scrolls when they do not fit (see Carousel). Equal cards
+   are the right shape: the five measures are peers, none leads. */
+.indicatorRow {
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.indicatorRow > li {
+  flex: 0 0 min(17rem, 82vw);
+  scroll-snap-align: start;
+}
+
+.indicator {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  height: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.indicatorName {
+  margin: 0;
+  font-size: var(--text-md);
+}
+
+.indicatorValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.indicatorPeriod,
+.indicatorRange,
+.indicatorSource {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Ink on paper: the chart takes no colour, which belongs to the parties. */
+.chart {
+  display: block;
+  width: 100%;
+  max-width: 22rem; /* the labels are drawn for a card of about 240 px: not blown up on a phone */
+  height: auto;
+  margin-block: var(--space-2);
+}
+
+.chartLine {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartArea {
+  fill: var(--color-text);
+  fill-opacity: 0.07;
+}
+
+.chartDot {
+  fill: var(--color-surface);
+  stroke: var(--color-text);
+  stroke-width: 2px;
+}
+
+.chartGrid {
+  stroke: var(--color-border);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartAxis {
+  stroke: var(--color-border-strong);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.axisLabel {
+  fill: var(--color-text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.axisTitle {
+  fill: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.indicatorData summary {
+  display: list-item;
+  list-style-position: inside;
+  padding-block: var(--space-3);
+  cursor: pointer;
+}
+
+.indicatorUnit {
+  white-space: nowrap;
+  font-size: var(--text-md);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.indicatorData .table {
+  min-width: 0;
+}
+
+/* The government is the header of the community page: the president is the line to read, the
+   parties are chips a little larger than elsewhere, the headings step back. */
+.government {
+  margin-block: var(--space-4) 0;
+  gap: var(--space-3);
+}
+
+.government h2 {
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+}
+
+.government h3 {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.president {
+  font-size: var(--text-lg);
+  line-height: 1.4;
+}
+
+.government .party {
+  padding: var(--space-2) var(--space-4);
+}
+
+@media (min-width: 48rem) {
+  .government {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-8);
+  }
+
+  .government > h2,
+  .government > p {
+    grid-column: 1 / -1;
+  }
+}

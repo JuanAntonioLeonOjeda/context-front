@@ -1,0 +1,35 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4);
+}
+
+@media (min-width: 40rem) {
+  .main {
+    padding-inline: var(--space-6);
+  }
+}
+
+/* Off-screen until it takes focus: the first stop for keyboard and screen-reader users (WCAG 2.4.1). */
+.skip {
+  position: absolute;
+  left: var(--space-2);
+  top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  transform: translateY(-200%);
+}
+
+.skip:focus {
+  transform: translateY(0);
+}

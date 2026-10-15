@@ -1,0 +1,36 @@
+{
+  "territory_id": "ccaa-05",
+  "date": "2023-06-01",
+  "term": {
+    "president_name": "Ángel Víctor Torres Pérez",
+    "valid_from": "2023-05-28",
+    "is_caretaker": true,
+    "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-8478",
+    "parties": [
+      {
+        "party_id": "asg",
+        "short_name": "ASG",
+        "role": "governing",
+        "source_url": "https://idpbarcelona.net/docs/public/iccaa/2019/canarias_2019.pdf"
+      },
+      {
+        "party_id": "nueva-canarias",
+        "short_name": "NC",
+        "role": "governing",
+        "source_url": "https://idpbarcelona.net/docs/public/iccaa/2019/canarias_2019.pdf"
+      },
+      {
+        "party_id": "podemos",
+        "short_name": "Podemos",
+        "role": "governing",
+        "source_url": "https://idpbarcelona.net/docs/public/iccaa/2019/canarias_2019.pdf"
+      },
+      {
+        "party_id": "psoe",
+        "short_name": "PSOE",
+        "role": "governing",
+        "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2019-10440"
+      }
+    ]
+  }
+}

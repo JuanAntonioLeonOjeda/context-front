@@ -1,0 +1,119 @@
+{
+  "date": "2023-06-01",
+  "communities": [
+    {
+      "territory_id": "ccaa-01",
+      "governing_party_ids": ["pp"],
+      "is_caretaker": false,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-02",
+      "governing_party_ids": ["cha", "par", "podemos", "psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-03",
+      "governing_party_ids": ["psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-04",
+      "governing_party_ids": ["mes-per-mallorca", "psoe", "unidas-podemos"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-05",
+      "governing_party_ids": ["asg", "nueva-canarias", "podemos", "psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-06",
+      "governing_party_ids": ["prc", "psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-07",
+      "governing_party_ids": ["pp", "vox"],
+      "is_caretaker": false,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-08",
+      "governing_party_ids": ["psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-09",
+      "governing_party_ids": ["erc"],
+      "is_caretaker": false,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-10",
+      "governing_party_ids": ["compromis", "iu", "podemos", "psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-11",
+      "governing_party_ids": ["psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-12",
+      "governing_party_ids": ["pp"],
+      "is_caretaker": false,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-13",
+      "governing_party_ids": ["pp"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-14",
+      "governing_party_ids": ["pp"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-15",
+      "governing_party_ids": ["geroa-bai", "iu", "podemos", "psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-16",
+      "governing_party_ids": ["pnv", "psoe"],
+      "is_caretaker": false,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-17",
+      "governing_party_ids": ["psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-18",
+      "governing_party_ids": ["pp"],
+      "is_caretaker": true,
+      "has_data": true
+    },
+    {
+      "territory_id": "ccaa-19",
+      "governing_party_ids": ["coalicion-por-melilla", "psoe"],
+      "is_caretaker": true,
+      "has_data": true
+    }
+  ]
+}

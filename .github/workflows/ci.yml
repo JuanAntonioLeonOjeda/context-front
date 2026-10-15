@@ -1,0 +1,27 @@
+name: ci
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # Reads the pnpm version from the "packageManager" field of package.json.
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      # The generated types must match the committed contract: nobody edits them by hand,
+      # and a contract change comes with its regenerated types (pnpm api:generate).
+      - run: pnpm api:types && git diff --exit-code src/api
+      - run: pnpm test
+      - run: pnpm build

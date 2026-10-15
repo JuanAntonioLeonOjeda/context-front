@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contexto autonómico</title>
+    <script>
+      // The chosen colour theme, before the first paint so a dark choice never flashes light.
+      // Kept in step with src/features/shell/theme.ts.
+      try {
+        var theme = localStorage.getItem("contexto-tema");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.setAttribute("data-theme", theme);
+        }
+      } catch (e) {
+        /* storage blocked: the system theme applies */
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

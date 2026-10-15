@@ -1,0 +1,12 @@
+/* The name and the government: the header of the page. Below it the indicators (the hero: a row
+   of charts that scrolls when they do not fit) and the news. One column, top to bottom. */
+.header {
+  margin-bottom: var(--space-8);
+}
+
+.title {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-3xl);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
