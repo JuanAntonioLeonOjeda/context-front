@@ -6,7 +6,7 @@
 export const es = {
   app: {
     shell: {
-      name: "Contexto autonómico",
+      name: "InContext",
       skipToContent: "Saltar al contenido",
       nav: { label: "Principal", map: "Mapa", about: "Cómo funciona" },
       theme: {
@@ -24,6 +24,7 @@ export const es = {
           "Gobiernos: decretos del BOE y de los boletines autonómicos, con la fuente de cada dato.",
           "Límites de las comunidades: IGN, licencia CC BY 4.0.",
           "Colores de los partidos: Wikidata.",
+          "Banderas de las comunidades: Wikimedia Commons.",
         ],
       },
       method: {
@@ -93,8 +94,8 @@ export const es = {
   },
   community: {
     page: {
-      back: "Volver al mapa",
       notFound: "No existe esa comunidad.",
+      flag: "Bandera de {name}",
     },
     government: {
       title: "Gobierno",
@@ -103,9 +104,7 @@ export const es = {
       caretaker: "Gobierno en funciones.",
       governing: "Partidos que gobiernan",
       support: "Partidos que apoyaron la investidura sin entrar en el gobierno",
-      source: "Fuente",
-      sourceOf: "Fuente: {party}",
-      sourceOfTerm: "Fuente del nombramiento",
+      sourceOf: "Fuente de {party}",
     },
     indicators: {
       title: "Datos del INE",
@@ -120,6 +119,8 @@ export const es = {
         next: "Indicadores siguientes",
       },
       viewData: "Ver los datos de la gráfica",
+      dataTitle: "Datos: {name}",
+      close: "Cerrar",
       noValue: "Sin dato",
       noPeriod: "—",
       sourceLink: "Tabla {id} del INE",
@@ -156,7 +157,7 @@ export const es = {
     page: {
       title: "Cómo funciona",
       intro:
-        "Contexto autonómico reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, clasificadas por sector.",
+        "InContext reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, clasificadas por sector.",
     },
     data: {
       title: "De dónde salen los datos",
@@ -165,6 +166,7 @@ export const es = {
         "Gobiernos: decretos del BOE y de los boletines autonómicos. Cada gobierno y cada partido enlaza a su fuente.",
         "Límites de las comunidades: Instituto Geográfico Nacional, licencia CC BY 4.0.",
         "Colores de los partidos: Wikidata.",
+        "Banderas de las comunidades: Wikimedia Commons.",
         "Noticias: los canales públicos (RSS, mapas de noticias y secciones) de los medios nacionales y regionales seleccionados, respetando sus normas de acceso.",
       ],
     },

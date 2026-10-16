@@ -23,7 +23,7 @@ const PAGES: PageCase[] = [
   {
     name: "the map of today",
     path: "/",
-    loaded: () => screen.findByRole("navigation", { name: es.map.list.title }),
+    loaded: () => screen.findByRole("link", { name: "Galicia: gobierna PP" }),
   },
   {
     name: "the map when its data cannot be loaded",

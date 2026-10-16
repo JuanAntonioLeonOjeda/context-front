@@ -246,41 +246,160 @@
   min-width: 0;
 }
 
-/* The government is the header of the community page: the president is the line to read, the
-   parties are chips a little larger than elsewhere, the headings step back. */
+/* The government is part of the header grid of the community page (the section itself takes no
+   box: `display: contents`). The president and the date of the investiture sit at the right of
+   the name, at its height; under both, in a row, the parties that govern and those that
+   supported the investiture; last, the sources. */
 .government {
-  margin-block: var(--space-4) 0;
-  gap: var(--space-3);
+  display: contents;
 }
 
 .government h2 {
-  font-size: var(--text-md);
-  color: var(--color-text-muted);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
-.government h3 {
-  margin-top: var(--space-2);
+.president {
+  font-size: var(--text-md);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.who p {
+  margin: 0;
+}
+
+.groups,
+.groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-8);
+}
+
+.since {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
 
-.president {
-  font-size: var(--text-lg);
-  line-height: 1.4;
+/* What the row of seals is, as a tooltip on hover (the list also carries it as its name). */
+.tip {
+  position: relative;
 }
 
-.government .party {
-  padding: var(--space-2) var(--space-4);
+.tip:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  width: max-content;
+  max-width: 18rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--text-sm);
+  pointer-events: none;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.badge,
+.badgeSupport {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--color-surface);
+  border-radius: 999px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* The whole seal is the link to the party's source: its colour, no underline. */
+.badge a,
+.badgeSupport a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding-inline: var(--space-4);
+  border-radius: 999px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.badge a:hover,
+.badgeSupport a:hover {
+  text-decoration: underline;
+}
+
+.badge + .badge,
+.badge + .badgeSupport,
+.badgeSupport + .badgeSupport {
+  margin-inline-start: calc(-1 * var(--space-2));
+}
+
+.badge {
+  background: var(--color-border-strong);
+}
+
+.badgeSupport {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  font-weight: 400;
 }
 
 @media (min-width: 48rem) {
-  .government {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--space-8);
+  .who {
+    text-align: right;
   }
+}
 
-  .government > h2,
-  .government > p {
-    grid-column: 1 / -1;
-  }
+/* The data of a chart, in a modal window over the page. */
+.dataDialog {
+  width: min(32rem, calc(100vw - 2 * var(--space-4)));
+  max-height: calc(100vh - 2 * var(--space-8));
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-raised);
+}
+
+.dataDialog::backdrop {
+  background: var(--color-text);
+  opacity: 0.45;
+}
+
+.dataDialogHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.dataDialogHeader h2 {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.dataButton {
+  justify-self: start;
+  padding: var(--space-2) 0;
+  border: 0;
+  background: none;
+  color: var(--color-accent);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
 }

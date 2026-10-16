@@ -18,10 +18,7 @@ describe("header", () => {
     renderApp("/");
 
     const header = await screen.findByRole("banner");
-    expect(within(header).getByRole("link", { name: /Contexto autonómico/ })).toHaveAttribute(
-      "href",
-      "/",
-    );
+    expect(within(header).getByRole("link", { name: /InContext/ })).toHaveAttribute("href", "/");
     const nav = within(header).getByRole("navigation", { name: es.app.shell.nav.label });
     expect(
       within(nav)

@@ -5,6 +5,8 @@
  * the backend (`data/governments/README.md`, "Party colours").
  */
 
+import { contrastRatio } from "./contrast";
+
 export interface Party {
   id: string;
   name: string;
@@ -42,4 +44,11 @@ export function partiesById(table: ReadonlyMap<string, Party>, ids: readonly str
     }
     return party;
   });
+}
+
+/** The text token that reads best over a party colour (ink or white, whichever contrasts more). */
+export function onPartyColour(colour: string): string {
+  return contrastRatio(colour, "#ffffff") >= contrastRatio(colour, "#14202a")
+    ? "var(--color-on-party-light)"
+    : "var(--color-on-party-dark)";
 }

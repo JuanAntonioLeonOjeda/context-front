@@ -99,8 +99,7 @@ describe("party panel on the home page", () => {
     await user.click(within(await panel()).getByRole("button", { name: /^Vox/ }));
 
     expect(await findMapLink("Cataluña: gobierna PSC")).toBeVisible();
-    const list = screen.getByRole("navigation", { name: es.map.list.title });
-    expect(within(list).getAllByRole("link")).toHaveLength(19);
+    expect(screen.getAllByRole("link", { name: /: gobiernan? / })).toHaveLength(19);
   });
 
   it("rings a party that governs one community only, and not one that governs several", async () => {
