@@ -348,12 +348,12 @@
 }
 
 .badge {
-  background: var(--color-surface);
+  background: var(--color-logo-tile);
   border-color: var(--color-border-strong);
 }
 
 .badgeSupport {
-  background: var(--color-surface);
+  background: var(--color-logo-tile);
   border-color: var(--color-border-strong);
   font-weight: 400;
 }
@@ -405,13 +405,10 @@
   cursor: pointer;
 }
 
-/* The logo is the seal: no coloured fill behind it. In dark mode it sits on a white tile. */
+/* The logo is the seal: no coloured fill behind it. */
 .logo {
   display: block;
   height: 1.5rem;
   max-width: 4rem;
-  padding: 0.125rem 0.25rem;
-  border-radius: var(--radius-sm);
-  background: var(--color-logo-tile);
   object-fit: contain;
 }
