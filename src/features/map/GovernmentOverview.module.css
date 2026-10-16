@@ -208,14 +208,11 @@
   pointer-events: none;
 }
 
-/* The tile keeps a logo readable in dark mode, whatever its colours. */
+/* The logo goes straight on the panel, no tile behind it. */
 .logo {
   display: block;
   height: 1.75rem;
   max-width: 100%;
-  padding: 0.125rem 0.25rem;
-  border-radius: var(--radius-sm);
-  background: var(--color-logo-tile);
   object-fit: contain;
   object-position: left;
 }
