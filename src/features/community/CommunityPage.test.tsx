@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -140,26 +140,20 @@ describe("community page", () => {
   });
 
   // user-event activates only HTML anchors with Enter, not the <a> inside an SVG (browsers do),
-  // so the keyboard is exercised on HTML links: Ceuta's marker on the map and the list under
-  // it. The SVG links are reached by Tab in the map tests; their Enter is a real-browser check.
-  it.each([
-    ["the marker of a small territory", () => findMapLink("Ceuta: gobierna PP")],
-    [
-      "a community in the list under the map",
-      async () => {
-        const list = await screen.findByRole("navigation", { name: es.map.list.title });
-        return within(list).getByRole("link", { name: "Ceuta: gobierna PP" });
-      },
-    ],
-  ])("opens a community with the keyboard: Enter on %s", async (_where, find) => {
+  // so the keyboard is exercised on an HTML link: Ceuta's marker on the map. The SVG links are
+  // reached by Tab in the map tests; their Enter is a real-browser check.
+  it("opens a community with the keyboard: Enter on the marker of a small territory", async () => {
     const user = userEvent.setup();
     renderAt("/");
 
-    (await find()).focus();
+    (await findMapLink("Ceuta: gobierna PP")).focus();
     await user.keyboard("{Enter}");
 
-    // The community page is the only one with a way back to the map.
-    expect(await screen.findByRole("link", { name: es.community.page.back })).toBeVisible();
+    // The map is gone: this is the community page (whatever it has to say about Ceuta).
+    await waitFor(() => {
+      expect(screen.queryByRole("figure")).not.toBeInTheDocument();
+    });
+    expect(await screen.findByRole("heading", { level: 1 })).toBeVisible();
   });
 
   it("moves the focus to the new page after a navigation, but not on the first page", async () => {

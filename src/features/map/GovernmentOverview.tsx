@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { CommunityList } from "./CommunityList";
 import { CommunityMap, type CommunityMapProps } from "./CommunityMap";
 import { HomeIntro } from "./HomeIntro";
 import { summarise } from "./party-summary";
@@ -42,9 +41,6 @@ export function GovernmentOverview(
           onPreview={setPreviewId}
           hasStripes={looks.some((l) => l.fill.kind === "stripes")}
         />
-      </div>
-      <div className={styles.listArea}>
-        <CommunityList looks={looks} hrefOf={props.hrefOf} />
       </div>
     </div>
   );
