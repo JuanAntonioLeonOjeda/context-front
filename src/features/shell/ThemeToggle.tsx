@@ -8,13 +8,6 @@ import { applyTheme, nextTheme, readTheme, storeTheme, type ThemeChoice } from "
 import styles from "./Shell.module.css";
 
 const ICONS: Record<ThemeChoice, React.JSX.Element> = {
-  // A circle half filled: the theme follows the system.
-  system: (
-    <>
-      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M12 4a8 8 0 0 0 0 16Z" />
-    </>
-  ),
   light: (
     <>
       <circle cx="12" cy="12" r="4" />
@@ -31,7 +24,7 @@ const ICONS: Record<ThemeChoice, React.JSX.Element> = {
 };
 
 /**
- * One button that goes through system, light and dark. Its name says the current choice and
+ * One button that switches between light and dark. Its name says the current choice and
  * what the next press does, so it is not a mystery icon; the icon only repeats it.
  */
 export function ThemeToggle(): React.JSX.Element {

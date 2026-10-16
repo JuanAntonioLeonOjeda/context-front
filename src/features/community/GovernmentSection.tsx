@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { onPartyColour, partyTable, type Party } from "@/design/parties";
+import { partyLogoUrl } from "@/design/party-logos";
 import { fetchParties } from "@/features/map";
 import { ExternalLink } from "@/features/shell";
 import { es } from "@/i18n/es";
@@ -10,6 +11,22 @@ import type { TermParty } from "./community-api";
 import type { GovernmentView } from "./community-card";
 
 import styles from "./CommunityCard.module.css";
+
+/**
+ * A logo seal carries no colour fill (the logo is the seal): the party's colour is its border,
+ * for the parties that govern and for the supporters alike. Without a logo the seal is filled
+ * with the colour and the name over it.
+ */
+function badgeStyle(options: {
+  colour: string | undefined;
+  hasLogo: boolean;
+  supporting: boolean;
+}): React.CSSProperties | undefined {
+  const { colour, hasLogo, supporting } = options;
+  if (colour === undefined) return undefined;
+  if (supporting || hasLogo) return { borderColor: colour };
+  return { background: colour, color: onPartyColour(colour) };
+}
 
 function PartyList({
   title,
@@ -24,23 +41,25 @@ function PartyList({
 }): React.JSX.Element | null {
   if (parties.length === 0) return null;
   return (
-    <div className={styles.tip} data-tip={title}>
-      {/* Seals: the party's own colour with its name written inside, a little overlapped. The
-          ones that only supported the investiture are outlined, not filled. */}
+    <div
+      className={styles.tip}
+      data-tip={formatMessage(es.community.government.partiesOf, {
+        title,
+        parties: parties.map((party) => party.shortName).join(", "),
+      })}
+    >
+      {/* Seals: the party's own colour with its logo inside (its name when there is none), a
+          little overlapped. The ones that only supported the investiture are outlined, not
+          filled. */}
       <ul className={styles.badges} aria-label={title}>
         {parties.map((party) => {
           const colour = table?.get(party.partyId)?.colour;
+          const logo = partyLogoUrl(party.partyId);
           return (
             <li
               key={party.partyId}
               className={supporting ? styles.badgeSupport : styles.badge}
-              style={
-                colour === undefined
-                  ? undefined
-                  : supporting
-                    ? { borderColor: colour }
-                    : { background: colour, color: onPartyColour(colour) }
-              }
+              style={badgeStyle({ colour, hasLogo: logo !== null, supporting })}
             >
               <ExternalLink
                 href={party.sourceUrl}
@@ -48,7 +67,12 @@ function PartyList({
                   party: party.shortName,
                 })}
               >
-                {party.shortName}
+                {logo === null ? (
+                  party.shortName
+                ) : (
+                  // The link already carries the name ("Fuente de X"), so the image is decoration.
+                  <img className={styles.logo} src={logo} alt="" />
+                )}
               </ExternalLink>
             </li>
           );

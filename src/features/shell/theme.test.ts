@@ -6,28 +6,34 @@ afterEach(() => {
   window.localStorage.clear();
   document.documentElement.removeAttribute("data-theme");
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
+function mockSystemDark(isDark: boolean): void {
+  vi.stubGlobal("matchMedia", (query: string) => ({ matches: isDark, media: query }));
+}
+
 describe("nextTheme", () => {
-  it("goes system, light, dark and back to system", () => {
-    expect(nextTheme("system")).toBe("light");
+  it("switches between light and dark", () => {
     expect(nextTheme("light")).toBe("dark");
-    expect(nextTheme("dark")).toBe("system");
+    expect(nextTheme("dark")).toBe("light");
   });
 });
 
 describe("the stored theme", () => {
-  it("is system when nothing is stored, or something unknown is", () => {
-    expect(readTheme()).toBe("system");
+  it("is the system's theme when nothing is stored, or something unknown is", () => {
+    mockSystemDark(true);
+    expect(readTheme()).toBe("dark");
     window.localStorage.setItem(THEME_KEY, "sepia");
-    expect(readTheme()).toBe("system");
+    expect(readTheme()).toBe("dark");
+    mockSystemDark(false);
+    expect(readTheme()).toBe("light");
   });
 
-  it("remembers light and dark, and forgets the choice when it goes back to system", () => {
-    storeTheme("dark");
-    expect(readTheme()).toBe("dark");
-    storeTheme("system");
-    expect(window.localStorage.getItem(THEME_KEY)).toBeNull();
+  it("remembers the choice over the system's theme", () => {
+    mockSystemDark(true);
+    storeTheme("light");
+    expect(readTheme()).toBe("light");
   });
 
   it("does not fail when the browser blocks storage", () => {
@@ -38,7 +44,7 @@ describe("the stored theme", () => {
       throw new Error("blocked");
     });
 
-    expect(readTheme()).toBe("system");
+    expect(readTheme()).toBe("light");
     expect(() => {
       storeTheme("dark");
     }).not.toThrow();
@@ -46,12 +52,10 @@ describe("the stored theme", () => {
 });
 
 describe("applyTheme", () => {
-  it("sets data-theme for light and dark, and removes it for the system", () => {
+  it("sets data-theme", () => {
     applyTheme("dark");
     expect(document.documentElement).toHaveAttribute("data-theme", "dark");
     applyTheme("light");
     expect(document.documentElement).toHaveAttribute("data-theme", "light");
-    applyTheme("system");
-    expect(document.documentElement).not.toHaveAttribute("data-theme");
   });
 });

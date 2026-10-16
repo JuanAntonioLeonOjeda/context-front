@@ -12,11 +12,11 @@ function renderAt(path: string, community: Scenario = "canarias"): HTMLElement {
   return renderApp(path, { community });
 }
 
-/** Short names of the parties in a list, ignoring the "Fuente" link next to each. */
+/** Short names of the parties in a list, read from the name of each seal's source link. */
 function partyNames(list: HTMLElement): string[] {
   return within(list)
-    .getAllByRole("listitem")
-    .map((li) => li.textContent.split(" ")[0] ?? "");
+    .getAllByRole("link")
+    .map((link) => link.getAttribute("aria-label")?.replace("Fuente de ", "") ?? "");
 }
 
 describe("community page", () => {
