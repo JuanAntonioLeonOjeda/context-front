@@ -344,7 +344,9 @@
 .badge + .badge,
 .badge + .badgeSupport,
 .badgeSupport + .badgeSupport {
-  margin-inline-start: var(--space-2); /* no overlap: without a fill the seals would show through each other */
+  margin-inline-start: var(
+    --space-2
+  ); /* no overlap: without a fill the seals would show through each other */
 }
 
 .badge {
