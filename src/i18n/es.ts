@@ -24,7 +24,7 @@ export const es = {
           "Gobiernos: decretos del BOE y de los boletines autonómicos, con la fuente de cada dato.",
           "Límites de las comunidades: IGN, licencia CC BY 4.0.",
           "Colores de los partidos: Wikidata.",
-          "Banderas de las comunidades: Wikimedia Commons.",
+          "Banderas de las comunidades y logos de los partidos: Wikimedia Commons.",
         ],
       },
       method: {
@@ -105,6 +105,7 @@ export const es = {
       governing: "Partidos que gobiernan",
       support: "Partidos que apoyaron la investidura sin entrar en el gobierno",
       sourceOf: "Fuente de {party}",
+      partiesOf: "{title}: {parties}",
     },
     indicators: {
       title: "Datos del INE",
@@ -166,7 +167,7 @@ export const es = {
         "Gobiernos: decretos del BOE y de los boletines autonómicos. Cada gobierno y cada partido enlaza a su fuente.",
         "Límites de las comunidades: Instituto Geográfico Nacional, licencia CC BY 4.0.",
         "Colores de los partidos: Wikidata.",
-        "Banderas de las comunidades: Wikimedia Commons.",
+        "Banderas de las comunidades y logos de los partidos: Wikimedia Commons.",
         "Noticias: los canales públicos (RSS, mapas de noticias y secciones) de los medios nacionales y regionales seleccionados, respetando sus normas de acceso.",
       ],
     },
