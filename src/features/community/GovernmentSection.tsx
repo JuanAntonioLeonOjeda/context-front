@@ -13,8 +13,9 @@ import type { GovernmentView } from "./community-card";
 import styles from "./CommunityCard.module.css";
 
 /**
- * A logo seal carries no fill (the logo is the seal); only the supporters keep an outline in
- * the party's colour. Without a logo the seal is filled with the colour and the name over it.
+ * A logo seal carries no colour fill (the logo is the seal): the party's colour is its border,
+ * for the parties that govern and for the supporters alike. Without a logo the seal is filled
+ * with the colour and the name over it.
  */
 function badgeStyle(options: {
   colour: string | undefined;
@@ -23,8 +24,7 @@ function badgeStyle(options: {
 }): React.CSSProperties | undefined {
   const { colour, hasLogo, supporting } = options;
   if (colour === undefined) return undefined;
-  if (supporting) return { borderColor: colour };
-  if (hasLogo) return undefined;
+  if (supporting || hasLogo) return { borderColor: colour };
   return { background: colour, color: onPartyColour(colour) };
 }
 
