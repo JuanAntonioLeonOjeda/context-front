@@ -24,6 +24,7 @@ export const es = {
           "Gobiernos: decretos del BOE y de los boletines autonómicos, con la fuente de cada dato.",
           "Límites de las comunidades: IGN, licencia CC BY 4.0.",
           "Colores de los partidos: Wikidata.",
+          "Banderas de las comunidades: Wikimedia Commons.",
         ],
       },
       method: {
@@ -94,6 +95,7 @@ export const es = {
   community: {
     page: {
       back: "Volver al mapa",
+      flag: "Bandera de {name}",
       notFound: "No existe esa comunidad.",
     },
     government: {
@@ -164,6 +166,7 @@ export const es = {
         "Indicadores: tablas del INE. Cada dato enlaza a su tabla y dice cuándo se descargó.",
         "Gobiernos: decretos del BOE y de los boletines autonómicos. Cada gobierno y cada partido enlaza a su fuente.",
         "Límites de las comunidades: Instituto Geográfico Nacional, licencia CC BY 4.0.",
+        "Banderas de las comunidades: Wikimedia Commons.",
         "Colores de los partidos: Wikidata.",
         "Noticias: los canales públicos (RSS, mapas de noticias y secciones) de los medios nacionales y regionales seleccionados, respetando sus normas de acceso.",
       ],

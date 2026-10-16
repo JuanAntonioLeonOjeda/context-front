@@ -58,6 +58,14 @@ describe("community page", () => {
     expect(partyNames(listAfter(support))).toEqual(["Comuns", "ERC"]);
     expect(partyNames(listAfter(governing))).toEqual(["PSC"]);
   });
+  it("shows the flag of the community beside its name", async () => {
+    renderAt("/comunidades/ccaa-05");
+
+    expect(await screen.findByRole("img", { name: "Bandera de Canarias" })).toHaveAttribute(
+      "src",
+      expect.stringContaining(".svg"),
+    );
+  });
 
   it("says when a government is caretaker", async () => {
     renderAt("/comunidades/ccaa-05", "canarias-caretaker");
