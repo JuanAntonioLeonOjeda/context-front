@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { es } from "@/i18n/es";
@@ -65,18 +66,40 @@ describe("IndicatorsSection", () => {
     expect(
       within(filled).getByText(/el valor más bajo fue 11,6 % y el más alto, 13,4 %/),
     ).toBeVisible();
-    const table = within(filled).getByRole("table");
+    await userEvent.click(
+      within(filled).getByRole("button", { name: es.community.indicators.viewData }),
+    );
+    const table = within(screen.getByRole("dialog")).getByRole("table");
     expect(within(table).getAllByRole("row")).toHaveLength(1 + series.length);
     expect(await axeViolations(container)).toEqual([]);
   });
 
-  it("offers the table inside a closed details, so the card stays short", () => {
+  it("keeps the table out of the card: a button opens it in a modal window that closes again", async () => {
+    render(
+      <IndicatorsSection community="Canarias" rows={indicatorRows([{ ...withData, series }])} />,
+    );
+    const filled = card("Tasa de paro");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+
+    await userEvent.click(
+      within(filled).getByRole("button", { name: es.community.indicators.viewData }),
+    );
+    const dialog = screen.getByRole("dialog", { name: "Datos: Canarias: Tasa de paro" });
+    expect(dialog).toHaveAttribute("open");
+
+    await userEvent.click(
+      within(dialog).getByRole("button", { name: es.community.indicators.close }),
+    );
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("opens the link to the source in a new tab", () => {
     render(
       <IndicatorsSection community="Canarias" rows={indicatorRows([{ ...withData, series }])} />,
     );
 
-    const details = card("Tasa de paro").querySelector("details");
-    expect(details).not.toBeNull();
-    expect(details).not.toHaveAttribute("open");
+    const link = within(card("Tasa de paro")).getByRole("link", { name: "Tabla 14506 del INE" });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });
 });

@@ -1,8 +1,6 @@
-import { Link } from "react-router";
-
-import { CommunityFlag } from "./CommunityFlag";
 import { es } from "@/i18n/es";
 
+import { CommunityFlag } from "./CommunityFlag";
 import { GovernmentSection } from "./GovernmentSection";
 import { IndicatorsSection } from "./IndicatorsSection";
 import { NewsSection } from "./NewsSection";
@@ -16,9 +14,6 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
 
   return (
     <>
-      <p>
-        <Link to="/">{es.community.page.back}</Link>
-      </p>
       {card.state === "loading" && <p role="status">{es.community.state.loading}</p>}
       {card.state === "error" && (
         <div role="alert">

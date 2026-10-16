@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from "react-router";
 
+import { ExternalLink } from "@/features/shell";
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
@@ -84,7 +85,7 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
 function NewsItemView({ row }: { row: NewsRow }): React.JSX.Element {
   return (
     <li className={styles.newsItem}>
-      <a href={row.url}>{row.headline}</a>
+      <ExternalLink href={row.url}>{row.headline}</ExternalLink>
       <small className={styles.downloaded}>{row.outlet}</small>
     </li>
   );

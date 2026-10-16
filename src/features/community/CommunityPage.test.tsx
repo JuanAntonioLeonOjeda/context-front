@@ -12,13 +12,6 @@ function renderAt(path: string, community: Scenario = "canarias"): HTMLElement {
   return renderApp(path, { community });
 }
 
-/** The `<ul>` that follows a heading of the card. */
-function listAfter(heading: HTMLElement): HTMLElement {
-  const next = heading.nextElementSibling;
-  if (!(next instanceof HTMLElement)) throw new Error("no list after the heading");
-  return next;
-}
-
 /** Short names of the parties in a list, ignoring the "Fuente" link next to each. */
 function partyNames(list: HTMLElement): string[] {
   return within(list)
@@ -35,13 +28,14 @@ describe("community page", () => {
     expect(within(government).getByText(/Presidencia: Fernando Clavijo Batlle/)).toBeVisible();
     expect(within(government).getByText(/Desde el 14 de julio de 2023/)).toBeVisible();
     expect(
-      within(government).getByRole("link", { name: es.community.government.sourceOfTerm }),
+      within(government).getByRole("link", { name: /Desde el 14 de julio de 2023/ }),
     ).toHaveAttribute("href", expect.stringContaining("boe.es"));
-    const list = listAfter(
-      within(government).getByRole("heading", { name: es.community.government.governing }),
-    );
+    const list = within(government).getByRole("list", { name: es.community.government.governing });
     expect(partyNames(list)).toEqual(["CC", "PP"]);
-    expect(within(list).getByRole("link", { name: "Fuente: CC" })).toBeVisible();
+    // Each seal is a link to the party's own source.
+    const source = within(government).getByRole("link", { name: "Fuente de CC" });
+    expect(source).toHaveAttribute("target", "_blank");
+    expect(source).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });
 
   it("lists the supporters of the investiture apart from the parties that govern", async () => {
@@ -49,22 +43,12 @@ describe("community page", () => {
 
     const government = await screen.findByRole("region", { name: es.community.government.title });
     expect(within(government).getByText(/Presidencia: Salvador Illa Roca/)).toBeVisible();
-    const support = within(government).getByRole("heading", {
-      name: es.community.government.support,
-    });
-    const governing = within(government).getByRole("heading", {
+    const support = within(government).getByRole("list", { name: es.community.government.support });
+    const governing = within(government).getByRole("list", {
       name: es.community.government.governing,
     });
-    expect(partyNames(listAfter(support))).toEqual(["Comuns", "ERC"]);
-    expect(partyNames(listAfter(governing))).toEqual(["PSC"]);
-  });
-  it("shows the flag of the community beside its name", async () => {
-    renderAt("/comunidades/ccaa-05");
-
-    expect(await screen.findByRole("img", { name: "Bandera de Canarias" })).toHaveAttribute(
-      "src",
-      expect.stringContaining(".svg"),
-    );
+    expect(partyNames(support)).toEqual(["Comuns", "ERC"]);
+    expect(partyNames(governing)).toEqual(["PSC"]);
   });
 
   it("says when a government is caretaker", async () => {
@@ -72,6 +56,15 @@ describe("community page", () => {
 
     expect(await screen.findByText(es.community.government.caretaker)).toBeVisible();
     expect(screen.getByText(/Presidencia: Ángel Víctor Torres Pérez/)).toBeVisible();
+  });
+
+  it("shows the flag of the community beside its name", async () => {
+    renderAt("/comunidades/ccaa-05");
+
+    expect(await screen.findByRole("img", { name: "Bandera de Canarias" })).toHaveAttribute(
+      "src",
+      expect.stringContaining(".svg"),
+    );
   });
 
   it("shows the five INE indicators as cards with value, period, chart and source link", async () => {
@@ -143,7 +136,7 @@ describe("community page", () => {
     await user.click(await findMapLink("Canarias: gobiernan CC y PP"));
     expect(await screen.findByRole("heading", { level: 1, name: "Canarias" })).toBeVisible();
 
-    await user.click(screen.getByRole("link", { name: es.community.page.back }));
+    await user.click(screen.getByRole("link", { name: es.app.shell.nav.map }));
     expect(await findMapLink("Galicia: gobierna PP")).toBeVisible();
   });
 
@@ -174,7 +167,7 @@ describe("community page", () => {
     await screen.findByRole("heading", { level: 1, name: "Canarias" });
     expect(screen.getByRole("main")).toHaveFocus();
 
-    await user.click(screen.getByRole("link", { name: es.community.page.back }));
+    await user.click(screen.getByRole("link", { name: es.app.shell.nav.map }));
     await findMapLink("Galicia: gobierna PP");
     expect(screen.getByRole("main")).toHaveFocus();
   });

@@ -1,7 +1,16 @@
 /* The name and the government: the header of the page. Below it the indicators (the hero: a row
    of charts that scrolls when they do not fit) and the news. One column, top to bottom. */
 .header {
-  margin-bottom: var(--space-8);
+  display: grid;
+  gap: var(--space-3) var(--space-8);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 48rem) {
+  .header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
 }
 
 .title {

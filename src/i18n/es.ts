@@ -94,9 +94,8 @@ export const es = {
   },
   community: {
     page: {
-      back: "Volver al mapa",
-      flag: "Bandera de {name}",
       notFound: "No existe esa comunidad.",
+      flag: "Bandera de {name}",
     },
     government: {
       title: "Gobierno",
@@ -105,9 +104,7 @@ export const es = {
       caretaker: "Gobierno en funciones.",
       governing: "Partidos que gobiernan",
       support: "Partidos que apoyaron la investidura sin entrar en el gobierno",
-      source: "Fuente",
-      sourceOf: "Fuente: {party}",
-      sourceOfTerm: "Fuente del nombramiento",
+      sourceOf: "Fuente de {party}",
     },
     indicators: {
       title: "Datos del INE",
@@ -122,6 +119,8 @@ export const es = {
         next: "Indicadores siguientes",
       },
       viewData: "Ver los datos de la gráfica",
+      dataTitle: "Datos: {name}",
+      close: "Cerrar",
       noValue: "Sin dato",
       noPeriod: "—",
       sourceLink: "Tabla {id} del INE",
@@ -166,8 +165,8 @@ export const es = {
         "Indicadores: tablas del INE. Cada dato enlaza a su tabla y dice cuándo se descargó.",
         "Gobiernos: decretos del BOE y de los boletines autonómicos. Cada gobierno y cada partido enlaza a su fuente.",
         "Límites de las comunidades: Instituto Geográfico Nacional, licencia CC BY 4.0.",
-        "Banderas de las comunidades: Wikimedia Commons.",
         "Colores de los partidos: Wikidata.",
+        "Banderas de las comunidades: Wikimedia Commons.",
         "Noticias: los canales públicos (RSS, mapas de noticias y secciones) de los medios nacionales y regionales seleccionados, respetando sus normas de acceso.",
       ],
     },

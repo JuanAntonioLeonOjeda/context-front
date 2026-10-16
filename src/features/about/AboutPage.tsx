@@ -1,4 +1,4 @@
-import { REPOSITORIES } from "@/features/shell";
+import { ExternalLink, REPOSITORIES } from "@/features/shell";
 import { es } from "@/i18n/es";
 
 import styles from "./AboutPage.module.css";
@@ -55,10 +55,10 @@ export function AboutPage(): React.JSX.Element {
         <p>{about.project.text}</p>
         <ul className={styles.list}>
           <li>
-            <a href={REPOSITORIES.back}>{about.project.back}</a>
+            <ExternalLink href={REPOSITORIES.back}>{about.project.back}</ExternalLink>
           </li>
           <li>
-            <a href={REPOSITORIES.front}>{about.project.front}</a>
+            <ExternalLink href={REPOSITORIES.front}>{about.project.front}</ExternalLink>
           </li>
         </ul>
       </Section>
