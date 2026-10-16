@@ -6,7 +6,7 @@
 export const es = {
   app: {
     shell: {
-      name: "Contexto autonómico",
+      name: "InContext",
       skipToContent: "Saltar al contenido",
       nav: { label: "Principal", map: "Mapa", about: "Cómo funciona" },
       theme: {
@@ -156,7 +156,7 @@ export const es = {
     page: {
       title: "Cómo funciona",
       intro:
-        "Contexto autonómico reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, clasificadas por sector.",
+        "InContext reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, clasificadas por sector.",
     },
     data: {
       title: "De dónde salen los datos",

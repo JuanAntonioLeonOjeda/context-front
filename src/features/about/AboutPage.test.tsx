@@ -14,7 +14,7 @@ describe("how it works page", () => {
       "aria-current",
       "page",
     );
-    expect(document.title).toBe("Cómo funciona · Contexto autonómico");
+    expect(document.title).toBe("Cómo funciona · InContext");
   });
 
   it("never describes a responsible party for a news item", async () => {
