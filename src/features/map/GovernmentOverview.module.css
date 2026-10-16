@@ -208,11 +208,15 @@
   pointer-events: none;
 }
 
-/* The logo goes straight on the panel, no tile behind it. */
+/* No tile in light mode; in dark mode a light one keeps the dark logos readable, the same
+   for every party. */
 .logo {
   display: block;
   height: 1.75rem;
   max-width: 100%;
+  padding: 0.125rem 0.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-logo-backing);
   object-fit: contain;
   object-position: left;
 }
