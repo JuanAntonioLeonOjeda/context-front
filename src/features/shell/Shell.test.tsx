@@ -37,25 +37,21 @@ describe("theme button", () => {
     renderApp("/");
 
     const button = await screen.findByRole("button", { name: /Tema de color/ });
-    expect(button).toHaveAccessibleName(
-      "Tema de color: según el sistema. Pulsa para cambiar a claro.",
-    );
+    expect(button).toHaveAccessibleName("Tema de color: claro. Pulsa para cambiar a oscuro.");
   });
 
-  it("goes through light, dark and system, applying and remembering each", async () => {
+  it("switches between light and dark, applying and remembering each", async () => {
     const user = userEvent.setup();
     renderApp("/");
     const button = await screen.findByRole("button", { name: /Tema de color/ });
 
     await user.click(button);
-    expect(document.documentElement).toHaveAttribute("data-theme", "light");
-    await user.click(button);
     expect(document.documentElement).toHaveAttribute("data-theme", "dark");
     expect(window.localStorage.getItem(THEME_KEY)).toBe("dark");
-    expect(button).toHaveAccessibleName(/oscuro\. Pulsa para cambiar a según el sistema/);
+    expect(button).toHaveAccessibleName(/oscuro\. Pulsa para cambiar a claro/);
     await user.click(button);
-    expect(document.documentElement).not.toHaveAttribute("data-theme");
-    expect(window.localStorage.getItem(THEME_KEY)).toBeNull();
+    expect(document.documentElement).toHaveAttribute("data-theme", "light");
+    expect(window.localStorage.getItem(THEME_KEY)).toBe("light");
   });
 
   it("starts from the stored choice", async () => {

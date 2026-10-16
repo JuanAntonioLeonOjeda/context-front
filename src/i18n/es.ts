@@ -11,7 +11,6 @@ export const es = {
       nav: { label: "Principal", map: "Mapa", about: "Cómo funciona" },
       theme: {
         label: "Tema de color: {current}. Pulsa para cambiar a {next}.",
-        system: "según el sistema",
         light: "claro",
         dark: "oscuro",
       },
