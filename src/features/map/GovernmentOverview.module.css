@@ -183,8 +183,41 @@
 }
 
 .partyName {
+  position: relative;
   font-weight: 700;
   overflow-wrap: anywhere;
+}
+
+/* The full name of the party, as a tooltip on hover or keyboard focus (the button already
+   carries it as its accessible name, so the tooltip is only for the eyes). */
+.row:hover .partyName::after,
+.row:focus-visible .partyName::after {
+  content: attr(data-tip);
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  width: max-content;
+  max-width: 18rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  pointer-events: none;
+}
+
+/* The tile keeps a logo readable in dark mode, whatever its colours. */
+.logo {
+  display: block;
+  height: 1.75rem;
+  max-width: 100%;
+  padding: 0.125rem 0.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-logo-tile);
+  object-fit: contain;
+  object-position: left;
 }
 
 .units {
