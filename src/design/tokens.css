@@ -82,7 +82,7 @@
     --color-on-party-dark: #14202a;
     --color-on-party-light: #ffffff;
     --color-logo-tile: #ffffff;
-    --color-logo-backing: #c3ccd3;
+    --color-logo-backing: var(--color-accent);
     --color-map-outline-outer: #e7edf1;
     --color-map-outline-inner: #0f1a22;
     --color-map-separator: #ffffff;
@@ -110,7 +110,7 @@
   --color-on-party-dark: #14202a;
   --color-on-party-light: #ffffff;
   --color-logo-tile: #ffffff;
-  --color-logo-backing: #c3ccd3;
+  --color-logo-backing: var(--color-accent);
   --color-map-outline-outer: #e7edf1;
   --color-map-outline-inner: #0f1a22;
   --color-map-separator: #ffffff;
