@@ -29,7 +29,7 @@
      contrasts with any party colour; the stripe separator is light in both themes. */
   --color-on-party-dark: #14202a; /* text over a light party colour */
   --color-on-party-light: #ffffff; /* text over a dark party colour */
-  --color-logo-tile: #ffffff; /* the tile under a party logo, white in light and dark */
+  --color-logo-tile: transparent; /* under a party logo: none in light, white in dark so dark logos stay readable */
   --color-map-outline-outer: #14202a;
   --color-map-outline-inner: #ffffff;
   --color-map-separator: #ffffff;

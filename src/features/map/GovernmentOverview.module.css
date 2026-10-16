@@ -208,7 +208,7 @@
   pointer-events: none;
 }
 
-/* The tile keeps a logo readable in dark mode, whatever its colours. */
+/* No tile in light mode; in dark mode a white one keeps dark logos readable. */
 .logo {
   display: block;
   height: 1.75rem;
