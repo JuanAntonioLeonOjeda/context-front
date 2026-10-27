@@ -48,6 +48,19 @@ pnpm build
 pnpm api:generate     # regenerate the typed client from the backend's OpenAPI
 ```
 
+### Rebuild the Docker image after every change to the app
+
+The author looks at the app through the container (`datos-front-1`, served on `WEB_PORT`,
+3000 by default), which runs the image built at that moment: `pnpm dev` or green tests do not
+update it. After any change in `src/`, styles, `index.html`, `nginx.conf` or dependencies, and
+before saying the work is done, rebuild and restart the service from the sibling repo:
+
+```bash
+docker compose -p datos -f ../back/docker-compose.yml --profile app up -d --build front
+```
+
+Say in the final message that the image was rebuilt (or why it was not).
+
 ## Secrets and configuration
 
 - Only public configuration reaches the browser (`VITE_*`): the API base URL. Anything

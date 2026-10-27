@@ -151,6 +151,11 @@ export const es = {
       error: "No hemos podido cargar las noticias.",
       retry: "Volver a intentarlo",
       outletAndTime: "{outlet}, {time}",
+      carousel: {
+        label: "Noticias del {date}",
+        previous: "Noticias anteriores",
+        next: "Noticias siguientes",
+      },
     },
   },
   about: {
