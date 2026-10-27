@@ -53,7 +53,7 @@ export interface NodeText {
   link: string | null; // "Relación con la anterior: 0,77", null for the root
   first: TreeArticle; // the first article published: the one the card shows
   rest: TreeArticle[]; // the others, as the API sends them (by outlet id)
-  moreOutlets: string; // "2 medios más", or "" when there is no other article
+  moreOutlets: string; // "2 medios más", "1 noticia más de este medio", or "" when there is no other article
 }
 
 /** The article published first; at the same instant, the one of the lower outlet id. */
@@ -63,6 +63,22 @@ export function firstArticle(articles: readonly TreeArticle[]): TreeArticle {
   );
   if (!first) throw new Error("a story has at least one article");
   return first;
+}
+
+/** "2 medios más"; when every other article is from the first one's outlet, says so instead. */
+function moreText(articles: number, outlets: number): string {
+  if (articles === 0) return "";
+  if (outlets === 0) {
+    return formatMessage(
+      articles === 1 ? es.stories.tree.sameOutletOne : es.stories.tree.sameOutlet,
+      {
+        count: String(articles),
+      },
+    );
+  }
+  return formatMessage(outlets === 1 ? es.stories.tree.moreOne : es.stories.tree.more, {
+    count: String(outlets),
+  });
 }
 
 export function nodeText(node: TreeNodeData): NodeText {
@@ -83,11 +99,6 @@ export function nodeText(node: TreeNodeData): NodeText {
           }),
     first,
     rest,
-    moreOutlets:
-      rest.length === 0
-        ? ""
-        : formatMessage(otherOutlets.size === 1 ? es.stories.tree.moreOne : es.stories.tree.more, {
-            count: String(Math.max(otherOutlets.size, 1)),
-          }),
+    moreOutlets: moreText(rest.length, otherOutlets.size),
   };
 }

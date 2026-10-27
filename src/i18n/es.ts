@@ -184,6 +184,8 @@ export const es = {
       regionLabel: "Árbol de historias relacionadas, se desplaza en horizontal",
       more: "{count} medios más",
       moreOne: "1 medio más",
+      sameOutlet: "{count} noticias más de este medio",
+      sameOutletOne: "1 noticia más de este medio",
       unfold: "Desplegar ({more})",
       fold: "Plegar",
       moreHint: "Pulsa «Desplegar» en una tarjeta para ver el titular de los demás medios.",
@@ -228,7 +230,7 @@ export const es = {
     limits: {
       title: "Qué no hace todavía",
       items: [
-        "El sector lo asigna un modelo propio y la comunidad y el nivel de gobierno, reglas automáticas. Se midieron con 200 noticias etiquetadas a mano que nunca se usaron para entrenar, y pueden equivocarse, por ejemplo tomando por política una noticia que no lo es.",
+        "El sector lo asigna un modelo propio y la comunidad y el nivel de gobierno, reglas automáticas. Se midieron con 200 noticias etiquetadas a mano que nunca se usaron para entrenar, y pueden equivocarse, por ejemplo tomando por política una noticia que no lo es. Con esa muestra no se puede afirmar que el modelo acierte más que las reglas en el sector.",
         "Muchas noticias salen «Sin determinar», porque pocas nombran un gobierno.",
         "Los gobiernos locales, como ayuntamientos y cabildos, todavía no se modelan.",
       ],
