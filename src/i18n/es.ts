@@ -139,6 +139,17 @@ export const es = {
       error: "No hemos podido cargar esta comunidad.",
       retry: "Volver a intentarlo",
     },
+    trees: {
+      title: "Árbol de noticias",
+      sectorNav: "Sector del árbol de noticias",
+      note: "Cada elemento es un árbol de noticias relacionadas y muestra la más reciente de esta comunidad en el sector. Pulsa sobre ella para ver el árbol completo.",
+      empty: "No hay árboles de noticias de {sector} en esta comunidad.",
+      loading: "Cargando los árboles…",
+      error: "No hemos podido cargar los árboles de noticias.",
+      retry: "Volver a intentarlo",
+      carousel: { label: "Árboles de noticias del {date}, se desplazan en horizontal" },
+      panelLabel: "Árbol de noticias relacionadas con «{headline}»",
+    },
     news: {
       title: "Noticias",
       sectorNav: "Sector de las noticias",
@@ -147,8 +158,8 @@ export const es = {
         legend: "Fechas",
         from: "Desde",
         to: "Hasta",
-        reset: "Últimos 3 días",
-        note: "Se muestran los últimos 3 días. Puedes elegir otras fechas, hasta 31 días seguidos.",
+        reset: "Última semana",
+        note: "Se muestra la última semana. Puedes elegir otras fechas, hasta 31 días seguidos.",
       },
       method:
         "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
@@ -160,11 +171,6 @@ export const es = {
       source: "Ver fuente",
       sourceOf: "Ver fuente de «{headline}» (se abre en otra pestaña)",
       tree: "Ver árbol",
-      filter: {
-        treeOnly: "Solo con árbol",
-      },
-      noTree: "No hay árbol de noticias para esta selección.",
-      emptyTree: "No hay noticias de {sector} con árbol en este periodo.",
       treeOf: "Ver árbol de noticias relacionadas con «{headline}»",
       carousel: {
         label: "Noticias del {date}",

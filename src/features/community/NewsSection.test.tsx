@@ -10,6 +10,11 @@ import { serveCommunity } from "@/test/community";
 import { newsLoaded } from "@/test/news";
 import { server } from "@/test/server";
 
+async function sectorLink(name: string): Promise<HTMLElement> {
+  const nav = await screen.findByRole("navigation", { name: es.community.news.sectorNav });
+  return within(nav).getByRole("link", { name });
+}
+
 async function newsSection(): Promise<HTMLElement> {
   return screen.findByRole("region", { name: es.community.news.title });
 }
@@ -83,21 +88,19 @@ describe("news of a community", () => {
     );
     const user = userEvent.setup();
 
-    await user.click(await screen.findByRole("link", { name: "Vivienda" }));
+    await user.click(await sectorLink("Vivienda"));
 
     expect(await screen.findByText(/No hay noticias de vivienda/)).toBeVisible();
     expect(asked).toEqual(["housing"]);
-    expect(screen.getByRole("link", { name: "Vivienda" })).toHaveAttribute("aria-current", "page");
-    expect(screen.getByRole("link", { name: "Vivienda" })).toHaveFocus();
+    const housing = await sectorLink("Vivienda");
+    expect(housing).toHaveAttribute("aria-current", "page");
+    expect(housing).toHaveFocus();
   });
 
   it("falls back to the first sector when the URL names one that does not exist", async () => {
     renderApp("/comunidades/ccaa-05?sector=transporte");
 
-    expect(await screen.findByRole("link", { name: "Educación" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
+    expect(await sectorLink("Educación")).toHaveAttribute("aria-current", "page");
   });
 
   it("says a sector has no news instead of leaving a blank", async () => {
@@ -123,7 +126,7 @@ describe("news of a community", () => {
         HttpResponse.json({ detail: "boom" }, { status: 500 }),
       ),
     );
-    await user.click(await screen.findByRole("link", { name: "Sanidad" }));
+    await user.click(await sectorLink("Sanidad"));
 
     const alert = await screen.findByRole("alert");
     expect(alert).toHaveTextContent(es.community.news.error);
@@ -144,57 +147,7 @@ describe("news of a community", () => {
   });
 });
 
-describe("filter of the news with a tree", () => {
-  it("is a switch, off at first, when the selection has news with a tree", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
-
-    const toggle = await screen.findByRole("switch", { name: es.community.news.filter.treeOnly });
-    expect(toggle).toHaveAttribute("aria-checked", "false");
-    expect(screen.queryByText(/noticias tienen un árbol/)).toBeNull();
-    expect(screen.queryByText(es.community.news.noTree)).toBeNull();
-  });
-
-  it("shows no switch, only that there is no tree, when the selection has none", async () => {
-    renderApp("/comunidades/ccaa-09", { community: "cataluna" });
-
-    expect(await screen.findByText(es.community.news.noTree)).toBeVisible();
-    expect(screen.queryByRole("switch")).toBeNull();
-  });
-
-  it("shows the news without filtering when ?arbol=1 is left in a selection with no tree", async () => {
-    renderApp("/comunidades/ccaa-09?arbol=1", { community: "cataluna" });
-
-    expect(await screen.findByText(es.community.news.noTree)).toBeVisible();
-    expect(screen.queryByRole("switch")).toBeNull();
-    expect(screen.getByText(/No hay noticias de educación en este periodo/)).toBeVisible();
-  });
-
-  it("shows only the news with a tree when it is on, keeps it in the URL and turns off again", async () => {
-    const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05?sector=health");
-    const section = await newsSection();
-    await newsLoaded();
-    expect(section.querySelectorAll("ol > li")).toHaveLength(11);
-
-    await user.click(within(section).getByRole("switch"));
-
-    expect(within(section).getByRole("switch")).toHaveAttribute("aria-checked", "true");
-    expect(section.querySelectorAll("ol > li")).toHaveLength(1);
-    expect(within(section).getAllByRole("link", { name: /Ver árbol/ })).toHaveLength(1);
-
-    await user.click(within(section).getByRole("switch"));
-
-    expect(section.querySelectorAll("ol > li")).toHaveLength(11);
-  });
-
-  it("starts on when the URL says so and keeps the sector when it is toggled", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health&arbol=1");
-
-    const toggle = await screen.findByRole("switch");
-    expect(toggle).toHaveAttribute("aria-checked", "true");
-    expect(screen.getByRole("link", { name: "Sanidad" })).toHaveAttribute("aria-current", "page");
-  });
-
+describe("actions of a news item", () => {
   it("gives each news item two actions with an icon that is hidden from assistive technology", async () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
@@ -208,13 +161,6 @@ describe("filter of the news with a tree", () => {
     });
     expect(tree.querySelector("svg[aria-hidden='true']")).not.toBeNull();
     expect(tree).toHaveTextContent("Ver árbol");
-  });
-
-  it("has no axe violations with the switch on", async () => {
-    const container = renderApp("/comunidades/ccaa-05?sector=health&arbol=1");
-
-    await newsLoaded();
-    expect(await axeViolations(container)).toEqual([]);
   });
 });
 
@@ -287,14 +233,13 @@ describe("range of days of the news", () => {
     });
   });
 
-  it("reads the days from the URL and keeps the sector and the switch", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health&arbol=1&desde=2026-10-05&hasta=2026-10-07");
+  it("reads the days from the URL and keeps the sector", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health&desde=2026-10-05&hasta=2026-10-07");
 
     await newsLoaded();
     expect(screen.getByLabelText(es.community.news.range.from)).toHaveValue("2026-10-05");
     expect(screen.getByLabelText(es.community.news.range.to)).toHaveValue("2026-10-07");
-    expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "true");
-    expect(screen.getByRole("link", { name: "Sanidad" })).toHaveAttribute("aria-current", "page");
+    expect(await sectorLink("Sanidad")).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("button", { name: es.community.news.range.reset })).toBeVisible();
   });
 

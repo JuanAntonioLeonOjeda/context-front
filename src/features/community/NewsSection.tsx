@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
 import { ExternalLink } from "@/features/shell";
@@ -7,7 +8,9 @@ import { formatMessage } from "@/i18n/format";
 
 import { Carousel } from "./Carousel";
 import { searchWith } from "./search-params";
-import { groupByDay, newsRows, withTree, type NewsRow } from "./news-card";
+import { groupByDay, newsRows, type NewsRow } from "./news-card";
+import { EmptyState } from "./EmptyState";
+import { SectionHeading } from "./SectionHeading";
 import { SourceIcon, TreeIcon } from "./icons";
 import { SECTORS, type Sector } from "./news-api";
 import { dayOf, withBound } from "./news-range";
@@ -16,7 +19,6 @@ import { useCommunityNews } from "./useCommunityNews";
 import styles from "./CommunityCard.module.css";
 
 const DEFAULT_SECTOR: Sector = SECTORS[0];
-const TREE_ONLY_PARAM = "arbol";
 const FROM_PARAM = "desde";
 const TO_PARAM = "hasta";
 
@@ -29,15 +31,8 @@ function sectorOf(value: string | null): Sector {
 export function NewsSection({ territoryId }: { territoryId: string }): React.JSX.Element {
   const [params, setParams] = useSearchParams();
   const sector = sectorOf(params.get("sector"));
-  // `?arbol=1` shows only the news that belong to a tree of related news; it stays in the URL.
-  const treeOnly = params.get(TREE_ONLY_PARAM) === "1";
-  const toggleTreeOnly = (): void => {
-    const next = new URLSearchParams(params);
-    if (treeOnly) next.delete(TREE_ONLY_PARAM);
-    else next.set(TREE_ONLY_PARAM, "1");
-    setParams(next, { preventScrollReset: true });
-  };
-  // The range of days is in the URL too; without it the API answers the last three days.
+  const [open, setOpen] = useState(true);
+  // The range of days is in the URL too; without it the API answers the last week.
   const range = { from: dayOf(params.get(FROM_PARAM)), to: dayOf(params.get(TO_PARAM)) };
   const news = useCommunityNews(territoryId, sector, range);
   // The inputs show the days the API resolved when none was chosen, so the range is always visible.
@@ -59,113 +54,106 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
   };
   const sectorName = es.community.news.sectors[sector];
 
-  // The switch exists only where there is something to filter: a selection with no tree says so
-  // instead, and a `?arbol=1` left in the URL then filters nothing.
-  const hasTree = news.state === "ready" && withTree(news.news.items).length > 0;
-  const filterOn = treeOnly && hasTree;
-  const shown =
-    news.state === "ready" ? (filterOn ? withTree(news.news.items) : news.news.items) : [];
+  const shown = news.state === "ready" ? news.news.items : [];
 
   return (
     <section aria-labelledby="news-title" className={styles.newsSection}>
-      <h2 id="news-title">{es.community.news.title}</h2>
-      <nav aria-label={es.community.news.sectorNav}>
-        <ul className={styles.sectors}>
-          {SECTORS.map((s) => (
-            <li key={s}>
-              <Link
-                to={{ search: searchWith(params, { sector: s }) }}
-                preventScrollReset
-                aria-current={s === sector ? "page" : undefined}
-              >
-                {es.community.news.sectors[s]}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      {hasTree && (
-        <button
-          type="button"
-          role="switch"
-          aria-checked={filterOn}
-          className={styles.switch}
-          onClick={toggleTreeOnly}
-        >
-          <span className={styles.switchTrack} aria-hidden="true" />
-          {es.community.news.filter.treeOnly}
-        </button>
-      )}
-      <fieldset className={styles.dates}>
-        <legend>{es.community.news.range.legend}</legend>
-        <label>
-          {es.community.news.range.from}
-          <input
-            type="date"
-            value={shownFrom ?? ""}
-            onChange={(event) => {
-              setBound("from", event.target.value);
-            }}
-          />
-        </label>
-        <label>
-          {es.community.news.range.to}
-          <input
-            type="date"
-            value={shownTo ?? ""}
-            onChange={(event) => {
-              setBound("to", event.target.value);
-            }}
-          />
-        </label>
-        {(range.from !== null || range.to !== null) && (
-          <button type="button" onClick={resetRange}>
-            {es.community.news.range.reset}
-          </button>
-        )}
-      </fieldset>
-      <p className={styles.newsNote}>{es.community.news.range.note}</p>
-      <p className={styles.newsNote}>{es.community.news.method}</p>
-      {news.state === "error" && (
-        <div role="alert">
-          <p>{es.community.news.error}</p>
-          <button type="button" onClick={news.retry}>
-            {es.community.news.retry}
-          </button>
-        </div>
-      )}
-      {news.state === "loading" && <p role="status">{es.community.news.loading}</p>}
-      {news.state === "ready" && (
+      <SectionHeading
+        id="news-title"
+        title={es.community.news.title}
+        open={open}
+        onToggle={() => {
+          setOpen(!open);
+        }}
+      />
+      {open && (
         <>
-          {!hasTree && <p className={styles.newsNote}>{es.community.news.noTree}</p>}
-          {shown.length === 0 ? (
-            <p>
-              {formatMessage(filterOn ? es.community.news.emptyTree : es.community.news.empty, {
-                sector: sectorName.toLowerCase(),
-              })}
-            </p>
-          ) : (
-            <div className={styles.timeline}>
-              {groupByDay(newsRows(shown)).map((day) => (
-                <section key={day.day} aria-labelledby={`news-day-${day.day}`}>
-                  <Carousel
-                    heading={
-                      <h3 id={`news-day-${day.day}`} className={styles.newsDay}>
-                        {day.label}
-                      </h3>
-                    }
-                    label={formatMessage(es.community.news.carousel.label, { date: day.label })}
-                    buttonLabels={es.community.news.carousel}
+          <nav aria-label={es.community.news.sectorNav}>
+            <ul className={styles.sectors}>
+              {SECTORS.map((s) => (
+                <li key={s}>
+                  <Link
+                    to={{ search: searchWith(params, { sector: s }) }}
+                    preventScrollReset
+                    aria-current={s === sector ? "page" : undefined}
                   >
-                    <ol className={styles.news}>
-                      {day.rows.map((row) => (
-                        <NewsItemView key={row.key} row={row} />
-                      ))}
-                    </ol>
-                  </Carousel>
-                </section>
+                    {es.community.news.sectors[s]}
+                  </Link>
+                </li>
               ))}
+            </ul>
+          </nav>
+          <fieldset className={styles.dates}>
+            <legend>{es.community.news.range.legend}</legend>
+            <label>
+              {es.community.news.range.from}
+              <input
+                type="date"
+                value={shownFrom ?? ""}
+                onChange={(event) => {
+                  setBound("from", event.target.value);
+                }}
+              />
+            </label>
+            <label>
+              {es.community.news.range.to}
+              <input
+                type="date"
+                value={shownTo ?? ""}
+                onChange={(event) => {
+                  setBound("to", event.target.value);
+                }}
+              />
+            </label>
+            {(range.from !== null || range.to !== null) && (
+              <button type="button" onClick={resetRange}>
+                {es.community.news.range.reset}
+              </button>
+            )}
+          </fieldset>
+          <p className={styles.newsNote}>{es.community.news.range.note}</p>
+          <p className={styles.newsNote}>{es.community.news.method}</p>
+          {news.state === "error" && (
+            <div role="alert">
+              <p>{es.community.news.error}</p>
+              <button type="button" onClick={news.retry}>
+                {es.community.news.retry}
+              </button>
             </div>
+          )}
+          {news.state === "loading" && <p role="status">{es.community.news.loading}</p>}
+          {news.state === "ready" && (
+            <>
+              {shown.length === 0 ? (
+                <EmptyState>
+                  {formatMessage(es.community.news.empty, {
+                    sector: sectorName.toLowerCase(),
+                  })}
+                </EmptyState>
+              ) : (
+                <div className={styles.timeline}>
+                  {groupByDay(newsRows(shown)).map((day) => (
+                    <section key={day.day} aria-labelledby={`news-day-${day.day}`}>
+                      <Carousel
+                        heading={
+                          <h3 id={`news-day-${day.day}`} className={styles.newsDay}>
+                            {day.label}
+                          </h3>
+                        }
+                        label={formatMessage(es.community.news.carousel.label, { date: day.label })}
+                        buttonLabels={es.community.news.carousel}
+                      >
+                        <ol className={styles.news}>
+                          {day.rows.map((row) => (
+                            <NewsItemView key={row.key} row={row} />
+                          ))}
+                        </ol>
+                      </Carousel>
+                    </section>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </>
       )}

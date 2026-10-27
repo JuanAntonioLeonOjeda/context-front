@@ -52,7 +52,7 @@ export async function fetchCommunityNews(
   sector: Sector,
   range: NewsRange,
 ): Promise<CommunityNews> {
-  // Without dates the API answers its default: the last three days.
+  // Without dates the API answers its default: the last week.
   const { data, response } = await api.GET("/communities/{territory_id}/news", {
     params: {
       path: { territory_id: territoryId },

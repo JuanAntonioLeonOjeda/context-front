@@ -370,6 +370,60 @@
         }
       }
     },
+    "/communities/{territory_id}/trees": {
+      "get": {
+        "tags": [
+          "news"
+        ],
+        "summary": "Trees",
+        "description": "The trees of related stories that reach this community and sector, one item per tree: the newest\nnews of the tree that the active classifier placed there. No dates filter them. `tree_story_id` of\neach item is the story to ask `/stories/{story_id}/tree` for, which answers the whole tree.\n\n**Order:** publication time of that news, newest first; ties by outlet id. The order never depends\non an outlet's size, audience or line. No item names a party (ADR-0018).",
+        "operationId": "trees_communities__territory_id__trees_get",
+        "parameters": [
+          {
+            "name": "territory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Territory Id"
+            }
+          },
+          {
+            "name": "sector",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "A sector id: education, health or housing",
+              "title": "Sector"
+            },
+            "description": "A sector id: education, health or housing"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityTreesOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/communities/{territory_id}/stories": {
       "get": {
         "tags": [
@@ -647,6 +701,32 @@
           "stories"
         ],
         "title": "CommunityStoriesOut"
+      },
+      "CommunityTreesOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "sector_id": {
+            "type": "string",
+            "title": "Sector Id"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/NewsItemOut"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "territory_id",
+          "sector_id",
+          "items"
+        ],
+        "title": "CommunityTreesOut"
       },
       "ComponentStatus": {
         "type": "string",
