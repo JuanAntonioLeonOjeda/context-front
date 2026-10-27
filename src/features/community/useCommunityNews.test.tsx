@@ -9,11 +9,13 @@ import { server } from "@/test/server";
 import type { Sector } from "./news-api";
 import { useCommunityNews } from "./useCommunityNews";
 
+const NO_RANGE = { from: null, to: null };
+
 describe("useCommunityNews", () => {
   it("loads the news of a community and sector, newest first as the API sends them", async () => {
     serveCommunity();
 
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 
@@ -31,7 +33,7 @@ describe("useCommunityNews", () => {
 
   it("never carries a lead or a party: the mapped items hold only outlet, headline, link and date", async () => {
     serveCommunity();
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 
@@ -52,7 +54,7 @@ describe("useCommunityNews", () => {
   it("is ready with no items for a sector without news", async () => {
     serveCommunity("cataluna");
 
-    const { result } = renderHook(() => useCommunityNews("ccaa-09", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-09", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 
@@ -73,6 +75,7 @@ describe("useCommunityNews", () => {
           territory_id: "ccaa-05",
           sector_id: sector,
           since: "2026-09-15",
+          until: "2026-10-14",
           items: [],
         });
       }),
@@ -82,7 +85,7 @@ describe("useCommunityNews", () => {
     }
 
     const { result, rerender } = renderHook(
-      ({ sector }: Props) => useCommunityNews("ccaa-05", sector),
+      ({ sector }: Props) => useCommunityNews("ccaa-05", sector, NO_RANGE),
       { wrapper: queryWrapper(), initialProps: { sector: "housing" } },
     );
     await waitFor(() => {
@@ -105,7 +108,7 @@ describe("useCommunityNews", () => {
         HttpResponse.json({ detail: "boom" }, { status: 500 }),
       ),
     );
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 
@@ -127,7 +130,7 @@ describe("useCommunityNews", () => {
       ),
     );
 
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 

@@ -2,5 +2,6 @@
   "territory_id": "ccaa-09",
   "sector_id": "health",
   "since": "2026-09-15",
-  "items": []
+  "items": [],
+  "until": "2026-10-14"
 }

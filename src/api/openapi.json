@@ -284,7 +284,7 @@
           "news"
         ],
         "summary": "Community",
-        "description": "The news of the last 30 days (today included, Spain time) that the active classifier\nplaced in this community and sector, at most 5 per outlet (its newest).\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nNo item names a party (ADR-0018): who governs the community is in\n`/communities/{territory_id}/governments`.",
+        "description": "The news of a range of days (Spain time) that the active classifier placed in this community and\nsector. Without dates: the last 3 days, today included. With `date_from` and/or\n`date_to` (ISO dates, both included): that range, of at most 31 days. At most\n5 per outlet and day (its newest).\n\nNothing is deleted: any day the collector ran can be asked for. A day it did not run, or before the\nportal began collecting, answers an empty list, not an error.\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nNo item names a party (ADR-0018): who governs the community is in\n`/communities/{territory_id}/governments`.",
         "operationId": "community_communities__territory_id__news_get",
         "parameters": [
           {
@@ -306,6 +306,44 @@
               "title": "Sector"
             },
             "description": "A sector id: education, health or housing"
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "First day, ISO date",
+              "title": "Date From"
+            },
+            "description": "First day, ISO date"
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Last day, ISO date",
+              "title": "Date To"
+            },
+            "description": "Last day, ISO date"
           }
         ],
         "responses": {
@@ -506,6 +544,11 @@
             "format": "date",
             "title": "Since"
           },
+          "until": {
+            "type": "string",
+            "format": "date",
+            "title": "Until"
+          },
           "items": {
             "items": {
               "$ref": "#/components/schemas/NewsItemOut"
@@ -519,6 +562,7 @@
           "territory_id",
           "sector_id",
           "since",
+          "until",
           "items"
         ],
         "title": "CommunityNewsOut"

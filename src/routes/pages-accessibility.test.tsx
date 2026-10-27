@@ -42,7 +42,7 @@ const PAGES: PageCase[] = [
     path: "/comunidades/ccaa-05",
     loaded: async () => {
       await screen.findByRole("heading", { name: "Tasa de paro" });
-      return screen.findByText(/Noticias desde el/);
+      return screen.findByText(/Noticias del /);
     },
   },
   {
