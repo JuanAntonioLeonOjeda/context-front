@@ -63,6 +63,13 @@ describe("nodeText", () => {
     expect(nodeText(node(2, 1)).moreOutlets).toBe("1 medio más"); // H1 (a) and H3 (b, as H2)
   });
 
+  it("does not say 'medio' when the other articles are all from the first one's outlet", () => {
+    const same = node(2, 1);
+    const articles = same.articles.filter((a) => a.outletId === "b"); // H2 (first) and H3, both b
+
+    expect(nodeText({ ...same, articles }).moreOutlets).toBe("1 noticia más de este medio");
+  });
+
   it("dates the node in Spain and says the similarity with the previous one", () => {
     const text = nodeText(node(2, 1, 0.766));
 
