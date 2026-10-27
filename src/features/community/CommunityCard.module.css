@@ -620,3 +620,22 @@
   font-size: var(--text-lg);
   font-weight: 700;
 }
+
+/* The search box of a list: the same field as the dates, as wide as the section lets it. */
+.search {
+  display: grid;
+  gap: var(--space-1);
+  max-width: 28rem;
+  font-weight: 700;
+}
+
+.search input {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 400;
+}

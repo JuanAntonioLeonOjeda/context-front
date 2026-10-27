@@ -8,10 +8,12 @@ import { formatMessage } from "@/i18n/format";
 
 import { Carousel } from "./Carousel";
 import { EmptyState } from "./EmptyState";
+import { SearchBox } from "./SearchBox";
 import { SectionHeading } from "./SectionHeading";
 import { ChevronIcon, SourceIcon } from "./icons";
 import { SECTORS, type Sector } from "./news-api";
 import { formatNewsTime, groupByDay, newsDay } from "./news-card";
+import { matchesQuery } from "./news-search";
 import { searchWith } from "./search-params";
 import { useCommunityTrees } from "./useCommunityTrees";
 import type { TreeEntry } from "./trees-api";
@@ -19,6 +21,7 @@ import type { TreeEntry } from "./trees-api";
 import styles from "./CommunityCard.module.css";
 
 const SECTOR_PARAM = "sector-arbol";
+const SEARCH_PARAM = "buscar-arbol";
 
 /** The sector of `?sector-arbol=`; anything else (or nothing) is the first one. */
 function sectorOf(value: string | null): Sector {
@@ -48,10 +51,20 @@ function treeRows(entries: readonly TreeEntry[]): TreeRow[] {
  * tree under its row, at the width of the section. Closes like the others.
  */
 export function TreesSection({ territoryId }: { territoryId: string }): React.JSX.Element {
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const sector = sectorOf(params.get(SECTOR_PARAM));
   const trees = useCommunityTrees(territoryId, sector);
   const [open, setOpen] = useState(true);
+  // The search is in the URL and looks at the card of each tree: headline, outlet and time.
+  const query = params.get(SEARCH_PARAM) ?? "";
+  const setQuery = (value: string): void => {
+    const next = new URLSearchParams(params);
+    if (value === "") next.delete(SEARCH_PARAM);
+    else next.set(SEARCH_PARAM, value);
+    setParams(next, { preventScrollReset: true, replace: true });
+  };
+  const rows = trees.state === "ready" ? treeRows(trees.trees) : [];
+  const shown = rows.filter((row) => matchesQuery(query, row.entry.headline, row.outlet));
   // One tree open at a time: the page does not fill with horizontal trees.
   const [openStory, setOpenStory] = useState<number | null>(null);
 
@@ -86,6 +99,12 @@ export function TreesSection({ territoryId }: { territoryId: string }): React.JS
             </ul>
           </nav>
           <p className={styles.newsNote}>{es.community.trees.note}</p>
+          <SearchBox
+            label={es.community.trees.search.label}
+            placeholder={es.community.trees.search.placeholder}
+            value={query}
+            onChange={setQuery}
+          />
           {trees.state === "error" && (
             <div role="alert">
               <p>{es.community.trees.error}</p>
@@ -96,15 +115,20 @@ export function TreesSection({ territoryId }: { territoryId: string }): React.JS
           )}
           {trees.state === "loading" && <p role="status">{es.community.trees.loading}</p>}
           {trees.state === "ready" &&
-            (trees.trees.length === 0 ? (
+            (shown.length === 0 ? (
               <EmptyState>
-                {formatMessage(es.community.trees.empty, {
-                  sector: es.community.news.sectors[sector].toLowerCase(),
-                })}
+                {rows.length > 0
+                  ? formatMessage(es.community.trees.search.noMatch, {
+                      sector: es.community.news.sectors[sector].toLowerCase(),
+                      query,
+                    })
+                  : formatMessage(es.community.trees.empty, {
+                      sector: es.community.news.sectors[sector].toLowerCase(),
+                    })}
               </EmptyState>
             ) : (
               <div className={styles.timeline}>
-                {groupByDay(treeRows(trees.trees)).map((day) => {
+                {groupByDay(shown).map((day) => {
                   const opened = day.rows.find((row) => row.entry.storyId === openStory);
                   return (
                     <section key={day.day} aria-labelledby={`trees-day-${day.day}`}>

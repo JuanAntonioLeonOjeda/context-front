@@ -10,9 +10,11 @@ import { Carousel } from "./Carousel";
 import { searchWith } from "./search-params";
 import { groupByDay, newsRows, type NewsRow } from "./news-card";
 import { EmptyState } from "./EmptyState";
+import { SearchBox } from "./SearchBox";
 import { SectionHeading } from "./SectionHeading";
 import { SourceIcon, TreeIcon } from "./icons";
 import { SECTORS, type Sector } from "./news-api";
+import { matchesQuery } from "./news-search";
 import { dayOf, withBound } from "./news-range";
 import { useCommunityNews } from "./useCommunityNews";
 
@@ -21,6 +23,7 @@ import styles from "./CommunityCard.module.css";
 const DEFAULT_SECTOR: Sector = SECTORS[0];
 const FROM_PARAM = "desde";
 const TO_PARAM = "hasta";
+const SEARCH_PARAM = "buscar";
 
 /** The sector of `?sector=`; anything else (or nothing) is the first one, the same for everyone. */
 function sectorOf(value: string | null): Sector {
@@ -54,7 +57,16 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
   };
   const sectorName = es.community.news.sectors[sector];
 
-  const shown = news.state === "ready" ? news.news.items : [];
+  // The search is in the URL too and looks at what the range brought: headline, outlet and time.
+  const query = params.get(SEARCH_PARAM) ?? "";
+  const setQuery = (value: string): void => {
+    const next = new URLSearchParams(params);
+    if (value === "") next.delete(SEARCH_PARAM);
+    else next.set(SEARCH_PARAM, value);
+    setParams(next, { preventScrollReset: true, replace: true });
+  };
+  const rows = news.state === "ready" ? newsRows(news.news.items) : [];
+  const shown = rows.filter((row) => matchesQuery(query, row.headline, row.outlet));
 
   return (
     <section aria-labelledby="news-title" className={styles.newsSection}>
@@ -112,6 +124,12 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
             )}
           </fieldset>
           <p className={styles.newsNote}>{es.community.news.range.note}</p>
+          <SearchBox
+            label={es.community.news.search.label}
+            placeholder={es.community.news.search.placeholder}
+            value={query}
+            onChange={setQuery}
+          />
           <p className={styles.newsNote}>{es.community.news.method}</p>
           {news.state === "error" && (
             <div role="alert">
@@ -126,13 +144,18 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
             <>
               {shown.length === 0 ? (
                 <EmptyState>
-                  {formatMessage(es.community.news.empty, {
-                    sector: sectorName.toLowerCase(),
-                  })}
+                  {rows.length > 0
+                    ? formatMessage(es.community.news.search.noMatch, {
+                        sector: sectorName.toLowerCase(),
+                        query,
+                      })
+                    : formatMessage(es.community.news.empty, {
+                        sector: sectorName.toLowerCase(),
+                      })}
                 </EmptyState>
               ) : (
                 <div className={styles.timeline}>
-                  {groupByDay(newsRows(shown)).map((day) => (
+                  {groupByDay(shown).map((day) => (
                     <section key={day.day} aria-labelledby={`news-day-${day.day}`}>
                       <Carousel
                         heading={
