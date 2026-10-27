@@ -80,7 +80,7 @@ function BranchView({ branch }: { branch: Branch }): React.JSX.Element {
   const listId = useId();
   return (
     <li className={styles.branch}>
-      <article className={styles.node} data-open={open}>
+      <article className={styles.node} data-open={open} data-expandable={text.rest.length > 0}>
         <small className={styles.meta}>{text.started}</small>
         {text.link !== null && <small className={styles.meta}>{text.link}</small>}
         <span className={styles.outlet}>{text.first.outletName}</span>
