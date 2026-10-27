@@ -76,7 +76,14 @@
   font-weight: 700;
 }
 
-.node[data-open="false"] .headline {
+/* A card with nothing to unfold has no button to read the rest, so its headline is never cut and
+   the card grows with it. */
+.node[data-expandable="false"] {
+  height: auto;
+  min-height: 12.5rem;
+}
+
+.node[data-open="false"][data-expandable="true"] .headline {
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;

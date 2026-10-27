@@ -27,6 +27,16 @@ describe("tree of related news", () => {
     expect(within(region).queryAllByRole("heading")).toHaveLength(0);
   });
 
+  it("marks which cards have something to unfold, so a lone headline is never cut", async () => {
+    renderApp("/arbol/37");
+
+    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
+    for (const card of within(region).getAllByRole("article")) {
+      const hasButton = within(card).queryByRole("button") !== null;
+      expect(card).toHaveAttribute("data-expandable", String(hasButton));
+    }
+  });
+
   it("unfolds the headlines of the other outlets on click and folds them on a second click", async () => {
     const user = userEvent.setup();
     renderApp("/arbol/37");
@@ -140,4 +150,17 @@ describe("tree of related news", () => {
     await screen.findByRole("region", { name: es.stories.tree.regionLabel });
     expect(await axeViolations(container)).toEqual([]);
   });
+});
+
+describe("route of a tree", () => {
+  it.each(["1e3", "0x10", "037", "-5", "0", "abc", "9999999999999999999"])(
+    "names no story for the segment %s",
+    async (segment) => {
+      renderApp(`/arbol/${segment}`);
+
+      expect(
+        await screen.findByRole("heading", { level: 1, name: es.errors.notFound.title }),
+      ).toBeVisible();
+    },
+  );
 });
