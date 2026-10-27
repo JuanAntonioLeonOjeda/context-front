@@ -23,6 +23,7 @@ const newsSchema = z.object({
       url: z.url(),
       published_at: z.iso.datetime(),
       classified_by: z.object({ model_id: z.string(), model_version: z.string() }),
+      tree_story_id: z.number().nullable(),
     }),
   ),
 });
@@ -33,6 +34,7 @@ export interface NewsItem {
   headline: string;
   url: string;
   publishedAt: string; // ISO instant
+  treeStoryId: number | null; // the story whose tree of related news this item belongs to
 }
 
 export interface CommunityNews {
@@ -61,6 +63,7 @@ export async function fetchCommunityNews(
       headline: item.headline,
       url: item.url,
       publishedAt: item.published_at,
+      treeStoryId: item.tree_story_id,
     })),
   };
 }

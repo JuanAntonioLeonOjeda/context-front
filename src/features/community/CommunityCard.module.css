@@ -429,3 +429,11 @@
   max-width: 4rem;
   object-fit: contain;
 }
+
+/* The two ways out of a news item: to the outlet's page and to the tree of related news. */
+.newsActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-weight: 700;
+}

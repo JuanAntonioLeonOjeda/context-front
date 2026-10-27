@@ -1,1 +1,6 @@
-{ "territory_id": "ccaa-09", "sector_id": "health", "since": "2026-09-15", "items": [] }
+{
+  "territory_id": "ccaa-09",
+  "sector_id": "health",
+  "since": "2026-09-15",
+  "items": []
+}

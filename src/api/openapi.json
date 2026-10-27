@@ -331,10 +331,148 @@
           }
         }
       }
+    },
+    "/communities/{territory_id}/stories": {
+      "get": {
+        "tags": [
+          "stories"
+        ],
+        "summary": "Community",
+        "description": "The stories of the last 30 days (today included, Spain time): groups of articles from\ndifferent outlets about the same event. A story belongs to this community (and sector, when\ngiven) when more than half of its articles are classified there by the active classifier. At most\n50 stories.\n\n**Order:** stories by their newest article, newest first, ties by story id; inside a story, articles\nby outlet id, then publication time. The order never depends on an outlet's size, audience or line.\n\n`grouping` says how the stories were made: the threshold is provisional until pairs are labelled\nby hand. It is `null` until the first grouping run exists.",
+        "operationId": "community_communities__territory_id__stories_get",
+        "parameters": [
+          {
+            "name": "territory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Territory Id"
+            }
+          },
+          {
+            "name": "sector",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "A sector id: education, health or housing",
+              "title": "Sector"
+            },
+            "description": "A sector id: education, health or housing"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityStoriesOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stories/{story_id}/tree": {
+      "get": {
+        "tags": [
+          "stories"
+        ],
+        "summary": "Tree",
+        "description": "The tree of related stories the story belongs to, from the latest linking run: each story points\nat the earlier story it continues (`parent_story_id`, null for the root). A link only says\n\"related and later\": it does not say why.\n\n**Order:** nodes by the publication time of their first article, oldest first, ties by story id;\ninside a node, articles by outlet id, then publication time. The order never depends on an\noutlet's size, audience or line.\n\n`linking` says how the links were made and `grouping` how the stories were; both thresholds are\nprovisional until pairs are labelled by hand. 404 when the story has no relations.",
+        "operationId": "tree_stories__story_id__tree_get",
+        "parameters": [
+          {
+            "name": "story_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Story Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoryTreeOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "ArticleOut": {
+        "properties": {
+          "outlet_id": {
+            "type": "string",
+            "title": "Outlet Id"
+          },
+          "outlet_name": {
+            "type": "string",
+            "title": "Outlet Name"
+          },
+          "headline": {
+            "type": "string",
+            "title": "Headline"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Published At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "outlet_id",
+          "outlet_name",
+          "headline",
+          "url",
+          "published_at"
+        ],
+        "title": "ArticleOut"
+      },
       "ClassifierOut": {
         "properties": {
           "model_id": {
@@ -416,6 +554,56 @@
         ],
         "title": "CommunityOnMapOut"
       },
+      "CommunityStoriesOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "sector_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector Id"
+          },
+          "since": {
+            "type": "string",
+            "format": "date",
+            "title": "Since"
+          },
+          "grouping": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupingOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stories": {
+            "items": {
+              "$ref": "#/components/schemas/StoryOut"
+            },
+            "type": "array",
+            "title": "Stories"
+          }
+        },
+        "type": "object",
+        "required": [
+          "territory_id",
+          "sector_id",
+          "since",
+          "grouping",
+          "stories"
+        ],
+        "title": "CommunityStoriesOut"
+      },
       "ComponentStatus": {
         "type": "string",
         "enum": [
@@ -468,6 +656,40 @@
           "term"
         ],
         "title": "GovernmentOut"
+      },
+      "GroupingOut": {
+        "properties": {
+          "run_id": {
+            "type": "integer",
+            "title": "Run Id"
+          },
+          "encoder_version": {
+            "type": "string",
+            "title": "Encoder Version"
+          },
+          "threshold": {
+            "type": "number",
+            "title": "Threshold"
+          },
+          "window_days": {
+            "type": "integer",
+            "title": "Window Days"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_id",
+          "encoder_version",
+          "threshold",
+          "window_days",
+          "created_at"
+        ],
+        "title": "GroupingOut"
       },
       "HTTPValidationError": {
         "properties": {
@@ -554,6 +776,35 @@
         ],
         "title": "Level"
       },
+      "LinkingOut": {
+        "properties": {
+          "run_id": {
+            "type": "integer",
+            "title": "Run Id"
+          },
+          "threshold": {
+            "type": "number",
+            "title": "Threshold"
+          },
+          "window_days": {
+            "type": "integer",
+            "title": "Window Days"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_id",
+          "threshold",
+          "window_days",
+          "created_at"
+        ],
+        "title": "LinkingOut"
+      },
       "NewsItemOut": {
         "properties": {
           "outlet_id": {
@@ -579,6 +830,17 @@
           },
           "classified_by": {
             "$ref": "#/components/schemas/ClassifierOut"
+          },
+          "tree_story_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tree Story Id"
           }
         },
         "type": "object",
@@ -588,7 +850,8 @@
           "headline",
           "url",
           "published_at",
-          "classified_by"
+          "classified_by",
+          "tree_story_id"
         ],
         "title": "NewsItemOut"
       },
@@ -712,6 +975,56 @@
         ],
         "title": "SourceOut"
       },
+      "StoryOut": {
+        "properties": {
+          "story_id": {
+            "type": "integer",
+            "title": "Story Id"
+          },
+          "articles": {
+            "items": {
+              "$ref": "#/components/schemas/ArticleOut"
+            },
+            "type": "array",
+            "title": "Articles"
+          }
+        },
+        "type": "object",
+        "required": [
+          "story_id",
+          "articles"
+        ],
+        "title": "StoryOut"
+      },
+      "StoryTreeOut": {
+        "properties": {
+          "root_story_id": {
+            "type": "integer",
+            "title": "Root Story Id"
+          },
+          "linking": {
+            "$ref": "#/components/schemas/LinkingOut"
+          },
+          "grouping": {
+            "$ref": "#/components/schemas/GroupingOut"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/TreeNodeOut"
+            },
+            "type": "array",
+            "title": "Nodes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "root_story_id",
+          "linking",
+          "grouping",
+          "nodes"
+        ],
+        "title": "StoryTreeOut"
+      },
       "TermOut": {
         "properties": {
           "president_name": {
@@ -805,6 +1118,57 @@
           "name"
         ],
         "title": "TerritoryOut"
+      },
+      "TreeNodeOut": {
+        "properties": {
+          "story_id": {
+            "type": "integer",
+            "title": "Story Id"
+          },
+          "parent_story_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Story Id"
+          },
+          "link_similarity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Link Similarity"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "articles": {
+            "items": {
+              "$ref": "#/components/schemas/ArticleOut"
+            },
+            "type": "array",
+            "title": "Articles"
+          }
+        },
+        "type": "object",
+        "required": [
+          "story_id",
+          "parent_story_id",
+          "link_similarity",
+          "started_at",
+          "articles"
+        ],
+        "title": "TreeNodeOut"
       },
       "ValidationError": {
         "properties": {

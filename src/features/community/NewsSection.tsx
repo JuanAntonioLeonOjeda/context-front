@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from "react-router";
 
 import { ExternalLink } from "@/features/shell";
+import { treePath } from "@/features/stories";
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
@@ -95,9 +96,23 @@ function NewsItemView({ row }: { row: NewsRow }): React.JSX.Element {
     <li>
       <article className={styles.newsItem}>
         <small className={styles.downloaded}>{row.outlet}</small>
-        <h4 className={styles.newsHeadline}>
-          <ExternalLink href={row.url}>{row.headline}</ExternalLink>
-        </h4>
+        <h4 className={styles.newsHeadline}>{row.headline}</h4>
+        <div className={styles.newsActions}>
+          <ExternalLink
+            href={row.url}
+            aria-label={formatMessage(es.community.news.sourceOf, { headline: row.headline })}
+          >
+            {es.community.news.source}
+          </ExternalLink>
+          {row.treeStoryId !== null && (
+            <Link
+              to={treePath(row.treeStoryId)}
+              aria-label={formatMessage(es.community.news.treeOf, { headline: row.headline })}
+            >
+              {es.community.news.tree}
+            </Link>
+          )}
+        </div>
       </article>
     </li>
   );

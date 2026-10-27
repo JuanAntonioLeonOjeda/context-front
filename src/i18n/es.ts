@@ -151,11 +151,33 @@ export const es = {
       error: "No hemos podido cargar las noticias.",
       retry: "Volver a intentarlo",
       outletAndTime: "{outlet}, {time}",
+      source: "Ver fuente",
+      sourceOf: "Ver fuente de «{headline}» (se abre en otra pestaña)",
+      tree: "Ver árbol",
+      treeOf: "Ver el árbol de noticias relacionadas con «{headline}»",
       carousel: {
         label: "Noticias del {date}",
         previous: "Noticias anteriores",
         next: "Noticias siguientes",
       },
+    },
+  },
+  stories: {
+    tree: {
+      title: "Noticias relacionadas",
+      back: "Volver",
+      reading:
+        "Cada tarjeta es una historia: los titulares de varios medios que cuentan el mismo suceso. El tiempo avanza de izquierda a derecha: cada rama continúa la historia anterior a la que se parece más.",
+      method:
+        "Las historias y las relaciones las calcula un modelo de similitud de textos, con un umbral provisional (similitud mínima {threshold} y hasta {days} días entre una historia y la siguiente). Pueden contener errores. Una relación solo dice «parecida y posterior», no su causa.",
+      regionLabel: "Árbol de historias relacionadas, se desplaza en horizontal",
+      coveredBy: "Cubierta por {count} medios",
+      started: "Desde el {date}, {time}",
+      similarity: "Relación con la anterior: {value}",
+      loading: "Cargando el árbol…",
+      error: "No hemos podido cargar el árbol.",
+      retry: "Volver a intentarlo",
+      notFound: "Esta noticia no tiene noticias relacionadas.",
     },
   },
   about: {
