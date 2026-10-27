@@ -4,6 +4,7 @@ import { ExternalLink } from "@/features/shell";
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
+import { Carousel } from "./Carousel";
 import { searchWith } from "./search-params";
 import { groupByDay, newsRows, type NewsRow } from "./news-card";
 import { SECTORS, type Sector } from "./news-api";
@@ -64,14 +65,21 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
             <div className={styles.timeline}>
               {groupByDay(newsRows(news.news.items)).map((day) => (
                 <section key={day.day} aria-labelledby={`news-day-${day.day}`}>
-                  <h3 id={`news-day-${day.day}`} className={styles.newsDay}>
-                    {day.label}
-                  </h3>
-                  <ol className={styles.news}>
-                    {day.rows.map((row) => (
-                      <NewsItemView key={row.key} row={row} />
-                    ))}
-                  </ol>
+                  <Carousel
+                    heading={
+                      <h3 id={`news-day-${day.day}`} className={styles.newsDay}>
+                        {day.label}
+                      </h3>
+                    }
+                    label={formatMessage(es.community.news.carousel.label, { date: day.label })}
+                    buttonLabels={es.community.news.carousel}
+                  >
+                    <ol className={styles.news}>
+                      {day.rows.map((row) => (
+                        <NewsItemView key={row.key} row={row} />
+                      ))}
+                    </ol>
+                  </Carousel>
                 </section>
               ))}
             </div>
@@ -84,9 +92,13 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
 
 function NewsItemView({ row }: { row: NewsRow }): React.JSX.Element {
   return (
-    <li className={styles.newsItem}>
-      <ExternalLink href={row.url}>{row.headline}</ExternalLink>
-      <small className={styles.downloaded}>{row.outlet}</small>
+    <li>
+      <article className={styles.newsItem}>
+        <small className={styles.downloaded}>{row.outlet}</small>
+        <h4 className={styles.newsHeadline}>
+          <ExternalLink href={row.url}>{row.headline}</ExternalLink>
+        </h4>
+      </article>
     </li>
   );
 }
