@@ -139,6 +139,7 @@ export const es = {
       error: "No hemos podido cargar esta comunidad.",
       retry: "Volver a intentarlo",
     },
+    filters: { legend: "Filtros" },
     trees: {
       title: "Árbol de noticias",
       sectorNav: "Sector del árbol de noticias",
@@ -148,10 +149,20 @@ export const es = {
       error: "No hemos podido cargar los árboles de noticias.",
       retry: "Volver a intentarlo",
       carousel: { label: "Árboles de noticias del {date}, se desplazan en horizontal" },
+      search: {
+        label: "Buscar",
+        placeholder: "Escribe un titular o un medio",
+        noMatch: "Ningún árbol de noticias de {sector} coincide con «{query}».",
+      },
       panelLabel: "Árbol de noticias relacionadas con «{headline}»",
     },
     news: {
       title: "Noticias",
+      search: {
+        label: "Buscar",
+        placeholder: "Escribe un titular o un medio",
+        noMatch: "Ninguna noticia de {sector} de estas fechas coincide con «{query}».",
+      },
       sectorNav: "Sector de las noticias",
       sectors: { education: "Educación", health: "Sanidad", housing: "Vivienda" },
       range: {

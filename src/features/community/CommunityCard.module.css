@@ -137,7 +137,7 @@
 
 /* The explanations above the list stay a readable line; the list itself uses the width. */
 .newsNote {
-  max-width: 46rem;
+  max-width: none; /* the notes run to the end of the section, not to a column in the middle of it */
 }
 
 /* The indicators: a row of cards, one per measure, each wide enough for its chart to be read. The
@@ -491,10 +491,8 @@
 }
 
 /* The range of days: two date fields and, when it is not the default, a way back to it. */
-.dates {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
+.filters {
+  display: grid;
   gap: var(--space-4);
   margin: 0;
   padding: var(--space-2) var(--space-4) var(--space-4);
@@ -502,9 +500,25 @@
   border-radius: var(--radius-lg);
 }
 
-.dates legend {
+.filters legend {
   padding: 0 var(--space-2);
   font-weight: 700;
+}
+
+/* The search against the left edge, the dates against the right; on a narrow screen, in turn. */
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-4);
 }
 
 .dates label {
@@ -619,4 +633,26 @@
   max-width: 32rem;
   font-size: var(--text-lg);
   font-weight: 700;
+}
+
+/* The search box of a list: the same field as the dates, as wide as the section lets it. */
+.search {
+  display: grid;
+  gap: var(--space-1);
+  font-weight: 700;
+}
+
+.search input {
+  width: min(22rem, 100%);
+}
+
+.search input {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 400;
 }

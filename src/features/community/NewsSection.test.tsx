@@ -164,6 +164,58 @@ describe("actions of a news item", () => {
   });
 });
 
+describe("search of the news", () => {
+  it("filters the list as the reader types, by headline, ignoring case and accents", async () => {
+    const user = userEvent.setup();
+    renderApp("/comunidades/ccaa-05?sector=health");
+    const section = await newsSection();
+    await newsLoaded();
+    expect(section.querySelectorAll("ol > li")).toHaveLength(11);
+
+    await user.type(
+      within(section).getByRole("searchbox", { name: es.community.news.search.label }),
+      "PARLAMENTO rechaza",
+    );
+
+    expect(section.querySelectorAll("ol > li")).toHaveLength(1);
+    expect(
+      within(section).getByRole("link", { name: /El Parlamento rechaza tramitar la ley del PSOE/ }),
+    ).toBeVisible();
+  });
+
+  it("also looks at the outlet, the secondary text of the card", async () => {
+    const user = userEvent.setup();
+    renderApp("/comunidades/ccaa-05?sector=health");
+    const section = await newsSection();
+    await newsLoaded();
+
+    await user.type(within(section).getByRole("searchbox"), "radio television canaria");
+
+    const found = section.querySelectorAll("ol > li").length;
+    expect(found).toBeGreaterThan(0);
+    expect(found).toBeLessThan(11);
+    for (const small of section.querySelectorAll("small")) {
+      expect(small.textContent).toMatch(/Radio Televisión Canaria/);
+    }
+  });
+
+  it("says nothing matches, with what was typed, and keeps the search in the URL", async () => {
+    const user = userEvent.setup();
+    renderApp("/comunidades/ccaa-05?sector=health&buscar=zzzz");
+    const section = await newsSection();
+    await newsLoaded();
+
+    expect(within(section).getByRole("searchbox")).toHaveValue("zzzz");
+    expect(
+      within(section).getByText(/Ninguna noticia de sanidad de estas fechas coincide con «zzzz»/),
+    ).toBeVisible();
+
+    await user.clear(within(section).getByRole("searchbox"));
+
+    expect(section.querySelectorAll("ol > li")).toHaveLength(11);
+  });
+});
+
 describe("range of days of the news", () => {
   it("shows in the fields the days the API resolved when none was chosen, and no way back", async () => {
     renderApp("/comunidades/ccaa-05?sector=health");

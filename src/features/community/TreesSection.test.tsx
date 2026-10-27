@@ -135,6 +135,43 @@ describe("trees of news of a community", () => {
   });
 });
 
+describe("search of the trees", () => {
+  it("filters the cards as the reader types, by headline or outlet, ignoring accents", async () => {
+    const user = userEvent.setup();
+    renderApp("/comunidades/ccaa-05");
+    const section = await treesLoaded();
+    expect(within(section).getAllByRole("article")).toHaveLength(2);
+    const box = within(section).getByRole("searchbox", { name: es.community.trees.search.label });
+
+    await user.type(box, "ayuso");
+
+    expect(within(section).getAllByRole("article")).toHaveLength(1);
+    expect(within(section).getByRole("button", { name: /Ayuso, ante las amenazas/ })).toBeVisible();
+
+    await user.clear(box);
+    await user.type(box, "el pais");
+
+    expect(within(section).getAllByRole("article")).toHaveLength(1);
+    expect(
+      within(section).getByRole("button", { name: /Un grupo de 200 profesores/ }),
+    ).toBeVisible();
+  });
+
+  it("says nothing matches and does not touch the search of the news", async () => {
+    const user = userEvent.setup();
+    renderApp("/comunidades/ccaa-05?buscar=algo");
+    const section = await treesLoaded();
+
+    await user.type(within(section).getByRole("searchbox"), "zzzz");
+
+    expect(
+      within(section).getByText(/Ningún árbol de noticias de educación coincide con «zzzz»/),
+    ).toBeVisible();
+    const news = await screen.findByRole("region", { name: es.community.news.title });
+    expect(within(news).getByRole("searchbox")).toHaveValue("algo");
+  });
+});
+
 describe("sections that close", () => {
   it.each([
     ["the INE data", es.community.indicators.title],
