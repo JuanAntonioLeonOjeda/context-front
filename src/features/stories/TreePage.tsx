@@ -1,3 +1,4 @@
+import { useId, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import { ExternalLink } from "@/features/shell";
@@ -40,6 +41,7 @@ export function TreePage({ storyId }: { storyId: number }): React.JSX.Element {
       {tree.state === "ready" && (
         <>
           <p className={styles.note}>{es.stories.tree.reading}</p>
+          <p className={styles.note}>{es.stories.tree.moreHint}</p>
           <p className={styles.note}>
             {formatMessage(es.stories.tree.method, {
               threshold: tree.tree.linkThreshold.toLocaleString("es"),
@@ -65,20 +67,55 @@ export function TreePage({ storyId }: { storyId: number }): React.JSX.Element {
 
 function BranchView({ branch }: { branch: Branch }): React.JSX.Element {
   const text = nodeText(branch.node);
+  // Open while the pointer is over the card or after the button pinned it: hover alone would leave
+  // keyboard and touch users without the other headlines.
+  const [hovered, setHovered] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const open = hovered || pinned;
+  const listId = useId();
   return (
     <li className={styles.branch}>
-      <article className={styles.node}>
-        <h2 className={styles.heading}>{text.heading}</h2>
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- hover is an extra: the button below does the same for keyboard and touch */}
+      <article
+        className={styles.node}
+        onMouseEnter={() => {
+          setHovered(true);
+        }}
+        onMouseLeave={() => {
+          setHovered(false);
+        }}
+      >
         <small className={styles.meta}>{text.started}</small>
         {text.link !== null && <small className={styles.meta}>{text.link}</small>}
-        <ul className={styles.articles}>
-          {branch.node.articles.map((article) => (
-            <li key={article.url}>
-              <span className={styles.outlet}>{article.outletName}</span>
-              <ExternalLink href={article.url}>{article.headline}</ExternalLink>
-            </li>
-          ))}
-        </ul>
+        <span className={styles.outlet}>{text.first.outletName}</span>
+        <ExternalLink href={text.first.url} className={styles.headline}>
+          {text.first.headline}
+        </ExternalLink>
+        {text.rest.length > 0 && (
+          <>
+            <button
+              type="button"
+              className={styles.more}
+              aria-expanded={open}
+              aria-controls={listId}
+              onClick={() => {
+                setPinned(!pinned);
+              }}
+            >
+              {text.moreOutlets}
+            </button>
+            {open && (
+              <ul id={listId} className={styles.articles}>
+                {text.rest.map((article) => (
+                  <li key={article.url}>
+                    <span className={styles.outlet}>{article.outletName}</span>
+                    <ExternalLink href={article.url}>{article.headline}</ExternalLink>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        )}
       </article>
       {branch.children.length > 0 && (
         <ul className={styles.children}>

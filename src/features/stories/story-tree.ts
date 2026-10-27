@@ -1,12 +1,12 @@
 /**
  * The shape and the text of the tree. Pure: the API's nodes in, nested branches out. A node has no
- * title on purpose: any headline chosen to stand for a story would favour one outlet. It shows how
- * many outlets cover it and each outlet's own headline, in the order the API gives (by outlet).
+ * title of its own: a card shows the headline of the first article published (an objective rule, not
+ * a choice of outlet) and the other outlets' headlines unfold on request.
  */
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
-import type { TreeNodeData } from "./tree-api";
+import type { TreeArticle, TreeNodeData } from "./tree-api";
 
 export interface Branch {
   node: TreeNodeData;
@@ -49,16 +49,28 @@ const spainTime = new Intl.DateTimeFormat("es", {
 });
 
 export interface NodeText {
-  heading: string; // "Cubierta por 6 medios"
-  started: string; // "12 de octubre de 2026, 13:46"
+  started: string; // "Desde el 12 de octubre de 2026, 13:46"
   link: string | null; // "Relación con la anterior: 0,77", null for the root
+  first: TreeArticle; // the first article published: the one the card shows
+  rest: TreeArticle[]; // the others, as the API sends them (by outlet id)
+  moreOutlets: string; // "2 medios más", or "" when there is no other article
+}
+
+/** The article published first; at the same instant, the one of the lower outlet id. */
+export function firstArticle(articles: readonly TreeArticle[]): TreeArticle {
+  const [first] = [...articles].sort(
+    (a, b) => a.publishedAt.localeCompare(b.publishedAt) || a.outletId.localeCompare(b.outletId),
+  );
+  if (!first) throw new Error("a story has at least one article");
+  return first;
 }
 
 export function nodeText(node: TreeNodeData): NodeText {
-  const outlets = new Set(node.articles.map((article) => article.outletId)).size;
+  const first = firstArticle(node.articles);
+  const rest = node.articles.filter((article) => article !== first);
+  const otherOutlets = new Set(rest.map((a) => a.outletId).filter((id) => id !== first.outletId));
   const started = new Date(node.startedAt);
   return {
-    heading: formatMessage(es.stories.tree.coveredBy, { count: String(outlets) }),
     started: formatMessage(es.stories.tree.started, {
       date: formatLongDate(spainDay.format(started)),
       time: spainTime.format(started),
@@ -68,6 +80,14 @@ export function nodeText(node: TreeNodeData): NodeText {
         ? null
         : formatMessage(es.stories.tree.similarity, {
             value: node.linkSimilarity.toLocaleString("es", { maximumFractionDigits: 2 }),
+          }),
+    first,
+    rest,
+    moreOutlets:
+      rest.length === 0
+        ? ""
+        : formatMessage(otherOutlets.size === 1 ? es.stories.tree.moreOne : es.stories.tree.more, {
+            count: String(Math.max(otherOutlets.size, 1)),
           }),
   };
 }
