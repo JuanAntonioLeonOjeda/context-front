@@ -12,7 +12,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "abc",
@@ -23,7 +24,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": 37
     },
     {
       "outlet_id": "diario-de-avisos",
@@ -34,7 +36,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "rtvc",
@@ -45,7 +48,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "rtvc",
@@ -56,7 +60,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "el-confidencial",
@@ -67,7 +72,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "canarias7",
@@ -78,7 +84,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "canarias7",
@@ -89,7 +96,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "canarias7",
@@ -100,7 +108,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "diario-de-avisos",
@@ -111,7 +120,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     },
     {
       "outlet_id": "rtvc",
@@ -122,7 +132,8 @@
       "classified_by": {
         "model_id": "rules",
         "model_version": "d74a59205b94"
-      }
+      },
+      "tree_story_id": null
     }
   ]
 }

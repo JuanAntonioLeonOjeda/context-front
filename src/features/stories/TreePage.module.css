@@ -1,0 +1,130 @@
+/* The tree grows from left to right: time runs along the branches. Each branch is a card followed
+   by its children stacked at the right; the connectors are borders of pseudo-elements, so the
+   markup stays plain nested lists. */
+.back {
+  justify-self: start;
+}
+
+.note {
+  max-width: 46rem;
+}
+
+.scroll {
+  overflow-x: auto;
+  padding-block: var(--space-4);
+}
+
+.tree,
+.children {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tree {
+  display: inline-block;
+  min-width: 100%;
+}
+
+.branch {
+  display: flex;
+  align-items: center;
+}
+
+.node {
+  flex: none;
+  width: 20rem;
+  display: grid;
+  gap: var(--space-1);
+  align-content: start;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.node > * {
+  margin-block: 0;
+}
+
+.heading {
+  font-size: 1rem;
+}
+
+.meta {
+  color: var(--color-text-muted);
+}
+
+.articles {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.articles li {
+  display: grid;
+}
+
+.articles a {
+  font-weight: 700;
+}
+
+.outlet {
+  color: var(--color-text-muted);
+}
+
+/* The children of a branch: a column at the right of its card. */
+.children {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--space-8);
+}
+
+/* From the card to the vertical rail of its children. */
+.children::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: var(--space-8);
+  border-top: 2px solid var(--color-border-strong);
+}
+
+.children > .branch {
+  position: relative;
+  padding: var(--space-2) 0 var(--space-2) var(--space-8);
+}
+
+/* From the rail to each child's card. */
+.children > .branch::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--space-8);
+  border-top: 2px solid var(--color-border-strong);
+}
+
+/* The rail: the full height between the first and the last child, ending at their centres. */
+.children > .branch::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-left: 2px solid var(--color-border-strong);
+}
+
+.children > .branch:first-child::after {
+  top: 50%;
+}
+
+.children > .branch:last-child::after {
+  bottom: 50%;
+}
+
+.children > .branch:only-child::after {
+  display: none;
+}

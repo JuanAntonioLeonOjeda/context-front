@@ -1,0 +1,157 @@
+{
+  "root_story_id": 4,
+  "linking": {
+    "run_id": 1,
+    "threshold": 0.75,
+    "window_days": 14,
+    "created_at": "2026-10-27T10:35:50.046193Z"
+  },
+  "grouping": {
+    "run_id": 1,
+    "encoder_version": "paraphrase-multilingual-mpnet-base-v2-max128",
+    "threshold": 0.88,
+    "window_days": 3,
+    "created_at": "2026-10-26T16:56:11.923409Z"
+  },
+  "nodes": [
+    {
+      "story_id": 4,
+      "parent_story_id": null,
+      "link_similarity": null,
+      "started_at": "2026-10-12T13:46:24Z",
+      "articles": [
+        {
+          "outlet_id": "abc",
+          "outlet_name": "ABC",
+          "headline": "El Papa ingresa en el hospital y será operado hoy del nódulo de pulmón",
+          "url": "https://www.abc.es/sociedad/papa-ingresa-clinica-gemelli-extirparle-nodulo-pulmon-20261013122457-nt.html",
+          "published_at": "2026-10-13T11:48:26Z"
+        },
+        {
+          "outlet_id": "canarias7",
+          "outlet_name": "Canarias7",
+          "headline": "El Papa ya está en el hospital Gemelli de Roma para que los médicos le extirpen esta tarde un nódulo pulmonar",
+          "url": "https://www.canarias7.es/sociedad/papa-hospital-gemelli-roma-medicos-extirpen-tarde-20261013130734-ntrc.html",
+          "published_at": "2026-10-13T12:06:20Z"
+        },
+        {
+          "outlet_id": "el-espanol",
+          "outlet_name": "El Español",
+          "headline": "El Papa León XIV llega al Hospital Gemelli de Roma en el que será operado de un nódulo pulmonar esta tarde",
+          "url": "https://www.elespanol.com/mundo/europa/20261013/papa-leon-xiv-trasladado-hospital-gemelli-roma-operado-nodulo-pulmonar-tarde/1003744418296_0.html",
+          "published_at": "2026-10-13T11:38:23Z"
+        }
+      ]
+    },
+    {
+      "story_id": 37,
+      "parent_story_id": 4,
+      "link_similarity": 0.76626575,
+      "started_at": "2026-10-13T18:01:46Z",
+      "articles": [
+        {
+          "outlet_id": "abc",
+          "outlet_name": "ABC",
+          "headline": "Los médicos confirman que el Papa tiene un cáncer de pulmón",
+          "url": "https://www.abc.es/sociedad/papa-operado-exito-segun-primer-parte-medico-20261013195802-nt.html",
+          "published_at": "2026-10-14T07:33:46Z"
+        },
+        {
+          "outlet_id": "el-espanol",
+          "outlet_name": "El Español",
+          "headline": "El Vaticano anuncia que al Papa se le ha detectado un cáncer de pulmón tras la operación para extirparle un nódulo",
+          "url": "https://www.elespanol.com/mundo/europa/20261013/operacion-extirpar-nodulo-pulmonar-papa-leon-salio-bien-anuncia-vaticano/1003744419069_0.html",
+          "published_at": "2026-10-13T18:01:46Z"
+        }
+      ]
+    },
+    {
+      "story_id": 57,
+      "parent_story_id": 37,
+      "link_similarity": 0.8998092,
+      "started_at": "2026-10-13T21:52:18Z",
+      "articles": [
+        {
+          "outlet_id": "diario-de-avisos",
+          "outlet_name": "Diario de Avisos",
+          "headline": "El Vaticano confirma que el papa León XIV tenía cáncer de pulmón tras ser operado: “Se ha detectado en una fase muy inicial”",
+          "url": "https://diariodeavisos.elespanol.com/2026/10/papa-leon-xiv-cancer-pulmon-vaticano/",
+          "published_at": "2026-10-13T21:52:18Z"
+        },
+        {
+          "outlet_id": "telemadrid",
+          "outlet_name": "Telemadrid",
+          "headline": "El Vaticano confirma que el papa León XIV tiene cáncer de pulmón tras su operación",
+          "url": "https://www.telemadrid.es/noticias/sociedad/El-Vaticano-confirma-que-el-papa-Leon-XIV-tiene-cancer-de-pulmon-tras-su-operacion-0-2934606511--20261014072913.html",
+          "published_at": "2026-10-14T05:29:13Z"
+        }
+      ]
+    },
+    {
+      "story_id": 52,
+      "parent_story_id": 4,
+      "link_similarity": 0.78755784,
+      "started_at": "2026-10-14T07:37:10Z",
+      "articles": [
+        {
+          "outlet_id": "la-razon",
+          "outlet_name": "La Razón",
+          "headline": "El Papa pasa una noche \"tranquila\" tras su operación por un adenocarcinoma pulmonar",
+          "url": "https://www.larazon.es/sociedad/papa-pasa-noche-tranquila-operacion-adenocarcinoma-pulmonar_202610146acf3126b79b18452fc3e9f5.html",
+          "published_at": "2026-10-14T07:37:10Z"
+        },
+        {
+          "outlet_id": "okdiario",
+          "outlet_name": "OKdiario",
+          "headline": "El Papa pasa una noche «tranquila» en el hospital tras conocer que padece cáncer de pulmón",
+          "url": "https://okdiario.com/internacional/papa-pasa-noche-tranquila-hospital-conocer-que-padece-cancer-pulmon-20546816",
+          "published_at": "2026-10-14T11:47:54Z"
+        }
+      ]
+    },
+    {
+      "story_id": 76,
+      "parent_story_id": 37,
+      "link_similarity": 0.8709306,
+      "started_at": "2026-10-14T12:31:50Z",
+      "articles": [
+        {
+          "outlet_id": "canarias7",
+          "outlet_name": "Canarias7",
+          "headline": "¿Qué es el adenocarcinoma que le han extirpado al Papa?",
+          "url": "https://www.canarias7.es/sociedad/salud/adenocarcinoma-extirpado-papa-20261014002820-ntrc.html",
+          "published_at": "2026-10-14T21:28:20Z"
+        },
+        {
+          "outlet_id": "el-espanol",
+          "outlet_name": "El Español",
+          "headline": "Qué es el adenocarcinoma pulmonar que sufre el Papa: así evoluciona el tumor maligno de pulmón más frecuente",
+          "url": "https://www.elespanol.com/ciencia/salud/20261014/adenocarcinoma-pulmonar-sufre-papa-evoluciona-tumor-maligno-pulmon-frecuente/1003744419921_0.html",
+          "published_at": "2026-10-14T12:31:50Z"
+        }
+      ]
+    },
+    {
+      "story_id": 125,
+      "parent_story_id": 37,
+      "link_similarity": 0.80030835,
+      "started_at": "2026-10-15T12:22:42Z",
+      "articles": [
+        {
+          "outlet_id": "el-pais",
+          "outlet_name": "El País",
+          "headline": "El Papa evoluciona “con normalidad” y realiza fisioterapia dos días después de su operación",
+          "url": "https://elpais.com/internacional/2026-10-15/el-papa-evoluciona-con-normalidad-y-realiza-fisioterapia-dos-dias-despues-de-su-operacion.html",
+          "published_at": "2026-10-15T12:42:18Z"
+        },
+        {
+          "outlet_id": "la-razon",
+          "outlet_name": "La Razón",
+          "headline": "El Papa evoluciona con normalidad y la radiografía confirma la \"buena recuperación\" del pulmón operado",
+          "url": "https://www.larazon.es/sociedad/pulmon-operado-papa-leon-xiv-muestra-buena-recuperacion_202610156ad0c592bafd3d736360a064.html",
+          "published_at": "2026-10-15T12:22:42Z"
+        }
+      ]
+    }
+  ]
+}

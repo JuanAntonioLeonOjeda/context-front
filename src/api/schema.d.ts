@@ -150,10 +150,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/communities/{territory_id}/stories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Community
+         * @description The stories of the last 30 days (today included, Spain time): groups of articles from
+         *     different outlets about the same event. A story belongs to this community (and sector, when
+         *     given) when more than half of its articles are classified there by the active classifier. At most
+         *     50 stories.
+         *
+         *     **Order:** stories by their newest article, newest first, ties by story id; inside a story, articles
+         *     by outlet id, then publication time. The order never depends on an outlet's size, audience or line.
+         *
+         *     `grouping` says how the stories were made: the threshold is provisional until pairs are labelled
+         *     by hand. It is `null` until the first grouping run exists.
+         */
+        get: operations["community_communities__territory_id__stories_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stories/{story_id}/tree": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Tree
+         * @description The tree of related stories the story belongs to, from the latest linking run: each story points
+         *     at the earlier story it continues (`parent_story_id`, null for the root). A link only says
+         *     "related and later": it does not say why.
+         *
+         *     **Order:** nodes by the publication time of their first article, oldest first, ties by story id;
+         *     inside a node, articles by outlet id, then publication time. The order never depends on an
+         *     outlet's size, audience or line.
+         *
+         *     `linking` says how the links were made and `grouping` how the stories were; both thresholds are
+         *     provisional until pairs are labelled by hand. 404 when the story has no relations.
+         */
+        get: operations["tree_stories__story_id__tree_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ArticleOut */
+        ArticleOut: {
+            /** Outlet Id */
+            outlet_id: string;
+            /** Outlet Name */
+            outlet_name: string;
+            /** Headline */
+            headline: string;
+            /** Url */
+            url: string;
+            /**
+             * Published At
+             * Format: date-time
+             */
+            published_at: string;
+        };
         /** ClassifierOut */
         ClassifierOut: {
             /** Model Id */
@@ -186,6 +260,21 @@ export interface components {
             /** Has Data */
             has_data: boolean;
         };
+        /** CommunityStoriesOut */
+        CommunityStoriesOut: {
+            /** Territory Id */
+            territory_id: string;
+            /** Sector Id */
+            sector_id: string | null;
+            /**
+             * Since
+             * Format: date
+             */
+            since: string;
+            grouping: components["schemas"]["GroupingOut"] | null;
+            /** Stories */
+            stories: components["schemas"]["StoryOut"][];
+        };
         /**
          * ComponentStatus
          * @enum {string}
@@ -211,6 +300,22 @@ export interface components {
              */
             date: string;
             term: components["schemas"]["TermOut"];
+        };
+        /** GroupingOut */
+        GroupingOut: {
+            /** Run Id */
+            run_id: number;
+            /** Encoder Version */
+            encoder_version: string;
+            /** Threshold */
+            threshold: number;
+            /** Window Days */
+            window_days: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -241,6 +346,20 @@ export interface components {
          * @enum {string}
          */
         Level: "state" | "ccaa" | "province";
+        /** LinkingOut */
+        LinkingOut: {
+            /** Run Id */
+            run_id: number;
+            /** Threshold */
+            threshold: number;
+            /** Window Days */
+            window_days: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
         /** NewsItemOut */
         NewsItemOut: {
             /** Outlet Id */
@@ -257,6 +376,8 @@ export interface components {
              */
             published_at: string;
             classified_by: components["schemas"]["ClassifierOut"];
+            /** Tree Story Id */
+            tree_story_id: number | null;
         };
         /** PartyOut */
         PartyOut: {
@@ -301,6 +422,22 @@ export interface components {
             /** Fetched At */
             fetched_at: string | null;
         };
+        /** StoryOut */
+        StoryOut: {
+            /** Story Id */
+            story_id: number;
+            /** Articles */
+            articles: components["schemas"]["ArticleOut"][];
+        };
+        /** StoryTreeOut */
+        StoryTreeOut: {
+            /** Root Story Id */
+            root_story_id: number;
+            linking: components["schemas"]["LinkingOut"];
+            grouping: components["schemas"]["GroupingOut"];
+            /** Nodes */
+            nodes: components["schemas"]["TreeNodeOut"][];
+        };
         /** TermOut */
         TermOut: {
             /** President Name */
@@ -335,6 +472,22 @@ export interface components {
             ine_code: string | null;
             /** Name */
             name: string;
+        };
+        /** TreeNodeOut */
+        TreeNodeOut: {
+            /** Story Id */
+            story_id: number;
+            /** Parent Story Id */
+            parent_story_id: number | null;
+            /** Link Similarity */
+            link_similarity: number | null;
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /** Articles */
+            articles: components["schemas"]["ArticleOut"][];
         };
         /** ValidationError */
         ValidationError: {
@@ -574,6 +727,71 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CommunityNewsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    community_communities__territory_id__stories_get: {
+        parameters: {
+            query?: {
+                /** @description A sector id: education, health or housing */
+                sector?: string | null;
+            };
+            header?: never;
+            path: {
+                territory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunityStoriesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    tree_stories__story_id__tree_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                story_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StoryTreeOut"];
                 };
             };
             /** @description Validation Error */

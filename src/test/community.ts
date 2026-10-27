@@ -7,6 +7,7 @@ import canariasIndicators from "@/test/fixtures/community-ccaa-05-indicators.jso
 import canariasNews from "@/test/fixtures/community-ccaa-05-news-health.json";
 import catalunaNews from "@/test/fixtures/community-ccaa-09-news-health.json";
 import parties from "@/test/fixtures/parties.json";
+import tree37 from "@/test/fixtures/story-37-tree.json";
 import unknown from "@/test/fixtures/community-unknown-governments.json";
 import territories from "@/test/fixtures/territories.json";
 import { server } from "@/test/server";
@@ -19,7 +20,10 @@ const GOVERNMENT = { canarias, cataluna, "canarias-caretaker": caretaker } as co
  * Serves the community endpoints with responses captured from the real backend. Any id
  * other than ccaa-05 (or ccaa-09 for "cataluna") answers the API's real 404.
  */
-export function serveCommunity(scenario: Scenario = "canarias"): void {
+export function serveCommunity(
+  scenario: Scenario = "canarias",
+  options: { failingTree?: boolean } = {},
+): void {
   const id = scenario === "cataluna" ? "ccaa-09" : "ccaa-05";
   server.use(
     http.get("*/api/territories", () => HttpResponse.json(territories)),
@@ -35,5 +39,14 @@ export function serveCommunity(scenario: Scenario = "canarias"): void {
     http.get("*/api/communities/:territoryId/news", ({ params }) =>
       HttpResponse.json(params.territoryId === "ccaa-09" ? catalunaNews : canariasNews),
     ),
+    http.get("*/api/stories/:storyId/tree", ({ params }) => {
+      if (options.failingTree) return HttpResponse.json({ detail: "boom" }, { status: 500 });
+      return params.storyId === "37"
+        ? HttpResponse.json(tree37)
+        : HttpResponse.json(
+            { detail: `story ${String(params.storyId)} has no relations` },
+            { status: 404 },
+          );
+    }),
   );
 }

@@ -10,6 +10,7 @@ function item(publishedAt = "2026-10-14T09:44:08Z"): NewsItem {
     headline: "Un titular",
     url: "https://rtvc.es/1",
     publishedAt,
+    treeStoryId: null,
   };
 }
 
@@ -23,6 +24,7 @@ describe("newsRows", () => {
       outlet: "Radio Televisión Canaria, 11:44",
       headline: "Un titular",
       url: "https://rtvc.es/1",
+      treeStoryId: null,
     });
   });
 });

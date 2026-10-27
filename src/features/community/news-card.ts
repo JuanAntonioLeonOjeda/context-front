@@ -13,6 +13,7 @@ export interface NewsRow {
   outlet: string; // "Outlet, 11:44"
   headline: string;
   url: string;
+  treeStoryId: number | null;
 }
 
 // The day and the hour a reader in Spain sees.
@@ -66,5 +67,11 @@ export function newsRows(items: readonly NewsItem[]): NewsRow[] {
     }),
     headline: item.headline,
     url: item.url,
+    treeStoryId: item.treeStoryId,
   }));
+}
+
+/** The items that belong to a tree of related news (`?arbol=1` shows only these). */
+export function withTree(items: readonly NewsItem[]): NewsItem[] {
+  return items.filter((item) => item.treeStoryId !== null);
 }

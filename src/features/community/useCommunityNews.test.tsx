@@ -44,6 +44,7 @@ describe("useCommunityNews", () => {
       "outletId",
       "outletName",
       "publishedAt",
+      "treeStoryId",
       "url",
     ]);
   });
