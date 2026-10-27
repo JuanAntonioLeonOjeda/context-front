@@ -80,56 +80,64 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
       />
       {open && (
         <>
-          <nav aria-label={es.community.news.sectorNav}>
-            <ul className={styles.sectors}>
-              {SECTORS.map((s) => (
-                <li key={s}>
-                  <Link
-                    to={{ search: searchWith(params, { sector: s }) }}
-                    preventScrollReset
-                    aria-current={s === sector ? "page" : undefined}
-                  >
-                    {es.community.news.sectors[s]}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <fieldset className={styles.dates}>
-            <legend>{es.community.news.range.legend}</legend>
-            <label>
-              {es.community.news.range.from}
-              <input
-                type="date"
-                value={shownFrom ?? ""}
-                onChange={(event) => {
-                  setBound("from", event.target.value);
-                }}
+          <fieldset className={styles.filters}>
+            <legend>{es.community.filters.legend}</legend>
+            <nav aria-label={es.community.news.sectorNav}>
+              <ul className={styles.sectors}>
+                {SECTORS.map((s) => (
+                  <li key={s}>
+                    <Link
+                      to={{ search: searchWith(params, { sector: s }) }}
+                      preventScrollReset
+                      aria-current={s === sector ? "page" : undefined}
+                    >
+                      {es.community.news.sectors[s]}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div className={styles.filterRow}>
+              <SearchBox
+                label={es.community.news.search.label}
+                placeholder={es.community.news.search.placeholder}
+                value={query}
+                onChange={setQuery}
               />
-            </label>
-            <label>
-              {es.community.news.range.to}
-              <input
-                type="date"
-                value={shownTo ?? ""}
-                onChange={(event) => {
-                  setBound("to", event.target.value);
-                }}
-              />
-            </label>
-            {(range.from !== null || range.to !== null) && (
-              <button type="button" onClick={resetRange}>
-                {es.community.news.range.reset}
-              </button>
-            )}
+              <div
+                role="group"
+                aria-label={es.community.news.range.legend}
+                className={styles.dates}
+              >
+                <label>
+                  {es.community.news.range.from}
+                  <input
+                    type="date"
+                    value={shownFrom ?? ""}
+                    onChange={(event) => {
+                      setBound("from", event.target.value);
+                    }}
+                  />
+                </label>
+                <label>
+                  {es.community.news.range.to}
+                  <input
+                    type="date"
+                    value={shownTo ?? ""}
+                    onChange={(event) => {
+                      setBound("to", event.target.value);
+                    }}
+                  />
+                </label>
+                {(range.from !== null || range.to !== null) && (
+                  <button type="button" onClick={resetRange}>
+                    {es.community.news.range.reset}
+                  </button>
+                )}
+              </div>
+            </div>
           </fieldset>
           <p className={styles.newsNote}>{es.community.news.range.note}</p>
-          <SearchBox
-            label={es.community.news.search.label}
-            placeholder={es.community.news.search.placeholder}
-            value={query}
-            onChange={setQuery}
-          />
           <p className={styles.newsNote}>{es.community.news.method}</p>
           {news.state === "error" && (
             <div role="alert">

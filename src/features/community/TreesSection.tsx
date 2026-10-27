@@ -80,31 +80,36 @@ export function TreesSection({ territoryId }: { territoryId: string }): React.JS
       />
       {open && (
         <>
-          <nav aria-label={es.community.trees.sectorNav}>
-            <ul className={styles.sectors}>
-              {SECTORS.map((s) => (
-                <li key={s}>
-                  <Link
-                    to={{ search: searchWith(params, { [SECTOR_PARAM]: s }) }}
-                    preventScrollReset
-                    aria-current={s === sector ? "page" : undefined}
-                    onClick={() => {
-                      setOpenStory(null);
-                    }}
-                  >
-                    {es.community.news.sectors[s]}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <fieldset className={styles.filters}>
+            <legend>{es.community.filters.legend}</legend>
+            <nav aria-label={es.community.trees.sectorNav}>
+              <ul className={styles.sectors}>
+                {SECTORS.map((s) => (
+                  <li key={s}>
+                    <Link
+                      to={{ search: searchWith(params, { [SECTOR_PARAM]: s }) }}
+                      preventScrollReset
+                      aria-current={s === sector ? "page" : undefined}
+                      onClick={() => {
+                        setOpenStory(null);
+                      }}
+                    >
+                      {es.community.news.sectors[s]}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div className={styles.filterRow}>
+              <SearchBox
+                label={es.community.trees.search.label}
+                placeholder={es.community.trees.search.placeholder}
+                value={query}
+                onChange={setQuery}
+              />
+            </div>
+          </fieldset>
           <p className={styles.newsNote}>{es.community.trees.note}</p>
-          <SearchBox
-            label={es.community.trees.search.label}
-            placeholder={es.community.trees.search.placeholder}
-            value={query}
-            onChange={setQuery}
-          />
           {trees.state === "error" && (
             <div role="alert">
               <p>{es.community.trees.error}</p>

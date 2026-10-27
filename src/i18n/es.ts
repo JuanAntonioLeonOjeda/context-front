@@ -139,6 +139,7 @@ export const es = {
       error: "No hemos podido cargar esta comunidad.",
       retry: "Volver a intentarlo",
     },
+    filters: { legend: "Filtros" },
     trees: {
       title: "Árbol de noticias",
       sectorNav: "Sector del árbol de noticias",
