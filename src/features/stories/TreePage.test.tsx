@@ -27,45 +27,58 @@ describe("tree of related news", () => {
     expect(within(region).queryAllByRole("heading")).toHaveLength(0);
   });
 
-  it("unfolds the headlines of the other outlets on hover and folds them on leaving", async () => {
+  it("unfolds the headlines of the other outlets on click and folds them on a second click", async () => {
     const user = userEvent.setup();
     renderApp("/arbol/37");
     const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
     const [card] = within(region).getAllByRole("article");
     if (!card) throw new Error("no card rendered");
-    const more = within(card).getByRole("button", { name: /medios? más/ });
-    expect(more).toHaveAttribute("aria-expanded", "false");
+    const toggle = within(card).getByRole("button", { name: /^Desplegar \(\d medios? más\)$/ });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
 
-    await user.hover(card);
+    await user.click(toggle);
 
-    expect(more).toHaveAttribute("aria-expanded", "true");
+    const folded = within(card).getByRole("button", { name: es.stories.tree.fold });
+    expect(folded).toHaveAttribute("aria-expanded", "true");
     expect(within(card).getAllByRole("link").length).toBeGreaterThan(1);
     for (const link of within(card).getAllByRole("link")) {
       expect(link).toHaveAttribute("href", expect.stringMatching(/^https?:\/\//));
     }
 
-    await user.unhover(card);
+    await user.click(folded);
 
-    expect(more).toHaveAttribute("aria-expanded", "false");
+    expect(within(card).getByRole("button", { name: /^Desplegar/ })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
     expect(within(card).getAllByRole("link")).toHaveLength(1);
   });
 
-  it("opens and closes with the button too, for keyboard and touch", async () => {
+  it("does not unfold on hover: only the button does", async () => {
     const user = userEvent.setup();
     renderApp("/arbol/37");
     const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
     const [card] = within(region).getAllByRole("article");
     if (!card) throw new Error("no card rendered");
-    const more = within(card).getByRole("button", { name: /medios? más/ });
-    more.focus();
 
-    await user.keyboard("{Enter}");
-    expect(more).toHaveAttribute("aria-expanded", "true");
-    expect(within(card).getAllByRole("link").length).toBeGreaterThan(1);
+    await user.hover(card);
 
-    await user.keyboard("{Enter}");
-    expect(more).toHaveAttribute("aria-expanded", "false");
     expect(within(card).getAllByRole("link")).toHaveLength(1);
+  });
+
+  it("opens with the keyboard too", async () => {
+    const user = userEvent.setup();
+    renderApp("/arbol/37");
+    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
+    const [card] = within(region).getAllByRole("article");
+    if (!card) throw new Error("no card rendered");
+    within(card)
+      .getByRole("button", { name: /^Desplegar/ })
+      .focus();
+
+    await user.keyboard("{Enter}");
+
+    expect(within(card).getAllByRole("link").length).toBeGreaterThan(1);
   });
 
   it("links each headline to its outlet and says when each story began", async () => {

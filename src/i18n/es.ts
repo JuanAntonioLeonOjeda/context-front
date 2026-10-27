@@ -29,7 +29,7 @@ export const es = {
       method: {
         title: "Cómo se hace",
         items: [
-          "Las noticias se clasifican con reglas automáticas todavía sin medir, y pueden contener errores.",
+          "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
           "De cada noticia solo se publican el titular y el enlace al medio.",
         ],
         link: "Leer cómo funciona",
@@ -143,9 +143,6 @@ export const es = {
       title: "Noticias",
       sectorNav: "Sector de las noticias",
       sectors: { education: "Educación", health: "Sanidad", housing: "Vivienda" },
-      window:
-        "Noticias del {from} al {to}: hasta 5 por medio y día, de la más reciente a la más antigua.",
-      windowOneDay: "Noticias del {date}: hasta 5 por medio, de la más reciente a la más antigua.",
       range: {
         legend: "Fechas",
         from: "Desde",
@@ -154,7 +151,7 @@ export const es = {
         note: "Se muestran los últimos 3 días. Puedes elegir otras fechas, hasta 31 días seguidos.",
       },
       method:
-        "Las noticias se clasifican con reglas automáticas que todavía no se han medido, y pueden contener errores.",
+        "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
       empty: "No hay noticias de {sector} en este periodo.",
       loading: "Cargando las noticias…",
       error: "No hemos podido cargar las noticias.",
@@ -165,8 +162,8 @@ export const es = {
       tree: "Ver árbol",
       filter: {
         treeOnly: "Solo con árbol",
-        treeOnlyCount: "{count} de {total} noticias tienen un árbol de noticias relacionadas.",
       },
+      noTree: "No hay árbol de noticias para esta selección.",
       emptyTree: "No hay noticias de {sector} con árbol en este periodo.",
       treeOf: "Ver árbol de noticias relacionadas con «{headline}»",
       carousel: {
@@ -187,8 +184,9 @@ export const es = {
       regionLabel: "Árbol de historias relacionadas, se desplaza en horizontal",
       more: "{count} medios más",
       moreOne: "1 medio más",
-      moreHint:
-        "Pasa el ratón por encima o pulsa el botón para ver el titular de los demás medios.",
+      unfold: "Desplegar ({more})",
+      fold: "Plegar",
+      moreHint: "Pulsa «Desplegar» en una tarjeta para ver el titular de los demás medios.",
       started: "Desde el {date}, {time}",
       similarity: "Relación con la anterior: {value}",
       loading: "Cargando el árbol…",
@@ -230,7 +228,7 @@ export const es = {
     limits: {
       title: "Qué no hace todavía",
       items: [
-        "Las reglas que clasifican las noticias aún no se han medido con un conjunto de prueba: pueden equivocarse, por ejemplo tomando por política una noticia que no lo es.",
+        "El sector lo asigna un modelo propio y la comunidad y el nivel de gobierno, reglas automáticas. Se midieron con 200 noticias etiquetadas a mano que nunca se usaron para entrenar, y pueden equivocarse, por ejemplo tomando por política una noticia que no lo es.",
         "Muchas noticias salen «Sin determinar», porque pocas nombran un gobierno.",
         "Los gobiernos locales, como ayuntamientos y cabildos, todavía no se modelan.",
       ],

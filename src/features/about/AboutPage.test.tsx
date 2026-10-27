@@ -29,7 +29,9 @@ describe("how it works page", () => {
 
     expect(await screen.findByText(/nunca se muestra/)).toBeVisible();
     const limits = screen.getByRole("region", { name: es.about.limits.title });
-    expect(within(limits).getByText(/aún no se han medido/)).toBeVisible();
+    expect(
+      within(limits).getByText(/etiquetadas a mano que nunca se usaron para entrenar/),
+    ).toBeVisible();
   });
 
   it("names the sources of every kind of data", async () => {

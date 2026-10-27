@@ -7,6 +7,7 @@ import { es } from "@/i18n/es";
 import { renderApp } from "@/test/app";
 import { axeViolations } from "@/test/axe";
 import { serveCommunity } from "@/test/community";
+import { newsLoaded } from "@/test/news";
 import { server } from "@/test/server";
 
 async function newsSection(): Promise<HTMLElement> {
@@ -18,7 +19,7 @@ describe("news of a community", () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
-    await within(section).findByText(/Noticias del /);
+    await newsLoaded();
     // One <li> per article, in lists by day; the lists nested in each article are not counted.
     expect(section.querySelectorAll("ol > li")).toHaveLength(11);
     const link = within(section).getByRole("link", {
@@ -32,7 +33,7 @@ describe("news of a community", () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
-    await within(section).findByText(/Noticias del /);
+    await newsLoaded();
     const days = within(section).getAllByRole("heading", { level: 3 });
     expect(days.length).toBeGreaterThan(1);
     expect(days[0]).toHaveTextContent("14 de octubre de 2026");
@@ -44,7 +45,7 @@ describe("news of a community", () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
-    await within(section).findByText(/Noticias del /);
+    await newsLoaded();
     expect(section).not.toHaveTextContent(/Responsable|Confianza|Base de la atribución/);
     expect(section.querySelectorAll("li > span[aria-hidden='true']")).toHaveLength(0);
   });
@@ -67,7 +68,7 @@ describe("news of a community", () => {
   it("changes the sector with a link, asks the API for it and keeps the focus on the link", async () => {
     const asked: (string | null)[] = [];
     renderApp("/comunidades/ccaa-05");
-    await screen.findByText(/Noticias del /); // the first sector is loaded
+    await newsLoaded(); // the first sector is loaded
     server.use(
       http.get("*/api/communities/:territoryId/news", ({ request }) => {
         asked.push(new URL(request.url).searchParams.get("sector"));
@@ -103,9 +104,9 @@ describe("news of a community", () => {
     renderApp("/comunidades/ccaa-09", { community: "cataluna" });
 
     expect(await screen.findByText(/No hay noticias de educación en este periodo/)).toBeVisible();
-    expect(
-      screen.getByText(/Noticias del 15 de septiembre de 2026 al 14 de octubre de 2026/),
-    ).toBeVisible();
+    await waitFor(() => {
+      expect(screen.getByLabelText(es.community.news.range.from)).toHaveValue("2026-09-15");
+    });
   });
 
   it("says how the news are classified", async () => {
@@ -132,31 +133,47 @@ describe("news of a community", () => {
     serveCommunity();
     await user.click(within(alert).getByRole("button", { name: es.community.news.retry }));
 
-    expect(await screen.findByText(/Noticias del /)).toBeVisible();
+    await newsLoaded();
   });
 
   it("has no axe violations", async () => {
     const container = renderApp("/comunidades/ccaa-05?sector=health");
 
-    await screen.findByText(/Noticias del /);
+    await newsLoaded();
     expect(await axeViolations(container)).toEqual([]);
   });
 });
 
 describe("filter of the news with a tree", () => {
-  it("is a switch, off at first, that shows how many news have a tree", async () => {
+  it("is a switch, off at first, when the selection has news with a tree", async () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const toggle = await screen.findByRole("switch", { name: es.community.news.filter.treeOnly });
     expect(toggle).toHaveAttribute("aria-checked", "false");
-    expect(await screen.findByText(/1 de 11 noticias tienen un árbol/)).toBeVisible();
+    expect(screen.queryByText(/noticias tienen un árbol/)).toBeNull();
+    expect(screen.queryByText(es.community.news.noTree)).toBeNull();
+  });
+
+  it("shows no switch, only that there is no tree, when the selection has none", async () => {
+    renderApp("/comunidades/ccaa-09", { community: "cataluna" });
+
+    expect(await screen.findByText(es.community.news.noTree)).toBeVisible();
+    expect(screen.queryByRole("switch")).toBeNull();
+  });
+
+  it("shows the news without filtering when ?arbol=1 is left in a selection with no tree", async () => {
+    renderApp("/comunidades/ccaa-09?arbol=1", { community: "cataluna" });
+
+    expect(await screen.findByText(es.community.news.noTree)).toBeVisible();
+    expect(screen.queryByRole("switch")).toBeNull();
+    expect(screen.getByText(/No hay noticias de educación en este periodo/)).toBeVisible();
   });
 
   it("shows only the news with a tree when it is on, keeps it in the URL and turns off again", async () => {
     const user = userEvent.setup();
     renderApp("/comunidades/ccaa-05?sector=health");
     const section = await newsSection();
-    await within(section).findByText(/Noticias del /);
+    await newsLoaded();
     expect(section.querySelectorAll("ol > li")).toHaveLength(11);
 
     await user.click(within(section).getByRole("switch"));
@@ -178,19 +195,11 @@ describe("filter of the news with a tree", () => {
     expect(screen.getByRole("link", { name: "Sanidad" })).toHaveAttribute("aria-current", "page");
   });
 
-  it("says there are no news with a tree instead of leaving a blank", async () => {
-    renderApp("/comunidades/ccaa-09?arbol=1", { community: "cataluna" });
-
-    expect(
-      await screen.findByText(/No hay noticias de educación con árbol en este periodo/),
-    ).toBeVisible();
-  });
-
   it("gives each news item two actions with an icon that is hidden from assistive technology", async () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
-    await within(section).findByText(/Noticias del /);
+    await newsLoaded();
     const sources = within(section).getAllByRole("link", { name: /^Ver fuente de/ });
     expect(sources).toHaveLength(11);
     expect(sources[0]?.querySelector("svg[aria-hidden='true']")).not.toBeNull();
@@ -204,7 +213,7 @@ describe("filter of the news with a tree", () => {
   it("has no axe violations with the switch on", async () => {
     const container = renderApp("/comunidades/ccaa-05?sector=health&arbol=1");
 
-    await screen.findByText(/Noticias del /);
+    await newsLoaded();
     expect(await axeViolations(container)).toEqual([]);
   });
 });
@@ -230,7 +239,7 @@ describe("range of days of the news", () => {
     const asked: Record<string, string | null>[] = [];
     const user = userEvent.setup();
     renderApp("/comunidades/ccaa-05?sector=health");
-    await screen.findByText(/Noticias del /);
+    await newsLoaded();
     server.use(
       http.get("*/api/communities/:territoryId/news", ({ request }) => {
         const url = new URL(request.url);
@@ -252,18 +261,22 @@ describe("range of days of the news", () => {
       target: { value: "2026-10-01" },
     });
 
-    await screen.findByText(/Noticias del 1 de octubre de 2026 al 14 de octubre de 2026/);
+    await waitFor(() => {
+      expect(screen.getByLabelText(es.community.news.range.from)).toHaveValue("2026-10-01");
+    });
     expect(asked.at(-1)).toEqual({ from: "2026-10-01", to: "2026-10-14" });
 
     await user.click(screen.getByRole("button", { name: es.community.news.range.reset }));
 
-    await screen.findByText(/Noticias del 12 de octubre de 2026 al 14 de octubre de 2026/);
+    await waitFor(() => {
+      expect(screen.getByLabelText(es.community.news.range.from)).toHaveValue("2026-10-12");
+    });
     expect(asked.at(-1)).toEqual({ from: null, to: null });
   });
 
   it("moves the other day when the first one is set after the last", async () => {
     renderApp("/comunidades/ccaa-05?sector=health&desde=2026-10-01&hasta=2026-10-05");
-    await screen.findByText(/Noticias del /);
+    await newsLoaded();
 
     fireEvent.change(screen.getByLabelText(es.community.news.range.from), {
       target: { value: "2026-10-09" },
@@ -277,7 +290,8 @@ describe("range of days of the news", () => {
   it("reads the days from the URL and keeps the sector and the switch", async () => {
     renderApp("/comunidades/ccaa-05?sector=health&arbol=1&desde=2026-10-05&hasta=2026-10-07");
 
-    expect(await screen.findByLabelText(es.community.news.range.from)).toHaveValue("2026-10-05");
+    await newsLoaded();
+    expect(screen.getByLabelText(es.community.news.range.from)).toHaveValue("2026-10-05");
     expect(screen.getByLabelText(es.community.news.range.to)).toHaveValue("2026-10-07");
     expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "true");
     expect(screen.getByRole("link", { name: "Sanidad" })).toHaveAttribute("aria-current", "page");
@@ -287,7 +301,7 @@ describe("range of days of the news", () => {
   it("ignores a day in the URL that is not a date", async () => {
     renderApp("/comunidades/ccaa-05?sector=health&desde=ayer");
 
-    expect(await screen.findByText(/Noticias del /)).toBeVisible();
+    await newsLoaded();
     expect(screen.queryByRole("button", { name: es.community.news.range.reset })).toBeNull();
   });
 });

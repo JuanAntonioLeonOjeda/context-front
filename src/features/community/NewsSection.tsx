@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router";
 import { ExternalLink } from "@/features/shell";
 import { treePath } from "@/features/stories";
 import { es } from "@/i18n/es";
-import { formatLongDate, formatMessage } from "@/i18n/format";
+import { formatMessage } from "@/i18n/format";
 
 import { Carousel } from "./Carousel";
 import { searchWith } from "./search-params";
@@ -59,11 +59,15 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
   };
   const sectorName = es.community.news.sectors[sector];
 
+  // The switch exists only where there is something to filter: a selection with no tree says so
+  // instead, and a `?arbol=1` left in the URL then filters nothing.
+  const hasTree = news.state === "ready" && withTree(news.news.items).length > 0;
+  const filterOn = treeOnly && hasTree;
   const shown =
-    news.state === "ready" ? (treeOnly ? withTree(news.news.items) : news.news.items) : [];
+    news.state === "ready" ? (filterOn ? withTree(news.news.items) : news.news.items) : [];
 
   return (
-    <section aria-labelledby="news-title" className={styles.section}>
+    <section aria-labelledby="news-title" className={styles.newsSection}>
       <h2 id="news-title">{es.community.news.title}</h2>
       <nav aria-label={es.community.news.sectorNav}>
         <ul className={styles.sectors}>
@@ -80,16 +84,18 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
           ))}
         </ul>
       </nav>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={treeOnly}
-        className={styles.switch}
-        onClick={toggleTreeOnly}
-      >
-        <span className={styles.switchTrack} aria-hidden="true" />
-        {es.community.news.filter.treeOnly}
-      </button>
+      {hasTree && (
+        <button
+          type="button"
+          role="switch"
+          aria-checked={filterOn}
+          className={styles.switch}
+          onClick={toggleTreeOnly}
+        >
+          <span className={styles.switchTrack} aria-hidden="true" />
+          {es.community.news.filter.treeOnly}
+        </button>
+      )}
       <fieldset className={styles.dates}>
         <legend>{es.community.news.range.legend}</legend>
         <label>
@@ -131,25 +137,10 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
       {news.state === "loading" && <p role="status">{es.community.news.loading}</p>}
       {news.state === "ready" && (
         <>
-          <p className={styles.newsNote}>
-            {news.news.since === news.news.until
-              ? formatMessage(es.community.news.windowOneDay, {
-                  date: formatLongDate(news.news.since),
-                })
-              : formatMessage(es.community.news.window, {
-                  from: formatLongDate(news.news.since),
-                  to: formatLongDate(news.news.until),
-                })}
-          </p>
-          <p className={styles.newsNote}>
-            {formatMessage(es.community.news.filter.treeOnlyCount, {
-              count: String(withTree(news.news.items).length),
-              total: String(news.news.items.length),
-            })}
-          </p>
+          {!hasTree && <p className={styles.newsNote}>{es.community.news.noTree}</p>}
           {shown.length === 0 ? (
             <p>
-              {formatMessage(treeOnly ? es.community.news.emptyTree : es.community.news.empty, {
+              {formatMessage(filterOn ? es.community.news.emptyTree : es.community.news.empty, {
                 sector: sectorName.toLowerCase(),
               })}
             </p>
