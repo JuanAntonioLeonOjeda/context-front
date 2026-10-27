@@ -46,10 +46,6 @@
   margin-block: 0;
 }
 
-.heading {
-  font-size: 1rem;
-}
-
 .meta {
   color: var(--color-text-muted);
 }
@@ -66,8 +62,19 @@
   display: grid;
 }
 
-.articles a {
+.articles a,
+.headline {
   font-weight: 700;
+}
+
+/* The card is a quiet column; the other outlets unfold below the first headline, and the
+   connectors follow because they hang from the same list item. */
+.more {
+  justify-self: start;
+  min-height: 2.25rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  font-size: var(--text-sm);
 }
 
 .outlet {

@@ -181,11 +181,14 @@ export const es = {
       title: "Noticias relacionadas",
       back: "Volver",
       reading:
-        "Cada tarjeta es una historia: los titulares de varios medios que cuentan el mismo suceso. El tiempo avanza de izquierda a derecha: cada rama continúa la historia anterior a la que se parece más.",
+        "Cada tarjeta es una historia: muestra el titular de la primera noticia publicada y, al desplegarla, los de los demás medios que cuentan el mismo suceso. El tiempo avanza de izquierda a derecha: cada rama continúa la historia anterior a la que se parece más.",
       method:
         "Las historias y las relaciones las calcula un modelo de similitud de textos, con un umbral provisional (similitud mínima {threshold} y hasta {days} días entre una historia y la siguiente). Pueden contener errores. Una relación solo dice «parecida y posterior», no su causa.",
       regionLabel: "Árbol de historias relacionadas, se desplaza en horizontal",
-      coveredBy: "Cubierta por {count} medios",
+      more: "{count} medios más",
+      moreOne: "1 medio más",
+      moreHint:
+        "Pasa el ratón por encima o pulsa el botón para ver el titular de los demás medios.",
       started: "Desde el {date}, {time}",
       similarity: "Relación con la anterior: {value}",
       loading: "Cargando el árbol…",
