@@ -132,8 +132,13 @@ export interface paths {
         };
         /**
          * Community
-         * @description The news of the last 30 days (today included, Spain time) that the active classifier
-         *     placed in this community and sector, at most 5 per outlet (its newest).
+         * @description The news of a range of days (Spain time) that the active classifier placed in this community and
+         *     sector. Without dates: the last 3 days, today included. With `date_from` and/or
+         *     `date_to` (ISO dates, both included): that range, of at most 31 days. At most
+         *     5 per outlet and day (its newest).
+         *
+         *     Nothing is deleted: any day the collector ran can be asked for. A day it did not run, or before the
+         *     portal began collecting, answers an empty list, not an error.
          *
          *     **Order:** publication time, newest first; ties by outlet id. The order never depends on an
          *     outlet's size, audience or line.
@@ -246,6 +251,11 @@ export interface components {
              * Format: date
              */
             since: string;
+            /**
+             * Until
+             * Format: date
+             */
+            until: string;
             /** Items */
             items: components["schemas"]["NewsItemOut"][];
         };
@@ -711,6 +721,10 @@ export interface operations {
             query: {
                 /** @description A sector id: education, health or housing */
                 sector: string;
+                /** @description First day, ISO date */
+                date_from?: string | null;
+                /** @description Last day, ISO date */
+                date_to?: string | null;
             };
             header?: never;
             path: {

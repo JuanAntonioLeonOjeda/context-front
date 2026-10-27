@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
@@ -18,7 +18,7 @@ describe("news of a community", () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
-    await within(section).findByText(/Noticias desde el/);
+    await within(section).findByText(/Noticias del /);
     // One <li> per article, in lists by day; the lists nested in each article are not counted.
     expect(section.querySelectorAll("ol > li")).toHaveLength(11);
     const link = within(section).getByRole("link", {
@@ -32,7 +32,7 @@ describe("news of a community", () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
-    await within(section).findByText(/Noticias desde el/);
+    await within(section).findByText(/Noticias del /);
     const days = within(section).getAllByRole("heading", { level: 3 });
     expect(days.length).toBeGreaterThan(1);
     expect(days[0]).toHaveTextContent("14 de octubre de 2026");
@@ -44,7 +44,7 @@ describe("news of a community", () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
-    await within(section).findByText(/Noticias desde el/);
+    await within(section).findByText(/Noticias del /);
     expect(section).not.toHaveTextContent(/Responsable|Confianza|Base de la atribución/);
     expect(section.querySelectorAll("li > span[aria-hidden='true']")).toHaveLength(0);
   });
@@ -67,7 +67,7 @@ describe("news of a community", () => {
   it("changes the sector with a link, asks the API for it and keeps the focus on the link", async () => {
     const asked: (string | null)[] = [];
     renderApp("/comunidades/ccaa-05");
-    await screen.findByText(/Noticias desde el/); // the first sector is loaded
+    await screen.findByText(/Noticias del /); // the first sector is loaded
     server.use(
       http.get("*/api/communities/:territoryId/news", ({ request }) => {
         asked.push(new URL(request.url).searchParams.get("sector"));
@@ -75,6 +75,7 @@ describe("news of a community", () => {
           territory_id: "ccaa-05",
           sector_id: "housing",
           since: "2026-09-15",
+          until: "2026-10-14",
           items: [],
         });
       }),
@@ -102,7 +103,9 @@ describe("news of a community", () => {
     renderApp("/comunidades/ccaa-09", { community: "cataluna" });
 
     expect(await screen.findByText(/No hay noticias de educación en este periodo/)).toBeVisible();
-    expect(screen.getByText(/Noticias desde el 15 de septiembre de 2026/)).toBeVisible();
+    expect(
+      screen.getByText(/Noticias del 15 de septiembre de 2026 al 14 de octubre de 2026/),
+    ).toBeVisible();
   });
 
   it("says how the news are classified", async () => {
@@ -129,13 +132,13 @@ describe("news of a community", () => {
     serveCommunity();
     await user.click(within(alert).getByRole("button", { name: es.community.news.retry }));
 
-    expect(await screen.findByText(/Noticias desde el/)).toBeVisible();
+    expect(await screen.findByText(/Noticias del /)).toBeVisible();
   });
 
   it("has no axe violations", async () => {
     const container = renderApp("/comunidades/ccaa-05?sector=health");
 
-    await screen.findByText(/Noticias desde el/);
+    await screen.findByText(/Noticias del /);
     expect(await axeViolations(container)).toEqual([]);
   });
 });
@@ -153,7 +156,7 @@ describe("filter of the news with a tree", () => {
     const user = userEvent.setup();
     renderApp("/comunidades/ccaa-05?sector=health");
     const section = await newsSection();
-    await within(section).findByText(/Noticias desde el/);
+    await within(section).findByText(/Noticias del /);
     expect(section.querySelectorAll("ol > li")).toHaveLength(11);
 
     await user.click(within(section).getByRole("switch"));
@@ -187,7 +190,7 @@ describe("filter of the news with a tree", () => {
     renderApp("/comunidades/ccaa-05?sector=health");
 
     const section = await newsSection();
-    await within(section).findByText(/Noticias desde el/);
+    await within(section).findByText(/Noticias del /);
     const sources = within(section).getAllByRole("link", { name: /^Ver fuente de/ });
     expect(sources).toHaveLength(11);
     expect(sources[0]?.querySelector("svg[aria-hidden='true']")).not.toBeNull();
@@ -201,7 +204,90 @@ describe("filter of the news with a tree", () => {
   it("has no axe violations with the switch on", async () => {
     const container = renderApp("/comunidades/ccaa-05?sector=health&arbol=1");
 
-    await screen.findByText(/Noticias desde el/);
+    await screen.findByText(/Noticias del /);
     expect(await axeViolations(container)).toEqual([]);
+  });
+});
+
+describe("range of days of the news", () => {
+  it("shows in the fields the days the API resolved when none was chosen, and no way back", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+    const section = await newsSection();
+
+    await waitFor(() => {
+      expect(within(section).getByLabelText(es.community.news.range.from)).toHaveValue(
+        "2026-09-15",
+      );
+    });
+    expect(within(section).getByLabelText(es.community.news.range.to)).toHaveValue("2026-10-14");
+    expect(
+      within(section).queryByRole("button", { name: es.community.news.range.reset }),
+    ).toBeNull();
+    expect(within(section).getByText(es.community.news.range.note)).toBeVisible();
+  });
+
+  it("asks for the days chosen and goes back to the default with the button", async () => {
+    const asked: Record<string, string | null>[] = [];
+    const user = userEvent.setup();
+    renderApp("/comunidades/ccaa-05?sector=health");
+    await screen.findByText(/Noticias del /);
+    server.use(
+      http.get("*/api/communities/:territoryId/news", ({ request }) => {
+        const url = new URL(request.url);
+        asked.push({
+          from: url.searchParams.get("date_from"),
+          to: url.searchParams.get("date_to"),
+        });
+        return HttpResponse.json({
+          territory_id: "ccaa-05",
+          sector_id: "health",
+          since: url.searchParams.get("date_from") ?? "2026-10-12",
+          until: url.searchParams.get("date_to") ?? "2026-10-14",
+          items: [],
+        });
+      }),
+    );
+
+    fireEvent.change(screen.getByLabelText(es.community.news.range.from), {
+      target: { value: "2026-10-01" },
+    });
+
+    await screen.findByText(/Noticias del 1 de octubre de 2026 al 14 de octubre de 2026/);
+    expect(asked.at(-1)).toEqual({ from: "2026-10-01", to: "2026-10-14" });
+
+    await user.click(screen.getByRole("button", { name: es.community.news.range.reset }));
+
+    await screen.findByText(/Noticias del 12 de octubre de 2026 al 14 de octubre de 2026/);
+    expect(asked.at(-1)).toEqual({ from: null, to: null });
+  });
+
+  it("moves the other day when the first one is set after the last", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health&desde=2026-10-01&hasta=2026-10-05");
+    await screen.findByText(/Noticias del /);
+
+    fireEvent.change(screen.getByLabelText(es.community.news.range.from), {
+      target: { value: "2026-10-09" },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText(es.community.news.range.to)).toHaveValue("2026-10-09");
+    });
+  });
+
+  it("reads the days from the URL and keeps the sector and the switch", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health&arbol=1&desde=2026-10-05&hasta=2026-10-07");
+
+    expect(await screen.findByLabelText(es.community.news.range.from)).toHaveValue("2026-10-05");
+    expect(screen.getByLabelText(es.community.news.range.to)).toHaveValue("2026-10-07");
+    expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("link", { name: "Sanidad" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("button", { name: es.community.news.range.reset })).toBeVisible();
+  });
+
+  it("ignores a day in the URL that is not a date", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health&desde=ayer");
+
+    expect(await screen.findByText(/Noticias del /)).toBeVisible();
+    expect(screen.queryByRole("button", { name: es.community.news.range.reset })).toBeNull();
   });
 });

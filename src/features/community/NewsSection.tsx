@@ -10,12 +10,15 @@ import { searchWith } from "./search-params";
 import { groupByDay, newsRows, withTree, type NewsRow } from "./news-card";
 import { SourceIcon, TreeIcon } from "./icons";
 import { SECTORS, type Sector } from "./news-api";
+import { dayOf, withBound } from "./news-range";
 import { useCommunityNews } from "./useCommunityNews";
 
 import styles from "./CommunityCard.module.css";
 
 const DEFAULT_SECTOR: Sector = SECTORS[0];
 const TREE_ONLY_PARAM = "arbol";
+const FROM_PARAM = "desde";
+const TO_PARAM = "hasta";
 
 /** The sector of `?sector=`; anything else (or nothing) is the first one, the same for everyone. */
 function sectorOf(value: string | null): Sector {
@@ -34,7 +37,26 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
     else next.set(TREE_ONLY_PARAM, "1");
     setParams(next, { preventScrollReset: true });
   };
-  const news = useCommunityNews(territoryId, sector);
+  // The range of days is in the URL too; without it the API answers the last three days.
+  const range = { from: dayOf(params.get(FROM_PARAM)), to: dayOf(params.get(TO_PARAM)) };
+  const news = useCommunityNews(territoryId, sector, range);
+  // The inputs show the days the API resolved when none was chosen, so the range is always visible.
+  const shownFrom = range.from ?? (news.state === "ready" ? news.news.since : null);
+  const shownTo = range.to ?? (news.state === "ready" ? news.news.until : null);
+  const setBound = (changed: "from" | "to", day: string): void => {
+    if (day === "") return;
+    const next = withBound({ from: shownFrom, to: shownTo }, changed, day);
+    const query = new URLSearchParams(params);
+    if (next.from !== null) query.set(FROM_PARAM, next.from);
+    if (next.to !== null) query.set(TO_PARAM, next.to);
+    setParams(query, { preventScrollReset: true });
+  };
+  const resetRange = (): void => {
+    const query = new URLSearchParams(params);
+    query.delete(FROM_PARAM);
+    query.delete(TO_PARAM);
+    setParams(query, { preventScrollReset: true });
+  };
   const sectorName = es.community.news.sectors[sector];
 
   const shown =
@@ -68,6 +90,35 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
         <span className={styles.switchTrack} aria-hidden="true" />
         {es.community.news.filter.treeOnly}
       </button>
+      <fieldset className={styles.dates}>
+        <legend>{es.community.news.range.legend}</legend>
+        <label>
+          {es.community.news.range.from}
+          <input
+            type="date"
+            value={shownFrom ?? ""}
+            onChange={(event) => {
+              setBound("from", event.target.value);
+            }}
+          />
+        </label>
+        <label>
+          {es.community.news.range.to}
+          <input
+            type="date"
+            value={shownTo ?? ""}
+            onChange={(event) => {
+              setBound("to", event.target.value);
+            }}
+          />
+        </label>
+        {(range.from !== null || range.to !== null) && (
+          <button type="button" onClick={resetRange}>
+            {es.community.news.range.reset}
+          </button>
+        )}
+      </fieldset>
+      <p className={styles.newsNote}>{es.community.news.range.note}</p>
       <p className={styles.newsNote}>{es.community.news.method}</p>
       {news.state === "error" && (
         <div role="alert">
@@ -81,7 +132,14 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
       {news.state === "ready" && (
         <>
           <p className={styles.newsNote}>
-            {formatMessage(es.community.news.window, { date: formatLongDate(news.news.since) })}
+            {news.news.since === news.news.until
+              ? formatMessage(es.community.news.windowOneDay, {
+                  date: formatLongDate(news.news.since),
+                })
+              : formatMessage(es.community.news.window, {
+                  from: formatLongDate(news.news.since),
+                  to: formatLongDate(news.news.until),
+                })}
           </p>
           <p className={styles.newsNote}>
             {formatMessage(es.community.news.filter.treeOnlyCount, {

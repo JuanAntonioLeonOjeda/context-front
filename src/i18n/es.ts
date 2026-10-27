@@ -143,7 +143,16 @@ export const es = {
       title: "Noticias",
       sectorNav: "Sector de las noticias",
       sectors: { education: "Educación", health: "Sanidad", housing: "Vivienda" },
-      window: "Noticias desde el {date}: hasta 5 por medio, de la más reciente a la más antigua.",
+      window:
+        "Noticias del {from} al {to}: hasta 5 por medio y día, de la más reciente a la más antigua.",
+      windowOneDay: "Noticias del {date}: hasta 5 por medio, de la más reciente a la más antigua.",
+      range: {
+        legend: "Fechas",
+        from: "Desde",
+        to: "Hasta",
+        reset: "Últimos 3 días",
+        note: "Se muestran los últimos 3 días. Puedes elegir otras fechas, hasta 31 días seguidos.",
+      },
       method:
         "Las noticias se clasifican con reglas automáticas que todavía no se han medido, y pueden contener errores.",
       empty: "No hay noticias de {sector} en este periodo.",
