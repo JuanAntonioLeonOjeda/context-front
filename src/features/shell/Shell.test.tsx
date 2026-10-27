@@ -75,7 +75,7 @@ describe("footer", () => {
       expect(within(footer).getByRole("heading", { level: 2, name: title })).toBeVisible();
     }
     expect(within(footer).getByText(/IGN, licencia CC BY 4.0/)).toBeVisible();
-    expect(within(footer).getByText(/todavía sin medir/)).toBeVisible();
+    expect(within(footer).getByText(/lo asigna un modelo propio/)).toBeVisible();
     expect(await axeViolations(container)).toEqual([]);
   });
 

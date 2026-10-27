@@ -29,7 +29,7 @@ export const es = {
       method: {
         title: "Cómo se hace",
         items: [
-          "Las noticias se clasifican con reglas automáticas todavía sin medir, y pueden contener errores.",
+          "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
           "De cada noticia solo se publican el titular y el enlace al medio.",
         ],
         link: "Leer cómo funciona",
@@ -151,7 +151,7 @@ export const es = {
         note: "Se muestran los últimos 3 días. Puedes elegir otras fechas, hasta 31 días seguidos.",
       },
       method:
-        "Las noticias se clasifican con reglas automáticas que todavía no se han medido, y pueden contener errores.",
+        "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
       empty: "No hay noticias de {sector} en este periodo.",
       loading: "Cargando las noticias…",
       error: "No hemos podido cargar las noticias.",
@@ -228,7 +228,7 @@ export const es = {
     limits: {
       title: "Qué no hace todavía",
       items: [
-        "Las reglas que clasifican las noticias aún no se han medido con un conjunto de prueba: pueden equivocarse, por ejemplo tomando por política una noticia que no lo es.",
+        "El sector lo asigna un modelo propio y la comunidad y el nivel de gobierno, reglas automáticas. Se midieron con 200 noticias etiquetadas a mano que nunca se usaron para entrenar, y pueden equivocarse, por ejemplo tomando por política una noticia que no lo es.",
         "Muchas noticias salen «Sin determinar», porque pocas nombran un gobierno.",
         "Los gobiernos locales, como ayuntamientos y cabildos, todavía no se modelan.",
       ],
