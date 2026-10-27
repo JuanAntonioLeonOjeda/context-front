@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { es } from "@/i18n/es";
 import { renderApp, type AppScenario } from "@/test/app";
 import { axeViolations } from "@/test/axe";
+import { newsLoaded } from "@/test/news";
 
 // Every page and state of the app, fully loaded, audited with axe in each theme.
 //
@@ -42,7 +43,7 @@ const PAGES: PageCase[] = [
     path: "/comunidades/ccaa-05",
     loaded: async () => {
       await screen.findByRole("heading", { name: "Tasa de paro" });
-      return screen.findByText(/Noticias del /);
+      return newsLoaded();
     },
   },
   {

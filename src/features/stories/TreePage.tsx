@@ -67,24 +67,11 @@ export function TreePage({ storyId }: { storyId: number }): React.JSX.Element {
 
 function BranchView({ branch }: { branch: Branch }): React.JSX.Element {
   const text = nodeText(branch.node);
-  // Open while the pointer is over the card or after the button pinned it: hover alone would leave
-  // keyboard and touch users without the other headlines.
-  const [hovered, setHovered] = useState(false);
-  const [pinned, setPinned] = useState(false);
-  const open = hovered || pinned;
+  const [open, setOpen] = useState(false);
   const listId = useId();
   return (
     <li className={styles.branch}>
-      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- hover is an extra: the button below does the same for keyboard and touch */}
-      <article
-        className={styles.node}
-        onMouseEnter={() => {
-          setHovered(true);
-        }}
-        onMouseLeave={() => {
-          setHovered(false);
-        }}
-      >
+      <article className={styles.node} data-open={open}>
         <small className={styles.meta}>{text.started}</small>
         {text.link !== null && <small className={styles.meta}>{text.link}</small>}
         <span className={styles.outlet}>{text.first.outletName}</span>
@@ -99,10 +86,12 @@ function BranchView({ branch }: { branch: Branch }): React.JSX.Element {
               aria-expanded={open}
               aria-controls={listId}
               onClick={() => {
-                setPinned(!pinned);
+                setOpen(!open);
               }}
             >
-              {text.moreOutlets}
+              {open
+                ? es.stories.tree.fold
+                : formatMessage(es.stories.tree.unfold, { more: text.moreOutlets })}
             </button>
             {open && (
               <ul id={listId} className={styles.articles}>

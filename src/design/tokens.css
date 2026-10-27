@@ -15,6 +15,7 @@
   --color-surface: #ffffff;
   --color-text: #14202a;
   --color-text-muted: #4a5b68;
+  --color-text-gray: #3d4a54; /* the texts of the news section: a gray a little darker than the muted one */
   --color-border: #d5dde3;
   --color-border-strong: #6f7f8b;
   --color-accent: #0b5cad;
@@ -70,6 +71,7 @@
     --color-surface: #16252f;
     --color-text: #e7edf1;
     --color-text-muted: #a3b3bf;
+    --color-text-gray: #a3b3bf;
     --color-border: #2b3d49;
     --color-border-strong: #7c909e;
     --color-accent: #7db8f0;
@@ -98,6 +100,7 @@
   --color-surface: #16252f;
   --color-text: #e7edf1;
   --color-text-muted: #a3b3bf;
+  --color-text-gray: #a3b3bf;
   --color-border: #2b3d49;
   --color-border-strong: #7c909e;
   --color-accent: #7db8f0;

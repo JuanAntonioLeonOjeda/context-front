@@ -562,3 +562,15 @@
   color: var(--color-text);
   font: inherit;
 }
+
+/* The news section: its texts in a gray a little darker than the muted one, headlines and links
+   aside. Overriding the token here keeps the indicators, which share some classes, as they were. */
+.newsSection {
+  composes: section;
+  --color-text-muted: var(--color-text-gray);
+  color: var(--color-text-gray);
+}
+
+.newsSection .newsHeadline {
+  color: var(--color-text);
+}
