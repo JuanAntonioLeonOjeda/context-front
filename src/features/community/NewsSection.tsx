@@ -7,13 +7,15 @@ import { formatLongDate, formatMessage } from "@/i18n/format";
 
 import { Carousel } from "./Carousel";
 import { searchWith } from "./search-params";
-import { groupByDay, newsRows, type NewsRow } from "./news-card";
+import { groupByDay, newsRows, withTree, type NewsRow } from "./news-card";
+import { SourceIcon, TreeIcon } from "./icons";
 import { SECTORS, type Sector } from "./news-api";
 import { useCommunityNews } from "./useCommunityNews";
 
 import styles from "./CommunityCard.module.css";
 
 const DEFAULT_SECTOR: Sector = SECTORS[0];
+const TREE_ONLY_PARAM = "arbol";
 
 /** The sector of `?sector=`; anything else (or nothing) is the first one, the same for everyone. */
 function sectorOf(value: string | null): Sector {
@@ -22,10 +24,21 @@ function sectorOf(value: string | null): Sector {
 
 /** The latest news of the community in one sector: outlet, time, headline and link. */
 export function NewsSection({ territoryId }: { territoryId: string }): React.JSX.Element {
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const sector = sectorOf(params.get("sector"));
+  // `?arbol=1` shows only the news that belong to a tree of related news; it stays in the URL.
+  const treeOnly = params.get(TREE_ONLY_PARAM) === "1";
+  const toggleTreeOnly = (): void => {
+    const next = new URLSearchParams(params);
+    if (treeOnly) next.delete(TREE_ONLY_PARAM);
+    else next.set(TREE_ONLY_PARAM, "1");
+    setParams(next, { preventScrollReset: true });
+  };
   const news = useCommunityNews(territoryId, sector);
   const sectorName = es.community.news.sectors[sector];
+
+  const shown =
+    news.state === "ready" ? (treeOnly ? withTree(news.news.items) : news.news.items) : [];
 
   return (
     <section aria-labelledby="news-title" className={styles.section}>
@@ -45,6 +58,16 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
           ))}
         </ul>
       </nav>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={treeOnly}
+        className={styles.switch}
+        onClick={toggleTreeOnly}
+      >
+        <span className={styles.switchTrack} aria-hidden="true" />
+        {es.community.news.filter.treeOnly}
+      </button>
       <p className={styles.newsNote}>{es.community.news.method}</p>
       {news.state === "error" && (
         <div role="alert">
@@ -60,11 +83,21 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
           <p className={styles.newsNote}>
             {formatMessage(es.community.news.window, { date: formatLongDate(news.news.since) })}
           </p>
-          {news.news.items.length === 0 ? (
-            <p>{formatMessage(es.community.news.empty, { sector: sectorName.toLowerCase() })}</p>
+          <p className={styles.newsNote}>
+            {formatMessage(es.community.news.filter.treeOnlyCount, {
+              count: String(withTree(news.news.items).length),
+              total: String(news.news.items.length),
+            })}
+          </p>
+          {shown.length === 0 ? (
+            <p>
+              {formatMessage(treeOnly ? es.community.news.emptyTree : es.community.news.empty, {
+                sector: sectorName.toLowerCase(),
+              })}
+            </p>
           ) : (
             <div className={styles.timeline}>
-              {groupByDay(newsRows(news.news.items)).map((day) => (
+              {groupByDay(newsRows(shown)).map((day) => (
                 <section key={day.day} aria-labelledby={`news-day-${day.day}`}>
                   <Carousel
                     heading={
@@ -100,15 +133,19 @@ function NewsItemView({ row }: { row: NewsRow }): React.JSX.Element {
         <div className={styles.newsActions}>
           <ExternalLink
             href={row.url}
+            className={styles.newsActionGhost}
             aria-label={formatMessage(es.community.news.sourceOf, { headline: row.headline })}
           >
+            <SourceIcon />
             {es.community.news.source}
           </ExternalLink>
           {row.treeStoryId !== null && (
             <Link
               to={treePath(row.treeStoryId)}
+              className={styles.newsActionSolid}
               aria-label={formatMessage(es.community.news.treeOf, { headline: row.headline })}
             >
+              <TreeIcon />
               {es.community.news.tree}
             </Link>
           )}

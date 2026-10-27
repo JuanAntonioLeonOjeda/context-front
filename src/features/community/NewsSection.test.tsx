@@ -139,3 +139,69 @@ describe("news of a community", () => {
     expect(await axeViolations(container)).toEqual([]);
   });
 });
+
+describe("filter of the news with a tree", () => {
+  it("is a switch, off at first, that shows how many news have a tree", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+
+    const toggle = await screen.findByRole("switch", { name: es.community.news.filter.treeOnly });
+    expect(toggle).toHaveAttribute("aria-checked", "false");
+    expect(await screen.findByText(/1 de 11 noticias tienen un árbol/)).toBeVisible();
+  });
+
+  it("shows only the news with a tree when it is on, keeps it in the URL and turns off again", async () => {
+    const user = userEvent.setup();
+    renderApp("/comunidades/ccaa-05?sector=health");
+    const section = await newsSection();
+    await within(section).findByText(/Noticias desde el/);
+    expect(section.querySelectorAll("ol > li")).toHaveLength(11);
+
+    await user.click(within(section).getByRole("switch"));
+
+    expect(within(section).getByRole("switch")).toHaveAttribute("aria-checked", "true");
+    expect(section.querySelectorAll("ol > li")).toHaveLength(1);
+    expect(within(section).getAllByRole("link", { name: /Ver árbol/ })).toHaveLength(1);
+
+    await user.click(within(section).getByRole("switch"));
+
+    expect(section.querySelectorAll("ol > li")).toHaveLength(11);
+  });
+
+  it("starts on when the URL says so and keeps the sector when it is toggled", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health&arbol=1");
+
+    const toggle = await screen.findByRole("switch");
+    expect(toggle).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("link", { name: "Sanidad" })).toHaveAttribute("aria-current", "page");
+  });
+
+  it("says there are no news with a tree instead of leaving a blank", async () => {
+    renderApp("/comunidades/ccaa-09?arbol=1", { community: "cataluna" });
+
+    expect(
+      await screen.findByText(/No hay noticias de educación con árbol en este periodo/),
+    ).toBeVisible();
+  });
+
+  it("gives each news item two actions with an icon that is hidden from assistive technology", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+
+    const section = await newsSection();
+    await within(section).findByText(/Noticias desde el/);
+    const sources = within(section).getAllByRole("link", { name: /^Ver fuente de/ });
+    expect(sources).toHaveLength(11);
+    expect(sources[0]?.querySelector("svg[aria-hidden='true']")).not.toBeNull();
+    const tree = within(section).getByRole("link", {
+      name: /^Ver árbol de noticias relacionadas con/,
+    });
+    expect(tree.querySelector("svg[aria-hidden='true']")).not.toBeNull();
+    expect(tree).toHaveTextContent("Ver árbol");
+  });
+
+  it("has no axe violations with the switch on", async () => {
+    const container = renderApp("/comunidades/ccaa-05?sector=health&arbol=1");
+
+    await screen.findByText(/Noticias desde el/);
+    expect(await axeViolations(container)).toEqual([]);
+  });
+});

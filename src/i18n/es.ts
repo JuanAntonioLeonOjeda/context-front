@@ -154,7 +154,12 @@ export const es = {
       source: "Ver fuente",
       sourceOf: "Ver fuente de «{headline}» (se abre en otra pestaña)",
       tree: "Ver árbol",
-      treeOf: "Ver el árbol de noticias relacionadas con «{headline}»",
+      filter: {
+        treeOnly: "Solo con árbol",
+        treeOnlyCount: "{count} de {total} noticias tienen un árbol de noticias relacionadas.",
+      },
+      emptyTree: "No hay noticias de {sector} con árbol en este periodo.",
+      treeOf: "Ver árbol de noticias relacionadas con «{headline}»",
       carousel: {
         label: "Noticias del {date}",
         previous: "Noticias anteriores",

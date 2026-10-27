@@ -81,7 +81,7 @@ describe("tree of related news", () => {
     const user = userEvent.setup();
     const container = renderApp("/comunidades/ccaa-05?sector=health");
     const button = await screen.findByRole("link", {
-      name: /Ver el árbol de noticias relacionadas/,
+      name: /Ver árbol de noticias relacionadas/,
     });
 
     await user.click(button);
