@@ -7,6 +7,7 @@ import { formatMessage } from "@/i18n/format";
 import type { IndicatorRow } from "./community-card";
 import { Carousel } from "./Carousel";
 import { HEIGHT, PLOT, WIDTH } from "./indicator-chart";
+import { SectionHeading } from "./SectionHeading";
 
 import styles from "./CommunityCard.module.css";
 
@@ -19,22 +20,37 @@ export function IndicatorsSection(props: {
   community: string;
   rows: readonly IndicatorRow[];
 }): React.JSX.Element {
+  const [open, setOpen] = useState(true);
+  const heading = (
+    <SectionHeading
+      id="indicators-title"
+      title={es.community.indicators.title}
+      open={open}
+      onToggle={() => {
+        setOpen(!open);
+      }}
+    />
+  );
   return (
     <section aria-labelledby="indicators-title" className={styles.section}>
-      <Carousel
-        heading={<h2 id="indicators-title">{es.community.indicators.title}</h2>}
-        label={formatMessage(es.community.indicators.carousel.label, {
-          community: props.community,
-        })}
-      >
-        <ul className={styles.indicatorRow}>
-          {props.rows.map((row) => (
-            <li key={row.id}>
-              <IndicatorCard row={row} community={props.community} />
-            </li>
-          ))}
-        </ul>
-      </Carousel>
+      {open ? (
+        <Carousel
+          heading={heading}
+          label={formatMessage(es.community.indicators.carousel.label, {
+            community: props.community,
+          })}
+        >
+          <ul className={styles.indicatorRow}>
+            {props.rows.map((row) => (
+              <li key={row.id}>
+                <IndicatorCard row={row} community={props.community} />
+              </li>
+            ))}
+          </ul>
+        </Carousel>
+      ) : (
+        heading
+      )}
     </section>
   );
 }

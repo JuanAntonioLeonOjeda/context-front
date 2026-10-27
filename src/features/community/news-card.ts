@@ -40,15 +40,15 @@ export function formatNewsTime(isoInstant: string): string {
   return spainTime.format(instant(isoInstant));
 }
 
-export interface NewsDay {
+export interface NewsDay<T extends { day: string } = NewsRow> {
   day: string;
   label: string; // "14 de octubre de 2026"
-  rows: NewsRow[];
+  rows: T[];
 }
 
 /** The rows in the order they come (newest first), grouped by the day they were published. */
-export function groupByDay(rows: readonly NewsRow[]): NewsDay[] {
-  const days: NewsDay[] = [];
+export function groupByDay<T extends { day: string }>(rows: readonly T[]): NewsDay<T>[] {
+  const days: NewsDay<T>[] = [];
   for (const row of rows) {
     const last = days.at(-1);
     if (last?.day === row.day) last.rows.push(row);
@@ -69,9 +69,4 @@ export function newsRows(items: readonly NewsItem[]): NewsRow[] {
     url: item.url,
     treeStoryId: item.treeStoryId,
   }));
-}
-
-/** The items that belong to a tree of related news (`?arbol=1` shows only these). */
-export function withTree(items: readonly NewsItem[]): NewsItem[] {
-  return items.filter((item) => item.treeStoryId !== null);
 }

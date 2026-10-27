@@ -1,6 +1,6 @@
 /**
  * The range of days of the news, kept in the URL as `?desde=…&hasta=…` (ISO dates, both included).
- * Pure: dates in, dates out. Without them the API answers its default, the last three days. The
+ * Pure: dates in, dates out. Without them the API answers its default, the last week. The
  * API takes at most 31 days, so a bound that would break that or the order moves the other one.
  */
 export const MAX_RANGE_DAYS = 31;

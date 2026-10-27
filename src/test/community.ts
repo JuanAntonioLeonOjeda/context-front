@@ -5,6 +5,7 @@ import canarias from "@/test/fixtures/community-ccaa-05-governments.json";
 import cataluna from "@/test/fixtures/community-ccaa-09-governments.json";
 import canariasIndicators from "@/test/fixtures/community-ccaa-05-indicators.json";
 import canariasNews from "@/test/fixtures/community-ccaa-05-news-health.json";
+import trees from "@/test/fixtures/community-trees-education.json";
 import catalunaNews from "@/test/fixtures/community-ccaa-09-news-health.json";
 import parties from "@/test/fixtures/parties.json";
 import tree37 from "@/test/fixtures/story-37-tree.json";
@@ -22,7 +23,7 @@ const GOVERNMENT = { canarias, cataluna, "canarias-caretaker": caretaker } as co
  */
 export function serveCommunity(
   scenario: Scenario = "canarias",
-  options: { failingTree?: boolean } = {},
+  options: { failingTree?: boolean; failingTrees?: boolean } = {},
 ): void {
   const id = scenario === "cataluna" ? "ccaa-09" : "ccaa-05";
   server.use(
@@ -39,9 +40,16 @@ export function serveCommunity(
     http.get("*/api/communities/:territoryId/news", ({ params }) =>
       HttpResponse.json(params.territoryId === "ccaa-09" ? catalunaNews : canariasNews),
     ),
+    // Real answer of Madrid in education, served for any community in any sector but Cataluña,
+    // which has none.
+    http.get("*/api/communities/:territoryId/trees", ({ params }) => {
+      if (options.failingTrees) return HttpResponse.json({ detail: "boom" }, { status: 500 });
+      return HttpResponse.json(params.territoryId === "ccaa-09" ? { ...trees, items: [] } : trees);
+    }),
     http.get("*/api/stories/:storyId/tree", ({ params }) => {
       if (options.failingTree) return HttpResponse.json({ detail: "boom" }, { status: 500 });
-      return params.storyId === "37"
+      // Story 37 has the real tree; the stories of the trees list (384, 213) are given the same one.
+      return ["37", "384", "213"].includes(String(params.storyId))
         ? HttpResponse.json(tree37)
         : HttpResponse.json(
             { detail: `story ${String(params.storyId)} has no relations` },

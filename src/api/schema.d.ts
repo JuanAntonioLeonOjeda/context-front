@@ -155,6 +155,31 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/communities/{territory_id}/trees": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Trees
+         * @description The trees of related stories that reach this community and sector, one item per tree: the newest
+         *     news of the tree that the active classifier placed there. No dates filter them. `tree_story_id` of
+         *     each item is the story to ask `/stories/{story_id}/tree` for, which answers the whole tree.
+         *
+         *     **Order:** publication time of that news, newest first; ties by outlet id. The order never depends
+         *     on an outlet's size, audience or line. No item names a party (ADR-0018).
+         */
+        get: operations["trees_communities__territory_id__trees_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/communities/{territory_id}/stories": {
         parameters: {
             query?: never;
@@ -284,6 +309,15 @@ export interface components {
             grouping: components["schemas"]["GroupingOut"] | null;
             /** Stories */
             stories: components["schemas"]["StoryOut"][];
+        };
+        /** CommunityTreesOut */
+        CommunityTreesOut: {
+            /** Territory Id */
+            territory_id: string;
+            /** Sector Id */
+            sector_id: string;
+            /** Items */
+            items: components["schemas"]["NewsItemOut"][];
         };
         /**
          * ComponentStatus
@@ -741,6 +775,40 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CommunityNewsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trees_communities__territory_id__trees_get: {
+        parameters: {
+            query: {
+                /** @description A sector id: education, health or housing */
+                sector: string;
+            };
+            header?: never;
+            path: {
+                territory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunityTreesOut"];
                 };
             };
             /** @description Validation Error */

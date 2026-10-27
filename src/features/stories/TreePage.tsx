@@ -10,9 +10,8 @@ import { useStoryTree } from "./useStoryTree";
 
 import styles from "./TreePage.module.css";
 
-/** The tree of related stories of one story, in time order from left to right. */
+/** The page of the tree of related stories of one story. */
 export function TreePage({ storyId }: { storyId: number }): React.JSX.Element {
-  const tree = useStoryTree(storyId);
   const navigate = useNavigate();
   const location = useLocation();
   // Back to where the user came from; with no history in this tab (a shared link), to the home.
@@ -28,6 +27,16 @@ export function TreePage({ storyId }: { storyId: number }): React.JSX.Element {
         {es.stories.tree.back}
       </button>
       <h1>{es.stories.tree.title}</h1>
+      <StoryTreeView storyId={storyId} />
+    </>
+  );
+}
+
+/** The tree of related stories of one story, in time order from left to right, with its states. */
+export function StoryTreeView({ storyId }: { storyId: number }): React.JSX.Element {
+  const tree = useStoryTree(storyId);
+  return (
+    <>
       {tree.state === "loading" && <p role="status">{es.stories.tree.loading}</p>}
       {tree.state === "error" && (
         <div role="alert">
