@@ -10,7 +10,7 @@ import { api } from "@/api/client";
 
 import type { NewsRange } from "./news-range";
 
-export const SECTORS = ["education", "health", "housing"] as const;
+export const SECTORS = ["education", "health", "housing", "justice", "work", "taxes"] as const;
 export type Sector = (typeof SECTORS)[number];
 
 const newsSchema = z.object({
