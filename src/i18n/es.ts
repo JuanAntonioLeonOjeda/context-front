@@ -170,7 +170,6 @@ export const es = {
         housing: "Vivienda",
         justice: "Justicia",
         work: "Trabajo",
-        taxes: "Impuestos",
       },
       range: {
         legend: "Fechas",

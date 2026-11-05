@@ -63,7 +63,7 @@ describe("news of a community", () => {
       within(nav)
         .getAllByRole("link")
         .map((l) => l.textContent),
-    ).toEqual(["Educación", "Sanidad", "Vivienda", "Justicia", "Trabajo", "Impuestos"]);
+    ).toEqual(["Educación", "Sanidad", "Vivienda", "Justicia", "Trabajo"]);
     expect(within(nav).getByRole("link", { name: "Educación" })).toHaveAttribute(
       "aria-current",
       "page",
