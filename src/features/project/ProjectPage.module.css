@@ -1,0 +1,252 @@
+/* "El proyecto": the list of chapters on the side and one text column, so a line stays under
+   about 70 characters. On narrow screens the list goes above the text. */
+.layout {
+  display: grid;
+  gap: var(--space-8);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 60rem) {
+  .layout {
+    grid-template-columns: 16rem minmax(0, 46rem);
+    align-items: start;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: var(--space-16);
+  }
+}
+
+.sidebar {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.sidebarTitle,
+.sidebarCount {
+  margin: 0;
+}
+
+.sidebarTitle {
+  font-weight: 700;
+}
+
+.sidebarCount,
+.crumb {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.chapterList {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chapterLink {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+.chapterLink:hover {
+  text-decoration: underline;
+}
+
+/* The current chapter: bold and a bar at the left, not colour alone. */
+.chapterLink[aria-current="page"] {
+  box-shadow: inset 3px 0 0 var(--color-accent);
+  font-weight: 700;
+}
+
+.chapterNumber {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.page {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.crumb {
+  margin: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-3xl);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+
+.lead {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+.prose {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.prose > p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.blockHeading {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-xl);
+}
+
+.section {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.section h2,
+.section h3,
+.section p {
+  margin: 0;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-6);
+  line-height: 1.5;
+}
+
+.callout {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.callout p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.calloutTitle {
+  font-weight: 700;
+}
+
+.stats {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin: 0;
+}
+
+.stat {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.stat dt {
+  order: 2;
+  font-weight: 700;
+}
+
+.stat dd {
+  margin: 0;
+}
+
+.statValue {
+  order: 1;
+  font-size: var(--text-xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.statDetail {
+  order: 3;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Wide tables scroll inside their box, never the page. */
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  border-bottom-color: var(--color-border-strong);
+}
+
+.pager {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.pagerLink {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.pagerLink:hover {
+  border-color: var(--color-border-strong);
+}
+
+.pagerNext {
+  composes: pagerLink;
+  text-align: right;
+}
+
+.pagerDirection {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}

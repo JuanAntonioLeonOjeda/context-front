@@ -32,7 +32,7 @@ export function SiteHeader(): React.JSX.Element {
           <NavLink to="/" end>
             {shell.nav.map}
           </NavLink>
-          <NavLink to="/como-funciona">{shell.nav.about}</NavLink>
+          <NavLink to="/proyecto">{shell.nav.project}</NavLink>
         </nav>
         <ThemeToggle />
       </div>

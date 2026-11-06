@@ -1,20 +1,8 @@
 import { ExternalLink, REPOSITORIES } from "@/features/shell";
 import { es } from "@/i18n/es";
 
-import styles from "./AboutPage.module.css";
-
-function Section(props: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}): React.JSX.Element {
-  return (
-    <section aria-labelledby={props.id} className={styles.section}>
-      <h2 id={props.id}>{props.title}</h2>
-      {props.children}
-    </section>
-  );
-}
+import { Section } from "./Section";
+import styles from "./ProjectPage.module.css";
 
 function List({ items }: { items: readonly string[] }): React.JSX.Element {
   return (
@@ -26,14 +14,12 @@ function List({ items }: { items: readonly string[] }): React.JSX.Element {
   );
 }
 
-/** How the portal decides what it shows, where the data comes from and what it cannot do yet. */
-export function AboutPage(): React.JSX.Element {
+/** Chapter 1: where the data comes from, what is published, neutrality and the limits. */
+export function HowItWorks(): React.JSX.Element {
   const { about } = es;
   return (
-    <article className={styles.page}>
-      <title>{`${about.page.title} · ${es.app.shell.name}`}</title>
-      <h1 className={styles.title}>{about.page.title}</h1>
-      <p className={styles.lead}>{about.page.intro}</p>
+    <>
+      <p>{about.page.intro}</p>
 
       <Section id="about-data" title={about.data.title}>
         <List items={about.data.items} />
@@ -62,6 +48,6 @@ export function AboutPage(): React.JSX.Element {
           </li>
         </ul>
       </Section>
-    </article>
+    </>
   );
 }

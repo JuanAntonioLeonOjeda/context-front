@@ -201,7 +201,7 @@ describe("moving between pages", () => {
     renderAt("/");
     const nav = await screen.findByRole("navigation", { name: es.app.shell.nav.label });
 
-    await user.click(within(nav).getByRole("link", { name: "Cómo funciona" }));
+    await user.click(within(nav).getByRole("link", { name: "El proyecto" }));
 
     expect(await screen.findByRole("heading", { level: 1, name: "Cómo funciona" })).toBeVisible();
     expect(scrollTo).toHaveBeenCalledWith(0, 0);

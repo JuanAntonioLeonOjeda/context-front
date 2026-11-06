@@ -70,9 +70,21 @@ const PAGES: PageCase[] = [
     loaded: () => screen.findByText(es.community.page.notFound),
   },
   {
-    name: "the how-it-works page",
-    path: "/como-funciona",
-    loaded: () => screen.findByRole("heading", { level: 1, name: es.about.page.title }),
+    name: "the first chapter of the project, how it works",
+    path: "/proyecto/como-funciona",
+    loaded: () => screen.findByRole("heading", { level: 1, name: "Cómo funciona" }),
+  },
+  {
+    name: "a chapter of the project with a table and a callout",
+    path: "/proyecto/el-modelo",
+    loaded: () =>
+      screen.findByRole("heading", { level: 1, name: "Un modelo propio para el sector" }),
+  },
+  {
+    name: "a chapter of the project with figures",
+    path: "/proyecto/las-noticias",
+    loaded: () =>
+      screen.findByRole("heading", { level: 1, name: "Las noticias: qué se recoge y qué no" }),
   },
   {
     name: "an address that does not exist",
