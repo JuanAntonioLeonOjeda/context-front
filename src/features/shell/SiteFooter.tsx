@@ -30,7 +30,7 @@ export function SiteFooter(): React.JSX.Element {
             ))}
           </ul>
           <p>
-            <Link to="/como-funciona">{footer.method.link}</Link>
+            <Link to="/proyecto/como-funciona">{footer.method.link}</Link>
           </p>
         </section>
         <section aria-labelledby="footer-project" className={styles.footerColumn}>
