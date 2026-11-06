@@ -33,7 +33,7 @@ Update the status column when a phase creates or finishes a path.
 | `.env.example` | public configuration (`VITE_API_BASE_URL`, `API_PROXY_TARGET`) | ✅ |
 | `scripts/` | `api-generate.mjs`: downloads the backend contract and generates the types | ✅ |
 | `Dockerfile`, `nginx.conf`, `.dockerignore` | production-style image: pnpm build, then nginx serving the app and forwarding `/api` to the backend; built by the compose file in `../back` (project `datos`, service `front`, profile `app`) | ✅ |
-| `.github/workflows/ci.yml` | format, lint, typecheck, generated types in sync, tests, build | ✅ |
+| `.github/workflows/` | `ci.yml`: format, lint, typecheck, generated types in sync, tests, build; `deploy-space.yml`: after a push to `main`, asks `../back` to deploy the Hugging Face Space (ADR-0023 there) | ✅ |
 | `docs/adr/` | front-only ADRs: 0013 (the map as an SVG with d3-geo); project-wide ones are in `../back/docs/adr/` | 🚧 |
 | `specs/<phase>/` | `spec.md`, `plan.md`, `tasks.md` for each phase (workflow `spec-driven-phase`); `foundation` and `map-governments` also have `review.md` (the latter in `../back/specs/` for both repos) | 🚧 |
 
