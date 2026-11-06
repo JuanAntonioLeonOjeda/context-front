@@ -232,6 +232,32 @@
         }
       }
     },
+    "/sectors": {
+      "get": {
+        "tags": [
+          "governments"
+        ],
+        "summary": "Sectors",
+        "description": "The sectors in use, ordered by id, with the indicator each is measured by.",
+        "operationId": "sectors_sectors_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SectorOut"
+                  },
+                  "type": "array",
+                  "title": "Response Sectors Sectors Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/communities/{territory_id}/indicators": {
       "get": {
         "tags": [
@@ -284,7 +310,7 @@
           "news"
         ],
         "summary": "Community",
-        "description": "The news of a range of days (Spain time) that the active classifier placed in this community and\nsector. Without dates: the last 3 days, today included. With `date_from` and/or\n`date_to` (ISO dates, both included): that range, of at most 31 days. At most\n5 per outlet and day (its newest).\n\nNothing is deleted: any day the collector ran can be asked for. A day it did not run, or before the\nportal began collecting, answers an empty list, not an error.\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nNo item names a party (ADR-0018): who governs the community is in\n`/communities/{territory_id}/governments`.",
+        "description": "The news of a range of days (Spain time) that the active classifier placed in this community and\nsector. Without dates: the last 7 days, today included. With `date_from` and/or\n`date_to` (ISO dates, both included): that range, of at most 31 days. At most\n5 per outlet and day (its newest).\n\nNothing is deleted: any day the collector ran can be asked for. A day it did not run, or before the\nportal began collecting, answers an empty list, not an error.\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nNo item names a party (ADR-0018): who governs the community is in\n`/communities/{territory_id}/governments`.",
         "operationId": "community_communities__territory_id__news_get",
         "parameters": [
           {
@@ -1050,6 +1076,36 @@
           "value"
         ],
         "title": "PointOut"
+      },
+      "SectorOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "indicator_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Indicator Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "indicator_id"
+        ],
+        "title": "SectorOut"
       },
       "SourceOut": {
         "properties": {

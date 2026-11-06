@@ -106,6 +106,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/sectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Sectors
+         * @description The sectors in use, ordered by id, with the indicator each is measured by.
+         */
+        get: operations["sectors_sectors_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/communities/{territory_id}/indicators": {
         parameters: {
             query?: never;
@@ -133,7 +153,7 @@ export interface paths {
         /**
          * Community
          * @description The news of a range of days (Spain time) that the active classifier placed in this community and
-         *     sector. Without dates: the last 3 days, today included. With `date_from` and/or
+         *     sector. Without dates: the last 7 days, today included. With `date_from` and/or
          *     `date_to` (ISO dates, both included): that range, of at most 31 days. At most
          *     5 per outlet and day (its newest).
          *
@@ -453,6 +473,15 @@ export interface components {
             /** Value */
             value: number;
         };
+        /** SectorOut */
+        SectorOut: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Indicator Id */
+            indicator_id: string | null;
+        };
         /** SourceOut */
         SourceOut: {
             /** Publisher */
@@ -715,6 +744,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PartyOut"][];
+                };
+            };
+        };
+    };
+    sectors_sectors_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorOut"][];
                 };
             };
         };
