@@ -164,7 +164,13 @@ export const es = {
         noMatch: "Ninguna noticia de {sector} de estas fechas coincide con «{query}».",
       },
       sectorNav: "Sector de las noticias",
-      sectors: { education: "Educación", health: "Sanidad", housing: "Vivienda" },
+      sectors: {
+        education: "Educación",
+        health: "Sanidad",
+        housing: "Vivienda",
+        justice: "Justicia",
+        work: "Trabajo",
+      },
       range: {
         legend: "Fechas",
         from: "Desde",
