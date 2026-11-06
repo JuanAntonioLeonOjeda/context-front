@@ -8,7 +8,7 @@ description: Project description, scope and phases, commands, secrets, attributi
 
 The **web app** of a public portfolio project: an interactive map of Spain where each
 community (CCAA) and sector shows recent news from several outlets grouped by story, the
-governing party or coalition, the party responsible for what each story describes, a
+governing party or coalition (no news item is attributed to a party, ADR-0018), a
 timeline of earlier events, statistical context and voter profiles. The backend and data
 pipeline live in the sibling repo `../back`, which also holds the brief
 (`../back/docs/project-brief.md`) and the project-wide ADRs (`../back/docs/adr/`).
@@ -26,7 +26,7 @@ goes through `.claude/workflows/spec-driven-phase.md` with its own `specs/<phase
 |---|---|---|
 | 0 | `foundation` | Vite + React + React Router v7, tooling, API client from OpenAPI, design tokens |
 | 1 | `map-governments` | map coloured by governing party, community page with government and basic indicators |
-| 2 | `news-live` | sector filter, latest news by outlet, party responsible with confidence |
+| 2 | `news-live` | sector filter, latest news by outlet (the party responsible was removed by ADR-0018) |
 | 3 | `story-contrast` | story page: all outlets side by side, common summary; server rendering for shareable pages |
 | 4 | `history-trace` | timeline of linked events with link type and confidence |
 | 5 | `context-voters` | indicators next to each story, voter profile pages |
@@ -48,6 +48,19 @@ pnpm build
 pnpm api:generate     # regenerate the typed client from the backend's OpenAPI
 ```
 
+### Rebuild the Docker image after every change to the app
+
+The author looks at the app through the container (`datos-front-1`, served on `WEB_PORT`,
+3000 by default), which runs the image built at that moment: `pnpm dev` or green tests do not
+update it. After any change in `src/`, styles, `index.html`, `nginx.conf` or dependencies, and
+before saying the work is done, rebuild and restart the service from the sibling repo:
+
+```bash
+docker compose -p datos -f ../back/docker-compose.yml --profile app up -d --build front
+```
+
+Say in the final message that the image was rebuilt (or why it was not).
+
 ## Secrets and configuration
 
 - Only public configuration reaches the browser (`VITE_*`): the API base URL. Anything
@@ -65,7 +78,8 @@ their attribution visible on the pages that use them.
 - Colour is never the only cue: coalitions and parties also carry text or pattern.
 - Outlets appear in the order the API returns, which is stable and documented; the UI
   never re-ranks them.
-- Confidence of an attribution or a link is shown, not hidden.
+- No news item is tied to a party (ADR-0018): no responsible, no party colour next to an item.
+- Confidence of a link is shown, not hidden.
 - Texts (`src/i18n/es.ts`) have no evaluative adjectives about parties or governments.
 - Review with `neutrality-reviewer`.
 

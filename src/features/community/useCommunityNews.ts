@@ -1,17 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchCommunityNews, type CommunityNews, type Sector } from "./news-api";
+import type { NewsRange } from "./news-range";
 
 export type CommunityNewsState =
   | { state: "loading" }
   | { state: "error"; retry: () => void }
   | { state: "ready"; news: CommunityNews };
 
-/** The latest news of one community and sector; each sector is cached on its own. */
-export function useCommunityNews(territoryId: string, sector: Sector): CommunityNewsState {
+/** The news of one community, sector and range of days; each combination is cached on its own. */
+export function useCommunityNews(
+  territoryId: string,
+  sector: Sector,
+  range: NewsRange,
+): CommunityNewsState {
   const query = useQuery({
-    queryKey: ["community", territoryId, "news", sector],
-    queryFn: () => fetchCommunityNews(territoryId, sector),
+    queryKey: ["community", territoryId, "news", sector, range.from, range.to],
+    queryFn: () => fetchCommunityNews(territoryId, sector, range),
   });
   if (query.isError) {
     return {

@@ -5,6 +5,7 @@ import { CommunityRoute } from "./CommunityRoute";
 import { ErrorMessage } from "./ErrorMessage";
 import { HomeRoute } from "./HomeRoute";
 import { NotFoundRoute } from "./NotFoundRoute";
+import { TreeRoute } from "./TreeRoute";
 import { RootLayout } from "./RootLayout";
 
 /**
@@ -32,5 +33,6 @@ export function buildRoutes(children: RouteObject[]): RouteObject[] {
 export const routes = buildRoutes([
   { index: true, Component: HomeRoute },
   { path: "comunidades/:territoryId", Component: CommunityRoute },
+  { path: "arbol/:storyId", Component: TreeRoute },
   { path: "como-funciona", Component: AboutRoute },
 ]);

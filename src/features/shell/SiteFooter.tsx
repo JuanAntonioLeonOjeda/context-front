@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { HealthStatus } from "@/features/health";
 import { es } from "@/i18n/es";
 
+import { ExternalLink } from "./ExternalLink";
 import { REPOSITORIES } from "./repositories";
 
 import styles from "./Shell.module.css";
@@ -37,10 +38,10 @@ export function SiteFooter(): React.JSX.Element {
           <p>{footer.project.about}</p>
           <ul>
             <li>
-              <a href={REPOSITORIES.back}>{footer.project.back}</a>
+              <ExternalLink href={REPOSITORIES.back}>{footer.project.back}</ExternalLink>
             </li>
             <li>
-              <a href={REPOSITORIES.front}>{footer.project.front}</a>
+              <ExternalLink href={REPOSITORIES.front}>{footer.project.front}</ExternalLink>
             </li>
           </ul>
         </section>

@@ -12,13 +12,18 @@ export interface AppScenario {
   backend?: BackendState;
   community?: Scenario;
   failingMapData?: MapEndpoint[];
+  failingTree?: boolean;
+  failingTrees?: boolean;
 }
 
 /** The whole app at `path`, answered by responses captured from the real backend. */
 export function renderApp(path: string, scenario: AppScenario = {}): HTMLElement {
   serveHealth(scenario.backend ?? "up");
   serveMapData(scenario.failingMapData ?? []);
-  serveCommunity(scenario.community ?? "canarias");
+  serveCommunity(scenario.community ?? "canarias", {
+    failingTree: scenario.failingTree ?? false,
+    failingTrees: scenario.failingTrees ?? false,
+  });
   const router = createMemoryRouter(routes, { initialEntries: [path] });
   return render(<RouterProvider router={router} />, { wrapper: queryWrapper() }).container;
 }

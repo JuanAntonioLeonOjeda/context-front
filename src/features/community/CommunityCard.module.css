@@ -89,12 +89,19 @@
   border-bottom: 2px solid var(--color-accent);
 }
 
+/* The news of one day: a row of equal cards inside a Carousel, which scrolls when they do not
+   fit. Newest first, left to right: the order the API sends, never re-ranked. */
 .news {
-  display: grid;
+  display: flex;
   gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.news > li {
+  flex: 0 0 min(17rem, 82vw);
+  scroll-snap-align: start;
 }
 
 .timeline {
@@ -103,73 +110,34 @@
 }
 
 .newsDay {
-  margin: 0 0 var(--space-3);
+  margin: 0;
   font-size: var(--text-md);
   color: var(--color-text-muted);
 }
 
 .newsItem {
-  position: relative;
-  display: grid;
-  gap: var(--space-1);
-  padding: var(--space-1) 0 var(--space-4) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
 }
 
-/* The stripe on the left: the colours of the responsible parties, as the map draws them. */
-.stripe {
-  position: absolute;
-  inset-block: var(--space-1) var(--space-4);
-  left: 0;
-  width: 0.5rem;
-  border-radius: 2px;
-  border: 1px solid var(--color-border-strong);
+.newsHeadline {
+  margin: 0;
+  font-size: var(--text-md);
 }
 
-.newsItem a {
+.newsHeadline a {
   font-weight: 700;
 }
 
 /* The explanations above the list stay a readable line; the list itself uses the width. */
 .newsNote {
-  max-width: 46rem;
-}
-
-/* On a wide screen the headline and its outlet on the left, who is responsible on the right. */
-@media (min-width: 48rem) {
-  .newsItem {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    grid-template-areas:
-      "headline attribution"
-      "meta attribution";
-    column-gap: var(--space-8);
-    align-items: start;
-  }
-
-  .newsItem > a {
-    grid-area: headline;
-  }
-
-  .newsItem > small {
-    grid-area: meta;
-  }
-
-  .newsItem > .attribution {
-    grid-area: attribution;
-    margin-top: 0;
-  }
-}
-
-.attribution {
-  display: grid;
-  gap: var(--space-2);
-  margin: var(--space-2) 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: var(--text-sm);
-}
-
-.attribution p {
-  margin: 0;
+  max-width: none; /* the notes run to the end of the section, not to a column in the middle of it */
 }
 
 /* The indicators: a row of cards, one per measure, each wide enough for its chart to be read. The
@@ -295,41 +263,396 @@
   min-width: 0;
 }
 
-/* The government is the header of the community page: the president is the line to read, the
-   parties are chips a little larger than elsewhere, the headings step back. */
+/* The government is part of the header grid of the community page (the section itself takes no
+   box: `display: contents`). The president and the date of the investiture sit at the right of
+   the name, at its height; under both, in a row, the parties that govern and those that
+   supported the investiture; last, the sources. */
 .government {
-  margin-block: var(--space-4) 0;
-  gap: var(--space-3);
+  display: contents;
 }
 
 .government h2 {
-  font-size: var(--text-md);
-  color: var(--color-text-muted);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
-.government h3 {
-  margin-top: var(--space-2);
+.president {
+  font-size: var(--text-md);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.who p {
+  margin: 0;
+}
+
+.groups,
+.groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-8);
+}
+
+.since {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
 
-.president {
-  font-size: var(--text-lg);
-  line-height: 1.4;
+/* What the row of seals is, as a tooltip on hover (the list also carries it as its name). */
+.tip {
+  position: relative;
 }
 
-.government .party {
-  padding: var(--space-2) var(--space-4);
+.tip:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  width: max-content;
+  max-width: 18rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--text-sm);
+  pointer-events: none;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.badge,
+.badgeSupport {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--color-surface);
+  border-radius: 999px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* The whole seal is the link to the party's source: its colour, no underline. */
+.badge a,
+.badgeSupport a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding-inline: var(--space-4);
+  border-radius: 999px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.badge a:hover,
+.badgeSupport a:hover {
+  text-decoration: underline;
+}
+
+.badge + .badge,
+.badge + .badgeSupport,
+.badgeSupport + .badgeSupport {
+  margin-inline-start: calc(-1 * var(--space-2));
+}
+
+.badge {
+  background: var(--color-logo-tile);
+  border-color: var(--color-border-strong);
+}
+
+.badgeSupport {
+  background: var(--color-logo-tile);
+  border-color: var(--color-border-strong);
+  font-weight: 400;
 }
 
 @media (min-width: 48rem) {
-  .government {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--space-8);
+  .who {
+    text-align: right;
   }
+}
 
-  .government > h2,
-  .government > p {
-    grid-column: 1 / -1;
-  }
+/* The data of a chart, in a modal window over the page. */
+.dataDialog {
+  width: min(32rem, calc(100vw - 2 * var(--space-4)));
+  max-height: calc(100vh - 2 * var(--space-8));
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-raised);
+}
+
+.dataDialog::backdrop {
+  background: var(--color-text);
+  opacity: 0.45;
+}
+
+.dataDialogHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.dataDialogHeader h2 {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.dataButton {
+  justify-self: start;
+  padding: var(--space-2) 0;
+  border: 0;
+  background: none;
+  color: var(--color-accent);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* The logo is the seal: no coloured fill behind it. */
+.logo {
+  display: block;
+  height: 1.5rem;
+  max-width: 4rem;
+  object-fit: contain;
+}
+
+/* The two ways out of a news item: to the outlet's page (outlined) and to the tree of related
+   news (filled, the action that is new). Pills with an icon; tokens only, so both themes work. */
+.newsActions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  /* Always at the bottom edge of the card, whatever the length of the headline. */
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+.newsAction {
+  display: inline-flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.newsAction svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.newsActionGhost {
+  composes: newsAction;
+  background: var(--color-surface);
+  color: var(--color-accent);
+}
+
+.newsActionGhost:hover {
+  background: var(--color-bg);
+  box-shadow: var(--shadow-raised);
+}
+
+.newsActionSolid {
+  composes: newsAction;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.newsActionSolid:hover {
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-1px);
+}
+
+/* The range of days: two date fields and, when it is not the default, a way back to it. */
+.filters {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-2) var(--space-4) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.filters legend {
+  padding: 0 var(--space-2);
+  font-weight: 700;
+}
+
+/* The search against the left edge, the dates against the right; on a narrow screen, in turn. */
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-4);
+}
+
+.dates label {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.dates input {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+/* The news section: its texts in a gray a little darker than the muted one, headlines and links
+   aside. Overriding the token here keeps the indicators, which share some classes, as they were. */
+.newsSection {
+  composes: section;
+  --color-text-muted: var(--color-text-gray);
+  color: var(--color-text-gray);
+}
+
+.newsSection .newsHeadline {
+  color: var(--color-text);
+}
+
+/* The heading of a section that closes: the button is the title, the chevron turns with the state. */
+.sectionHeading {
+  margin: 0;
+}
+
+.sectionToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  margin-inline-start: calc(-1 * var(--space-2));
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.sectionToggle:hover {
+  background: var(--color-bg);
+}
+
+.sectionToggle[aria-expanded="false"] svg {
+  transform: rotate(-90deg);
+}
+
+/* The headline of a tree's card is the button that opens the tree; its chevron turns when open. */
+.treeHeadline {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.treeHeadline svg {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--color-accent);
+}
+
+.treeHeadline[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+/* The open tree takes the width of the section, under the row of cards it belongs to. */
+.treePanel {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+/* Nothing to show: said in the middle of the section, a little louder than a note. */
+.emptyState {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-6);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.emptyState svg {
+  color: var(--color-accent);
+}
+
+.emptyState p {
+  margin: 0;
+  max-width: 32rem;
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+/* The search box of a list: the same field as the dates, as wide as the section lets it. */
+.search {
+  display: grid;
+  gap: var(--space-1);
+  font-weight: 700;
+}
+
+.search input {
+  width: min(22rem, 100%);
+}
+
+.search input {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 400;
 }

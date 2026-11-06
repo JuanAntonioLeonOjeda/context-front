@@ -11,7 +11,8 @@
   gap: var(--space-4);
 }
 
-.head h2 {
+.head h2,
+.head h3 {
   margin: 0;
 }
 

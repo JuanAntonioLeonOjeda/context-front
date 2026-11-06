@@ -52,6 +52,8 @@ describe("design tokens", () => {
       ["text on a surface", "--color-text", "--color-surface", 4.5],
       ["muted text", "--color-text-muted", "--color-bg", 4.5],
       ["muted text on a surface", "--color-text-muted", "--color-surface", 4.5],
+      ["gray text", "--color-text-gray", "--color-bg", 4.5],
+      ["gray text on a surface", "--color-text-gray", "--color-surface", 4.5],
       ["links", "--color-accent", "--color-bg", 4.5],
       ["links on a surface", "--color-accent", "--color-surface", 4.5],
       ["text on the accent colour", "--color-on-accent", "--color-accent", 4.5],

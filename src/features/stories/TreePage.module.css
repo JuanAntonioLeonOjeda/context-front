@@ -1,0 +1,161 @@
+/* The tree grows from left to right: time runs along the branches. Each branch is a card followed
+   by its children stacked at the right; the connectors are borders of pseudo-elements, so the
+   markup stays plain nested lists. */
+.back {
+  justify-self: start;
+}
+
+.note {
+  max-width: 46rem;
+}
+
+.scroll {
+  overflow-x: auto;
+  padding-block: var(--space-4);
+}
+
+.tree,
+.children {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tree {
+  display: inline-block;
+  min-width: 100%;
+}
+
+.branch {
+  display: flex;
+  align-items: center;
+}
+
+/* Every card has the same height, so the tree reads as a grid of equals; a card that is unfolded
+   grows to fit the other outlets. The headline is cut at three lines until then. */
+.node {
+  flex: none;
+  box-sizing: border-box;
+  width: 20rem;
+  height: 12.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.node[data-open="true"] {
+  height: auto;
+  min-height: 12.5rem;
+}
+
+.node > * {
+  margin-block: 0;
+}
+
+.meta {
+  color: var(--color-text-muted);
+}
+
+.articles {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.articles li {
+  display: grid;
+}
+
+.articles a,
+.headline {
+  font-weight: 700;
+}
+
+/* A card with nothing to unfold has no button to read the rest, so its headline is never cut and
+   the card grows with it. */
+.node[data-expandable="false"] {
+  height: auto;
+  min-height: 12.5rem;
+}
+
+.node[data-open="false"][data-expandable="true"] .headline {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* The card is a quiet column; the other outlets unfold below the first headline, and the
+   connectors follow because they hang from the same list item. */
+.more {
+  align-self: start;
+  margin-top: auto;
+  min-height: 2.25rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+}
+
+.outlet {
+  color: var(--color-text-muted);
+}
+
+/* The children of a branch: a column at the right of its card. */
+.children {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--space-8);
+}
+
+/* From the card to the vertical rail of its children. */
+.children::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: var(--space-8);
+  border-top: 2px solid var(--color-border-strong);
+}
+
+.children > .branch {
+  position: relative;
+  padding: var(--space-2) 0 var(--space-2) var(--space-8);
+}
+
+/* From the rail to each child's card. */
+.children > .branch::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--space-8);
+  border-top: 2px solid var(--color-border-strong);
+}
+
+/* The rail: the full height between the first and the last child, ending at their centres. */
+.children > .branch::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-left: 2px solid var(--color-border-strong);
+}
+
+.children > .branch:first-child::after {
+  top: 50%;
+}
+
+.children > .branch:last-child::after {
+  bottom: 50%;
+}
+
+.children > .branch:only-child::after {
+  display: none;
+}

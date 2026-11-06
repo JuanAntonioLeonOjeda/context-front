@@ -1,0 +1,34 @@
+# Asks the backend repo to deploy the Hugging Face Space after every push to main that changes the
+# web app (ADR-0023 in ../back/docs/adr/): the Space is built there, from both repos' main branches.
+#
+# Needs the secret BACK_DEPLOY_TOKEN: a fine-grained GitHub token limited to
+# JuanAntonioLeonOjeda/context-back with "Actions: read and write".
+name: Deploy to Hugging Face Space
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - docs/**
+      - specs/**
+      - .claude/**
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Run the backend's deploy workflow
+        env:
+          GH_TOKEN: ${{ secrets.BACK_DEPLOY_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::The BACK_DEPLOY_TOKEN secret is missing"
+            exit 1
+          fi
+          gh workflow run deploy-space.yml --repo JuanAntonioLeonOjeda/context-back --ref main
+          echo "Deploy requested: https://github.com/JuanAntonioLeonOjeda/context-back/actions/workflows/deploy-space.yml"

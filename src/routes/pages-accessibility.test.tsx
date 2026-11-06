@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { es } from "@/i18n/es";
 import { renderApp, type AppScenario } from "@/test/app";
 import { axeViolations } from "@/test/axe";
+import { newsLoaded } from "@/test/news";
 
 // Every page and state of the app, fully loaded, audited with axe in each theme.
 //
@@ -23,7 +24,7 @@ const PAGES: PageCase[] = [
   {
     name: "the map of today",
     path: "/",
-    loaded: () => screen.findByRole("navigation", { name: es.map.list.title }),
+    loaded: () => screen.findByRole("link", { name: "Galicia: gobierna PP" }),
   },
   {
     name: "the map when its data cannot be loaded",
@@ -42,7 +43,7 @@ const PAGES: PageCase[] = [
     path: "/comunidades/ccaa-05",
     loaded: async () => {
       await screen.findByRole("heading", { name: "Tasa de paro" });
-      return screen.findByText(/Noticias desde el/);
+      return newsLoaded();
     },
   },
   {

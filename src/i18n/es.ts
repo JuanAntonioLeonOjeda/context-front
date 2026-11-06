@@ -6,12 +6,11 @@
 export const es = {
   app: {
     shell: {
-      name: "Contexto autonómico",
+      name: "InContext",
       skipToContent: "Saltar al contenido",
       nav: { label: "Principal", map: "Mapa", about: "Cómo funciona" },
       theme: {
         label: "Tema de color: {current}. Pulsa para cambiar a {next}.",
-        system: "según el sistema",
         light: "claro",
         dark: "oscuro",
       },
@@ -24,14 +23,14 @@ export const es = {
           "Gobiernos: decretos del BOE y de los boletines autonómicos, con la fuente de cada dato.",
           "Límites de las comunidades: IGN, licencia CC BY 4.0.",
           "Colores de los partidos: Wikidata.",
+          "Banderas de las comunidades y logos de los partidos: Wikimedia Commons.",
         ],
       },
       method: {
         title: "Cómo se hace",
         items: [
-          "Las noticias se clasifican con reglas automáticas todavía sin medir, y pueden contener errores.",
+          "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
           "De cada noticia solo se publican el titular y el enlace al medio.",
-          "El responsable se deriva de una regla única, igual para todos los partidos.",
         ],
         link: "Leer cómo funciona",
       },
@@ -61,7 +60,7 @@ export const es = {
     },
     hero: {
       title: "Quién gobierna cada comunidad y qué cuentan los medios de ella",
-      lead: "El mapa de los gobiernos autonómicos, los datos del INE y las noticias de cada comunidad, con quién es responsable de lo que se cuenta y por qué.",
+      lead: "El mapa de los gobiernos autonómicos, los datos del INE y las noticias recientes de cada comunidad.",
       select: {
         label: "Ir a una comunidad",
         placeholder: "Elige una comunidad",
@@ -94,8 +93,8 @@ export const es = {
   },
   community: {
     page: {
-      back: "Volver al mapa",
       notFound: "No existe esa comunidad.",
+      flag: "Bandera de {name}",
     },
     government: {
       title: "Gobierno",
@@ -104,9 +103,8 @@ export const es = {
       caretaker: "Gobierno en funciones.",
       governing: "Partidos que gobiernan",
       support: "Partidos que apoyaron la investidura sin entrar en el gobierno",
-      source: "Fuente",
-      sourceOf: "Fuente: {party}",
-      sourceOfTerm: "Fuente del nombramiento",
+      sourceOf: "Fuente de {party}",
+      partiesOf: "{title}: {parties}",
     },
     indicators: {
       title: "Datos del INE",
@@ -121,6 +119,8 @@ export const es = {
         next: "Indicadores siguientes",
       },
       viewData: "Ver los datos de la gráfica",
+      dataTitle: "Datos: {name}",
+      close: "Cerrar",
       noValue: "Sin dato",
       noPeriod: "—",
       sourceLink: "Tabla {id} del INE",
@@ -139,74 +139,101 @@ export const es = {
       error: "No hemos podido cargar esta comunidad.",
       retry: "Volver a intentarlo",
     },
+    filters: { legend: "Filtros" },
+    trees: {
+      title: "Árbol de noticias",
+      sectorNav: "Sector del árbol de noticias",
+      note: "Cada elemento es un árbol de noticias relacionadas y muestra la más reciente de esta comunidad en el sector. Pulsa sobre ella para ver el árbol completo.",
+      empty: "No hay árboles de noticias de {sector} en esta comunidad.",
+      loading: "Cargando los árboles…",
+      error: "No hemos podido cargar los árboles de noticias.",
+      retry: "Volver a intentarlo",
+      carousel: { label: "Árboles de noticias del {date}, se desplazan en horizontal" },
+      search: {
+        label: "Buscar",
+        placeholder: "Escribe un titular o un medio",
+        noMatch: "Ningún árbol de noticias de {sector} coincide con «{query}».",
+      },
+      panelLabel: "Árbol de noticias relacionadas con «{headline}»",
+    },
     news: {
       title: "Noticias",
+      search: {
+        label: "Buscar",
+        placeholder: "Escribe un titular o un medio",
+        noMatch: "Ninguna noticia de {sector} de estas fechas coincide con «{query}».",
+      },
       sectorNav: "Sector de las noticias",
-      sectors: { education: "Educación", health: "Sanidad", housing: "Vivienda" },
-      window: "Noticias desde el {date}: hasta 5 por medio, de la más reciente a la más antigua.",
+      sectors: {
+        education: "Educación",
+        health: "Sanidad",
+        housing: "Vivienda",
+        justice: "Justicia",
+        work: "Trabajo",
+      },
+      range: {
+        legend: "Fechas",
+        from: "Desde",
+        to: "Hasta",
+        reset: "Última semana",
+        note: "Se muestra la última semana. Puedes elegir otras fechas, hasta 31 días seguidos.",
+      },
       method:
-        "Las noticias se clasifican con reglas automáticas que todavía no se han medido, y pueden contener errores.",
-      sharedCompetences:
-        "En educación, sanidad y vivienda las competencias están repartidas entre el Estado, la comunidad y los ayuntamientos: si una noticia no nombra un gobierno, no podemos decir cuál es el responsable.",
+        "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
       empty: "No hay noticias de {sector} en este periodo.",
       loading: "Cargando las noticias…",
       error: "No hemos podido cargar las noticias.",
       retry: "Volver a intentarlo",
       outletAndTime: "{outlet}, {time}",
-      responsible: "Responsable: {government}, {parties}",
-      caretaker: "en funciones",
-      confidence: "Confianza: {confidence}",
-      confidenceWords: { high: "Alta", medium: "Media", not_determined: "Sin determinar" },
-      basis: "Base de la atribución",
-      levels: {
-        state: "Gobierno de España",
-        ccaa: "Gobierno autonómico",
-        local: "Gobierno local",
+      source: "Ver fuente",
+      sourceOf: "Ver fuente de «{headline}» (se abre en otra pestaña)",
+      tree: "Ver árbol",
+      treeOf: "Ver árbol de noticias relacionadas con «{headline}»",
+      carousel: {
+        label: "Noticias del {date}",
+        previous: "Noticias anteriores",
+        next: "Noticias siguientes",
       },
-      reasons: {
-        no_level_named: "la noticia no nombra ningún gobierno",
-        no_competence: "la noticia nombra un gobierno sin competencias en este sector",
-        local_not_modelled: "la noticia nombra un gobierno local, que todavía no recogemos",
-        no_government_on_date: "no hay datos de gobierno en la fecha de la noticia",
-      },
+    },
+  },
+  stories: {
+    tree: {
+      title: "Noticias relacionadas",
+      back: "Volver",
+      reading:
+        "Cada tarjeta es una historia: muestra el titular de la primera noticia publicada y, al desplegarla, los de los demás medios que cuentan el mismo suceso. El tiempo avanza de izquierda a derecha: cada rama continúa la historia anterior a la que se parece más.",
+      method:
+        "Las historias y las relaciones las calcula un modelo de similitud de textos, con un umbral provisional (similitud mínima {threshold} y hasta {days} días entre una historia y la siguiente). Pueden contener errores. Una relación solo dice «parecida y posterior», no su causa.",
+      regionLabel: "Árbol de historias relacionadas, se desplaza en horizontal",
+      more: "{count} medios más",
+      moreOne: "1 medio más",
+      sameOutlet: "{count} noticias más de este medio",
+      sameOutletOne: "1 noticia más de este medio",
+      unfold: "Desplegar ({more})",
+      fold: "Plegar",
+      moreHint: "Pulsa «Desplegar» en una tarjeta para ver el titular de los demás medios.",
+      started: "Desde el {date}, {time}",
+      similarity: "Relación con la anterior: {value}",
+      loading: "Cargando el árbol…",
+      error: "No hemos podido cargar el árbol.",
+      retry: "Volver a intentarlo",
+      notFound: "Esta noticia no tiene noticias relacionadas.",
     },
   },
   about: {
     page: {
       title: "Cómo funciona",
       intro:
-        "Contexto autonómico reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, y dice quién es responsable de lo que cuenta cada noticia, con su base y su confianza.",
-    },
-    responsible: {
-      title: "Quién es el responsable de una noticia",
-      steps: [
-        "Cada noticia se clasifica por comunidad, por sector (educación, sanidad o vivienda) y por los gobiernos que nombra: el del Estado, el de la comunidad o uno local.",
-        "El responsable no lo decide un modelo ni se escribe a mano: sale de una regla única, la misma para todos los partidos y todos los medios.",
-        "Si la noticia nombra un gobierno y ese nivel tiene alguna competencia en el sector, son responsables los partidos que gobernaban ese nivel el día de la publicación, en hora de España. Los partidos que solo apoyaron la investidura no cuentan.",
-        "Si no se cumple, la noticia aparece como «Sin determinar» y se dice por qué.",
-      ],
-      reasonsTitle: "Por qué una noticia puede quedar sin determinar",
-      reasons: [
-        "No nombra ningún gobierno, y en educación, sanidad y vivienda las competencias están repartidas entre el Estado, la comunidad y los ayuntamientos.",
-        "Nombra un gobierno que no tiene competencias en ese sector.",
-        "Nombra un gobierno local (ayuntamiento, cabildo), que todavía no recogemos.",
-        "No hay datos del gobierno en la fecha de la noticia.",
-      ],
-      confidenceTitle: "La confianza",
-      confidence: [
-        ["Alta", "la noticia nombra un gobierno con competencias en el sector."],
-        ["Media", "todavía no se usa."],
-        ["Sin determinar", "no se puede decir quién es responsable, con el motivo."],
-      ],
+        "InContext reúne, para cada comunidad autónoma, quién gobierna, datos oficiales del INE y las noticias recientes de medios nacionales y regionales, clasificadas por sector.",
     },
     data: {
       title: "De dónde salen los datos",
       items: [
         "Indicadores: tablas del INE. Cada dato enlaza a su tabla y dice cuándo se descargó.",
         "Gobiernos: decretos del BOE y de los boletines autonómicos. Cada gobierno y cada partido enlaza a su fuente.",
-        "Competencias: la Constitución, los estatutos de autonomía y las leyes. La base legal se ve en las noticias que tienen un responsable.",
         "Límites de las comunidades: Instituto Geográfico Nacional, licencia CC BY 4.0.",
         "Colores de los partidos: Wikidata.",
+        "Banderas de las comunidades y logos de los partidos: Wikimedia Commons.",
         "Noticias: los canales públicos (RSS, mapas de noticias y secciones) de los medios nacionales y regionales seleccionados, respetando sus normas de acceso.",
       ],
     },
@@ -226,7 +253,7 @@ export const es = {
     limits: {
       title: "Qué no hace todavía",
       items: [
-        "Las reglas que clasifican las noticias aún no se han medido con un conjunto de prueba: pueden equivocarse, por ejemplo tomando por política una noticia que no lo es.",
+        "El sector lo asigna un modelo propio y la comunidad y el nivel de gobierno, reglas automáticas. Se midieron con 200 noticias etiquetadas a mano que nunca se usaron para entrenar, y pueden equivocarse, por ejemplo tomando por política una noticia que no lo es. Con esa muestra no se puede afirmar que el modelo acierte más que las reglas en el sector.",
         "Muchas noticias salen «Sin determinar», porque pocas nombran un gobierno.",
         "Los gobiernos locales, como ayuntamientos y cabildos, todavía no se modelan.",
       ],

@@ -27,11 +27,13 @@ function prefersReducedMotion(): boolean {
 export function Carousel(props: {
   heading: React.ReactNode;
   label: string;
+  /** What the arrows say; the indicators' by default. */
+  buttonLabels?: { previous: string; next: string };
   children: React.ReactNode;
 }): React.JSX.Element {
   const track = useRef<HTMLDivElement>(null);
   const [edges, setEdges] = useState<Edges>(FITS);
-  const { carousel } = es.community.indicators;
+  const carousel = props.buttonLabels ?? es.community.indicators.carousel;
 
   const measure = useCallback(() => {
     const el = track.current;

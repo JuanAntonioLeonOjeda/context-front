@@ -6,22 +6,14 @@ import { ThemeToggle } from "./ThemeToggle";
 
 import styles from "./Shell.module.css";
 
-/** The brand: nine small squares, the unit the party panel counts communities with. */
+/** The brand: a newspaper, the thing the app puts in context. */
 function BrandMark(): React.JSX.Element {
   return (
     <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
-      {[0, 1, 2].flatMap((row) =>
-        [0, 1, 2].map((col) => (
-          <rect
-            key={`${String(row)}${String(col)}`}
-            x={col * 8.5 + 0.5}
-            y={row * 8.5 + 0.5}
-            width="6.5"
-            height="6.5"
-            rx="1.6"
-          />
-        )),
-      )}
+      <path
+        fillRule="evenodd"
+        d="M4 3.5h13a1.5 1.5 0 0 1 1.5 1.5v3H21a1 1 0 0 1 1 1V18a2.5 2.5 0 0 1-2.5 2.5H6A3.5 3.5 0 0 1 2.5 17V5A1.5 1.5 0 0 1 4 3.5Zm1.5 2.5v3h10V6Zm0 5v1.5h5V11Zm6.5 0v1.5h3.5V11Zm-6.5 3.5V16h5v-1.5Zm6.5 0V16h3.5v-1.5ZM18.5 10.5V17a1 1 0 0 0 2 0v-6.5Z"
+      />
     </svg>
   );
 }

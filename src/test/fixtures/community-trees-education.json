@@ -1,0 +1,30 @@
+{
+  "territory_id": "ccaa-13",
+  "sector_id": "education",
+  "items": [
+    {
+      "outlet_id": "abc",
+      "outlet_name": "ABC",
+      "headline": "Ayuso, ante las amenazas de la izquierda: «No me van a callar ni amedrentar»",
+      "url": "https://www.abc.es/espana/madrid/ayuso-ante-amenazas-izquierda-van-callar-amedrentar-20261022112643-nt.html",
+      "published_at": "2026-10-22T14:58:09Z",
+      "classified_by": {
+        "model_id": "composite",
+        "model_version": "communities=rules@d74a59205b94;sectors=setfit@d33978f5b50f;levels=rules@d74a59205b94"
+      },
+      "tree_story_id": 384
+    },
+    {
+      "outlet_id": "el-pais",
+      "outlet_name": "El País",
+      "headline": "Un grupo de 200 profesores corta la autovía A-3 en el inicio del cuarto día de huelga educativa de Madrid",
+      "url": "https://elpais.com/espana/madrid/2026-10-19/un-grupo-de-200-profesores-corta-la-autovia-a-3-en-el-inicio-del-cuarto-dia-de-huelga-educativa-de-madrid.html",
+      "published_at": "2026-10-19T08:17:57Z",
+      "classified_by": {
+        "model_id": "composite",
+        "model_version": "communities=rules@d74a59205b94;sectors=setfit@d33978f5b50f;levels=rules@d74a59205b94"
+      },
+      "tree_story_id": 213
+    }
+  ]
+}

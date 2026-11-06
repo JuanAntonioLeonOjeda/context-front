@@ -15,6 +15,7 @@
   --color-surface: #ffffff;
   --color-text: #14202a;
   --color-text-muted: #4a5b68;
+  --color-text-gray: #3d4a54; /* the texts of the news section: a gray a little darker than the muted one */
   --color-border: #d5dde3;
   --color-border-strong: #6f7f8b;
   --color-accent: #0b5cad;
@@ -27,6 +28,10 @@
 
   /* Map (ADR-0013). The double outline pairs a dark and a light line, so one of the two
      contrasts with any party colour; the stripe separator is light in both themes. */
+  --color-on-party-dark: #14202a; /* text over a light party colour */
+  --color-on-party-light: #ffffff; /* text over a dark party colour */
+  --color-logo-tile: #ffffff; /* the tile under a party logo, white in light and dark */
+  --color-logo-backing: transparent; /* under a logo that sits on the page: none in light, a light tile in dark */
   --color-map-outline-outer: #14202a;
   --color-map-outline-inner: #ffffff;
   --color-map-separator: #ffffff;
@@ -66,6 +71,7 @@
     --color-surface: #16252f;
     --color-text: #e7edf1;
     --color-text-muted: #a3b3bf;
+    --color-text-gray: #a3b3bf;
     --color-border: #2b3d49;
     --color-border-strong: #7c909e;
     --color-accent: #7db8f0;
@@ -75,6 +81,10 @@
     --color-danger-surface: #3a1a18;
     --color-header: rgb(15 26 34 / 0.82);
     --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.35);
+    --color-on-party-dark: #14202a;
+    --color-on-party-light: #ffffff;
+    --color-logo-tile: #ffffff;
+    --color-logo-backing: #b5bec5;
     --color-map-outline-outer: #e7edf1;
     --color-map-outline-inner: #0f1a22;
     --color-map-separator: #ffffff;
@@ -90,6 +100,7 @@
   --color-surface: #16252f;
   --color-text: #e7edf1;
   --color-text-muted: #a3b3bf;
+  --color-text-gray: #a3b3bf;
   --color-border: #2b3d49;
   --color-border-strong: #7c909e;
   --color-accent: #7db8f0;
@@ -99,6 +110,10 @@
   --color-danger-surface: #3a1a18;
   --color-header: rgb(15 26 34 / 0.82);
   --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.35);
+  --color-on-party-dark: #14202a;
+  --color-on-party-light: #ffffff;
+  --color-logo-tile: #ffffff;
+  --color-logo-backing: #b5bec5;
   --color-map-outline-outer: #e7edf1;
   --color-map-outline-inner: #0f1a22;
   --color-map-separator: #ffffff;

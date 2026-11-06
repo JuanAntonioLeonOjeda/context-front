@@ -1,9 +1,13 @@
+import { useEffect, useRef, useState } from "react";
+
+import { ExternalLink } from "@/features/shell";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
 import type { IndicatorRow } from "./community-card";
 import { Carousel } from "./Carousel";
 import { HEIGHT, PLOT, WIDTH } from "./indicator-chart";
+import { SectionHeading } from "./SectionHeading";
 
 import styles from "./CommunityCard.module.css";
 
@@ -16,22 +20,37 @@ export function IndicatorsSection(props: {
   community: string;
   rows: readonly IndicatorRow[];
 }): React.JSX.Element {
+  const [open, setOpen] = useState(true);
+  const heading = (
+    <SectionHeading
+      id="indicators-title"
+      title={es.community.indicators.title}
+      open={open}
+      onToggle={() => {
+        setOpen(!open);
+      }}
+    />
+  );
   return (
     <section aria-labelledby="indicators-title" className={styles.section}>
-      <Carousel
-        heading={<h2 id="indicators-title">{es.community.indicators.title}</h2>}
-        label={formatMessage(es.community.indicators.carousel.label, {
-          community: props.community,
-        })}
-      >
-        <ul className={styles.indicatorRow}>
-          {props.rows.map((row) => (
-            <li key={row.id}>
-              <IndicatorCard row={row} community={props.community} />
-            </li>
-          ))}
-        </ul>
-      </Carousel>
+      {open ? (
+        <Carousel
+          heading={heading}
+          label={formatMessage(es.community.indicators.carousel.label, {
+            community: props.community,
+          })}
+        >
+          <ul className={styles.indicatorRow}>
+            {props.rows.map((row) => (
+              <li key={row.id}>
+                <IndicatorCard row={row} community={props.community} />
+              </li>
+            ))}
+          </ul>
+        </Carousel>
+      ) : (
+        heading
+      )}
     </section>
   );
 }
@@ -128,14 +147,68 @@ function IndicatorCard({
         </svg>
       )}
       {row.range !== null && <p className={styles.indicatorRange}>{row.range}</p>}
-      {row.data.length > 0 && (
-        <details className={styles.indicatorData}>
-          <summary>{indicators.viewData}</summary>
+      {row.data.length > 0 && <DataDialog community={community} row={row} />}
+      <p className={styles.indicatorSource}>
+        <ExternalLink href={row.tableUrl}>{row.tableLabel}</ExternalLink>
+        {row.downloaded && <small className={styles.downloaded}> {row.downloaded}</small>}
+      </p>
+    </article>
+  );
+}
+
+/** The numbers behind a chart: a button that opens them in a modal window, a table of every point. */
+function DataDialog({
+  community,
+  row,
+}: {
+  community: string;
+  row: IndicatorRow;
+}): React.JSX.Element {
+  const { indicators } = es.community;
+  const [open, setOpen] = useState(false);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const name = formatMessage(indicators.caption, { community: `${community}: ${row.name}` });
+
+  useEffect(() => {
+    if (open) dialog.current?.showModal();
+  }, [open]);
+
+  return (
+    <>
+      <button
+        type="button"
+        className={styles.dataButton}
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        {indicators.viewData}
+      </button>
+      {open && (
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events -- the keyboard way to close is native Escape and the Close button
+        <dialog
+          ref={dialog}
+          className={styles.dataDialog}
+          aria-labelledby={`data-${row.id}`}
+          // Escape closes it by itself (keyboard); the click on the backdrop is the pointer's extra.
+          onClose={() => {
+            setOpen(false);
+          }}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) event.currentTarget.close();
+          }}
+        >
+          <div className={styles.dataDialogHeader}>
+            <h2 id={`data-${row.id}`}>
+              {formatMessage(indicators.dataTitle, { name: `${community}: ${row.name}` })}
+            </h2>
+            <button type="button" onClick={() => dialog.current?.close()}>
+              {indicators.close}
+            </button>
+          </div>
           <div className={styles.tableScroll}>
             <table className={styles.table}>
-              <caption className={styles.visuallyHidden}>
-                {formatMessage(indicators.caption, { community: `${community}: ${row.name}` })}
-              </caption>
+              <caption className={styles.visuallyHidden}>{name}</caption>
               <thead>
                 <tr>
                   <th scope="col">{indicators.columns.period}</th>
@@ -152,12 +225,8 @@ function IndicatorCard({
               </tbody>
             </table>
           </div>
-        </details>
+        </dialog>
       )}
-      <p className={styles.indicatorSource}>
-        <a href={row.tableUrl}>{row.tableLabel}</a>
-        {row.downloaded && <small className={styles.downloaded}> {row.downloaded}</small>}
-      </p>
-    </article>
+    </>
   );
 }

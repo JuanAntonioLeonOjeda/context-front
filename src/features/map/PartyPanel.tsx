@@ -1,3 +1,4 @@
+import { partyLogoUrl } from "@/design/party-logos";
 import { es } from "@/i18n/es";
 import { formatCount, formatMessage } from "@/i18n/format";
 
@@ -15,7 +16,7 @@ interface PartyPanelProps {
 }
 
 /**
- * Who governs today, drawn as one row per party: its colour, its name and one square per
+ * Who governs today, drawn as one row per party: its logo (its name when there is none) and one square per
  * community where it governs. It is also the key of the map. A row is a button that
  * highlights those communities on the map; the count is written, never only drawn.
  */
@@ -31,6 +32,7 @@ export function PartyPanel(props: PartyPanelProps): React.JSX.Element {
       <ul className={styles.rows}>
         {summary.rows.map(({ party, communityIds }) => {
           const colour = cssBackground({ kind: "solid", colour: party.colour });
+          const logo = partyLogoUrl(party.id);
           const count = formatCount(panel.communities, communityIds.length);
           return (
             <li key={party.id}>
@@ -49,8 +51,12 @@ export function PartyPanel(props: PartyPanelProps): React.JSX.Element {
                   onPreview(null);
                 }}
               >
-                <span className={styles.partyName} aria-hidden="true">
-                  {party.shortName}
+                <span className={styles.partyName} data-tip={party.name} aria-hidden="true">
+                  {logo === null ? (
+                    party.shortName
+                  ) : (
+                    <img className={styles.logo} src={logo} alt="" />
+                  )}
                 </span>
                 <span className={styles.units} aria-hidden="true">
                   {communityIds.map((id) => (

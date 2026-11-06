@@ -9,11 +9,13 @@ import { server } from "@/test/server";
 import type { Sector } from "./news-api";
 import { useCommunityNews } from "./useCommunityNews";
 
+const NO_RANGE = { from: null, to: null };
+
 describe("useCommunityNews", () => {
   it("loads the news of a community and sector, newest first as the API sends them", async () => {
     serveCommunity();
 
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 
@@ -29,28 +31,9 @@ describe("useCommunityNews", () => {
     expect(times).toEqual([...times].sort().reverse());
   });
 
-  it("maps the attribution: parties and basis when high, the reason when not determined", async () => {
+  it("never carries a lead or a party: the mapped items hold only outlet, headline, link and date", async () => {
     serveCommunity();
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
-      wrapper: queryWrapper(),
-    });
-
-    await waitFor(() => {
-      expect(result.current.state).toBe("ready");
-    });
-    if (result.current.state !== "ready") throw new Error("not ready");
-    const entries = result.current.news.items.flatMap((i) => i.attribution);
-    const high = entries.find((a) => a.confidence === "high");
-    const undetermined = entries.find((a) => a.confidence === "not_determined");
-    expect(high).toMatchObject({ level: "ccaa", partyIds: ["coalicion-canaria", "pp"] });
-    expect(high?.competences[0]?.legalBasis).toBeTruthy();
-    expect(high?.reason).toBeNull();
-    expect(undetermined).toMatchObject({ reason: "no_level_named", partyIds: [] });
-  });
-
-  it("never carries a lead: the mapped items hold only headline, link, date and attribution", async () => {
-    serveCommunity();
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 
@@ -59,11 +42,11 @@ describe("useCommunityNews", () => {
     });
     if (result.current.state !== "ready") throw new Error("not ready");
     expect(Object.keys(result.current.news.items[0] ?? {}).sort()).toEqual([
-      "attribution",
       "headline",
       "outletId",
       "outletName",
       "publishedAt",
+      "treeStoryId",
       "url",
     ]);
   });
@@ -71,7 +54,7 @@ describe("useCommunityNews", () => {
   it("is ready with no items for a sector without news", async () => {
     serveCommunity("cataluna");
 
-    const { result } = renderHook(() => useCommunityNews("ccaa-09", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-09", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 
@@ -92,6 +75,7 @@ describe("useCommunityNews", () => {
           territory_id: "ccaa-05",
           sector_id: sector,
           since: "2026-09-15",
+          until: "2026-10-14",
           items: [],
         });
       }),
@@ -101,7 +85,7 @@ describe("useCommunityNews", () => {
     }
 
     const { result, rerender } = renderHook(
-      ({ sector }: Props) => useCommunityNews("ccaa-05", sector),
+      ({ sector }: Props) => useCommunityNews("ccaa-05", sector, NO_RANGE),
       { wrapper: queryWrapper(), initialProps: { sector: "housing" } },
     );
     await waitFor(() => {
@@ -124,7 +108,7 @@ describe("useCommunityNews", () => {
         HttpResponse.json({ detail: "boom" }, { status: 500 }),
       ),
     );
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 
@@ -146,7 +130,7 @@ describe("useCommunityNews", () => {
       ),
     );
 
-    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health"), {
+    const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
     });
 

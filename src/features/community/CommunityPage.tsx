@@ -1,10 +1,10 @@
-import { Link } from "react-router";
-
 import { es } from "@/i18n/es";
 
+import { CommunityFlag } from "./CommunityFlag";
 import { GovernmentSection } from "./GovernmentSection";
 import { IndicatorsSection } from "./IndicatorsSection";
 import { NewsSection } from "./NewsSection";
+import { TreesSection } from "./TreesSection";
 import { useCommunityCard } from "./useCommunityCard";
 
 import styles from "./CommunityLayout.module.css";
@@ -15,9 +15,6 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
 
   return (
     <>
-      <p>
-        <Link to="/">{es.community.page.back}</Link>
-      </p>
       {card.state === "loading" && <p role="status">{es.community.state.loading}</p>}
       {card.state === "error" && (
         <div role="alert">
@@ -38,10 +35,14 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
         <>
           <title>{`${card.name} · ${es.app.shell.name}`}</title>
           <div className={styles.header}>
-            <h1 className={styles.title}>{card.name}</h1>
+            <div className={styles.identity}>
+              <CommunityFlag territoryId={territoryId} name={card.name} />
+              <h1 className={styles.title}>{card.name}</h1>
+            </div>
             <GovernmentSection government={card.government} />
           </div>
           <IndicatorsSection community={card.name} rows={card.indicators} />
+          <TreesSection territoryId={territoryId} />
           <NewsSection territoryId={territoryId} />
         </>
       )}

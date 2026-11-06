@@ -1,7 +1,5 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { http, HttpResponse, type JsonBodyType } from "msw";
-
-import { es } from "@/i18n/es";
 
 import governments from "@/test/fixtures/map-governments-2026-10-14.json";
 import geometry from "@/test/fixtures/map-geometry.json";
@@ -45,6 +43,5 @@ export function mapLink(name: string): HTMLElement {
 
 /** Waits for the map to be drawn, then returns the map link of a community. */
 export async function findMapLink(name: string): Promise<HTMLElement> {
-  await screen.findByRole("navigation", { name: es.map.list.title });
-  return mapLink(name);
+  return waitFor(() => mapLink(name));
 }

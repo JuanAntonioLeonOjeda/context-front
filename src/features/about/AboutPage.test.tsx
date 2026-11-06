@@ -14,18 +14,14 @@ describe("how it works page", () => {
       "aria-current",
       "page",
     );
-    expect(document.title).toBe("Cómo funciona · Contexto autonómico");
+    expect(document.title).toBe("Cómo funciona · InContext");
   });
 
-  it("explains how the responsible party is decided, its reasons and the confidence words", async () => {
+  it("never describes a responsible party for a news item", async () => {
     renderApp("/como-funciona");
 
-    const section = await screen.findByRole("region", { name: es.about.responsible.title });
-    expect(within(section).getAllByRole("listitem").length).toBeGreaterThanOrEqual(8);
-    expect(within(section).getByText(/la misma para todos los partidos/)).toBeVisible();
-    for (const word of ["Alta", "Media", "Sin determinar"]) {
-      expect(within(section).getByText(word, { selector: "dt" })).toBeVisible();
-    }
+    expect(await screen.findByRole("heading", { level: 1, name: "Cómo funciona" })).toBeVisible();
+    expect(document.body).not.toHaveTextContent(/responsable/i);
   });
 
   it("states what is published and what is not, and what the portal cannot do yet", async () => {
@@ -33,7 +29,9 @@ describe("how it works page", () => {
 
     expect(await screen.findByText(/nunca se muestra/)).toBeVisible();
     const limits = screen.getByRole("region", { name: es.about.limits.title });
-    expect(within(limits).getByText(/aún no se han medido/)).toBeVisible();
+    expect(
+      within(limits).getByText(/etiquetadas a mano que nunca se usaron para entrenar/),
+    ).toBeVisible();
   });
 
   it("names the sources of every kind of data", async () => {
