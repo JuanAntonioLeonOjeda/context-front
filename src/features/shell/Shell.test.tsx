@@ -24,9 +24,9 @@ describe("header", () => {
       within(nav)
         .getAllByRole("link")
         .map((l) => l.textContent),
-    ).toEqual(["Mapa", "Cómo funciona"]);
+    ).toEqual(["Mapa", "El proyecto"]);
     expect(within(nav).getByRole("link", { name: "Mapa" })).toHaveAttribute("aria-current", "page");
-    expect(within(nav).getByRole("link", { name: "Cómo funciona" })).not.toHaveAttribute(
+    expect(within(nav).getByRole("link", { name: "El proyecto" })).not.toHaveAttribute(
       "aria-current",
     );
   });
@@ -93,7 +93,7 @@ describe("footer", () => {
     );
     expect(within(footer).getByRole("link", { name: es.app.footer.method.link })).toHaveAttribute(
       "href",
-      "/como-funciona",
+      "/proyecto/como-funciona",
     );
   });
 

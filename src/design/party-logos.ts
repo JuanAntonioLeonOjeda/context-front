@@ -1,5 +1,5 @@
 // One image per party, named after the party id (`psoe.svg`). Wikimedia Commons, credited in
-// the footer and in /como-funciona. Not every party has a usable one: the caller falls back
+// the footer and in /proyecto/como-funciona. Not every party has a usable one: the caller falls back
 // to the short name, the same for all of them.
 const LOGOS = import.meta.glob<string>("@/assets/parties/*.{svg,png,jpg}", {
   eager: true,

@@ -1,10 +1,12 @@
-import type { RouteObject } from "react-router";
+import { Navigate, type RouteObject } from "react-router";
 
-import { AboutRoute } from "./AboutRoute";
+import { FIRST_CHAPTER_PATH } from "@/features/project";
+
 import { CommunityRoute } from "./CommunityRoute";
 import { ErrorMessage } from "./ErrorMessage";
 import { HomeRoute } from "./HomeRoute";
 import { NotFoundRoute } from "./NotFoundRoute";
+import { ProjectRoute } from "./ProjectRoute";
 import { TreeRoute } from "./TreeRoute";
 import { RootLayout } from "./RootLayout";
 
@@ -34,5 +36,8 @@ export const routes = buildRoutes([
   { index: true, Component: HomeRoute },
   { path: "comunidades/:territoryId", Component: CommunityRoute },
   { path: "arbol/:storyId", Component: TreeRoute },
-  { path: "como-funciona", Component: AboutRoute },
+  { path: "proyecto", element: <Navigate to={FIRST_CHAPTER_PATH} replace /> },
+  { path: "proyecto/:slug", Component: ProjectRoute },
+  // The old address of "Cómo funciona", now the first chapter of "El proyecto".
+  { path: "como-funciona", element: <Navigate to={FIRST_CHAPTER_PATH} replace /> },
 ]);
