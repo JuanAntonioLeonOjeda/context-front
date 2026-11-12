@@ -272,9 +272,10 @@ export interface paths {
          *     midpoint of its census falls; a big city can leave a band almost empty). Income: the INE's mean net
          *     income per person of the election's year. It describes areas, not people.
          *
-         *     Without `election`, the latest loaded one. Groups: the parties with at least 3 % of the
-         *     community's valid votes (and a list without a party, by its acronym), then "others".
-         *     `profile` is null when fewer than two municipalities have income (Ceuta, Melilla).
+         *     Without `election`, the latest loaded one. Groups: the parties with at least
+         *     `shown_from_percent` % of the community's valid votes (and a candidature that is not in the party
+         *     table, by its acronym), then "others". `profile` is null when fewer than two municipalities have
+         *     income (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded.
          */
         get: operations["community_communities__territory_id__voters_get"];
         put?: never;
@@ -437,7 +438,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "party" | "list" | "others";
+            kind: "party" | "candidature" | "others";
             /** Label */
             label: string | null;
         };
@@ -530,6 +531,11 @@ export interface components {
             classified_by: components["schemas"]["ClassifierOut"];
             /** Tree Story Id */
             tree_story_id: number | null;
+        };
+        /** NotFoundOut */
+        NotFoundOut: {
+            /** Detail */
+            detail: string;
         };
         /** PartyOut */
         PartyOut: {
@@ -691,6 +697,8 @@ export interface components {
             income: components["schemas"]["IncomeOut"] | null;
             /** Municipalities */
             municipalities: number;
+            /** Shown From Percent */
+            shown_from_percent: number;
             profile: components["schemas"]["ProfileOut"] | null;
             /** No Profile Reason */
             no_profile_reason: ("no_results" | "too_few_municipalities") | null;
@@ -1077,6 +1085,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["VotersOut"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundOut"];
                 };
             };
             /** @description Validation Error */

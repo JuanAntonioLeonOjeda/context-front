@@ -560,7 +560,7 @@
           "voters"
         ],
         "summary": "Community",
-        "description": "How the municipalities of a community voted in a general election, grouped in\nfive income bands of about the same census (each municipality whole, in the band where the\nmidpoint of its census falls; a big city can leave a band almost empty). Income: the INE's mean net\nincome per person of the election's year. It describes areas, not people.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least 3 % of the\ncommunity's valid votes (and a list without a party, by its acronym), then \"others\".\n`profile` is null when fewer than two municipalities have income (Ceuta, Melilla).",
+        "description": "How the municipalities of a community voted in a general election, grouped in\nfive income bands of about the same census (each municipality whole, in the band where the\nmidpoint of its census falls; a big city can leave a band almost empty). Income: the INE's mean net\nincome per person of the election's year. It describes areas, not people.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least\n`shown_from_percent` % of the community's valid votes (and a candidature that is not in the party\ntable, by its acronym), then \"others\". `profile` is null when fewer than two municipalities have\nincome (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded.",
         "operationId": "community_communities__territory_id__voters_get",
         "parameters": [
           {
@@ -601,6 +601,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundOut"
+                }
+              }
+            },
+            "description": "Not Found"
           },
           "422": {
             "description": "Validation Error",
@@ -982,7 +992,7 @@
             "type": "string",
             "enum": [
               "party",
-              "list",
+              "candidature",
               "others"
             ],
             "title": "Kind"
@@ -1228,6 +1238,19 @@
           "tree_story_id"
         ],
         "title": "NewsItemOut"
+      },
+      "NotFoundOut": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "NotFoundOut"
       },
       "PartyOut": {
         "properties": {
@@ -1694,6 +1717,10 @@
             "type": "integer",
             "title": "Municipalities"
           },
+          "shown_from_percent": {
+            "type": "integer",
+            "title": "Shown From Percent"
+          },
           "profile": {
             "anyOf": [
               {
@@ -1726,6 +1753,7 @@
           "election",
           "income",
           "municipalities",
+          "shown_from_percent",
           "profile",
           "no_profile_reason"
         ],
