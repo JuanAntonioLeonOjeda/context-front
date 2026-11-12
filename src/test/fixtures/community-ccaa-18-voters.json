@@ -1,0 +1,17 @@
+{
+  "territory_id": "ccaa-18",
+  "election": {
+    "id": "congreso-2023-07",
+    "held_on": "2023-07-23",
+    "source_file": "02202307_MUNI.zip",
+    "source_url": "https://infoelectoral.interior.gob.es/es/elecciones-celebradas/area-de-descargas/"
+  },
+  "income": {
+    "year": 2023,
+    "source_url": "https://servicios.ine.es/wstempus/js/ES/DATOS_METADATAOPERACION/353?p=12&g1=19:&g2=482:284048&date=20230101&tip=AM",
+    "fetched_at": "2026-11-12T08:41:50.832447Z"
+  },
+  "municipalities": 1,
+  "profile": null,
+  "no_profile_reason": "too_few_municipalities"
+}
