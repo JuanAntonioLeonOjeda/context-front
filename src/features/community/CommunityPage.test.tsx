@@ -172,9 +172,38 @@ describe("community page", () => {
     expect(screen.getByRole("main")).toHaveFocus();
   });
 
+  it("shows the voter profile by income between the INE data and the news", async () => {
+    renderAt("/comunidades/ccaa-05");
+
+    await screen.findByRole("article", { name: "Tramo 1 de 5 · rentas más bajas" });
+    const titles = [
+      es.community.indicators.title,
+      es.voters.section.title,
+      es.community.news.title,
+    ];
+    const regions = screen
+      .getAllByRole("region")
+      .map((region) => region.getAttribute("aria-labelledby"))
+      .filter((id) => ["indicators-title", "voters-title", "news-title"].includes(id ?? ""));
+    expect(regions).toEqual(["indicators-title", "voters-title", "news-title"]);
+    for (const name of titles) expect(screen.getByRole("region", { name })).toBeVisible();
+  });
+
+  it("shows no voter profile for a community the API has no election for", async () => {
+    renderAt("/comunidades/ccaa-09", "cataluna");
+
+    // The news are the last thing of the page to arrive: the profile would be there by now.
+    await screen.findByRole("region", { name: es.community.news.title });
+    await screen.findByRole("heading", { name: "Tasa de paro" });
+    await waitFor(() => {
+      expect(screen.queryByRole("region", { name: es.voters.section.title })).toBeNull();
+    });
+  });
+
   it("has no axe violations", async () => {
     const container = renderAt("/comunidades/ccaa-05");
     await screen.findByRole("heading", { name: "Tasa de paro" });
+    await screen.findByRole("article", { name: "Tramo 1 de 5 · rentas más bajas" });
 
     expect(await axeViolations(container)).toEqual([]);
   });

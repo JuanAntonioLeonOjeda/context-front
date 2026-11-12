@@ -1,3 +1,4 @@
+import { VotersSection } from "@/features/voters";
 import { es } from "@/i18n/es";
 
 import { CommunityFlag } from "./CommunityFlag";
@@ -9,7 +10,8 @@ import { useCommunityCard } from "./useCommunityCard";
 
 import styles from "./CommunityLayout.module.css";
 
-/** The page of one community: who governs it and the INE data, each with its source. */
+/** The page of one community: who governs it, the INE data, how its municipalities voted by
+ *  income, and its news, each with its source. */
 export function CommunityPage({ territoryId }: { territoryId: string }): React.JSX.Element {
   const card = useCommunityCard(territoryId);
 
@@ -42,6 +44,7 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
             <GovernmentSection government={card.government} />
           </div>
           <IndicatorsSection community={card.name} rows={card.indicators} />
+          <VotersSection territoryId={territoryId} />
           <TreesSection territoryId={territoryId} />
           <NewsSection territoryId={territoryId} />
         </>

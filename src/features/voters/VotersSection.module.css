@@ -1,5 +1,8 @@
+/* Every grid here has one column that may shrink (minmax(0, 1fr)): without it the widest child,
+   the table, would set the width of the whole section and push the page sideways on a phone. */
 .section {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   margin-block: var(--space-6);
 }
@@ -10,6 +13,7 @@
 
 .bands {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   margin: 0;
   padding: 0;
@@ -18,6 +22,7 @@
 
 .band {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2);
   padding: var(--space-4);
   border: 1px solid var(--color-border);
