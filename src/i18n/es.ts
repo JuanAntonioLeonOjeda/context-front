@@ -180,6 +180,10 @@ export const es = {
       },
       method:
         "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
+      indicator: {
+        label: "Dato oficial de {sector}",
+        source: "Fuente:",
+      },
       empty: "No hay noticias de {sector} en este periodo.",
       loading: "Cargando las noticias…",
       error: "No hemos podido cargar las noticias.",

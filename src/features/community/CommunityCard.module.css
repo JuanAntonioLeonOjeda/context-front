@@ -135,6 +135,28 @@
   font-weight: 700;
 }
 
+/* The sector's official figure, between the filters and the news: a quiet box, the same paper as
+   an indicator card, so it reads as data and not as one more headline. */
+.sectorIndicator {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.sectorIndicatorName,
+.sectorIndicatorValue {
+  margin: 0;
+}
+
+.sectorIndicatorName {
+  font-weight: 700;
+}
+
 /* The explanations above the list stay a readable line; the list itself uses the width. */
 .newsNote {
   max-width: none; /* the notes run to the end of the section, not to a column in the middle of it */

@@ -1,0 +1,7 @@
+[
+  { "id": "education", "name": "Educación", "indicator_id": "higher_education_share_16plus" },
+  { "id": "health", "name": "Sanidad", "indicator_id": null },
+  { "id": "housing", "name": "Vivienda", "indicator_id": "housing_price_index" },
+  { "id": "justice", "name": "Justicia", "indicator_id": null },
+  { "id": "work", "name": "Trabajo", "indicator_id": "unemployment_rate" }
+]
