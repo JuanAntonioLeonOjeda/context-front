@@ -217,6 +217,41 @@ export const es = {
       others: "Otras",
       percent: "{value} %",
     },
+    section: {
+      title: "Perfil de voto por renta",
+      intro:
+        "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según su renta media por persona de {year}.",
+      introNoIncome:
+        "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
+      loading: "Cargando el perfil de voto…",
+      error: "No hemos podido cargar el perfil de voto.",
+      retry: "Volver a intentarlo",
+      barsOf: "Voto en el {band}",
+      withoutIncome: "Municipios sin dato de renta, que quedan fuera de los tramos: {count}.",
+    },
+    reasons: {
+      no_results: "No hay resultados de esta elección para la comunidad.",
+      too_few_municipalities:
+        "Hacen falta al menos dos municipios con dato de renta para formar tramos, y esta comunidad no los tiene.",
+    },
+    table: {
+      open: "Ver los datos en tabla",
+      caption: "Porcentaje del voto válido de cada tramo de renta",
+      band: "Tramo",
+      size: "Municipios y censo",
+    },
+    method: {
+      title: "Cómo leerlo",
+      bands:
+        "Cada tramo reúne municipios enteros, ordenados por su renta neta media por persona de {year}, de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
+      shares:
+        "Los porcentajes son sobre el voto válido de cada tramo. Se muestran los partidos con al menos el 3 % del voto válido de la comunidad, y el resto se suma en «Otras».",
+      areas:
+        "El perfil describe zonas, no personas: en un municipio de cualquier tramo vota gente de todas las rentas.",
+      sources: "Fuentes:",
+      election: "resultados por municipio, Ministerio del Interior",
+      income: "renta por municipio, INE (Atlas de distribución de renta de los hogares)",
+    },
   },
   stories: {
     tree: {
