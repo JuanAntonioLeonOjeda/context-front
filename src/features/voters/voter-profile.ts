@@ -44,8 +44,11 @@ function bandName(index: number, total: number): string {
     number: String(index + 1),
     total: String(total),
   });
-  if (index === 0) return `${name} · ${es.voters.band.lowest}`;
-  if (index === total - 1) return `${name} · ${es.voters.band.highest}`;
+  if (index === 0)
+    return formatMessage(es.voters.band.withEnd, { name, end: es.voters.band.lowest });
+  if (index === total - 1) {
+    return formatMessage(es.voters.band.withEnd, { name, end: es.voters.band.highest });
+  }
   return name;
 }
 
@@ -69,18 +72,22 @@ function sizeText(band: IncomeBand): string {
   const census = formatMessage(es.voters.band.censusShare, {
     percent: percent(band.censusPercent),
   });
-  return `${municipalities} · ${census}`;
+  return formatMessage(es.voters.band.size, { municipalities, census });
 }
 
-function groupLabel(group: VoteGroup, parties: ReadonlyMap<string, Party>): string {
+/** The row of the party table for a group that is a party. A party the table does not know is
+ *  a data error, as everywhere else on the site: it is never drawn as if it were "Otras". */
+function partyOf(group: VoteGroup, parties: ReadonlyMap<string, Party>): Party | null {
+  if (group.kind !== "party") return null;
+  const party = parties.get(group.id);
+  if (party === undefined) throw new Error(`party ${group.id} is not in the party table`);
+  return party;
+}
+
+function groupLabel(group: VoteGroup, party: Party | null): string {
   if (group.kind === "others") return es.voters.profile.others;
-  // The API's label is the same short name; the table is asked first so the name and the colour
-  // of a party always come from the same row.
-  return (
-    (group.kind === "party" ? parties.get(group.id)?.shortName : undefined) ??
-    group.label ??
-    group.id
-  );
+  // The name and the colour of a party come from the same row of the table.
+  return party?.shortName ?? group.label ?? group.id;
 }
 
 function bars(
@@ -92,15 +99,17 @@ function bars(
   const byId = new Map(groups.map((group) => [group.id, group]));
   return band.shares.flatMap((share) => {
     const group = byId.get(share.groupId);
-    if (group === undefined) return []; // a share of no declared group: not drawn, never guessed
+    // The API layer rejects a share of an undeclared group, so this only narrows the type.
+    if (group === undefined) return [];
+    const party = partyOf(group, parties);
     return [
       {
         groupId: group.id,
-        label: groupLabel(group, parties),
+        label: groupLabel(group, party),
         percent: percent(share.percent),
         width: highest === 0 ? 0 : Math.round((share.percent / highest) * 1000) / 10,
-        // Only a party of the table has a colour; a list without a party and "Otras" are neutral.
-        colour: group.kind === "party" ? (parties.get(group.id)?.colour ?? null) : null,
+        // Only a party has a colour; a candidature outside the table and "Otras" are neutral.
+        colour: party?.colour ?? null,
       },
     ];
   });

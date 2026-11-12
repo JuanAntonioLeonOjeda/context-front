@@ -39,12 +39,17 @@ export function serveCommunity(
     failingTrees?: boolean;
     failingSectors?: boolean;
     failingVoters?: boolean;
+    failingParties?: boolean;
   } = {},
 ): void {
   const id = scenario === "cataluna" ? "ccaa-09" : "ccaa-05";
   server.use(
     http.get("*/api/territories", () => HttpResponse.json(territories)),
-    http.get("*/api/parties", () => HttpResponse.json(parties)),
+    http.get("*/api/parties", () =>
+      options.failingParties
+        ? HttpResponse.json({ detail: "boom" }, { status: 500 })
+        : HttpResponse.json(parties),
+    ),
     // The pairs of `data/governments/sectors.csv` in the backend (active sectors only).
     http.get("*/api/sectors", () =>
       options.failingSectors

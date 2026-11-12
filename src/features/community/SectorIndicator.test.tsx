@@ -17,7 +17,7 @@ describe("the sector's indicator next to the news", () => {
     renderApp("/comunidades/ccaa-05?sector=education");
 
     const section = await newsSection();
-    const figure = await within(section).findByRole("complementary", { name: EDUCATION });
+    const figure = await within(section).findByRole("group", { name: EDUCATION });
     expect(figure).toHaveTextContent("Población de 16 y más años con educación superior");
     expect(figure).toHaveTextContent("32 % · 2.º trimestre de 2026");
     expect(within(figure).getByRole("link", { name: /Tabla 65289 del INE/ })).toHaveAttribute(
@@ -30,7 +30,7 @@ describe("the sector's indicator next to the news", () => {
     renderApp("/comunidades/ccaa-05?sector=work");
 
     const section = await newsSection();
-    const figure = await within(section).findByRole("complementary", {
+    const figure = await within(section).findByRole("group", {
       name: "Dato oficial de trabajo",
     });
     expect(figure).toHaveTextContent("Tasa de paro");
@@ -44,7 +44,7 @@ describe("the sector's indicator next to the news", () => {
     await newsLoaded();
     // The indicators of the page are loaded, so a figure would be there by now.
     await screen.findByRole("region", { name: es.community.indicators.title });
-    expect(within(section).queryByRole("complementary")).toBeNull();
+    expect(within(section).queryByRole("group", { name: /^Dato oficial/ })).toBeNull();
   });
 
   it("shows nothing, and still the news, when the sectors cannot be read", async () => {
@@ -55,7 +55,7 @@ describe("the sector's indicator next to the news", () => {
     expect(section.querySelectorAll("ol > li").length).toBeGreaterThan(0);
     // The page's indicators are drawn, so only the missing sectors keep the figure away.
     await screen.findByRole("region", { name: es.community.indicators.title });
-    expect(within(section).queryByRole("complementary")).toBeNull();
+    expect(within(section).queryByRole("group", { name: /^Dato oficial/ })).toBeNull();
     expect(within(section).queryByRole("alert")).toBeNull();
   });
 
@@ -63,7 +63,7 @@ describe("the sector's indicator next to the news", () => {
     const container = renderApp("/comunidades/ccaa-05?sector=education");
 
     const section = await newsSection();
-    await within(section).findByRole("complementary", { name: EDUCATION });
+    await within(section).findByRole("group", { name: EDUCATION });
     expect(await axeViolations(container)).toEqual([]);
   });
 });

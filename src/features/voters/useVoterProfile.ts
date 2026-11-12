@@ -25,21 +25,29 @@ export function useVoterProfile(territoryId: string): VoterProfileState {
     staleTime: 60 * 60 * 1000,
   });
 
-  const queries = [voters, parties];
-  if (queries.some((q) => q.isError)) {
-    return {
-      state: "error",
-      retry: () => {
-        for (const q of queries) if (q.isError) void q.refetch();
-      },
-    };
-  }
+  // First of all: with no election there is no section, whatever happens to the party table.
   if (voters.data === null) return { state: "absent" };
+  const queries = [voters, parties];
+  const failed: VoterProfileState = {
+    state: "error",
+    retry: () => {
+      for (const q of queries) void q.refetch();
+    },
+  };
+  if (queries.some((q) => q.isError)) return failed;
   if (!voters.data || !parties.data) return { state: "loading" };
   const { profile } = voters.data;
-  return {
-    state: "ready",
-    voters: voters.data,
-    bands: profile === null ? null : bandViews(profile, partyTable(parties.data)),
-  };
+  if (profile === null) return { state: "ready", voters: voters.data, bands: null };
+  try {
+    return {
+      state: "ready",
+      voters: voters.data,
+      bands: bandViews(profile, partyTable(parties.data)),
+    };
+  } catch (error) {
+    // A party the party table does not know is a data error: the section says it could not be
+    // loaded instead of drawing that party as if it were "Otras". The page around it stays up.
+    console.error(error);
+    return failed;
+  }
 }

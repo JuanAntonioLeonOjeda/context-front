@@ -127,18 +127,13 @@ describe("bandViews", () => {
     expect(PP?.colour).toMatch(/^#[0-9a-f]{6}$/);
   });
 
-  it("leaves a party the table does not know neutral, with the API's label", () => {
-    const [view] = bandViews(
-      {
-        ...PROFILE,
-        groups: [{ id: "nuevo", kind: "party", label: "Nuevo" }],
-        bands: [band(0, [["nuevo", 10]])],
-      },
-      TABLE,
-    );
-    expect(view?.bars).toEqual([
-      { groupId: "nuevo", label: "Nuevo", percent: "10,0 %", width: 100, colour: null },
-    ]);
+  it("refuses a party the party table does not know, instead of drawing it as the rest", () => {
+    const unknown: VoterProfile = {
+      ...PROFILE,
+      groups: [{ id: "nuevo", kind: "party", label: "Nuevo" }],
+      bands: [band(0, [["nuevo", 10]])],
+    };
+    expect(() => bandViews(unknown, TABLE)).toThrow(/nuevo is not in the party table/);
   });
 
   it("draws nothing in a band no municipality fell in", () => {

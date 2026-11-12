@@ -91,6 +91,23 @@ describe("fetchCommunityVoters", () => {
     await expect(fetchCommunityVoters("ccaa-05")).rejects.toThrow(/answered 500/);
   });
 
+  it("rejects a share of a group the profile does not declare", async () => {
+    serveCommunity();
+    const [first, ...rest] = canarias.profile.bands;
+    if (first === undefined) throw new Error("the fixture has no bands");
+    const stray = { ...first, shares: [{ group_id: "fantasma", votes: 1, percent: 0.1 }] };
+    server.use(
+      http.get("*/api/communities/:territoryId/voters", () =>
+        HttpResponse.json({
+          ...canarias,
+          profile: { ...canarias.profile, bands: [stray, ...rest] },
+        }),
+      ),
+    );
+
+    await expect(fetchCommunityVoters("ccaa-05")).rejects.toThrow(/not in `groups`/);
+  });
+
   it("rejects a response that breaks the contract", async () => {
     serveCommunity();
     server.use(

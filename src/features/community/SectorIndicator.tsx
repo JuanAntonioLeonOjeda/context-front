@@ -11,7 +11,8 @@ export function SectorIndicator(props: { sector: string; row: IndicatorRow }): R
   const { row } = props;
   const texts = es.community.news.indicator;
   return (
-    <aside
+    <div
+      role="group"
       aria-label={formatMessage(texts.label, { sector: props.sector.toLowerCase() })}
       className={styles.sectorIndicator}
     >
@@ -22,13 +23,13 @@ export function SectorIndicator(props: { sector: string; row: IndicatorRow }): R
         ) : (
           <>
             <strong>{row.value}</strong>
-            {row.period !== null && ` · ${row.period}`}
+            {row.period !== null && formatMessage(texts.period, { period: row.period })}
           </>
         )}
       </p>
       <p className={styles.indicatorSource}>
         {texts.source} <ExternalLink href={row.tableUrl}>{row.tableLabel}</ExternalLink>
       </p>
-    </aside>
+    </div>
   );
 }

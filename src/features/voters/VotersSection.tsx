@@ -52,7 +52,8 @@ function Profile(props: { voters: CommunityVoters; bands: BandView[] | null }): 
       {voters.noProfileReason !== null && <p>{es.voters.reasons[voters.noProfileReason]}</p>}
       {bands !== null && (
         <>
-          <ol className={styles.bands}>
+          {/* eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics of a list styled without markers; the explicit role keeps them (WCAG 1.3.1) */}
+          <ol className={styles.bands} role="list">
             {bands.map((band) => (
               <li key={band.index}>
                 <Band band={band} />
@@ -70,7 +71,7 @@ function Profile(props: { voters: CommunityVoters; bands: BandView[] | null }): 
             <summary>{es.voters.table.open}</summary>
             <DataTable bands={bands} />
           </details>
-          {year !== null && <Method year={year} />}
+          <Method year={year} />
         </>
       )}
       <p className={styles.note}>
@@ -89,12 +90,9 @@ function Profile(props: { voters: CommunityVoters; bands: BandView[] | null }): 
 }
 
 function Band({ band }: { band: BandView }): React.JSX.Element {
-  const titleId = `voters-band-${String(band.index)}`;
   return (
-    <article className={styles.band} aria-labelledby={titleId}>
-      <h3 id={titleId} className={styles.bandName}>
-        {band.name}
-      </h3>
+    <div className={styles.band}>
+      <h3 className={styles.bandName}>{band.name}</h3>
       <p className={styles.bandFacts}>
         {band.income !== null && <span>{band.income}</span>}
         <span>{band.size}</span>
@@ -102,7 +100,9 @@ function Band({ band }: { band: BandView }): React.JSX.Element {
       {band.bars.length === 0 ? (
         <p className={styles.note}>{es.voters.band.empty}</p>
       ) : (
+        // eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics, and the list's name with them, of a list styled without markers (WCAG 1.3.1)
         <ul
+          role="list"
           className={styles.bars}
           aria-label={formatMessage(es.voters.section.barsOf, { band: band.name })}
         >
@@ -125,15 +125,22 @@ function Band({ band }: { band: BandView }): React.JSX.Element {
         </ul>
       )}
       {band.blank !== null && <p className={styles.note}>{band.blank}</p>}
-    </article>
+    </div>
   );
 }
 
 /** The same numbers as the bars: a row per band, a column per group in the same order. */
 function DataTable({ bands }: { bands: readonly BandView[] }): React.JSX.Element {
   const columns = bands.find((band) => band.bars.length > 0)?.bars ?? [];
+  // A box that scrolls must take the focus, or the keyboard cannot scroll it.
   return (
-    <div className={styles.tableScroll}>
+    <div
+      className={styles.tableScroll}
+      role="region"
+      aria-label={es.voters.table.scroll}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a region that scrolls must take focus, or the keyboard cannot scroll it (WCAG 2.1.1)
+      tabIndex={0}
+    >
       <table className={styles.table}>
         <caption>{es.voters.table.caption}</caption>
         <thead>
@@ -154,7 +161,8 @@ function DataTable({ bands }: { bands: readonly BandView[] }): React.JSX.Element
               <td>{band.size}</td>
               {columns.map((column) => (
                 <td key={column.groupId}>
-                  {band.bars.find((bar) => bar.groupId === column.groupId)?.percent ?? "—"}
+                  {band.bars.find((bar) => bar.groupId === column.groupId)?.percent ??
+                    es.voters.table.noValue}
                 </td>
               ))}
             </tr>
@@ -165,12 +173,12 @@ function DataTable({ bands }: { bands: readonly BandView[] }): React.JSX.Element
   );
 }
 
-function Method({ year }: { year: string }): React.JSX.Element {
+function Method({ year }: { year: string | null }): React.JSX.Element {
   const { method } = es.voters;
   return (
     <aside aria-labelledby="voters-method-title" className={styles.method}>
       <h3 id="voters-method-title">{method.title}</h3>
-      <p>{formatMessage(method.bands, { year })}</p>
+      {year !== null && <p>{formatMessage(method.bands, { year })}</p>}
       <p>{method.shares}</p>
       <p>{method.areas}</p>
     </aside>

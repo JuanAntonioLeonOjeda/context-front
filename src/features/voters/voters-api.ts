@@ -46,6 +46,14 @@ const votersSchema = z.object({
       bands: z.array(bandSchema),
       municipalities_without_income: z.number().int(),
     })
+    // Every share belongs to a declared group: a figure with no name is never drawn.
+    .refine(
+      (profile) =>
+        profile.bands.every((band) =>
+          band.shares.every((share) => profile.groups.some((g) => g.id === share.group_id)),
+        ),
+      { message: "a share of a group that is not in `groups`" },
+    )
     .nullable(),
   no_profile_reason: z.enum(["no_results", "too_few_municipalities"]).nullable(),
 });
