@@ -200,6 +200,24 @@ export const es = {
       },
     },
   },
+  voters: {
+    band: {
+      name: "Tramo {number} de {total}",
+      lowest: "rentas más bajas",
+      highest: "rentas más altas",
+      incomeRange: "De {min} a {max} € por persona",
+      incomeSingle: "{value} € por persona",
+      municipalities: "{count} municipios",
+      municipality: "1 municipio",
+      censusShare: "{percent} del censo",
+      blank: "Voto en blanco: {percent}",
+      empty: "Ningún municipio cae en este tramo.",
+    },
+    profile: {
+      others: "Otras",
+      percent: "{value} %",
+    },
+  },
   stories: {
     tree: {
       title: "Noticias relacionadas",
