@@ -6,7 +6,7 @@ import type { Sector } from "./news-api";
 import { fetchSectorIndicators } from "./sectors-api";
 
 /**
- * The indicator a sector is measured by, for one community. `null` while it loads, when the
+ * The indicator shown next to a sector's news, for one community. `null` while it loads, when the
  * sector has none and when either request fails: the news never wait for it and nothing is
  * shown in its place.
  */

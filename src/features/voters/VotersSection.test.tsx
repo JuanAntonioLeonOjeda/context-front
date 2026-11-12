@@ -97,7 +97,7 @@ describe("voter profile of a community", () => {
     expect(barOf(band, "Otras").style.background).toBe("");
   });
 
-  it("draws a list without a party in the neutral colour, with its acronym", async () => {
+  it("draws a candidature that is not in the party table in the neutral colour, with its acronym", async () => {
     renderSection("ccaa-15");
 
     const band = await firstBand();

@@ -19,7 +19,7 @@ import { server } from "@/test/server";
 
 export type Scenario = "canarias" | "cataluna" | "canarias-caretaker" | "failing";
 
-// Canarias has a profile; Navarra, a list without a party (UPN); Ceuta, one municipality: none.
+// Canarias has a profile; Navarra, a candidature that is not in the party table (UPN); Ceuta, one municipality: none.
 const VOTERS = new Map<string, object>([
   ["ccaa-05", canariasVoters],
   ["ccaa-15", navarraVoters],

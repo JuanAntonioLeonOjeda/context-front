@@ -1,5 +1,5 @@
 /**
- * Which indicator each sector is measured by, as the API says it (`GET /sectors`): the pairing
+ * Which indicator goes next to each sector's news, as the API says it (`GET /sectors`): the pairing
  * is data of the backend, never decided here. Validated at the edge with zod.
  */
 import { z } from "zod";
