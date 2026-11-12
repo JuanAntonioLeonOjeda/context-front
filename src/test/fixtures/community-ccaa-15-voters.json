@@ -8,20 +8,49 @@
   },
   "income": {
     "year": 2023,
-    "source_url": "https://servicios.ine.es/wstempus/js/ES/DATOS_METADATAOPERACION/353?p=12&g1=19:&g2=482:284048&date=20230101&tip=AM",
+    "source_url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608",
     "fetched_at": "2026-11-12T08:41:50.832447Z"
   },
   "municipalities": 272,
+  "shown_from_percent": 3,
   "profile": {
     "census": 489973,
     "groups": [
-      { "id": "eh-bildu", "kind": "party", "label": "EH Bildu" },
-      { "id": "pp", "kind": "party", "label": "PP" },
-      { "id": "psoe", "kind": "party", "label": "PSOE" },
-      { "id": "sumar", "kind": "party", "label": "Sumar" },
-      { "id": "lista:U.P.N.", "kind": "list", "label": "U.P.N." },
-      { "id": "vox", "kind": "party", "label": "Vox" },
-      { "id": "otras", "kind": "others", "label": null }
+      {
+        "id": "eh-bildu",
+        "kind": "party",
+        "label": "EH Bildu"
+      },
+      {
+        "id": "pp",
+        "kind": "party",
+        "label": "PP"
+      },
+      {
+        "id": "psoe",
+        "kind": "party",
+        "label": "PSOE"
+      },
+      {
+        "id": "sumar",
+        "kind": "party",
+        "label": "Sumar"
+      },
+      {
+        "id": "lista:U.P.N.",
+        "kind": "candidature",
+        "label": "U.P.N."
+      },
+      {
+        "id": "vox",
+        "kind": "party",
+        "label": "Vox"
+      },
+      {
+        "id": "otras",
+        "kind": "others",
+        "label": null
+      }
     ],
     "bands": [
       {
@@ -35,13 +64,41 @@
         "blank_votes": 558,
         "blank_percent": 0.8,
         "shares": [
-          { "group_id": "eh-bildu", "votes": 4131, "percent": 6.1 },
-          { "group_id": "pp", "votes": 13797, "percent": 20.3 },
-          { "group_id": "psoe", "votes": 23674, "percent": 34.8 },
-          { "group_id": "sumar", "votes": 7136, "percent": 10.5 },
-          { "group_id": "lista:U.P.N.", "votes": 11533, "percent": 16.9 },
-          { "group_id": "vox", "votes": 6074, "percent": 8.9 },
-          { "group_id": "otras", "votes": 1201, "percent": 1.8 }
+          {
+            "group_id": "eh-bildu",
+            "votes": 4131,
+            "percent": 6.1
+          },
+          {
+            "group_id": "pp",
+            "votes": 13797,
+            "percent": 20.3
+          },
+          {
+            "group_id": "psoe",
+            "votes": 23674,
+            "percent": 34.8
+          },
+          {
+            "group_id": "sumar",
+            "votes": 7136,
+            "percent": 10.5
+          },
+          {
+            "group_id": "lista:U.P.N.",
+            "votes": 11533,
+            "percent": 16.9
+          },
+          {
+            "group_id": "vox",
+            "votes": 6074,
+            "percent": 8.9
+          },
+          {
+            "group_id": "otras",
+            "votes": 1201,
+            "percent": 1.8
+          }
         ]
       },
       {
@@ -55,13 +112,41 @@
         "blank_votes": 574,
         "blank_percent": 0.9,
         "shares": [
-          { "group_id": "eh-bildu", "votes": 14308, "percent": 21.7 },
-          { "group_id": "pp", "votes": 8966, "percent": 13.6 },
-          { "group_id": "psoe", "votes": 19344, "percent": 29.3 },
-          { "group_id": "sumar", "votes": 8722, "percent": 13.2 },
-          { "group_id": "lista:U.P.N.", "votes": 8178, "percent": 12.4 },
-          { "group_id": "vox", "votes": 2916, "percent": 4.4 },
-          { "group_id": "otras", "votes": 3049, "percent": 4.6 }
+          {
+            "group_id": "eh-bildu",
+            "votes": 14308,
+            "percent": 21.7
+          },
+          {
+            "group_id": "pp",
+            "votes": 8966,
+            "percent": 13.6
+          },
+          {
+            "group_id": "psoe",
+            "votes": 19344,
+            "percent": 29.3
+          },
+          {
+            "group_id": "sumar",
+            "votes": 8722,
+            "percent": 13.2
+          },
+          {
+            "group_id": "lista:U.P.N.",
+            "votes": 8178,
+            "percent": 12.4
+          },
+          {
+            "group_id": "vox",
+            "votes": 2916,
+            "percent": 4.4
+          },
+          {
+            "group_id": "otras",
+            "votes": 3049,
+            "percent": 4.6
+          }
         ]
       },
       {
@@ -75,13 +160,41 @@
         "blank_votes": 300,
         "blank_percent": 0.8,
         "shares": [
-          { "group_id": "eh-bildu", "votes": 8429, "percent": 23.2 },
-          { "group_id": "pp", "votes": 4929, "percent": 13.5 },
-          { "group_id": "psoe", "votes": 9871, "percent": 27.1 },
-          { "group_id": "sumar", "votes": 4989, "percent": 13.7 },
-          { "group_id": "lista:U.P.N.", "votes": 4405, "percent": 12.1 },
-          { "group_id": "vox", "votes": 1637, "percent": 4.5 },
-          { "group_id": "otras", "votes": 1831, "percent": 5.0 }
+          {
+            "group_id": "eh-bildu",
+            "votes": 8429,
+            "percent": 23.2
+          },
+          {
+            "group_id": "pp",
+            "votes": 4929,
+            "percent": 13.5
+          },
+          {
+            "group_id": "psoe",
+            "votes": 9871,
+            "percent": 27.1
+          },
+          {
+            "group_id": "sumar",
+            "votes": 4989,
+            "percent": 13.7
+          },
+          {
+            "group_id": "lista:U.P.N.",
+            "votes": 4405,
+            "percent": 12.1
+          },
+          {
+            "group_id": "vox",
+            "votes": 1637,
+            "percent": 4.5
+          },
+          {
+            "group_id": "otras",
+            "votes": 1831,
+            "percent": 5.0
+          }
         ]
       },
       {
@@ -95,13 +208,41 @@
         "blank_votes": 812,
         "blank_percent": 0.8,
         "shares": [
-          { "group_id": "eh-bildu", "votes": 18809, "percent": 17.7 },
-          { "group_id": "pp", "votes": 18561, "percent": 17.4 },
-          { "group_id": "psoe", "votes": 26296, "percent": 24.7 },
-          { "group_id": "sumar", "votes": 14468, "percent": 13.6 },
-          { "group_id": "lista:U.P.N.", "votes": 18185, "percent": 17.1 },
-          { "group_id": "vox", "votes": 5179, "percent": 4.9 },
-          { "group_id": "otras", "votes": 4110, "percent": 3.9 }
+          {
+            "group_id": "eh-bildu",
+            "votes": 18809,
+            "percent": 17.7
+          },
+          {
+            "group_id": "pp",
+            "votes": 18561,
+            "percent": 17.4
+          },
+          {
+            "group_id": "psoe",
+            "votes": 26296,
+            "percent": 24.7
+          },
+          {
+            "group_id": "sumar",
+            "votes": 14468,
+            "percent": 13.6
+          },
+          {
+            "group_id": "lista:U.P.N.",
+            "votes": 18185,
+            "percent": 17.1
+          },
+          {
+            "group_id": "vox",
+            "votes": 5179,
+            "percent": 4.9
+          },
+          {
+            "group_id": "otras",
+            "votes": 4110,
+            "percent": 3.9
+          }
         ]
       },
       {
@@ -115,13 +256,41 @@
         "blank_votes": 595,
         "blank_percent": 1.0,
         "shares": [
-          { "group_id": "eh-bildu", "votes": 13015, "percent": 21.0 },
-          { "group_id": "pp", "votes": 10236, "percent": 16.5 },
-          { "group_id": "psoe", "votes": 13697, "percent": 22.1 },
-          { "group_id": "sumar", "votes": 8276, "percent": 13.3 },
-          { "group_id": "lista:U.P.N.", "votes": 9477, "percent": 15.3 },
-          { "group_id": "vox", "votes": 3451, "percent": 5.6 },
-          { "group_id": "otras", "votes": 3336, "percent": 5.4 }
+          {
+            "group_id": "eh-bildu",
+            "votes": 13015,
+            "percent": 21.0
+          },
+          {
+            "group_id": "pp",
+            "votes": 10236,
+            "percent": 16.5
+          },
+          {
+            "group_id": "psoe",
+            "votes": 13697,
+            "percent": 22.1
+          },
+          {
+            "group_id": "sumar",
+            "votes": 8276,
+            "percent": 13.3
+          },
+          {
+            "group_id": "lista:U.P.N.",
+            "votes": 9477,
+            "percent": 15.3
+          },
+          {
+            "group_id": "vox",
+            "votes": 3451,
+            "percent": 5.6
+          },
+          {
+            "group_id": "otras",
+            "votes": 3336,
+            "percent": 5.4
+          }
         ]
       }
     ],

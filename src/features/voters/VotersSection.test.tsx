@@ -224,6 +224,28 @@ describe("voter profile of a community", () => {
     expect(method).not.toHaveTextContent("renta neta media por persona de");
   });
 
+  it("takes the threshold and the income's page from the API, not from the web's text", async () => {
+    serveCommunity();
+    server.use(
+      http.get("*/api/communities/:territoryId/voters", () =>
+        HttpResponse.json({
+          ...canarias,
+          shown_from_percent: 5,
+          income: { ...canarias.income, source_url: "https://example.org/renta" },
+        }),
+      ),
+    );
+    render(<VotersSection territoryId="ccaa-05" />, { wrapper: queryWrapper() });
+
+    const method = await screen.findByRole("complementary", { name: es.voters.method.title });
+    expect(method).toHaveTextContent("al menos el 5 %");
+    expect(method).not.toHaveTextContent("{percent}");
+    expect(screen.getByRole("link", { name: /INE/ })).toHaveAttribute(
+      "href",
+      "https://example.org/renta",
+    );
+  });
+
   describe.each(["light", "dark"] as const)("in the %s theme", (theme) => {
     afterEach(() => {
       document.documentElement.removeAttribute("data-theme");

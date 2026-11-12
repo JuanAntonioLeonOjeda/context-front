@@ -250,7 +250,7 @@ export const es = {
       bands:
         "Cada tramo reúne municipios enteros, ordenados por su renta neta media por persona de {year}, de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno. La renta es la del año de la elección.",
       shares:
-        "Los porcentajes son sobre el voto válido de cada tramo. Se muestran las candidaturas con al menos el 3 % del voto válido de la comunidad, y el resto se suma en «Otras».",
+        "Los porcentajes son sobre el voto válido de cada tramo. Se muestran las candidaturas con al menos el {percent} % del voto válido de la comunidad, y el resto se suma en «Otras».",
       areas:
         "El perfil describe zonas, no personas: en un municipio de cualquier tramo vota gente de todas las rentas.",
       sources: "Fuentes:",

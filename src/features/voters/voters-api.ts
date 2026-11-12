@@ -10,7 +10,7 @@ import { api } from "@/api/client";
 
 const groupSchema = z.object({
   id: z.string(),
-  kind: z.enum(["party", "list", "others"]),
+  kind: z.enum(["party", "candidature", "others"]),
   label: z.string().nullable(),
 });
 
@@ -38,7 +38,7 @@ const votersSchema = z.object({
   income: z
     .object({ year: z.number().int(), source_url: z.url(), fetched_at: z.iso.datetime() })
     .nullable(),
-  municipalities: z.number().int(),
+  shown_from_percent: z.number().int(),
   profile: z
     .object({
       census: z.number().int(),
@@ -58,10 +58,13 @@ const votersSchema = z.object({
   no_profile_reason: z.enum(["no_results", "too_few_municipalities"]).nullable(),
 });
 
-/** Who a share belongs to: a party of the party table, a list by its acronym, or the rest. */
+/**
+ * Who a share belongs to: a party of the party table, a candidature that is not in it (by its
+ * acronym), or the rest.
+ */
 export interface VoteGroup {
   id: string; // a party id when `kind` is "party"
-  kind: "party" | "list" | "others";
+  kind: "party" | "candidature" | "others";
   label: string | null; // null for "others": its name is the web's text
 }
 
@@ -90,8 +93,8 @@ export interface CommunityVoters {
   electionDay: string; // ISO date
   electionSourceUrl: string;
   incomeYear: number | null; // null: no income loaded for the election's year
-  incomeSourceUrl: string | null;
-  municipalities: number;
+  incomeSourceUrl: string | null; // the statistic's page at the INE
+  shownFromPercent: number; // a group is shown from this share of the community's valid votes
   profile: VoterProfile | null;
   noProfileReason: "no_results" | "too_few_municipalities" | null;
 }
@@ -111,7 +114,7 @@ export async function fetchCommunityVoters(territoryId: string): Promise<Communi
     electionSourceUrl: parsed.election.source_url,
     incomeYear: parsed.income?.year ?? null,
     incomeSourceUrl: parsed.income?.source_url ?? null,
-    municipalities: parsed.municipalities,
+    shownFromPercent: parsed.shown_from_percent,
     profile:
       parsed.profile === null
         ? null

@@ -31,7 +31,7 @@ const PROFILE: VoterProfile = {
   groups: [
     { id: "pp", kind: "party", label: "PP" },
     { id: "psoe", kind: "party", label: "PSOE" },
-    { id: "lista:U.P.N.", kind: "list", label: "U.P.N." },
+    { id: "lista:U.P.N.", kind: "candidature", label: "U.P.N." },
     { id: "otras", kind: "others", label: null },
   ],
   bands: [

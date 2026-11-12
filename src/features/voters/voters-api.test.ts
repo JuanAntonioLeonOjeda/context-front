@@ -16,11 +16,11 @@ describe("fetchCommunityVoters", () => {
     expect(voters).toMatchObject({
       electionDay: "2023-07-23",
       incomeYear: 2023,
-      municipalities: 88,
+      shownFromPercent: 3,
       noProfileReason: null,
     });
     expect(voters?.electionSourceUrl).toContain("infoelectoral.interior.gob.es");
-    expect(voters?.incomeSourceUrl).toContain("ine.es");
+    expect(voters?.incomeSourceUrl).toContain("www.ine.es/dyngs/INEbase");
     expect(voters?.profile?.bands.map((b) => b.index)).toEqual([0, 1, 2, 3, 4]);
     // The lowest band of Canarias, as the API answered it: 21 municipalities, 19.7 % of the census.
     expect(voters?.profile?.bands[0]).toMatchObject({
@@ -57,14 +57,14 @@ describe("fetchCommunityVoters", () => {
     ]);
   });
 
-  it("tells a list without a party from a party", async () => {
+  it("tells a candidature that is not in the party table from a party", async () => {
     serveCommunity();
 
     const groups = (await fetchCommunityVoters("ccaa-15"))?.profile?.groups;
 
-    expect(groups?.find((g) => g.kind === "list")).toEqual({
+    expect(groups?.find((g) => g.kind === "candidature")).toEqual({
       id: "lista:U.P.N.",
-      kind: "list",
+      kind: "candidature",
       label: "U.P.N.",
     });
   });
@@ -76,7 +76,6 @@ describe("fetchCommunityVoters", () => {
 
     expect(voters?.profile).toBeNull();
     expect(voters?.noProfileReason).toBe("too_few_municipalities");
-    expect(voters?.municipalities).toBe(1);
   });
 
   it("is null when the API knows no such community or has no election loaded", async () => {

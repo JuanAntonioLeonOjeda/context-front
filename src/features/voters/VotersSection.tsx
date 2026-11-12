@@ -8,10 +8,6 @@ import { useVoterProfile } from "./useVoterProfile";
 
 import styles from "./VotersSection.module.css";
 
-// The statistic's own page: the API's source is the address of the download, which is not a page.
-const INCOME_PAGE =
-  "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608";
-
 /**
  * How the municipalities of a community voted, by income band: one row per band with a bar per
  * group, the same numbers in a table, and the note that says how to read it. Every group goes
@@ -71,16 +67,16 @@ function Profile(props: { voters: CommunityVoters; bands: BandView[] | null }): 
             <summary>{es.voters.table.open}</summary>
             <DataTable bands={bands} />
           </details>
-          <Method year={year} />
+          <Method year={year} shownFromPercent={voters.shownFromPercent} />
         </>
       )}
       <p className={styles.note}>
         {es.voters.method.sources}{" "}
         <ExternalLink href={voters.electionSourceUrl}>{es.voters.method.election}</ExternalLink>
-        {year !== null && (
+        {voters.incomeSourceUrl !== null && (
           <>
             {"; "}
-            <ExternalLink href={INCOME_PAGE}>{es.voters.method.income}</ExternalLink>
+            <ExternalLink href={voters.incomeSourceUrl}>{es.voters.method.income}</ExternalLink>
           </>
         )}
         .
@@ -173,13 +169,14 @@ function DataTable({ bands }: { bands: readonly BandView[] }): React.JSX.Element
   );
 }
 
-function Method({ year }: { year: string | null }): React.JSX.Element {
+function Method(props: { year: string | null; shownFromPercent: number }): React.JSX.Element {
+  const { year, shownFromPercent } = props;
   const { method } = es.voters;
   return (
     <aside aria-labelledby="voters-method-title" className={styles.method}>
       <h3 id="voters-method-title">{method.title}</h3>
       {year !== null && <p>{formatMessage(method.bands, { year })}</p>}
-      <p>{method.shares}</p>
+      <p>{formatMessage(method.shares, { percent: String(shownFromPercent) })}</p>
       <p>{method.areas}</p>
     </aside>
   );

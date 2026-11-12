@@ -8,10 +8,11 @@
   },
   "income": {
     "year": 2023,
-    "source_url": "https://servicios.ine.es/wstempus/js/ES/DATOS_METADATAOPERACION/353?p=12&g1=19:&g2=482:284048&date=20230101&tip=AM",
+    "source_url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608",
     "fetched_at": "2026-11-12T08:41:50.832447Z"
   },
   "municipalities": 1,
+  "shown_from_percent": 3,
   "profile": null,
   "no_profile_reason": "too_few_municipalities"
 }
