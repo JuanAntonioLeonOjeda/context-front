@@ -115,7 +115,7 @@ export interface paths {
         };
         /**
          * Sectors
-         * @description The sectors in use, ordered by id, with the indicator each is measured by.
+         * @description The sectors in use, by id, each with the indicator shown next to its news.
          */
         get: operations["sectors_sectors_get"];
         put?: never;
