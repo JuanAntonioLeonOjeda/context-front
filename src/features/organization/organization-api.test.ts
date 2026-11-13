@@ -2,6 +2,7 @@ import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
 
 import general from "@/test/fixtures/organization.json";
+import andalucia from "@/test/fixtures/community-ccaa-01-organization.json";
 import madrid from "@/test/fixtures/community-ccaa-13-organization.json";
 import { server } from "@/test/server";
 
@@ -90,13 +91,27 @@ describe("fetchOrganization", () => {
 
 describe("fetchCommunityOrganization", () => {
   it("reads a community whose executive cannot be drawn: no head, no departments", async () => {
+    serve("/communities/ccaa-01/organization", andalucia);
+
+    const chart = await fetchCommunityOrganization("ccaa-01");
+
+    expect(chart?.territoryId).toBe("ccaa-01");
+    expect(chart?.executive).toEqual({ status: "no_data", head: null, departments: [] });
+    expect(chart?.local.map((b) => b.name)).toEqual(["Ayuntamiento", "Diputación provincial"]);
+  });
+
+  it("reads a community whose executive is complete: its head, nine departments, parliament and court", async () => {
     serve("/communities/ccaa-13/organization", madrid);
 
     const chart = await fetchCommunityOrganization("ccaa-13");
 
-    expect(chart?.territoryId).toBe("ccaa-13");
-    expect(chart?.executive).toEqual({ status: "no_data", head: null, departments: [] });
-    expect(chart?.local.map((b) => b.name)).toEqual(["Ayuntamiento", "Diputación provincial"]);
+    expect(chart?.executive.status).toBe("complete");
+    expect(chart?.executive.head?.holder?.name).toBe("Isabel Natividad Díaz Ayuso");
+    expect(chart?.executive.departments).toHaveLength(9);
+    expect(chart?.parliaments.map((b) => b.name)).toEqual(["Asamblea de Madrid"]);
+    expect(chart?.judiciary.map((b) => b.name)).toEqual([
+      "Tribunal Superior de Justicia de Madrid",
+    ]);
   });
 
   it("is null when the API knows no such community and throws on any other failure", async () => {
@@ -128,11 +143,11 @@ describe("the answer's shape is checked at the edge", () => {
   });
 
   it("refuses an executive that cannot be drawn but carries a head", async () => {
-    const broken = draft(madrid);
+    const broken = draft(andalucia);
     broken.executive.head = general.executive.head;
-    serve("/communities/ccaa-13/organization", broken);
+    serve("/communities/ccaa-01/organization", broken);
 
-    await expect(fetchCommunityOrganization("ccaa-13")).rejects.toThrow();
+    await expect(fetchCommunityOrganization("ccaa-01")).rejects.toThrow();
   });
 
   it("refuses a kind of body it does not know", async () => {

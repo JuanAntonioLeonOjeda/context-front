@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { es } from "@/i18n/es";
 import { axeViolations } from "@/test/axe";
-import { completeCommunityChart, serveOrganization } from "@/test/organization";
+import { serveOrganization } from "@/test/organization";
 import { queryWrapper } from "@/test/query";
 
 import { CommunityOrganizationPage } from "./CommunityOrganizationPage";
@@ -29,10 +29,10 @@ afterEach(() => {
 
 describe("a community whose executive cannot be drawn", () => {
   it("says there is no data yet and draws no head, no department and no empty group", async () => {
-    renderPage("ccaa-13");
+    renderPage("ccaa-01");
 
     expect(
-      await screen.findByRole("heading", { level: 1, name: "Organigrama de Comunidad de Madrid" }),
+      await screen.findByRole("heading", { level: 1, name: "Organigrama de Andalucía" }),
     ).toBeVisible();
     const executive = screen.getByRole("region", {
       name: es.organization.sections.executiveCommunity,
@@ -45,7 +45,7 @@ describe("a community whose executive cannot be drawn", () => {
   });
 
   it("still shows the local bodies that apply to every community", async () => {
-    renderPage("ccaa-13");
+    renderPage("ccaa-01");
 
     const local = await screen.findByRole("region", { name: es.organization.sections.local });
 
@@ -57,11 +57,11 @@ describe("a community whose executive cannot be drawn", () => {
   });
 
   it("links back to the community's page and to the general chart", async () => {
-    renderPage("ccaa-13");
+    renderPage("ccaa-01");
 
     expect(
-      await screen.findByRole("link", { name: "Volver a la ficha de Comunidad de Madrid" }),
-    ).toHaveAttribute("href", "/comunidades/ccaa-13");
+      await screen.findByRole("link", { name: "Volver a la ficha de Andalucía" }),
+    ).toHaveAttribute("href", "/comunidades/ccaa-01");
     expect(screen.getByRole("link", { name: es.organization.page.toGeneral })).toHaveAttribute(
       "href",
       "/organigrama",
@@ -71,14 +71,14 @@ describe("a community whose executive cannot be drawn", () => {
 
 describe("a community whose executive is complete", () => {
   it("draws its head and its departments under its own heading, with no BOE attribution", async () => {
-    renderPage("ccaa-13", { community: completeCommunityChart("ccaa-13") });
+    renderPage("ccaa-13");
 
     const executive = await screen.findByRole("region", {
       name: es.organization.sections.executiveCommunity,
     });
 
-    expect(within(executive).getByText("Pedro Sánchez Pérez-Castejón")).toBeVisible();
-    expect(within(executive).getAllByRole("heading", { level: 3 })).toHaveLength(23);
+    expect(within(executive).getByText("Isabel Natividad Díaz Ayuso")).toBeVisible();
+    expect(within(executive).getAllByRole("heading", { level: 3 })).toHaveLength(10);
     expect(screen.queryByText(es.organization.state.attribution)).toBeNull();
     expect(screen.queryByText("Sin datos todavía")).toBeNull();
   });
@@ -115,7 +115,7 @@ describe("the page's own failures and accessibility", () => {
     "has no accessibility violations in the %s theme",
     async (theme) => {
       document.documentElement.setAttribute("data-theme", theme);
-      const container = renderPage("ccaa-13", { community: completeCommunityChart("ccaa-13") });
+      const container = renderPage("ccaa-13");
       await screen.findByRole("region", { name: es.organization.sections.executiveCommunity });
 
       expect(await axeViolations(container)).toEqual([]);
