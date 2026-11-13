@@ -20,6 +20,14 @@ function partyNames(list: HTMLElement): string[] {
 }
 
 describe("community page", () => {
+  it("links to the community's own organisation chart", async () => {
+    renderAt("/comunidades/ccaa-05");
+
+    expect(
+      await screen.findByRole("link", { name: es.organization.community.link }),
+    ).toHaveAttribute("href", "/comunidades/ccaa-05/organigrama");
+  });
+
   it("shows who governs, since when, and the parties with their sources", async () => {
     renderAt("/comunidades/ccaa-05");
 

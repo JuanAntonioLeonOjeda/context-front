@@ -1,7 +1,9 @@
 import { Navigate, type RouteObject } from "react-router";
 
+import { GeneralOrganizationPage } from "@/features/organization";
 import { FIRST_CHAPTER_PATH } from "@/features/project";
 
+import { CommunityOrganizationRoute } from "./CommunityOrganizationRoute";
 import { CommunityRoute } from "./CommunityRoute";
 import { ErrorMessage } from "./ErrorMessage";
 import { HomeRoute } from "./HomeRoute";
@@ -35,6 +37,8 @@ export function buildRoutes(children: RouteObject[]): RouteObject[] {
 export const routes = buildRoutes([
   { index: true, Component: HomeRoute },
   { path: "comunidades/:territoryId", Component: CommunityRoute },
+  { path: "comunidades/:territoryId/organigrama", Component: CommunityOrganizationRoute },
+  { path: "organigrama", Component: GeneralOrganizationPage },
   { path: "arbol/:storyId", Component: TreeRoute },
   { path: "proyecto", element: <Navigate to={FIRST_CHAPTER_PATH} replace /> },
   { path: "proyecto/:slug", Component: ProjectRoute },
