@@ -1,0 +1,1022 @@
+{
+  "territory_id": "es",
+  "as_of": "2026-11-13",
+  "executive": {
+    "status": "complete",
+    "head": {
+      "id": "es-gobierno",
+      "name": "Presidencia del Gobierno",
+      "kind": "executive_head",
+      "level": "state",
+      "dir3_id": "EA0008567",
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1997-25336",
+      "holder": {
+        "name": "Pedro Sánchez Pérez-Castejón",
+        "post_title": "Presidente del Gobierno",
+        "since": "2023-11-17",
+        "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23302"
+      },
+      "competences": [
+        {
+          "summary": "Dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado; ejerce la función ejecutiva y la potestad reglamentaria.",
+          "legal_basis": "Constitución, art. 97",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a97"
+        }
+      ]
+    },
+    "departments": [
+      {
+        "id": "es-agricultura",
+        "name": "Ministerio de Agricultura, Pesca y Alimentación",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05024401",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Luis Planas Puchades",
+          "post_title": "Ministro de Agricultura, Pesca y Alimentación",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en recursos agrícolas, ganaderos y pesqueros, industria agroalimentaria y alimentación.",
+            "legal_basis": "Real Decreto 829/2023, art. 11.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a11"
+          }
+        ]
+      },
+      {
+        "id": "es-asuntos-exteriores",
+        "name": "Ministerio de Asuntos Exteriores, Unión Europea y Cooperación",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05023901",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "José Manuel Albares Bueno",
+          "post_title": "Ministro de Asuntos Exteriores, Unión Europea y Cooperación",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política exterior, las relaciones con la Unión Europea y la cooperación internacional al desarrollo, siguiendo las directrices del Gobierno.",
+            "legal_basis": "Real Decreto 829/2023, art. 2.1",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a2"
+          }
+        ]
+      },
+      {
+        "id": "es-ciencia",
+        "name": "Ministerio de Ciencia, Innovación y Universidades",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05236301",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Diana Morant Ripoll",
+          "post_title": "Ministra de Ciencia, Innovación y Universidades",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en ciencia, desarrollo tecnológico e innovación en todos los sectores.",
+            "legal_basis": "Real Decreto 829/2023, art. 19.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              },
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a19"
+          },
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en universidades y en las actividades que les son propias.",
+            "legal_basis": "Real Decreto 829/2023, art. 19.2",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a19"
+          }
+        ]
+      },
+      {
+        "id": "es-cultura",
+        "name": "Ministerio de Cultura",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05234201",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Ernest Urtasun Domènech",
+          "post_title": "Ministro de Cultura",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en patrimonio histórico, museos estatales, artes, libro y lectura, cine y audiovisual y bibliotecas estatales, y en la promoción de la cultura en español y la cooperación cultural.",
+            "legal_basis": "Real Decreto 829/2023, art. 15.1",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a15"
+          }
+        ]
+      },
+      {
+        "id": "es-defensa",
+        "name": "Ministerio de Defensa",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E00003301",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "María Margarita Robles Fernández",
+          "post_title": "Ministra de Defensa",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Desarrolla y ejecuta las directrices generales del Gobierno sobre política de defensa.",
+            "legal_basis": "Real Decreto 829/2023, art. 4.1",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a4"
+          }
+        ]
+      },
+      {
+        "id": "es-derechos-sociales",
+        "name": "Ministerio de Derechos Sociales, Consumo y Agenda 2030",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05235701",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Pablo Bustinduy Amador",
+          "post_title": "Ministro de Derechos Sociales, Consumo y Agenda 2030",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en bienestar social, cohesión, atención a las personas dependientes o con discapacidad y protección de los animales.",
+            "legal_basis": "Real Decreto 829/2023, art. 18.1",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a18"
+          },
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en consumo, protección de los consumidores y juego.",
+            "legal_basis": "Real Decreto 829/2023, art. 18.2",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              },
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a18"
+          },
+          {
+            "summary": "Propone y ejecuta la política del Gobierno para impulsar la Agenda 2030 de las Naciones Unidas.",
+            "legal_basis": "Real Decreto 829/2023, art. 18.3",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a18"
+          }
+        ]
+      },
+      {
+        "id": "es-economia",
+        "name": "Ministerio de Economía, Comercio y Empresa",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05234801",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Carlos Cuerpo Caballero",
+          "post_title": "Vicepresidente Primero del Gobierno y Ministro de Economía, Comercio y Empresa",
+          "since": "2026-03-26",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-7047"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en economía, en reformas para mejorar la competitividad y en comercio.",
+            "legal_basis": "Real Decreto 829/2023, art. 16.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a16"
+          }
+        ]
+      },
+      {
+        "id": "es-educacion",
+        "name": "Ministerio de Educación, Formación Profesional y Deportes",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05230301",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Milagros Tolón Jaime",
+          "post_title": "Ministra de Educación, Formación Profesional y Deportes",
+          "since": "2025-12-22",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-26353"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en educación y en formación profesional, la del sistema educativo y la del empleo.",
+            "legal_basis": "Real Decreto 829/2023, art. 8.1",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              },
+              {
+                "id": "work",
+                "name": "Trabajo"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a8"
+          },
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en materia de deporte.",
+            "legal_basis": "Real Decreto 829/2023, art. 8.2",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a8"
+          }
+        ]
+      },
+      {
+        "id": "es-hacienda",
+        "name": "Ministerio de Hacienda",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05250001",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Arcadi España García",
+          "post_title": "Ministro de Hacienda",
+          "since": "2026-03-26",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-7048"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en hacienda pública, presupuestos y gastos.",
+            "legal_basis": "Real Decreto 829/2023, art. 5.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              },
+              {
+                "id": "taxes",
+                "name": "Impuestos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a5"
+          }
+        ]
+      },
+      {
+        "id": "es-igualdad",
+        "name": "Ministerio de Igualdad",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05071601",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Ana María del Carmen Redondo García",
+          "post_title": "Ministra de Igualdad",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en igualdad: hacer real la igualdad entre mujeres y hombres y erradicar toda forma de discriminación.",
+            "legal_basis": "Real Decreto 829/2023, art. 20.1",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a20"
+          }
+        ]
+      },
+      {
+        "id": "es-inclusion",
+        "name": "Ministerio de Inclusión, Seguridad Social y Migraciones",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05072501",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Elma Saiz Delgado",
+          "post_title": "Ministra de Inclusión, Seguridad Social y Migraciones",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en Seguridad Social y clases pasivas, y elabora y desarrolla la política en extranjería, inmigración, emigración e inclusión.",
+            "legal_basis": "Real Decreto 829/2023, art. 21.1",
+            "sectors": [
+              {
+                "id": "migration",
+                "name": "Migración"
+              },
+              {
+                "id": "pensions",
+                "name": "Pensiones"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a21"
+          }
+        ]
+      },
+      {
+        "id": "es-industria-turismo",
+        "name": "Ministerio de Industria y Turismo",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05231501",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Jordi Hereu Boher",
+          "post_title": "Ministro de Industria y Turismo",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en industria y turismo.",
+            "legal_basis": "Real Decreto 829/2023, art. 10.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a10"
+          }
+        ]
+      },
+      {
+        "id": "es-juventud-infancia",
+        "name": "Ministerio de Juventud e Infancia",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05237801",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Sira Abed Rego",
+          "post_title": "Ministra de Juventud e Infancia",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en juventud y en protección del menor.",
+            "legal_basis": "Real Decreto 829/2023, art. 23.1",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a23"
+          }
+        ]
+      },
+      {
+        "id": "es-presidencia-justicia",
+        "name": "Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05228601",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Félix Bolaños García",
+          "post_title": "Ministro de la Presidencia, Justicia y Relaciones con las Cortes",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en asuntos de relevancia constitucional, prepara y sigue el programa legislativo, apoya a la Presidencia del Gobierno y al Consejo de Ministros y lleva las relaciones del Gobierno con las Cortes Generales.",
+            "legal_basis": "Real Decreto 829/2023, art. 3.1",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a3"
+          },
+          {
+            "summary": "Propone y ejecuta la política para desarrollar el ordenamiento jurídico y el derecho a la libertad religiosa, y lleva las relaciones del Gobierno con la Administración de Justicia, el Consejo General del Poder Judicial y el Ministerio Fiscal.",
+            "legal_basis": "Real Decreto 829/2023, art. 3.2",
+            "sectors": [
+              {
+                "id": "justice",
+                "name": "Justicia"
+              },
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a3"
+          }
+        ]
+      },
+      {
+        "id": "es-politica-territorial",
+        "name": "Ministerio de Política Territorial y Memoria Democrática",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05232701",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Ángel Víctor Torres Pérez",
+          "post_title": "Ministro de Política Territorial y Memoria Democrática",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en política territorial, organización territorial del Estado y relaciones con las comunidades autónomas y con las entidades locales.",
+            "legal_basis": "Real Decreto 829/2023, art. 12.1",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a12"
+          },
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en memoria histórica y democrática.",
+            "legal_basis": "Real Decreto 829/2023, art. 12.2",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a12"
+          }
+        ]
+      },
+      {
+        "id": "es-sanidad",
+        "name": "Ministerio de Sanidad",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05070101",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Mónica García Gómez",
+          "post_title": "Ministra de Sanidad",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en salud, planificación y asistencia sanitaria, y ejerce las competencias del Estado para asegurar el derecho a la protección de la salud.",
+            "legal_basis": "Real Decreto 829/2023, art. 17.1",
+            "sectors": [
+              {
+                "id": "health",
+                "name": "Sanidad"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a17"
+          }
+        ]
+      },
+      {
+        "id": "es-trabajo",
+        "name": "Ministerio de Trabajo y Economía Social",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05066501",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Yolanda Díaz Pérez",
+          "post_title": "Vicepresidenta Segunda del Gobierno y Ministra de Trabajo y Economía Social",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23540"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en empleo, economía social y responsabilidad social de las empresas.",
+            "legal_basis": "Real Decreto 829/2023, art. 9.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              },
+              {
+                "id": "work",
+                "name": "Trabajo"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a9"
+          }
+        ]
+      },
+      {
+        "id": "es-transportes",
+        "name": "Ministerio de Transportes y Movilidad Sostenible",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05229701",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Carlos Cuerpo Caballero",
+          "post_title": "Vicepresidente Primero del Gobierno y Ministro de Economía, Comercio y Empresa, encargado del despacho ordinario de los asuntos del Ministerio de Transportes y Movilidad Sostenible",
+          "since": "2026-11-04",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-23172"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta las políticas del Gobierno en infraestructuras y en transporte terrestre de competencia estatal, aéreo y marítimo.",
+            "legal_basis": "Real Decreto 829/2023, art. 7.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a7"
+          }
+        ]
+      },
+      {
+        "id": "es-vivienda",
+        "name": "Ministerio de Vivienda y Agenda Urbana",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05233601",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Isabel Rodríguez García",
+          "post_title": "Ministra de Vivienda y Agenda Urbana",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en vivienda, Agenda Urbana, calidad de la edificación y suelo.",
+            "legal_basis": "Real Decreto 829/2023, art. 14.1",
+            "sectors": [
+              {
+                "id": "housing",
+                "name": "Vivienda"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a14"
+          }
+        ]
+      },
+      {
+        "id": "es-interior",
+        "name": "Ministerio del Interior",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E00003801",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Fernando Grande-Marlaska Gómez",
+          "post_title": "Ministro del Interior",
+          "since": "2023-11-20",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en seguridad ciudadana, tráfico y seguridad vial y en las condiciones para ejercer los derechos fundamentales, y ejerce el mando de las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "legal_basis": "Real Decreto 829/2023, art. 6.1",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              },
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a6"
+          }
+        ]
+      },
+      {
+        "id": "es-transformacion-digital",
+        "name": "Ministerio para la Transformación Digital y de la Función Pública",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05251701",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Óscar López Águeda",
+          "post_title": "Ministro para la Transformación Digital y de la Función Pública",
+          "since": "2024-09-05",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-17932"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en telecomunicaciones, sociedad de la información, transformación digital y fomento de la inteligencia artificial.",
+            "legal_basis": "Real Decreto 829/2023, art. 22.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a22"
+          },
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en administración pública, función pública y gobernanza pública.",
+            "legal_basis": "Real Decreto 829/2023, art. 22.2",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a22"
+          }
+        ]
+      },
+      {
+        "id": "es-transicion-ecologica",
+        "name": "Ministerio para la Transición Ecológica y el Reto Demográfico",
+        "kind": "department",
+        "level": "state",
+        "dir3_id": "E05068001",
+        "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a1",
+        "holder": {
+          "name": "Sara Aagesen Muñoz",
+          "post_title": "Vicepresidenta Tercera del Gobierno y Ministra para la Transición Ecológica y el Reto Demográfico",
+          "since": "2024-11-24",
+          "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-24520"
+        },
+        "competences": [
+          {
+            "summary": "Propone y ejecuta la política del Gobierno en clima, energía y medio ambiente para pasar a un modelo productivo y social más ecológico, y elabora y desarrolla la política frente al reto demográfico y el despoblamiento.",
+            "legal_basis": "Real Decreto 829/2023, art. 13.1",
+            "sectors": [
+              {
+                "id": "environment",
+                "name": "Medio ambiente"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a13"
+          },
+          {
+            "summary": "Propone y ejecuta la política del agua como bien público esencial.",
+            "legal_basis": "Real Decreto 829/2023, art. 13.2",
+            "sectors": [
+              {
+                "id": "environment",
+                "name": "Medio ambiente"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a13"
+          },
+          {
+            "summary": "Propone y ejecuta la política de lucha contra la despoblación y elabora y desarrolla la estrategia nacional frente al reto demográfico.",
+            "legal_basis": "Real Decreto 829/2023, art. 13.3",
+            "sectors": [
+              {
+                "id": "environment",
+                "name": "Medio ambiente"
+              }
+            ],
+            "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-23537#a13"
+          }
+        ]
+      }
+    ]
+  },
+  "parliaments": [
+    {
+      "id": "es-cortes-generales",
+      "name": "Cortes Generales",
+      "kind": "parliament",
+      "level": "state",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a66",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Ejercen la potestad legislativa del Estado, aprueban sus Presupuestos y controlan la acción del Gobierno.",
+          "legal_basis": "Constitución, art. 66.2",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a66"
+        }
+      ]
+    }
+  ],
+  "judiciary": [
+    {
+      "id": "es-consejo-general-poder-judicial",
+      "name": "Consejo General del Poder Judicial",
+      "kind": "judiciary",
+      "level": "state",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a122",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Es el órgano de gobierno del poder judicial: nombramientos, ascensos, inspección y régimen disciplinario de jueces y magistrados.",
+          "legal_basis": "Constitución, art. 122.2",
+          "sectors": [
+            {
+              "id": "justice",
+              "name": "Justicia"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a122"
+        }
+      ]
+    },
+    {
+      "id": "es-tribunal-supremo",
+      "name": "Tribunal Supremo",
+      "kind": "judiciary",
+      "level": "state",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a123",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Es el órgano jurisdiccional superior en todos los órdenes, con jurisdicción en toda España, salvo en materia de garantías constitucionales.",
+          "legal_basis": "Constitución, art. 123.1",
+          "sectors": [
+            {
+              "id": "justice",
+              "name": "Justicia"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a123"
+        }
+      ]
+    }
+  ],
+  "local": [
+    {
+      "id": "local-ayuntamiento",
+      "name": "Ayuntamiento",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Urbanismo, patrimonio histórico, vivienda de protección pública y rehabilitación de edificios.",
+          "legal_basis": "Ley 7/1985, art. 25.2.a",
+          "sectors": [
+            {
+              "id": "housing",
+              "name": "Vivienda"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Medio ambiente urbano, abastecimiento de agua potable y evacuación y tratamiento de aguas residuales.",
+          "legal_basis": "Ley 7/1985, art. 25.2.b y c",
+          "sectors": [
+            {
+              "id": "environment",
+              "name": "Medio ambiente"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Policía local, protección civil, prevención y extinción de incendios, tráfico, estacionamiento y transporte colectivo urbano.",
+          "legal_basis": "Ley 7/1985, art. 25.2.f y g",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Atención a personas en situación o riesgo de exclusión social y protección de la salubridad pública.",
+          "legal_basis": "Ley 7/1985, art. 25.2.e y j",
+          "sectors": [
+            {
+              "id": "health",
+              "name": "Sanidad"
+            },
+            {
+              "id": "rights",
+              "name": "Derechos"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Promoción de la cultura y del deporte, y vigilancia del cumplimiento de la escolaridad obligatoria con las administraciones educativas.",
+          "legal_basis": "Ley 7/1985, art. 25.2.l, m y n",
+          "sectors": [
+            {
+              "id": "education",
+              "name": "Educación"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        }
+      ]
+    },
+    {
+      "id": "local-diputacion",
+      "name": "Diputación provincial",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a36",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Coordina los servicios municipales, asiste a los municipios (sobre todo a los pequeños) y presta servicios públicos de ámbito supramunicipal.",
+          "legal_basis": "Ley 7/1985, art. 36.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a36"
+        }
+      ]
+    }
+  ],
+  "communities": [
+    {
+      "territory_id": "ccaa-01",
+      "name": "Andalucía",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-02",
+      "name": "Aragón",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-05",
+      "name": "Canarias",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-06",
+      "name": "Cantabria",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-07",
+      "name": "Castilla y León",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-08",
+      "name": "Castilla-La Mancha",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-09",
+      "name": "Cataluña",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-18",
+      "name": "Ceuta",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-13",
+      "name": "Comunidad de Madrid",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-15",
+      "name": "Comunidad Foral de Navarra",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-10",
+      "name": "Comunitat Valenciana",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-11",
+      "name": "Extremadura",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-12",
+      "name": "Galicia",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-04",
+      "name": "Illes Balears",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-17",
+      "name": "La Rioja",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-19",
+      "name": "Melilla",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-16",
+      "name": "País Vasco",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-03",
+      "name": "Principado de Asturias",
+      "executive_status": "no_data"
+    },
+    {
+      "territory_id": "ccaa-14",
+      "name": "Región de Murcia",
+      "executive_status": "no_data"
+    }
+  ]
+}
