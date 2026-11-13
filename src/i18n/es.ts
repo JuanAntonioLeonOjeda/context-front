@@ -232,6 +232,7 @@ export const es = {
     box: {
       since: "Desde el {date}",
       source: "Fuente",
+      sourceOf: "Fuente: {what}",
       competences: "Competencias",
       competencesCount: "Competencias ({count})",
       noCompetences: "Sin competencias cargadas.",
