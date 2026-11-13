@@ -11,12 +11,14 @@ import { searchWith } from "./search-params";
 import { groupByDay, newsRows, type NewsRow } from "./news-card";
 import { EmptyState } from "./EmptyState";
 import { SearchBox } from "./SearchBox";
+import { SectorIndicator } from "./SectorIndicator";
 import { SectionHeading } from "./SectionHeading";
 import { SourceIcon, TreeIcon } from "./icons";
 import { SECTORS, type Sector } from "./news-api";
 import { matchesQuery } from "./news-search";
 import { dayOf, withBound } from "./news-range";
 import { useCommunityNews } from "./useCommunityNews";
+import { useSectorIndicator } from "./useSectorIndicator";
 
 import styles from "./CommunityCard.module.css";
 
@@ -56,6 +58,7 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
     setParams(query, { preventScrollReset: true });
   };
   const sectorName = es.community.news.sectors[sector];
+  const indicator = useSectorIndicator(territoryId, sector);
 
   // The search is in the URL too and looks at what the range brought: headline, outlet and time.
   const query = params.get(SEARCH_PARAM) ?? "";
@@ -137,6 +140,7 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
               </div>
             </div>
           </fieldset>
+          {indicator !== null && <SectorIndicator sector={sectorName} row={indicator} />}
           <p className={styles.newsNote}>{es.community.news.range.note}</p>
           <p className={styles.newsNote}>{es.community.news.method}</p>
           {news.state === "error" && (

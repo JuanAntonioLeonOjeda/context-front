@@ -180,6 +180,11 @@ export const es = {
       },
       method:
         "El sector de cada noticia lo asigna un modelo propio, y la comunidad y el nivel de gobierno, reglas automáticas. Pueden contener errores.",
+      indicator: {
+        label: "Dato oficial de {sector}",
+        period: " · {period}",
+        source: "Fuente:",
+      },
       empty: "No hay noticias de {sector} en este periodo.",
       loading: "Cargando las noticias…",
       error: "No hemos podido cargar las noticias.",
@@ -194,6 +199,63 @@ export const es = {
         previous: "Noticias anteriores",
         next: "Noticias siguientes",
       },
+    },
+  },
+  voters: {
+    band: {
+      name: "Tramo {number} de {total}",
+      withEnd: "{name} · {end}",
+      size: "{municipalities} · {census}",
+      lowest: "rentas más bajas",
+      highest: "rentas más altas",
+      incomeRange: "De {min} a {max} € por persona",
+      incomeSingle: "{value} € por persona",
+      municipalities: "{count} municipios",
+      municipality: "1 municipio",
+      censusShare: "{percent} del censo",
+      blank: "Voto en blanco: {percent}",
+      empty: "Ningún municipio cae en este tramo.",
+    },
+    profile: {
+      others: "Otras",
+      percent: "{value} %",
+    },
+    section: {
+      title: "Cómo votaron los municipios según su renta media",
+      intro:
+        "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según su renta media por persona de {year}.",
+      introNoIncome:
+        "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
+      loading: "Cargando el perfil de voto…",
+      error: "No hemos podido cargar el perfil de voto.",
+      retry: "Volver a intentarlo",
+      barsOf: "Voto en el {band}",
+      withoutIncome: "Municipios sin dato de renta, que quedan fuera de los tramos: {count}.",
+    },
+    reasons: {
+      no_results: "No hay resultados de esta elección para la comunidad.",
+      too_few_municipalities:
+        "Hacen falta al menos dos municipios con dato de renta para formar tramos, y esta comunidad no los tiene.",
+    },
+    table: {
+      open: "Ver los datos en tabla",
+      caption: "Porcentaje del voto válido de cada tramo de renta",
+      band: "Tramo",
+      size: "Municipios y censo",
+      scroll: "Tabla de datos, se desplaza en horizontal",
+      noValue: "Sin dato",
+    },
+    method: {
+      title: "Cómo leerlo",
+      bands:
+        "Cada tramo reúne municipios enteros, ordenados por su renta neta media por persona de {year}, de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno. La renta es la del año de la elección.",
+      shares:
+        "Los porcentajes son sobre el voto válido de cada tramo. Se muestran las candidaturas con al menos el {percent} % del voto válido de la comunidad, y el resto se suma en «Otras».",
+      areas:
+        "El perfil describe zonas, no personas: en un municipio de cualquier tramo vota gente de todas las rentas.",
+      sources: "Fuentes:",
+      election: "resultados por municipio, Ministerio del Interior",
+      income: "renta por municipio, INE (Atlas de distribución de renta de los hogares)",
     },
   },
   stories: {
