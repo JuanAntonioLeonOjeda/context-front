@@ -106,6 +106,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/sectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Sectors
+         * @description The sectors in use, by id, each with the indicator shown next to its news.
+         */
+        get: operations["sectors_sectors_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/communities/{territory_id}/indicators": {
         parameters: {
             query?: never;
@@ -133,7 +153,7 @@ export interface paths {
         /**
          * Community
          * @description The news of a range of days (Spain time) that the active classifier placed in this community and
-         *     sector. Without dates: the last 3 days, today included. With `date_from` and/or
+         *     sector. Without dates: the last 7 days, today included. With `date_from` and/or
          *     `date_to` (ISO dates, both included): that range, of at most 31 days. At most
          *     5 per outlet and day (its newest).
          *
@@ -238,6 +258,34 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/communities/{territory_id}/voters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Community
+         * @description How the municipalities of a community voted in a general election, grouped in
+         *     five income bands of about the same census (each municipality whole, in the band where the
+         *     midpoint of its census falls; a big city can leave a band almost empty). Income: the INE's mean net
+         *     income per person of the election's year. It describes areas, not people.
+         *
+         *     Without `election`, the latest loaded one. Groups: the parties with at least
+         *     `shown_from_percent` % of the community's valid votes (and a candidature that is not in the party
+         *     table, by its acronym), then "others". `profile` is null when fewer than two municipalities have
+         *     income (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded.
+         */
+        get: operations["community_communities__territory_id__voters_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -257,6 +305,29 @@ export interface components {
              * Format: date-time
              */
             published_at: string;
+        };
+        /** BandOut */
+        BandOut: {
+            /** Index */
+            index: number;
+            /** Municipalities */
+            municipalities: number;
+            /** Census */
+            census: number;
+            /** Census Percent */
+            census_percent: number;
+            /** Income Min Eur */
+            income_min_eur: number | null;
+            /** Income Max Eur */
+            income_max_eur: number | null;
+            /** Valid Votes */
+            valid_votes: number;
+            /** Blank Votes */
+            blank_votes: number;
+            /** Blank Percent */
+            blank_percent: number;
+            /** Shares */
+            shares: components["schemas"]["ShareOut"][];
         };
         /** ClassifierOut */
         ClassifierOut: {
@@ -324,6 +395,20 @@ export interface components {
          * @enum {string}
          */
         ComponentStatus: "up" | "down";
+        /** ElectionOut */
+        ElectionOut: {
+            /** Id */
+            id: string;
+            /**
+             * Held On
+             * Format: date
+             */
+            held_on: string;
+            /** Source File */
+            source_file: string;
+            /** Source Url */
+            source_url: string;
+        };
         /** GovernmentMapOut */
         GovernmentMapOut: {
             /**
@@ -344,6 +429,18 @@ export interface components {
              */
             date: string;
             term: components["schemas"]["TermOut"];
+        };
+        /** GroupOut */
+        GroupOut: {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "party" | "candidature" | "others";
+            /** Label */
+            label: string | null;
         };
         /** GroupingOut */
         GroupingOut: {
@@ -369,6 +466,18 @@ export interface components {
         /** HealthResponse */
         HealthResponse: {
             database: components["schemas"]["ComponentStatus"];
+        };
+        /** IncomeOut */
+        IncomeOut: {
+            /** Year */
+            year: number;
+            /** Source Url */
+            source_url: string;
+            /**
+             * Fetched At
+             * Format: date-time
+             */
+            fetched_at: string;
         };
         /** IndicatorOut */
         IndicatorOut: {
@@ -423,6 +532,11 @@ export interface components {
             /** Tree Story Id */
             tree_story_id: number | null;
         };
+        /** NotFoundOut */
+        NotFoundOut: {
+            /** Detail */
+            detail: string;
+        };
         /** PartyOut */
         PartyOut: {
             /** Id */
@@ -452,6 +566,35 @@ export interface components {
             quarter: number | null;
             /** Value */
             value: number;
+        };
+        /** ProfileOut */
+        ProfileOut: {
+            /** Census */
+            census: number;
+            /** Groups */
+            groups: components["schemas"]["GroupOut"][];
+            /** Bands */
+            bands: components["schemas"]["BandOut"][];
+            /** Municipalities Without Income */
+            municipalities_without_income: number;
+        };
+        /** SectorOut */
+        SectorOut: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Indicator Id */
+            indicator_id: string | null;
+        };
+        /** ShareOut */
+        ShareOut: {
+            /** Group Id */
+            group_id: string;
+            /** Votes */
+            votes: number;
+            /** Percent */
+            percent: number;
         };
         /** SourceOut */
         SourceOut: {
@@ -545,6 +688,20 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** VotersOut */
+        VotersOut: {
+            /** Territory Id */
+            territory_id: string;
+            election: components["schemas"]["ElectionOut"];
+            income: components["schemas"]["IncomeOut"] | null;
+            /** Municipalities */
+            municipalities: number;
+            /** Shown From Percent */
+            shown_from_percent: number;
+            profile: components["schemas"]["ProfileOut"] | null;
+            /** No Profile Reason */
+            no_profile_reason: ("no_results" | "too_few_municipalities") | null;
         };
     };
     responses: never;
@@ -719,6 +876,26 @@ export interface operations {
             };
         };
     };
+    sectors_sectors_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorOut"][];
+                };
+            };
+        };
+    };
     community_communities__territory_id__indicators_get: {
         parameters: {
             query?: never;
@@ -874,6 +1051,49 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StoryTreeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    community_communities__territory_id__voters_get: {
+        parameters: {
+            query?: {
+                /** @description e.g. congreso-2023-07 */
+                election?: string | null;
+            };
+            header?: never;
+            path: {
+                territory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VotersOut"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundOut"];
                 };
             };
             /** @description Validation Error */

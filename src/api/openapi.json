@@ -232,6 +232,32 @@
         }
       }
     },
+    "/sectors": {
+      "get": {
+        "tags": [
+          "governments"
+        ],
+        "summary": "Sectors",
+        "description": "The sectors in use, by id, each with the indicator shown next to its news.",
+        "operationId": "sectors_sectors_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SectorOut"
+                  },
+                  "type": "array",
+                  "title": "Response Sectors Sectors Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/communities/{territory_id}/indicators": {
       "get": {
         "tags": [
@@ -284,7 +310,7 @@
           "news"
         ],
         "summary": "Community",
-        "description": "The news of a range of days (Spain time) that the active classifier placed in this community and\nsector. Without dates: the last 3 days, today included. With `date_from` and/or\n`date_to` (ISO dates, both included): that range, of at most 31 days. At most\n5 per outlet and day (its newest).\n\nNothing is deleted: any day the collector ran can be asked for. A day it did not run, or before the\nportal began collecting, answers an empty list, not an error.\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nNo item names a party (ADR-0018): who governs the community is in\n`/communities/{territory_id}/governments`.",
+        "description": "The news of a range of days (Spain time) that the active classifier placed in this community and\nsector. Without dates: the last 7 days, today included. With `date_from` and/or\n`date_to` (ISO dates, both included): that range, of at most 31 days. At most\n5 per outlet and day (its newest).\n\nNothing is deleted: any day the collector ran can be asked for. A day it did not run, or before the\nportal began collecting, answers an empty list, not an error.\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nNo item names a party (ADR-0018): who governs the community is in\n`/communities/{territory_id}/governments`.",
         "operationId": "community_communities__territory_id__news_get",
         "parameters": [
           {
@@ -527,6 +553,77 @@
           }
         }
       }
+    },
+    "/communities/{territory_id}/voters": {
+      "get": {
+        "tags": [
+          "voters"
+        ],
+        "summary": "Community",
+        "description": "How the municipalities of a community voted in a general election, grouped in\nfive income bands of about the same census (each municipality whole, in the band where the\nmidpoint of its census falls; a big city can leave a band almost empty). Income: the INE's mean net\nincome per person of the election's year. It describes areas, not people.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least\n`shown_from_percent` % of the community's valid votes (and a candidature that is not in the party\ntable, by its acronym), then \"others\". `profile` is null when fewer than two municipalities have\nincome (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded.",
+        "operationId": "community_communities__territory_id__voters_get",
+        "parameters": [
+          {
+            "name": "territory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Territory Id"
+            }
+          },
+          {
+            "name": "election",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "e.g. congreso-2023-07",
+              "title": "Election"
+            },
+            "description": "e.g. congreso-2023-07"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VotersOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundOut"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -564,6 +661,81 @@
           "published_at"
         ],
         "title": "ArticleOut"
+      },
+      "BandOut": {
+        "properties": {
+          "index": {
+            "type": "integer",
+            "title": "Index"
+          },
+          "municipalities": {
+            "type": "integer",
+            "title": "Municipalities"
+          },
+          "census": {
+            "type": "integer",
+            "title": "Census"
+          },
+          "census_percent": {
+            "type": "number",
+            "title": "Census Percent"
+          },
+          "income_min_eur": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Income Min Eur"
+          },
+          "income_max_eur": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Income Max Eur"
+          },
+          "valid_votes": {
+            "type": "integer",
+            "title": "Valid Votes"
+          },
+          "blank_votes": {
+            "type": "integer",
+            "title": "Blank Votes"
+          },
+          "blank_percent": {
+            "type": "number",
+            "title": "Blank Percent"
+          },
+          "shares": {
+            "items": {
+              "$ref": "#/components/schemas/ShareOut"
+            },
+            "type": "array",
+            "title": "Shares"
+          }
+        },
+        "type": "object",
+        "required": [
+          "index",
+          "municipalities",
+          "census",
+          "census_percent",
+          "income_min_eur",
+          "income_max_eur",
+          "valid_votes",
+          "blank_votes",
+          "blank_percent",
+          "shares"
+        ],
+        "title": "BandOut"
       },
       "ClassifierOut": {
         "properties": {
@@ -736,6 +908,35 @@
         ],
         "title": "ComponentStatus"
       },
+      "ElectionOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "held_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Held On"
+          },
+          "source_file": {
+            "type": "string",
+            "title": "Source File"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "held_on",
+          "source_file",
+          "source_url"
+        ],
+        "title": "ElectionOut"
+      },
       "GovernmentMapOut": {
         "properties": {
           "date": {
@@ -780,6 +981,41 @@
           "term"
         ],
         "title": "GovernmentOut"
+      },
+      "GroupOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "party",
+              "candidature",
+              "others"
+            ],
+            "title": "Kind"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "label"
+        ],
+        "title": "GroupOut"
       },
       "GroupingOut": {
         "properties": {
@@ -839,6 +1075,30 @@
           "database"
         ],
         "title": "HealthResponse"
+      },
+      "IncomeOut": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fetched At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "source_url",
+          "fetched_at"
+        ],
+        "title": "IncomeOut"
       },
       "IndicatorOut": {
         "properties": {
@@ -979,6 +1239,19 @@
         ],
         "title": "NewsItemOut"
       },
+      "NotFoundOut": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "NotFoundOut"
+      },
       "PartyOut": {
         "properties": {
           "id": {
@@ -1050,6 +1323,93 @@
           "value"
         ],
         "title": "PointOut"
+      },
+      "ProfileOut": {
+        "properties": {
+          "census": {
+            "type": "integer",
+            "title": "Census"
+          },
+          "groups": {
+            "items": {
+              "$ref": "#/components/schemas/GroupOut"
+            },
+            "type": "array",
+            "title": "Groups"
+          },
+          "bands": {
+            "items": {
+              "$ref": "#/components/schemas/BandOut"
+            },
+            "type": "array",
+            "title": "Bands"
+          },
+          "municipalities_without_income": {
+            "type": "integer",
+            "title": "Municipalities Without Income"
+          }
+        },
+        "type": "object",
+        "required": [
+          "census",
+          "groups",
+          "bands",
+          "municipalities_without_income"
+        ],
+        "title": "ProfileOut"
+      },
+      "SectorOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "indicator_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Indicator Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "indicator_id"
+        ],
+        "title": "SectorOut"
+      },
+      "ShareOut": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "title": "Group Id"
+          },
+          "votes": {
+            "type": "integer",
+            "title": "Votes"
+          },
+          "percent": {
+            "type": "number",
+            "title": "Percent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "group_id",
+          "votes",
+          "percent"
+        ],
+        "title": "ShareOut"
       },
       "SourceOut": {
         "properties": {
@@ -1333,6 +1693,71 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "VotersOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "election": {
+            "$ref": "#/components/schemas/ElectionOut"
+          },
+          "income": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IncomeOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "municipalities": {
+            "type": "integer",
+            "title": "Municipalities"
+          },
+          "shown_from_percent": {
+            "type": "integer",
+            "title": "Shown From Percent"
+          },
+          "profile": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfileOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "no_profile_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "no_results",
+                  "too_few_municipalities"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "No Profile Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "territory_id",
+          "election",
+          "income",
+          "municipalities",
+          "shown_from_percent",
+          "profile",
+          "no_profile_reason"
+        ],
+        "title": "VotersOut"
       }
     }
   }

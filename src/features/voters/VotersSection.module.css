@@ -1,0 +1,147 @@
+/* Every grid here has one column that may shrink (minmax(0, 1fr)): without it the widest child,
+   the table, would set the width of the whole section and push the page sideways on a phone. */
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin-block: var(--space-6);
+}
+
+.section > * {
+  margin-block: 0;
+}
+
+.bands {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.band > * {
+  margin-block: 0;
+}
+
+.bandName {
+  font-size: var(--text-md);
+}
+
+.bandFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.bars {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Name, bar and figure in three columns that line up down the band; the name column is as wide
+   as the longest name, so every bar starts at the same place. */
+.barRow {
+  display: grid;
+  /* The same columns in every row, so the bars share one scale; a long name (a coalition's) wraps
+     in its column instead of taking the track's room. */
+  grid-template-columns: 7rem minmax(0, 1fr) 4.5rem;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.barLabel {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.track {
+  display: block;
+  block-size: var(--space-3);
+}
+
+/* A group without a party colour (a list, "Otras") is drawn in the neutral ink of the borders;
+   a party sets its own colour inline, from the party table. The outline keeps a pale party
+   colour visible on the surface. */
+.bar {
+  display: block;
+  block-size: 100%;
+  min-inline-size: 2px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-border-strong);
+}
+
+.barValue {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.note {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.data summary {
+  cursor: pointer;
+}
+
+.tableScroll {
+  overflow-x: auto;
+  margin-block-start: var(--space-2);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.table caption {
+  padding-block-end: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead th {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.method {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 70ch;
+}
+
+.method > * {
+  margin-block: 0;
+}
+
+.method h3 {
+  font-size: var(--text-md);
+}

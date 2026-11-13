@@ -26,7 +26,7 @@ Update the status column when a phase creates or finishes a path.
 | `src/features/shell/` | the frame of every page (`ExternalLink` too: links to other sites open in a new tab): sticky header with the brand, the two places of the site and a theme button (light or dark, starting from the system's; the choice is kept in `localStorage` and applied before the first paint by `index.html`), and the footer of three columns (sources, how it is done, the project) with the data status | ✅ |
 | `src/features/project/` | "El proyecto" (`/proyecto/:slug`, modelled on the docs of the author's thesis demo): chapters with a side list and previous/next links, their text as blocks in `es.project.chapters`; chapter 1 is "Cómo funciona" (`/como-funciona` redirects to it): where the data comes from, what is published, neutrality and limits | ✅ |
 | `src/features/stories/` | news by outlet, story page, timeline | ⏳ |
-| `src/features/voters/` | voter profiles | ⏳ |
+| `src/features/voters/` | "Perfil de voto por renta" on the community page (`GET /communities/{id}/voters`): one card per income band with a bar per group (party colours from `parties.ts`, name and figure always written), the same numbers in a table, the method note and both sources; nothing is drawn when the API has no election loaded | ✅ |
 | `src/routes/` | React Router route tree (`buildRoutes`), root layout, home, not found, error boundaries | 🚧 |
 | `src/features/health/` | backend health: validated fetch, hook, status shown in the footer | ✅ |
 | `src/test/` | fixtures (real API responses), MSW server, axe helper, health and query helpers | ✅ |
