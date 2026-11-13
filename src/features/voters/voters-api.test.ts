@@ -39,7 +39,7 @@ describe("fetchCommunityVoters", () => {
 
     expect(profile?.groups.map((g) => g.label)).toEqual([
       "CC",
-      "NC",
+      "NC-bc",
       "PP",
       "PSOE",
       "Sumar",
@@ -48,7 +48,7 @@ describe("fetchCommunityVoters", () => {
     ]);
     expect(profile?.bands[0]?.shares).toEqual([
       { groupId: "coalicion-canaria", percent: 12.5 },
-      { groupId: "nueva-canarias", percent: 3.5 },
+      { groupId: "lista:NC-bc", percent: 3.5 },
       { groupId: "pp", percent: 32.7 },
       { groupId: "psoe", percent: 34.7 },
       { groupId: "sumar", percent: 9.1 },

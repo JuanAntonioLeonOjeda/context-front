@@ -76,7 +76,7 @@ describe("voter profile of a community", () => {
         .map((li) => li.textContent),
     ).toEqual([
       "CC12,5 %",
-      "NC3,5 %",
+      "NC-bc3,5 %",
       "PP32,7 %",
       "PSOE34,7 %",
       "Sumar9,1 %",
@@ -115,7 +115,17 @@ describe("voter profile of a community", () => {
       within(table)
         .getAllByRole("columnheader")
         .map((th) => th.textContent),
-    ).toEqual(["Tramo", "Municipios y censo", "CC", "NC", "PP", "PSOE", "Sumar", "Vox", "Otras"]);
+    ).toEqual([
+      "Tramo",
+      "Municipios y censo",
+      "CC",
+      "NC-bc",
+      "PP",
+      "PSOE",
+      "Sumar",
+      "Vox",
+      "Otras",
+    ]);
     const row = within(table).getByRole("row", { name: new RegExp(`^${FIRST_BAND}`) });
     expect(
       within(row)
