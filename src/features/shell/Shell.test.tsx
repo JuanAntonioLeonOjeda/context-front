@@ -14,7 +14,7 @@ afterEach(() => {
 });
 
 describe("header", () => {
-  it("has the brand, the two places of the site, and marks the current one", async () => {
+  it("has the brand, the places of the site, and marks the current one", async () => {
     renderApp("/");
 
     const header = await screen.findByRole("banner");
@@ -24,7 +24,7 @@ describe("header", () => {
       within(nav)
         .getAllByRole("link")
         .map((l) => l.textContent),
-    ).toEqual(["Mapa", "El proyecto"]);
+    ).toEqual(["Mapa", "Organigrama", "El proyecto"]);
     expect(within(nav).getByRole("link", { name: "Mapa" })).toHaveAttribute("aria-current", "page");
     expect(within(nav).getByRole("link", { name: "El proyecto" })).not.toHaveAttribute(
       "aria-current",

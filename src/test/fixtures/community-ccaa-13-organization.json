@@ -1,0 +1,590 @@
+{
+  "territory_id": "ccaa-13",
+  "as_of": "2026-11-16",
+  "executive": {
+    "status": "complete",
+    "head": {
+      "id": "ccaa-13-gobierno",
+      "name": "Presidencia de la Comunidad de Madrid",
+      "kind": "executive_head",
+      "level": "ccaa",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#adiecisiete",
+      "holder": {
+        "name": "Isabel Natividad Díaz Ayuso",
+        "post_title": "Presidenta de la Comunidad de Madrid",
+        "since": "2023-06-22",
+        "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-14826"
+      },
+      "competences": [
+        {
+          "summary": "Ostenta la representación de la Comunidad y la ordinaria del Estado en ella, preside y dirige la actividad del Gobierno, nombra y cesa a los consejeros y coordina la Administración.",
+          "legal_basis": "Estatuto de Autonomía, art. 17.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#adiecisiete"
+        },
+        {
+          "summary": "El Gobierno dirige la política de la Comunidad y ejerce las funciones ejecutivas y administrativas y la potestad reglamentaria en lo que el Estatuto no reserva a la Asamblea.",
+          "legal_basis": "Estatuto de Autonomía, art. 22.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#aveintidos"
+        }
+      ]
+    },
+    "departments": [
+      {
+        "id": "ccaa-13-cultura",
+        "name": "Consejería de Cultura, Turismo y Deporte",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13022903",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13461&eli=true",
+        "holder": {
+          "name": "Mariano de Paco Serrano",
+          "post_title": "Consejero de Cultura, Turismo y Deporte",
+          "since": "2023-06-23",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2023/06/26/BOCM-20230626-10.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en cultura y deporte.",
+            "legal_basis": "Decreto 264/2023, art. 1",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13461&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en turismo.",
+            "legal_basis": "Decreto 264/2023, art. 1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13461&eli=true"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-13-digitalizacion",
+        "name": "Consejería de Digitalización",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13037569",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13453&eli=true",
+        "holder": {
+          "name": "Miguel López-Valverde Argüeso",
+          "post_title": "Consejero de Digitalización",
+          "since": "2023-06-23",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2023/06/26/BOCM-20230626-5.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en digitalización y transformación digital, y la coordinación de las que tienen las demás consejerías en esa materia.",
+            "legal_basis": "Decreto 261/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13453&eli=true"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-13-economia-hacienda",
+        "name": "Consejería de Economía, Hacienda y Empleo",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13037513",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13375&eli=true",
+        "holder": {
+          "name": "Rocío Albert López-Ibor",
+          "post_title": "Consejera de Economía, Hacienda y Empleo",
+          "since": "2023-06-23",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2023/06/26/BOCM-20230626-3.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en fomento económico, estadística, industria, minas, comercio, consumo, autónomos y economía social.",
+            "legal_basis": "Decreto 230/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13375&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en hacienda pública, patrimonio, presupuestos, fondos europeos, tributos y precios públicos, tesorería y contratación pública.",
+            "legal_basis": "Decreto 230/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              },
+              {
+                "id": "taxes",
+                "name": "Impuestos"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13375&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en recursos humanos, función pública e inspección de los servicios.",
+            "legal_basis": "Decreto 230/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13375&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en trabajo, empleo y prevención de riesgos laborales.",
+            "legal_basis": "Decreto 230/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "work",
+                "name": "Trabajo"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13375&eli=true"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-13-educacion",
+        "name": "Consejería de Educación, Ciencia y Universidades",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13037434",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13410&eli=true",
+        "holder": {
+          "name": "María Mercedes Zarzalejo Carbajo",
+          "post_title": "Consejera de Educación, Ciencia y Universidades",
+          "since": "2026-02-16",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2026/02/17/BOCM-20260217-2.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en educación, universidades, enseñanzas artísticas, investigación científica e innovación tecnológica.",
+            "legal_basis": "Decreto 248/2023, art. 1",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13410&eli=true"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-13-familia",
+        "name": "Consejería de Familia, Juventud y Asuntos Sociales",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13002916",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13396&eli=true",
+        "holder": {
+          "name": "Ana Dávila-Ponce de León Municio",
+          "post_title": "Consejera de Familia, Juventud y Asuntos Sociales",
+          "since": "2023-06-23",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2023/06/26/BOCM-20230626-9.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en servicios sociales, dependencia, discapacidad, infancia, juventud, familia y natalidad.",
+            "legal_basis": "Decreto 241/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13396&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en inmigración y cooperación al desarrollo.",
+            "legal_basis": "Decreto 241/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "migration",
+                "name": "Migración"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13396&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en igualdad, lucha contra la violencia de género y contra la discriminación.",
+            "legal_basis": "Decreto 241/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13396&eli=true"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-13-medio-ambiente",
+        "name": "Consejería de Medio Ambiente, Agricultura e Interior",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13037472",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true",
+        "holder": {
+          "name": "Jorge Rodrigo Domínguez",
+          "post_title": "Consejero de Medio Ambiente, Agricultura e Interior",
+          "since": "2026-10-26",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2026/10/26/BOCM-20261026-112.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en medio ambiente, biodiversidad, economía circular, calidad del aire, energía y evaluación ambiental.",
+            "legal_basis": "Decreto 235/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "environment",
+                "name": "Medio ambiente"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en agricultura, ganadería, alimentación y desarrollo rural.",
+            "legal_basis": "Decreto 235/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en urbanismo, ordenación del territorio y suelo.",
+            "legal_basis": "Decreto 235/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "housing",
+                "name": "Vivienda"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en seguridad, política interior, protección civil, coordinación de policías locales, emergencias, prevención y extinción de incendios y espectáculos públicos.",
+            "legal_basis": "Decreto 235/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en ordenación y control del juego.",
+            "legal_basis": "Decreto 235/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-13-presidencia-justicia",
+        "name": "Consejería de Presidencia, Justicia y Administración Local",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13037413",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13374&eli=true",
+        "holder": {
+          "name": "Miguel Ángel García Martín",
+          "post_title": "Consejero de Presidencia, Justicia y Administración Local",
+          "since": "2023-06-23",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2023/06/26/BOCM-20230626-2.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas la coordinación e impulso de la acción del Gobierno entre las consejerías y en sus relaciones con la Asamblea y otras administraciones, la cooperación con el Estado y la Unión Europea, el programa normativo, los procesos electorales, la transparencia y la atención al ciudadano.",
+            "legal_basis": "Decreto 229/2023, art. 1.2 y 1.3.a",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13374&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en administración local y desarrollo local.",
+            "legal_basis": "Decreto 229/2023, art. 1.3.b",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13374&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en justicia: los medios personales y materiales de la administración de justicia que ha asumido la Comunidad y la participación en la demarcación y planta judicial.",
+            "legal_basis": "Decreto 229/2023, art. 1.3.c",
+            "sectors": [
+              {
+                "id": "justice",
+                "name": "Justicia"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13374&eli=true"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-13-sanidad",
+        "name": "Consejería de Sanidad",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13002915",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13404&eli=true",
+        "holder": {
+          "name": "Fátima Matute Teresa",
+          "post_title": "Consejera de Sanidad",
+          "since": "2023-06-23",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2023/06/26/BOCM-20230626-7.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en asistencia sanitaria, atención farmacéutica, salud pública, seguridad alimentaria, salud mental, y ordenación e inspección sanitaria y farmacéutica.",
+            "legal_basis": "Decreto 245/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "health",
+                "name": "Sanidad"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13404&eli=true"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-13-vivienda-transportes",
+        "name": "Consejería de Vivienda, Transportes e Infraestructuras",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A13003355",
+        "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13403&eli=true",
+        "holder": {
+          "name": "José María García Gómez",
+          "post_title": "Consejero de Vivienda, Transportes e Infraestructuras",
+          "since": "2026-10-26",
+          "source_url": "https://www.bocm.es/boletin/CM_Orden_BOCM/2026/10/26/BOCM-20261026-111.PDF"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en vivienda, rehabilitación, accesibilidad, calidad de la edificación y patrimonio arquitectónico.",
+            "legal_basis": "Decreto 244/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "housing",
+                "name": "Vivienda"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13403&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en transportes, movilidad, carreteras, ferrocarriles e infraestructuras de transporte.",
+            "legal_basis": "Decreto 244/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13403&eli=true"
+          }
+        ]
+      }
+    ]
+  },
+  "parliaments": [
+    {
+      "id": "ccaa-13-asamblea",
+      "name": "Asamblea de Madrid",
+      "kind": "parliament",
+      "level": "ccaa",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#anoveno",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Representa al pueblo de Madrid, ejerce la potestad legislativa, aprueba y controla el Presupuesto y controla la acción del Gobierno.",
+          "legal_basis": "Estatuto de Autonomía, art. 9",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#anoveno"
+        },
+        {
+          "summary": "Elige de entre sus miembros a la persona que preside la Comunidad.",
+          "legal_basis": "Estatuto de Autonomía, art. 16.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#adieciseis"
+        }
+      ]
+    }
+  ],
+  "judiciary": [
+    {
+      "id": "ccaa-13-tsj",
+      "name": "Tribunal Superior de Justicia de Madrid",
+      "kind": "judiciary",
+      "level": "state",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#acuarentaycinco",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Es el órgano ante el que se agotan las sucesivas instancias procesales en el territorio de la Comunidad, sin perjuicio de la competencia del Tribunal Supremo.",
+          "legal_basis": "Estatuto de Autonomía, art. 45",
+          "sectors": [
+            {
+              "id": "justice",
+              "name": "Justicia"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#acuarentaycinco"
+        }
+      ]
+    }
+  ],
+  "local": [
+    {
+      "id": "local-ayuntamiento",
+      "name": "Ayuntamiento",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Urbanismo, patrimonio histórico, vivienda de protección pública y rehabilitación de edificios.",
+          "legal_basis": "Ley 7/1985, art. 25.2.a",
+          "sectors": [
+            {
+              "id": "housing",
+              "name": "Vivienda"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Medio ambiente urbano, abastecimiento de agua potable y evacuación y tratamiento de aguas residuales.",
+          "legal_basis": "Ley 7/1985, art. 25.2.b y c",
+          "sectors": [
+            {
+              "id": "environment",
+              "name": "Medio ambiente"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Policía local, protección civil, prevención y extinción de incendios, tráfico, estacionamiento y transporte colectivo urbano.",
+          "legal_basis": "Ley 7/1985, art. 25.2.f y g",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Atención a personas en situación o riesgo de exclusión social y protección de la salubridad pública.",
+          "legal_basis": "Ley 7/1985, art. 25.2.e y j",
+          "sectors": [
+            {
+              "id": "health",
+              "name": "Sanidad"
+            },
+            {
+              "id": "rights",
+              "name": "Derechos"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Promoción de la cultura y del deporte, y vigilancia del cumplimiento de la escolaridad obligatoria con las administraciones educativas.",
+          "legal_basis": "Ley 7/1985, art. 25.2.l, m y n",
+          "sectors": [
+            {
+              "id": "education",
+              "name": "Educación"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        }
+      ]
+    },
+    {
+      "id": "local-diputacion",
+      "name": "Diputación provincial",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a36",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Coordina los servicios municipales, asiste a los municipios (sobre todo a los pequeños) y presta servicios públicos de ámbito supramunicipal.",
+          "legal_basis": "Ley 7/1985, art. 36.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a36"
+        }
+      ]
+    }
+  ]
+}

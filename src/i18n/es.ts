@@ -201,6 +201,64 @@ export const es = {
       },
     },
   },
+  organization: {
+    nav: { general: "Organigrama" },
+    community: {
+      link: "Ver organigrama",
+      sources:
+        "Cada dato enlaza a su fuente oficial: los boletines oficiales del Estado y de la comunidad.",
+    },
+    page: {
+      generalTitle: "Organigrama de las administraciones",
+      generalIntro:
+        "Qué órganos tiene cada administración, quién ocupa la presidencia del gobierno y cada ministerio o consejería, y qué competencias les da la ley. Cada dato lleva su fuente.",
+      communityTitle: "Organigrama de {community}",
+      communityLoadingTitle: "Organigrama de la comunidad",
+      communityIntro:
+        "Quién ocupa la presidencia y cada consejería de {community} y qué competencias da la ley a cada órgano. Cada dato lleva su fuente.",
+      scope:
+        "Solo dice qué órganos hay, quién los ocupa y qué competencias tienen según la ley. No dice quién es responsable de lo que cuentan las noticias ni a qué partido pertenece cada cargo.",
+      asOf: "Datos a {date}.",
+      toCommunity: "Volver a la ficha de {community}",
+      toGeneral: "Ver el organigrama general",
+      loading: "Cargando el organigrama…",
+      error: "No se ha podido cargar el organigrama.",
+      retry: "Reintentar",
+      notFound: "No hay ninguna comunidad con ese identificador.",
+    },
+    sections: {
+      executiveState: "Gobierno del Estado",
+      executiveCommunity: "Gobierno de la comunidad",
+      parliament: "Poder legislativo",
+      judiciary: "Poder judicial",
+      local: "Administración local",
+      communities: "Comunidades autónomas",
+    },
+    box: {
+      since: "Desde el {date}",
+      source: "Fuente",
+      sourceOf: "Fuente: {what}",
+      competencesCount: "Competencias ({count})",
+      noCompetences: "Sin competencias cargadas.",
+      legalBasis: "Base legal",
+      sectors: "Sectores",
+      competencesOf: "de {name}",
+    },
+    noData: {
+      title: "Sin datos todavía",
+      executive:
+        "El gobierno de esta comunidad todavía no está cargado completo. No se muestra un gobierno a medias.",
+    },
+    communities: {
+      intro: "Cada comunidad tiene su propio organigrama.",
+      complete: "Gobierno completo",
+      noData: "Sin datos todavía",
+    },
+    state: {
+      attribution:
+        "Nombramientos y estructura de los ministerios. Fuente de los datos: Agencia Estatal Boletín Oficial del Estado.",
+    },
+  },
   voters: {
     band: {
       name: "Tramo {number} de {total}",

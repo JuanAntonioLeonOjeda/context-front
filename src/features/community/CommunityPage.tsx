@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import { VotersSection } from "@/features/voters";
 import { es } from "@/i18n/es";
 
@@ -43,6 +45,11 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
             </div>
             <GovernmentSection government={card.government} />
           </div>
+          <p>
+            <Link to={`/comunidades/${territoryId}/organigrama`}>
+              {es.organization.community.link}
+            </Link>
+          </p>
           <IndicatorsSection community={card.name} rows={card.indicators} />
           <VotersSection territoryId={territoryId} />
           <TreesSection territoryId={territoryId} />

@@ -18,7 +18,7 @@ function BrandMark(): React.JSX.Element {
   );
 }
 
-/** Sticky header: the brand, the two places of the site and the theme button. */
+/** Sticky header: the brand, the places of the site and the theme button. */
 export function SiteHeader(): React.JSX.Element {
   const { shell } = es.app;
   return (
@@ -32,6 +32,7 @@ export function SiteHeader(): React.JSX.Element {
           <NavLink to="/" end>
             {shell.nav.map}
           </NavLink>
+          <NavLink to="/organigrama">{es.organization.nav.general}</NavLink>
           <NavLink to="/proyecto">{shell.nav.project}</NavLink>
         </nav>
         <ThemeToggle />

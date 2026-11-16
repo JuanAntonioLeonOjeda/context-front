@@ -286,6 +286,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/organization": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * General
+         * @description The bodies of a territory with what the law gives each of them, and who holds the
+         *     head post of its executive and of each department (the president or prime minister, the
+         *     consejeros or ministers) on the day of the answer, each row with its source.
+         *
+         *     `executive.status` is `complete` only if the head and every department have a holder in force that
+         *     day; otherwise it is `no_data`, with no head and no departments: the web app says "sin datos
+         *     todavía". Departments are ordered by name, never by importance. No party is given for anyone.
+         */
+        get: operations["general_organization_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/communities/{territory_id}/organization": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Community
+         * @description The bodies of a territory with what the law gives each of them, and who holds the
+         *     head post of its executive and of each department (the president or prime minister, the
+         *     consejeros or ministers) on the day of the answer, each row with its source.
+         *
+         *     `executive.status` is `complete` only if the head and every department have a holder in force that
+         *     day; otherwise it is `no_data`, with no head and no departments: the web app says "sin datos
+         *     todavía". Departments are ordered by name, never by importance. No party is given for anyone.
+         */
+        get: operations["community_communities__territory_id__organization_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -329,6 +381,30 @@ export interface components {
             /** Shares */
             shares: components["schemas"]["ShareOut"][];
         };
+        /** BodyOut */
+        BodyOut: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "executive_head" | "department" | "parliament" | "judiciary" | "local";
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "state" | "ccaa" | "local";
+            /** Dir3 Id */
+            dir3_id: string | null;
+            /** Source Url */
+            source_url: string;
+            holder: components["schemas"]["HolderOut"] | null;
+            /** Competences */
+            competences: components["schemas"]["CompetenceOut"][];
+        };
         /** ClassifierOut */
         ClassifierOut: {
             /** Model Id */
@@ -366,6 +442,18 @@ export interface components {
             /** Has Data */
             has_data: boolean;
         };
+        /** CommunityRefOut */
+        CommunityRefOut: {
+            /** Territory Id */
+            territory_id: string;
+            /** Name */
+            name: string;
+            /**
+             * Executive Status
+             * @enum {string}
+             */
+            executive_status: "complete" | "no_data";
+        };
         /** CommunityStoriesOut */
         CommunityStoriesOut: {
             /** Territory Id */
@@ -390,6 +478,17 @@ export interface components {
             /** Items */
             items: components["schemas"]["NewsItemOut"][];
         };
+        /** CompetenceOut */
+        CompetenceOut: {
+            /** Summary */
+            summary: string;
+            /** Legal Basis */
+            legal_basis: string;
+            /** Sectors */
+            sectors: components["schemas"]["SectorRefOut"][];
+            /** Source Url */
+            source_url: string;
+        };
         /**
          * ComponentStatus
          * @enum {string}
@@ -408,6 +507,36 @@ export interface components {
             source_file: string;
             /** Source Url */
             source_url: string;
+        };
+        /** ExecutiveOut */
+        ExecutiveOut: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "complete" | "no_data";
+            head: components["schemas"]["BodyOut"] | null;
+            /** Departments */
+            departments: components["schemas"]["BodyOut"][];
+        };
+        /** GeneralOrganizationOut */
+        GeneralOrganizationOut: {
+            /** Territory Id */
+            territory_id: string;
+            /**
+             * As Of
+             * Format: date
+             */
+            as_of: string;
+            executive: components["schemas"]["ExecutiveOut"];
+            /** Parliaments */
+            parliaments: components["schemas"]["BodyOut"][];
+            /** Judiciary */
+            judiciary: components["schemas"]["BodyOut"][];
+            /** Local */
+            local: components["schemas"]["BodyOut"][];
+            /** Communities */
+            communities: components["schemas"]["CommunityRefOut"][];
         };
         /** GovernmentMapOut */
         GovernmentMapOut: {
@@ -466,6 +595,20 @@ export interface components {
         /** HealthResponse */
         HealthResponse: {
             database: components["schemas"]["ComponentStatus"];
+        };
+        /** HolderOut */
+        HolderOut: {
+            /** Name */
+            name: string;
+            /** Post Title */
+            post_title: string;
+            /**
+             * Since
+             * Format: date
+             */
+            since: string;
+            /** Source Url */
+            source_url: string;
         };
         /** IncomeOut */
         IncomeOut: {
@@ -537,6 +680,23 @@ export interface components {
             /** Detail */
             detail: string;
         };
+        /** OrganizationOut */
+        OrganizationOut: {
+            /** Territory Id */
+            territory_id: string;
+            /**
+             * As Of
+             * Format: date
+             */
+            as_of: string;
+            executive: components["schemas"]["ExecutiveOut"];
+            /** Parliaments */
+            parliaments: components["schemas"]["BodyOut"][];
+            /** Judiciary */
+            judiciary: components["schemas"]["BodyOut"][];
+            /** Local */
+            local: components["schemas"]["BodyOut"][];
+        };
         /** PartyOut */
         PartyOut: {
             /** Id */
@@ -586,6 +746,13 @@ export interface components {
             name: string;
             /** Indicator Id */
             indicator_id: string | null;
+        };
+        /** SectorRefOut */
+        SectorRefOut: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
         };
         /** ShareOut */
         ShareOut: {
@@ -1085,6 +1252,66 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["VotersOut"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotFoundOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    general_organization_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GeneralOrganizationOut"];
+                };
+            };
+        };
+    };
+    community_communities__territory_id__organization_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                territory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationOut"];
                 };
             };
             /** @description Not Found */
