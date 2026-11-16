@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
-import { ExternalLink } from "@/features/shell";
+import { Carousel, ExternalLink, SectionHeading } from "@/features/shell";
 import { StoryTreeView } from "@/features/stories";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
-import { Carousel } from "./Carousel";
 import { EmptyState } from "./EmptyState";
 import { SearchBox } from "./SearchBox";
-import { SectionHeading } from "./SectionHeading";
 import { ChevronIcon, SourceIcon } from "./icons";
 import { SECTORS, type Sector } from "./news-api";
 import { formatNewsTime, groupByDay, newsDay } from "./news-card";

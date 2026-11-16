@@ -1,6 +1,4 @@
-import { ChevronIcon } from "./icons";
-
-import styles from "./CommunityCard.module.css";
+import styles from "./SectionHeading.module.css";
 
 /**
  * The title of a section that can be closed and opened again: the heading holds the button, so
@@ -22,7 +20,20 @@ export function SectionHeading(props: {
         onClick={props.onToggle}
       >
         {props.title}
-        <ChevronIcon />
+        <svg
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
       </button>
     </h2>
   );

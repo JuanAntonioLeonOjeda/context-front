@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
-import { ExternalLink } from "@/features/shell";
+import { Carousel, ExternalLink, SectionHeading } from "@/features/shell";
 import { treePath } from "@/features/stories";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
-import { Carousel } from "./Carousel";
 import { searchWith } from "./search-params";
 import { groupByDay, newsRows, type NewsRow } from "./news-card";
 import { EmptyState } from "./EmptyState";
 import { SearchBox } from "./SearchBox";
 import { SectorIndicator } from "./SectorIndicator";
-import { SectionHeading } from "./SectionHeading";
 import { SourceIcon, TreeIcon } from "./icons";
 import { SECTORS, type Sector } from "./news-api";
 import { matchesQuery } from "./news-search";

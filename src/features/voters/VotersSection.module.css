@@ -11,17 +11,25 @@
   margin-block: 0;
 }
 
+/* The bands in a row that scrolls sideways, like the indicators: each card keeps its width and the
+   next one peeks out. */
 .bands {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
   gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.bands > li {
+  flex: 0 0 min(28rem, 90vw);
+  scroll-snap-align: start;
+}
+
 .band {
   display: grid;
+  height: 100%;
+  align-content: start;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2);
   padding: var(--space-4);
@@ -46,33 +54,39 @@
   font-size: var(--text-sm);
 }
 
+/* Vertical bars: one column per group, the figure on top, the bar growing from a common base and
+   the name below. Every column has the same width, so the bars share one scale. */
 .bars {
-  display: grid;
-  gap: var(--space-1);
+  display: flex;
+  gap: var(--space-2);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Name, bar and figure in three columns that line up down the band; the name column is as wide
-   as the longest name, so every bar starts at the same place. */
-.barRow {
+.barColumn {
   display: grid;
-  /* The same columns in every row, so the bars share one scale; a long name (a coalition's) wraps
-     in its column instead of taking the track's room. */
-  grid-template-columns: 7rem minmax(0, 1fr) 4.5rem;
-  gap: var(--space-2);
-  align-items: center;
+  flex: 1 1 0;
+  grid-template-rows: auto 9rem auto;
+  gap: var(--space-1);
+  min-width: 0;
+  justify-items: center;
+  text-align: center;
 }
 
-.barLabel {
+.barValue {
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 
 .track {
-  display: block;
-  block-size: var(--space-3);
+  display: flex;
+  align-items: flex-end;
+  inline-size: 100%;
+  max-inline-size: 3.5rem;
+  block-size: 100%;
 }
 
 /* A group without a party colour (a list, "Otras") is drawn in the neutral ink of the borders;
@@ -80,16 +94,17 @@
    colour visible on the surface. */
 .bar {
   display: block;
-  block-size: 100%;
-  min-inline-size: 2px;
+  inline-size: 100%;
+  min-block-size: 2px;
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   background: var(--color-border-strong);
 }
 
-.barValue {
-  font-variant-numeric: tabular-nums;
-  text-align: right;
+.barLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
 }
 
 .note {
@@ -144,4 +159,49 @@
 
 .method h3 {
   font-size: var(--text-md);
+}
+
+/* The parameter of the profile: a row of buttons, the pressed one filled; the state is in
+   `aria-pressed`, not in the colour alone. */
+.dimensions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.dimensions button {
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dimensions button[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* The previous dimension's profile stays while the next one is fetched. */
+.pending > * {
+  opacity: 0.6;
+}
+
+.status {
+  margin: 0;
+}
+
+/* Said to screen readers, not shown: the region itself is never removed from the page. */
+.statusHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

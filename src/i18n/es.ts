@@ -264,40 +264,88 @@ export const es = {
       name: "Tramo {number} de {total}",
       withEnd: "{name} · {end}",
       size: "{municipalities} · {census}",
-      lowest: "rentas más bajas",
-      highest: "rentas más altas",
-      incomeRange: "De {min} a {max} € por persona",
-      incomeSingle: "{value} € por persona",
       municipalities: "{count} municipios",
       municipality: "1 municipio",
       censusShare: "{percent} del censo",
       blank: "Voto en blanco: {percent}",
       empty: "Ningún municipio cae en este tramo.",
     },
+    dimensions: {
+      income: {
+        tab: "Renta",
+        lowest: "rentas más bajas",
+        highest: "rentas más altas",
+        range: "De {min} a {max} € por persona",
+        single: "{value} € por persona",
+        intro:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según su renta media por persona de {year}.",
+        introNoYear:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
+        withoutValue: "Municipios sin dato de renta, que quedan fuera de los tramos: {count}.",
+        tooFew:
+          "Hacen falta al menos dos municipios con dato de renta para formar tramos, y esta comunidad no los tiene.",
+        tableCaption: "Porcentaje del voto válido de cada tramo de renta",
+        method:
+          "Cada tramo reúne municipios enteros, ordenados por su renta neta media por persona de {year}, de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno. La renta es la del año de la elección.",
+      },
+      size: {
+        tab: "Tamaño",
+        lowest: "municipios más pequeños",
+        highest: "municipios más grandes",
+        range: "De {min} a {max} electores",
+        single: "{value} electores",
+        intro:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según su número de electores.",
+        introNoYear:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según su número de electores.",
+        withoutValue: "Municipios sin dato de tamaño, que quedan fuera de los tramos: {count}.",
+        tooFew:
+          "Hacen falta al menos dos municipios para formar tramos, y esta comunidad no los tiene.",
+        tableCaption: "Porcentaje del voto válido de cada tramo de tamaño",
+        method:
+          "Los tramos tienen un tamaño fijo en número de electores (menos de 1500, de 1500 a 7999, de 8000 a 39.999 y 40.000 o más), no un censo parecido: un municipio grande queda solo en su tramo. Los electores son los del censo electoral de la elección, no los habitantes.",
+      },
+      education: {
+        tab: "Estudios",
+        lowest: "menos estudios superiores",
+        highest: "más estudios superiores",
+        range: "De {min} % a {max} % con estudios superiores",
+        single: "{value} % con estudios superiores",
+        intro:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según el porcentaje de su población de 15 y más años con estudios superiores en {year}.",
+        introNoYear:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
+        withoutValue: "Municipios sin dato de estudios, que quedan fuera de los tramos: {count}.",
+        tooFew:
+          "Hacen falta al menos dos municipios con dato de estudios para formar tramos, y esta comunidad no los tiene.",
+        tableCaption: "Porcentaje del voto válido de los municipios de cada tramo de estudios",
+        method:
+          "Cada tramo reúne municipios enteros, ordenados por el porcentaje de su población de 15 y más años con estudios superiores en {year} (Censo anual de población del INE), de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
+      },
+    },
     profile: {
       others: "Otras",
       percent: "{value} %",
     },
     section: {
-      title: "Cómo votaron los municipios según su renta media",
-      intro:
-        "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según su renta media por persona de {year}.",
-      introNoIncome:
-        "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
+      title: "Cómo votaron los municipios",
+      tabs: "Parámetro del perfil",
       loading: "Cargando el perfil de voto…",
+      loaded: "Perfil por {parameter} cargado.",
       error: "No hemos podido cargar el perfil de voto.",
       retry: "Volver a intentarlo",
-      barsOf: "Voto en el {band}",
-      withoutIncome: "Municipios sin dato de renta, que quedan fuera de los tramos: {count}.",
+      barsOf: "Voto en {band}",
+      carousel: {
+        label: "Tramos del perfil, se desplazan en horizontal",
+        previous: "Tramos anteriores",
+        next: "Tramos siguientes",
+      },
     },
     reasons: {
       no_results: "No hay resultados de esta elección para la comunidad.",
-      too_few_municipalities:
-        "Hacen falta al menos dos municipios con dato de renta para formar tramos, y esta comunidad no los tiene.",
     },
     table: {
       open: "Ver los datos en tabla",
-      caption: "Porcentaje del voto válido de cada tramo de renta",
       band: "Tramo",
       size: "Municipios y censo",
       scroll: "Tabla de datos, se desplaza en horizontal",
@@ -305,15 +353,18 @@ export const es = {
     },
     method: {
       title: "Cómo leerlo",
-      bands:
-        "Cada tramo reúne municipios enteros, ordenados por su renta neta media por persona de {year}, de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno. La renta es la del año de la elección.",
       shares:
         "Los porcentajes son sobre el voto válido de cada tramo. Se muestran las candidaturas con al menos el {percent} % del voto válido de la comunidad, y el resto se suma en «Otras».",
       areas:
-        "El perfil describe zonas, no personas: en un municipio de cualquier tramo vota gente de todas las rentas.",
+        "El perfil describe zonas, no personas: en los municipios de cualquier tramo viven y votan personas con todos los niveles de estudios y de renta.",
       sources: "Fuentes:",
       election: "resultados por municipio, Ministerio del Interior",
-      income: "renta por municipio, INE (Atlas de distribución de renta de los hogares)",
+      // The statistic's page at the INE; the size has none (it is the election's own census).
+      statistic: {
+        income: "renta por municipio, INE (Atlas de distribución de renta de los hogares)",
+        education:
+          "estudios por municipio, INE (Censo anual de población, nivel de estudios completados)",
+      },
     },
   },
   stories: {

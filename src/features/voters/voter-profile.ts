@@ -1,13 +1,13 @@
 /**
- * The voter profile as the page draws it: one row per income band and, in it, one bar per
- * group. Pure: the API's numbers are only written in Spanish and turned into bar lengths; no
+ * The voter profile as the page draws it: one card per band of the chosen dimension and, in it,
+ * one bar per group. Pure: the API's numbers are only written in Spanish and turned into bar lengths; no
  * percentage is computed here. Groups keep the API's order, the same in every band.
  */
 import type { Party } from "@/design/parties";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
-import type { IncomeBand, VoteGroup, VoterProfile } from "./voters-api";
+import type { DimensionId, VoteGroup, VoterBand, VoterProfile } from "./voters-api";
 
 export interface BarView {
   groupId: string;
@@ -20,7 +20,7 @@ export interface BarView {
 export interface BandView {
   index: number;
   name: string; // "Tramo 1 de 5 · rentas más bajas"
-  income: string | null; // "De 10.321 a 12.079 € por persona"; null: no municipality in the band
+  range: string | null; // "De 10.321 a 12.079 € por persona"; null: no municipality in the band
   size: string; // "21 municipios · 19,7 % del censo"
   blank: string | null; // "Voto en blanco: 0,9 %"
   bars: BarView[]; // empty for a band no municipality fell in
@@ -28,43 +28,50 @@ export interface BandView {
 
 const one = new Intl.NumberFormat("es", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 // Spanish groups thousands from five digits on ("9500", "12.079"), as the rest of the site does.
-const euros = new Intl.NumberFormat("es", { maximumFractionDigits: 0 });
+const numbers = new Intl.NumberFormat("es", { maximumFractionDigits: 0 });
 
 function percent(value: number): string {
   return formatMessage(es.voters.profile.percent, { value: one.format(value) });
 }
 
 /** One bar scale for the whole profile, so a bar of one band can be compared with another's. */
-function highestShare(bands: readonly IncomeBand[]): number {
+function highestShare(bands: readonly VoterBand[]): number {
   return Math.max(0, ...bands.flatMap((band) => band.shares.map((share) => share.percent)));
 }
 
-function bandName(index: number, total: number): string {
+// How a value of the dimension is written: whole euros and electors, a percentage with a decimal.
+const VALUE_FORMAT: Record<DimensionId, Intl.NumberFormat> = {
+  income: numbers,
+  size: numbers,
+  education: one,
+};
+
+function bandName(index: number, total: number, dimension: DimensionId): string {
+  const texts = es.voters.dimensions[dimension];
   const name = formatMessage(es.voters.band.name, {
     number: String(index + 1),
     total: String(total),
   });
-  if (index === 0)
-    return formatMessage(es.voters.band.withEnd, { name, end: es.voters.band.lowest });
+  if (index === 0) return formatMessage(es.voters.band.withEnd, { name, end: texts.lowest });
   if (index === total - 1) {
-    return formatMessage(es.voters.band.withEnd, { name, end: es.voters.band.highest });
+    return formatMessage(es.voters.band.withEnd, { name, end: texts.highest });
   }
   return name;
 }
 
-function incomeText(band: IncomeBand): string | null {
-  if (band.incomeMinEur === null || band.incomeMaxEur === null) return null;
-  // A band that is one municipality (a capital with half the census) has one income, not a range.
-  if (band.incomeMinEur === band.incomeMaxEur) {
-    return formatMessage(es.voters.band.incomeSingle, { value: euros.format(band.incomeMinEur) });
-  }
-  return formatMessage(es.voters.band.incomeRange, {
-    min: euros.format(band.incomeMinEur),
-    max: euros.format(band.incomeMaxEur),
-  });
+function rangeText(band: VoterBand, dimension: DimensionId): string | null {
+  if (band.valueMin === null || band.valueMax === null) return null;
+  const texts = es.voters.dimensions[dimension];
+  const format = VALUE_FORMAT[dimension];
+  const min = format.format(band.valueMin);
+  const max = format.format(band.valueMax);
+  // A band that is one municipality (a capital with half the census) has one value, not a range;
+  // so has one whose values are written the same ("33,1 a 33,1" says nothing more than "33,1").
+  if (min === max) return formatMessage(texts.single, { value: min });
+  return formatMessage(texts.range, { min, max });
 }
 
-function sizeText(band: IncomeBand): string {
+function sizeText(band: VoterBand): string {
   const municipalities =
     band.municipalities === 1
       ? es.voters.band.municipality
@@ -91,7 +98,7 @@ function groupLabel(group: VoteGroup, party: Party | null): string {
 }
 
 function bars(
-  band: IncomeBand,
+  band: VoterBand,
   groups: readonly VoteGroup[],
   parties: ReadonlyMap<string, Party>,
   highest: number,
@@ -115,15 +122,19 @@ function bars(
   });
 }
 
-/** The bands of a profile, lowest incomes first as the API sends them. */
-export function bandViews(profile: VoterProfile, parties: ReadonlyMap<string, Party>): BandView[] {
+/** The bands of a profile, lowest values first as the API sends them. */
+export function bandViews(
+  profile: VoterProfile,
+  parties: ReadonlyMap<string, Party>,
+  dimension: DimensionId,
+): BandView[] {
   const highest = highestShare(profile.bands);
   return profile.bands.map((band) => {
     const isEmpty = band.municipalities === 0;
     return {
       index: band.index,
-      name: bandName(band.index, profile.bands.length),
-      income: incomeText(band),
+      name: bandName(band.index, profile.bands.length, dimension),
+      range: rangeText(band, dimension),
       size: sizeText(band),
       blank: isEmpty
         ? null
