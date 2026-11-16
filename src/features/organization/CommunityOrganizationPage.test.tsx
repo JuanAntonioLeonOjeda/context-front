@@ -80,7 +80,33 @@ describe("a community whose executive is complete", () => {
     expect(within(executive).getByText("Isabel Natividad Díaz Ayuso")).toBeVisible();
     expect(within(executive).getAllByRole("heading", { level: 3 })).toHaveLength(10);
     expect(screen.queryByText(es.organization.state.attribution)).toBeNull();
+    expect(screen.getByText(es.organization.community.sources)).toBeVisible();
     expect(screen.queryByText("Sin datos todavía")).toBeNull();
+  });
+});
+
+describe("the page of a community with its own official language", () => {
+  it("marks the language of the Catalan names and post titles but not of the Spanish summaries", async () => {
+    renderPage("ccaa-09");
+
+    const name = await screen.findByRole("heading", {
+      level: 3,
+      name: "Departament de la Presidència",
+    });
+    expect(name).toHaveAttribute("lang", "ca");
+    expect(screen.getByText("Conseller de la Presidència:")).toHaveAttribute("lang", "ca");
+    const summary = screen.getAllByText(/^Tiene atribuidas las competencias en/)[0];
+    expect(summary?.closest("[lang]")).toBeNull();
+  });
+
+  it("marks no language for a community that writes in Spanish", async () => {
+    renderPage("ccaa-13");
+
+    const name = await screen.findByRole("heading", {
+      level: 3,
+      name: "Consejería de Sanidad",
+    });
+    expect(name).not.toHaveAttribute("lang");
   });
 });
 
@@ -96,6 +122,20 @@ describe("a community that does not exist", () => {
 });
 
 describe("the page's own failures and accessibility", () => {
+  it("keeps the heading and the tab title while loading and on error", async () => {
+    renderPage("ccaa-13", { failing: true });
+    expect(
+      screen.getByRole("heading", { level: 1, name: es.organization.page.communityLoadingTitle }),
+    ).toBeVisible();
+    expect(await screen.findByRole("alert")).toBeVisible();
+    expect(
+      screen.getByRole("heading", { level: 1, name: es.organization.page.communityLoadingTitle }),
+    ).toBeVisible();
+    expect(document.querySelector("title")?.textContent).toBe(
+      `${es.organization.page.communityLoadingTitle} · ${es.app.shell.name}`,
+    );
+  });
+
   it("shows an error and reloads on retry", async () => {
     renderPage("ccaa-13", { failing: true });
     expect(await screen.findByRole("alert")).toHaveTextContent(es.organization.page.error);

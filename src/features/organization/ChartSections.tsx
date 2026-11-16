@@ -13,6 +13,7 @@ export function ExecutiveSection(props: {
   id: string;
   title: string;
   executive: ExecutiveView;
+  lang?: string | undefined;
 }): React.JSX.Element {
   const { executive } = props;
   return (
@@ -29,12 +30,12 @@ export function ExecutiveSection(props: {
         // eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics of a list styled without markers (WCAG 1.3.1)
         <ul role="list" className={styles.tree}>
           <li>
-            <OrganizationBox box={executive.head} />
+            <OrganizationBox box={executive.head} lang={props.lang} />
             {/* eslint-disable-next-line jsx-a11y/no-redundant-roles -- same as above */}
             <ul role="list">
               {executive.departments.map((department) => (
                 <li key={department.id}>
-                  <OrganizationBox box={department} />
+                  <OrganizationBox box={department} lang={props.lang} />
                 </li>
               ))}
             </ul>
@@ -50,6 +51,7 @@ export function BoxesSection(props: {
   id: string;
   title: string;
   boxes: readonly BoxView[];
+  lang?: string | undefined;
 }): React.JSX.Element | null {
   if (props.boxes.length === 0) return null;
   return (
@@ -59,7 +61,7 @@ export function BoxesSection(props: {
       <ul role="list" className={styles.tree}>
         {props.boxes.map((box) => (
           <li key={box.id}>
-            <OrganizationBox box={box} />
+            <OrganizationBox box={box} lang={props.lang} />
           </li>
         ))}
       </ul>

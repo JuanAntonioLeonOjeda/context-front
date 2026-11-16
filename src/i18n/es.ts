@@ -203,12 +203,17 @@ export const es = {
   },
   organization: {
     nav: { general: "Organigrama" },
-    community: { link: "Ver organigrama" },
+    community: {
+      link: "Ver organigrama",
+      sources:
+        "Cada dato enlaza a su fuente oficial: los boletines oficiales del Estado y de la comunidad.",
+    },
     page: {
       generalTitle: "Organigrama de las administraciones",
       generalIntro:
         "Qué órganos tiene cada administración, quién ocupa la presidencia del gobierno y cada ministerio o consejería, y qué competencias les da la ley. Cada dato lleva su fuente.",
       communityTitle: "Organigrama de {community}",
+      communityLoadingTitle: "Organigrama de la comunidad",
       communityIntro:
         "Quién ocupa la presidencia y cada consejería de {community} y qué competencias da la ley a cada órgano. Cada dato lleva su fuente.",
       scope:
@@ -233,12 +238,11 @@ export const es = {
       since: "Desde el {date}",
       source: "Fuente",
       sourceOf: "Fuente: {what}",
-      competences: "Competencias",
       competencesCount: "Competencias ({count})",
       noCompetences: "Sin competencias cargadas.",
       legalBasis: "Base legal",
       sectors: "Sectores",
-      noHolder: "Sin titular",
+      competencesOf: "de {name}",
     },
     noData: {
       title: "Sin datos todavía",
@@ -252,7 +256,7 @@ export const es = {
     },
     state: {
       attribution:
-        "Nombramientos y estructura de los ministerios: Fuente de los datos: Agencia Estatal Boletín Oficial del Estado.",
+        "Nombramientos y estructura de los ministerios. Fuente de los datos: Agencia Estatal Boletín Oficial del Estado.",
     },
   },
   voters: {

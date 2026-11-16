@@ -103,3 +103,12 @@ export function communityLinks(communities: readonly CommunityRef[]): CommunityL
         : es.organization.communities.noData,
   }));
 }
+
+/**
+ * The official language of a community that is not Spanish, for the names and post titles that
+ * keep the wording of their source (a Catalan department keeps its Catalan name). The summaries
+ * are always in Spanish.
+ */
+export function officialLanguage(territoryId: string): string | undefined {
+  return territoryId === "ccaa-09" ? "ca" : undefined;
+}

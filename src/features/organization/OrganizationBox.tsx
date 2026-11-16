@@ -11,12 +11,20 @@ import styles from "./Organization.module.css";
  * department have a holder) and, folded, what the law gives it, each with its source. No colour
  * says anything; each source link says which fact it is the source of.
  */
-export function OrganizationBox({ box }: { box: BoxView }): React.JSX.Element {
+export function OrganizationBox({
+  box,
+  lang,
+}: {
+  box: BoxView;
+  lang?: string | undefined;
+}): React.JSX.Element {
   const { box: text } = es.organization;
   return (
     <div className={styles.box}>
       <div className={styles.boxHeader}>
-        <h3 className={styles.boxName}>{box.name}</h3>
+        <h3 className={styles.boxName} lang={lang}>
+          {box.name}
+        </h3>
         <ExternalLink
           href={box.sourceUrl}
           className={styles.meta}
@@ -27,7 +35,7 @@ export function OrganizationBox({ box }: { box: BoxView }): React.JSX.Element {
       </div>
       {box.holder !== null && (
         <p className={styles.holder}>
-          <span>{box.holder.title}:</span>
+          <span lang={lang}>{box.holder.title}:</span>
           <strong>{box.holder.name}</strong>
           <span className={styles.meta}>{box.holder.since}</span>
           <ExternalLink
@@ -42,11 +50,17 @@ export function OrganizationBox({ box }: { box: BoxView }): React.JSX.Element {
         <p className={styles.note}>{box.competencesLabel}</p>
       ) : (
         <details className={styles.competences}>
-          <summary>{box.competencesLabel}</summary>
+          <summary>
+            {box.competencesLabel}
+            <span className={styles.visuallyHidden}>
+              {" "}
+              {formatMessage(text.competencesOf, { name: box.name })}
+            </span>
+          </summary>
           {/* eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics of a list styled without markers (WCAG 1.3.1) */}
           <ul role="list" className={styles.competenceList}>
             {box.competences.map((competence) => (
-              <li key={`${competence.legalBasis}|${competence.summary}`}>
+              <li key={`${competence.legalBasis}|${competence.summary}|${competence.sourceUrl}`}>
                 <p>{competence.summary}</p>
                 <p className={styles.meta}>
                   {text.legalBasis}: {competence.legalBasis} · {text.sectors}: {competence.sectors}{" "}
