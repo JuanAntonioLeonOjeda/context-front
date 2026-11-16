@@ -8,6 +8,8 @@ import canariasNews from "@/test/fixtures/community-ccaa-05-news-health.json";
 import canariasVoters from "@/test/fixtures/community-ccaa-05-voters.json";
 import navarraVoters from "@/test/fixtures/community-ccaa-15-voters.json";
 import ceutaVoters from "@/test/fixtures/community-ccaa-18-voters.json";
+import ceutaVotersByEducation from "@/test/fixtures/community-ccaa-18-voters-education.json";
+import canariasVotersByEducation from "@/test/fixtures/community-ccaa-05-voters-education.json";
 import ceutaVotersBySize from "@/test/fixtures/community-ccaa-18-voters-size.json";
 import canariasVotersBySize from "@/test/fixtures/community-ccaa-05-voters-size.json";
 import trees from "@/test/fixtures/community-trees-education.json";
@@ -32,6 +34,15 @@ const VOTERS_BY_SIZE = new Map<string, object>([
   ["ccaa-05", canariasVotersBySize],
   ["ccaa-18", ceutaVotersBySize],
 ]);
+// ... and by the education of their people (`?by=education`).
+const VOTERS_BY_EDUCATION = new Map<string, object>([
+  ["ccaa-05", canariasVotersByEducation],
+  ["ccaa-18", ceutaVotersByEducation],
+]);
+const VOTERS_BY: Record<string, Map<string, object>> = {
+  size: VOTERS_BY_SIZE,
+  education: VOTERS_BY_EDUCATION,
+};
 
 const GOVERNMENT = { canarias, cataluna, "canarias-caretaker": caretaker } as const;
 
@@ -77,8 +88,7 @@ export function serveCommunity(
     http.get("*/api/communities/:territoryId/voters", ({ params, request }) => {
       if (options.failingVoters) return HttpResponse.json({ detail: "boom" }, { status: 500 });
       const id = String(params.territoryId);
-      const voters =
-        new URL(request.url).searchParams.get("by") === "size" ? VOTERS_BY_SIZE : VOTERS;
+      const voters = VOTERS_BY[new URL(request.url).searchParams.get("by") ?? ""] ?? VOTERS;
       return voters.has(id)
         ? HttpResponse.json(voters.get(id))
         : HttpResponse.json({ detail: `unknown community ${id}` }, { status: 404 });

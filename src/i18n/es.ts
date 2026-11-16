@@ -305,6 +305,23 @@ export const es = {
         method:
           "Los tramos tienen un tamaño fijo en número de electores (menos de 1.500, de 1.500 a 7.999, de 8.000 a 39.999 y 40.000 o más), no un censo parecido: un municipio grande queda solo en su tramo. Los electores son los del censo electoral de la elección, no los habitantes.",
       },
+      education: {
+        tab: "Estudios",
+        lowest: "menos estudios superiores",
+        highest: "más estudios superiores",
+        range: "De {min} % a {max} % con estudios superiores",
+        single: "{value} % con estudios superiores",
+        intro:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según el porcentaje de su población de 15 y más años con estudios superiores en {year}.",
+        introNoYear:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
+        withoutValue: "Municipios sin dato de estudios, que quedan fuera de los tramos: {count}.",
+        tooFew:
+          "Hacen falta al menos dos municipios con dato de estudios para formar tramos, y esta comunidad no los tiene.",
+        tableCaption: "Porcentaje del voto válido de cada tramo de estudios",
+        method:
+          "Cada tramo reúne municipios enteros, ordenados por el porcentaje de su población de 15 y más años con estudios superiores en {year} (Censo anual de población del INE), de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
+      },
     },
     profile: {
       others: "Otras",
@@ -341,7 +358,12 @@ export const es = {
         "El perfil describe zonas, no personas: en un municipio de cualquier tramo vota gente de todo tipo.",
       sources: "Fuentes:",
       election: "resultados por municipio, Ministerio del Interior",
-      income: "renta por municipio, INE (Atlas de distribución de renta de los hogares)",
+      // The statistic's page at the INE; the size has none (it is the election's own census).
+      statistic: {
+        income: "renta por municipio, INE (Atlas de distribución de renta de los hogares)",
+        education:
+          "estudios por municipio, INE (Censo anual de población, nivel de estudios completados)",
+      },
     },
   },
   stories: {

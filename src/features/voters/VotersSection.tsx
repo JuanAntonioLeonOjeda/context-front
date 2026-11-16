@@ -10,11 +10,11 @@ import { useVoterProfile } from "./useVoterProfile";
 
 import styles from "./VotersSection.module.css";
 
-const DIMENSIONS: readonly DimensionId[] = ["income", "size"];
+const DIMENSIONS: readonly DimensionId[] = ["income", "size", "education"];
 
 /**
  * How the municipalities of a community voted, by band of one dimension at a time (income, the
- * size of the municipality): a card per band with a vertical bar per group, the same numbers in a
+ * size of the municipality, the education of its people): a card per band with a vertical bar per group, the same numbers in a
  * table, and the note that says how to read it. Every group goes through the same code; the
  * colour is never the only cue, each bar has its name and its figure.
  */
@@ -160,15 +160,28 @@ function Intro({ voters }: { voters: CommunityVoters }): React.JSX.Element {
   );
 }
 
+/** The name of the INE statistic a dimension is made from; none for the size, which is the
+ *  election's own census. */
+function statisticLabel(dimension: DimensionId): string | null {
+  switch (dimension) {
+    case "income":
+    case "education":
+      return es.voters.method.statistic[dimension];
+    case "size":
+      return null;
+  }
+}
+
 function Sources({ voters }: { voters: CommunityVoters }): React.JSX.Element {
+  const statistic = statisticLabel(voters.dimension);
   return (
     <p className={styles.note}>
       {es.voters.method.sources}{" "}
       <ExternalLink href={voters.electionSourceUrl}>{es.voters.method.election}</ExternalLink>
-      {voters.sourceUrl !== null && (
+      {voters.sourceUrl !== null && statistic !== null && (
         <>
           {"; "}
-          <ExternalLink href={voters.sourceUrl}>{es.voters.method.income}</ExternalLink>
+          <ExternalLink href={voters.sourceUrl}>{statistic}</ExternalLink>
         </>
       )}
       .

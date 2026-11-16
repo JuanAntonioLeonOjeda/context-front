@@ -171,3 +171,25 @@ describe("bandViews by the size of the municipality", () => {
     expect(views[3]?.range).toBe("De 40.000 a 90.000 electores");
   });
 });
+
+describe("bandViews by the education of the municipalities", () => {
+  const educated: VoterProfile = {
+    groups: PROFILE.groups,
+    municipalitiesWithoutValue: 0,
+    bands: [
+      band(0, [["pp", 40]], { valueMin: 14.101, valueMax: 24.081 }),
+      band(1, [["pp", 50]], { valueMin: 46.315, valueMax: 46.315 }),
+      band(2, [["pp", 30]], { valueMin: 30, valueMax: 31.25 }),
+    ],
+  };
+  const views = bandViews(educated, TABLE, "education");
+
+  it("names the ends by the studies and writes every value as a percentage with a decimal", () => {
+    expect(views[0]?.name).toBe("Tramo 1 de 3 · menos estudios superiores");
+    expect(views[2]?.name).toBe("Tramo 3 de 3 · más estudios superiores");
+    expect(views[0]?.range).toBe("De 14,1 % a 24,1 % con estudios superiores");
+    expect(views[1]?.range).toBe("46,3 % con estudios superiores");
+    // A whole number keeps its decimal, and a half rounds up as the API's 3 decimals suggest.
+    expect(views[2]?.range).toBe("De 30,0 % a 31,3 % con estudios superiores");
+  });
+});
