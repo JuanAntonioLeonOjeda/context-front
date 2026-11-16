@@ -6,10 +6,12 @@
     "source_file": "02202307_MUNI.zip",
     "source_url": "https://infoelectoral.interior.gob.es/es/elecciones-celebradas/area-de-descargas/"
   },
-  "income": {
-    "year": 2023,
+  "dimension": {
+    "id": "income",
+    "unit": "eur_per_person",
     "source_url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608",
-    "fetched_at": "2026-11-12T08:41:50.832447Z"
+    "year": 2023,
+    "fetched_at": "2026-11-13T09:07:52.570205Z"
   },
   "municipalities": 1,
   "shown_from_percent": 3,

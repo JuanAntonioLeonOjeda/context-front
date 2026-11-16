@@ -5,19 +5,23 @@ import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
 import type { BandView } from "./voter-profile";
-import type { CommunityVoters } from "./voters-api";
+import type { CommunityVoters, DimensionId } from "./voters-api";
 import { useVoterProfile } from "./useVoterProfile";
 
 import styles from "./VotersSection.module.css";
 
+const DIMENSIONS: readonly DimensionId[] = ["income", "size"];
+
 /**
- * How the municipalities of a community voted, by income band: one row per band with a bar per
- * group, the same numbers in a table, and the note that says how to read it. Every group goes
- * through the same code; the colour is never the only cue, each bar has its name and its figure.
+ * How the municipalities of a community voted, by band of one dimension at a time (income, the
+ * size of the municipality): a card per band with a vertical bar per group, the same numbers in a
+ * table, and the note that says how to read it. Every group goes through the same code; the
+ * colour is never the only cue, each bar has its name and its figure.
  */
 export function VotersSection({ territoryId }: { territoryId: string }): React.JSX.Element | null {
-  const profile = useVoterProfile(territoryId);
   const [open, setOpen] = useState(true);
+  const [dimension, setDimension] = useState<DimensionId>("income");
+  const profile = useVoterProfile(territoryId, dimension);
   if (profile.state === "absent") return null;
   const texts = es.voters.section;
   const heading = (
@@ -30,12 +34,16 @@ export function VotersSection({ territoryId }: { territoryId: string }): React.J
       }}
     />
   );
+  const tabs = <DimensionSwitch value={dimension} onChange={setDimension} />;
   return (
     <section aria-labelledby="voters-title" className={styles.section}>
       {open && profile.state === "ready" && profile.bands !== null ? (
-        <Profile voters={profile.voters} bands={profile.bands} heading={heading} />
+        <Profile voters={profile.voters} bands={profile.bands} heading={heading} tabs={tabs} />
       ) : (
-        heading
+        <>
+          {heading}
+          {open && tabs}
+        </>
       )}
       {open && profile.state === "loading" && <p role="status">{texts.loading}</p>}
       {open && profile.state === "error" && (
@@ -46,8 +54,33 @@ export function VotersSection({ territoryId }: { territoryId: string }): React.J
           </button>
         </div>
       )}
-      {profile.state === "ready" && profile.bands === null && <NoProfile voters={profile.voters} />}
+      {open && profile.state === "ready" && profile.bands === null && (
+        <NoProfile voters={profile.voters} />
+      )}
     </section>
+  );
+}
+
+/** The parameter the profile is made by: one pressed button among the others. */
+function DimensionSwitch(props: {
+  value: DimensionId;
+  onChange: (dimension: DimensionId) => void;
+}): React.JSX.Element {
+  return (
+    <div role="group" aria-label={es.voters.section.tabs} className={styles.dimensions}>
+      {DIMENSIONS.map((id) => (
+        <button
+          key={id}
+          type="button"
+          aria-pressed={props.value === id}
+          onClick={() => {
+            props.onChange(id);
+          }}
+        >
+          {es.voters.dimensions[id].tab}
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -55,14 +88,20 @@ function Profile(props: {
   voters: CommunityVoters;
   bands: BandView[];
   heading: React.JSX.Element;
+  tabs: React.JSX.Element;
 }): React.JSX.Element {
-  const { voters, bands, heading } = props;
-  const year = voters.incomeYear === null ? null : String(voters.incomeYear);
+  const { voters, bands } = props;
+  const texts = es.voters.dimensions[voters.dimension];
   return (
     <>
       <Carousel
-        heading={heading}
-        intro={<Intro voters={voters} year={year} />}
+        heading={props.heading}
+        intro={
+          <>
+            {props.tabs}
+            <Intro voters={voters} />
+          </>
+        }
         label={es.voters.section.carousel.label}
         buttonLabels={es.voters.section.carousel}
       >
@@ -75,18 +114,18 @@ function Profile(props: {
           ))}
         </ol>
       </Carousel>
-      {voters.profile !== null && voters.profile.municipalitiesWithoutIncome > 0 && (
+      {voters.profile !== null && voters.profile.municipalitiesWithoutValue > 0 && (
         <p className={styles.note}>
-          {formatMessage(es.voters.section.withoutIncome, {
-            count: String(voters.profile.municipalitiesWithoutIncome),
+          {formatMessage(texts.withoutValue, {
+            count: String(voters.profile.municipalitiesWithoutValue),
           })}
         </p>
       )}
       <details className={styles.data}>
         <summary>{es.voters.table.open}</summary>
-        <DataTable bands={bands} />
+        <DataTable bands={bands} caption={texts.tableCaption} />
       </details>
-      <Method year={year} shownFromPercent={voters.shownFromPercent} />
+      <Method voters={voters} />
       <Sources voters={voters} />
     </>
   );
@@ -94,23 +133,29 @@ function Profile(props: {
 
 /** A community with no profile to draw: why, and where the data comes from. */
 function NoProfile({ voters }: { voters: CommunityVoters }): React.JSX.Element {
-  const year = voters.incomeYear === null ? null : String(voters.incomeYear);
   return (
     <>
-      <Intro voters={voters} year={year} />
-      {voters.noProfileReason !== null && <p>{es.voters.reasons[voters.noProfileReason]}</p>}
+      <Intro voters={voters} />
+      {voters.noProfileReason !== null && (
+        <p>
+          {voters.noProfileReason === "no_results"
+            ? es.voters.reasons.no_results
+            : es.voters.dimensions[voters.dimension].tooFew}
+        </p>
+      )}
       <Sources voters={voters} />
     </>
   );
 }
 
-function Intro(props: { voters: CommunityVoters; year: string | null }): React.JSX.Element {
-  const date = formatLongDate(props.voters.electionDay);
+function Intro({ voters }: { voters: CommunityVoters }): React.JSX.Element {
+  const texts = es.voters.dimensions[voters.dimension];
+  const date = formatLongDate(voters.electionDay);
   return (
     <p>
-      {props.year === null
-        ? formatMessage(es.voters.section.introNoIncome, { date })
-        : formatMessage(es.voters.section.intro, { date, year: props.year })}
+      {voters.sourceYear === null
+        ? formatMessage(texts.introNoYear, { date })
+        : formatMessage(texts.intro, { date, year: String(voters.sourceYear) })}
     </p>
   );
 }
@@ -120,10 +165,10 @@ function Sources({ voters }: { voters: CommunityVoters }): React.JSX.Element {
     <p className={styles.note}>
       {es.voters.method.sources}{" "}
       <ExternalLink href={voters.electionSourceUrl}>{es.voters.method.election}</ExternalLink>
-      {voters.incomeSourceUrl !== null && (
+      {voters.sourceUrl !== null && (
         <>
           {"; "}
-          <ExternalLink href={voters.incomeSourceUrl}>{es.voters.method.income}</ExternalLink>
+          <ExternalLink href={voters.sourceUrl}>{es.voters.method.income}</ExternalLink>
         </>
       )}
       .
@@ -136,7 +181,7 @@ function Band({ band }: { band: BandView }): React.JSX.Element {
     <div className={styles.band}>
       <h3 className={styles.bandName}>{band.name}</h3>
       <p className={styles.bandFacts}>
-        {band.income !== null && <span>{band.income}</span>}
+        {band.range !== null && <span>{band.range}</span>}
         <span>{band.size}</span>
       </p>
       {band.bars.length === 0 ? (
@@ -172,7 +217,8 @@ function Band({ band }: { band: BandView }): React.JSX.Element {
 }
 
 /** The same numbers as the bars: a row per band, a column per group in the same order. */
-function DataTable({ bands }: { bands: readonly BandView[] }): React.JSX.Element {
+function DataTable(props: { bands: readonly BandView[]; caption: string }): React.JSX.Element {
+  const { bands } = props;
   const columns = bands.find((band) => band.bars.length > 0)?.bars ?? [];
   // A box that scrolls must take the focus, or the keyboard cannot scroll it.
   return (
@@ -184,7 +230,7 @@ function DataTable({ bands }: { bands: readonly BandView[] }): React.JSX.Element
       tabIndex={0}
     >
       <table className={styles.table}>
-        <caption>{es.voters.table.caption}</caption>
+        <caption>{props.caption}</caption>
         <thead>
           <tr>
             <th scope="col">{es.voters.table.band}</th>
@@ -215,14 +261,16 @@ function DataTable({ bands }: { bands: readonly BandView[] }): React.JSX.Element
   );
 }
 
-function Method(props: { year: string | null; shownFromPercent: number }): React.JSX.Element {
-  const { year, shownFromPercent } = props;
+function Method({ voters }: { voters: CommunityVoters }): React.JSX.Element {
   const { method } = es.voters;
+  const texts = es.voters.dimensions[voters.dimension];
+  // The note about the bands names the year of the values: without a year it is left out.
+  const hasYear = voters.sourceYear !== null || !texts.method.includes("{year}");
   return (
     <aside aria-labelledby="voters-method-title" className={styles.method}>
       <h3 id="voters-method-title">{method.title}</h3>
-      {year !== null && <p>{formatMessage(method.bands, { year })}</p>}
-      <p>{formatMessage(method.shares, { percent: String(shownFromPercent) })}</p>
+      {hasYear && <p>{formatMessage(texts.method, { year: String(voters.sourceYear ?? "") })}</p>}
+      <p>{formatMessage(method.shares, { percent: String(voters.shownFromPercent) })}</p>
       <p>{method.areas}</p>
     </aside>
   );

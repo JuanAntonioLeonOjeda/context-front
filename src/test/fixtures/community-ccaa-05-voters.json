@@ -6,10 +6,12 @@
     "source_file": "02202307_MUNI.zip",
     "source_url": "https://infoelectoral.interior.gob.es/es/elecciones-celebradas/area-de-descargas/"
   },
-  "income": {
-    "year": 2023,
+  "dimension": {
+    "id": "income",
+    "unit": "eur_per_person",
     "source_url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177088&menu=ultiDatos&idp=1254735976608",
-    "fetched_at": "2026-11-12T08:41:50.832447Z"
+    "year": 2023,
+    "fetched_at": "2026-11-13T09:07:52.570205Z"
   },
   "municipalities": 88,
   "shown_from_percent": 3,
@@ -58,8 +60,8 @@
         "municipalities": 21,
         "census": 318286,
         "census_percent": 19.7,
-        "income_min_eur": 10321.0,
-        "income_max_eur": 12079.0,
+        "value_min": 10321.0,
+        "value_max": 12079.0,
         "valid_votes": 185876,
         "blank_votes": 1593,
         "blank_percent": 0.9,
@@ -106,8 +108,8 @@
         "municipalities": 24,
         "census": 332842,
         "census_percent": 20.6,
-        "income_min_eur": 12113.0,
-        "income_max_eur": 13303.0,
+        "value_min": 12113.0,
+        "value_max": 13303.0,
         "valid_votes": 212908,
         "blank_votes": 1409,
         "blank_percent": 0.7,
@@ -154,8 +156,8 @@
         "municipalities": 16,
         "census": 328049,
         "census_percent": 20.3,
-        "income_min_eur": 13371.0,
-        "income_max_eur": 13871.0,
+        "value_min": 13371.0,
+        "value_max": 13871.0,
         "valid_votes": 209630,
         "blank_votes": 1690,
         "blank_percent": 0.8,
@@ -202,8 +204,8 @@
         "municipalities": 14,
         "census": 364210,
         "census_percent": 22.5,
-        "income_min_eur": 13874.0,
-        "income_max_eur": 14968.0,
+        "value_min": 13874.0,
+        "value_max": 14968.0,
         "valid_votes": 231859,
         "blank_votes": 1556,
         "blank_percent": 0.7,
@@ -250,8 +252,8 @@
         "municipalities": 13,
         "census": 273846,
         "census_percent": 16.9,
-        "income_min_eur": 14985.0,
-        "income_max_eur": 17397.0,
+        "value_min": 14985.0,
+        "value_max": 17397.0,
         "valid_votes": 176426,
         "blank_votes": 1863,
         "blank_percent": 1.1,
@@ -294,7 +296,7 @@
         ]
       }
     ],
-    "municipalities_without_income": 0
+    "municipalities_without_value": 0
   },
   "no_profile_reason": null
 }

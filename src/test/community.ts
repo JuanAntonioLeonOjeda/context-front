@@ -8,6 +8,8 @@ import canariasNews from "@/test/fixtures/community-ccaa-05-news-health.json";
 import canariasVoters from "@/test/fixtures/community-ccaa-05-voters.json";
 import navarraVoters from "@/test/fixtures/community-ccaa-15-voters.json";
 import ceutaVoters from "@/test/fixtures/community-ccaa-18-voters.json";
+import ceutaVotersBySize from "@/test/fixtures/community-ccaa-18-voters-size.json";
+import canariasVotersBySize from "@/test/fixtures/community-ccaa-05-voters-size.json";
 import trees from "@/test/fixtures/community-trees-education.json";
 import catalunaNews from "@/test/fixtures/community-ccaa-09-news-health.json";
 import parties from "@/test/fixtures/parties.json";
@@ -24,6 +26,11 @@ const VOTERS = new Map<string, object>([
   ["ccaa-05", canariasVoters],
   ["ccaa-15", navarraVoters],
   ["ccaa-18", ceutaVoters],
+]);
+// The same communities by the size of the municipality (`?by=size`); the others have no capture.
+const VOTERS_BY_SIZE = new Map<string, object>([
+  ["ccaa-05", canariasVotersBySize],
+  ["ccaa-18", ceutaVotersBySize],
 ]);
 
 const GOVERNMENT = { canarias, cataluna, "canarias-caretaker": caretaker } as const;
@@ -67,11 +74,13 @@ export function serveCommunity(
     http.get("*/api/communities/:territoryId/news", ({ params }) =>
       HttpResponse.json(params.territoryId === "ccaa-09" ? catalunaNews : canariasNews),
     ),
-    http.get("*/api/communities/:territoryId/voters", ({ params }) => {
+    http.get("*/api/communities/:territoryId/voters", ({ params, request }) => {
       if (options.failingVoters) return HttpResponse.json({ detail: "boom" }, { status: 500 });
       const id = String(params.territoryId);
-      return VOTERS.has(id)
-        ? HttpResponse.json(VOTERS.get(id))
+      const voters =
+        new URL(request.url).searchParams.get("by") === "size" ? VOTERS_BY_SIZE : VOTERS;
+      return voters.has(id)
+        ? HttpResponse.json(voters.get(id))
         : HttpResponse.json({ detail: `unknown community ${id}` }, { status: 404 });
     }),
     // Real answer of Madrid in education, served for any community in any sector but Cataluña,

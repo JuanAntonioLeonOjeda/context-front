@@ -4,7 +4,7 @@ import { partyTable } from "@/design/parties";
 import { fetchParties } from "@/features/map";
 
 import { bandViews, type BandView } from "./voter-profile";
-import { fetchCommunityVoters, type CommunityVoters } from "./voters-api";
+import { fetchCommunityVoters, type CommunityVoters, type DimensionId } from "./voters-api";
 
 export type VoterProfileState =
   | { state: "loading" }
@@ -12,11 +12,12 @@ export type VoterProfileState =
   | { state: "absent" } // the API has no election loaded: the section is not shown
   | { state: "ready"; voters: CommunityVoters; bands: BandView[] | null };
 
-/** A community's voter profile with its bars ready to draw; `bands` is null without a profile. */
-export function useVoterProfile(territoryId: string): VoterProfileState {
+/** A community's voter profile by one dimension with its bars ready to draw; `bands` is null
+ *  without a profile. */
+export function useVoterProfile(territoryId: string, by: DimensionId): VoterProfileState {
   const voters = useQuery({
-    queryKey: ["community", territoryId, "voters"],
-    queryFn: () => fetchCommunityVoters(territoryId),
+    queryKey: ["community", territoryId, "voters", by],
+    queryFn: () => fetchCommunityVoters(territoryId, by),
   });
   // The same key as the map: the party table is asked for once.
   const parties = useQuery({
@@ -42,7 +43,7 @@ export function useVoterProfile(territoryId: string): VoterProfileState {
     return {
       state: "ready",
       voters: voters.data,
-      bands: bandViews(profile, partyTable(parties.data)),
+      bands: bandViews(profile, partyTable(parties.data), by),
     };
   } catch (error) {
     // A party the party table does not know is a data error: the section says it could not be

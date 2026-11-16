@@ -560,7 +560,7 @@
           "voters"
         ],
         "summary": "Community",
-        "description": "How the municipalities of a community voted in a general election, grouped in\nfive income bands of about the same census (each municipality whole, in the band where the\nmidpoint of its census falls; a big city can leave a band almost empty). Income: the INE's mean net\nincome per person of the election's year. It describes areas, not people.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least\n`shown_from_percent` % of the community's valid votes (and a candidature that is not in the party\ntable, by its acronym), then \"others\". `profile` is null when fewer than two municipalities have\nincome (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded.",
+        "description": "How the municipalities of a community voted in a general election, grouped in\nbands of one dimension (`by`). `income` (the default): five bands of about the same census, ordered\nby the INE's mean net income per person of the election's year (each municipality whole, in the\nband where the midpoint of its census falls; a big city can leave a band almost empty). `size`:\nfour bands cut at fixed numbers of electors. It describes areas, not people.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least\n`shown_from_percent` % of the community's valid votes (and a candidature that is not in the party\ntable, by its acronym), then \"others\". `profile` is null when fewer than two municipalities have a\nvalue (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded. 422: an\nunknown `by`.",
         "operationId": "community_communities__territory_id__voters_get",
         "parameters": [
           {
@@ -589,6 +589,17 @@
               "title": "Election"
             },
             "description": "e.g. congreso-2023-07"
+          },
+          {
+            "name": "by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/DimensionId",
+              "description": "The dimension of the bands",
+              "default": "income"
+            },
+            "description": "The dimension of the bands"
           }
         ],
         "responses": {
@@ -755,7 +766,7 @@
             "type": "number",
             "title": "Census Percent"
           },
-          "income_min_eur": {
+          "value_min": {
             "anyOf": [
               {
                 "type": "number"
@@ -764,9 +775,9 @@
                 "type": "null"
               }
             ],
-            "title": "Income Min Eur"
+            "title": "Value Min"
           },
-          "income_max_eur": {
+          "value_max": {
             "anyOf": [
               {
                 "type": "number"
@@ -775,7 +786,7 @@
                 "type": "null"
               }
             ],
-            "title": "Income Max Eur"
+            "title": "Value Max"
           },
           "valid_votes": {
             "type": "integer",
@@ -803,8 +814,8 @@
           "municipalities",
           "census",
           "census_percent",
-          "income_min_eur",
-          "income_max_eur",
+          "value_min",
+          "value_max",
           "valid_votes",
           "blank_votes",
           "blank_percent",
@@ -1117,6 +1128,68 @@
         ],
         "title": "ComponentStatus"
       },
+      "DimensionId": {
+        "type": "string",
+        "enum": [
+          "income",
+          "size"
+        ],
+        "title": "DimensionId"
+      },
+      "DimensionOut": {
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/DimensionId"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "unit",
+          "source_url",
+          "year",
+          "fetched_at"
+        ],
+        "title": "DimensionOut"
+      },
       "ElectionOut": {
         "properties": {
           "id": {
@@ -1404,30 +1477,6 @@
           "source_url"
         ],
         "title": "HolderOut"
-      },
-      "IncomeOut": {
-        "properties": {
-          "year": {
-            "type": "integer",
-            "title": "Year"
-          },
-          "source_url": {
-            "type": "string",
-            "title": "Source Url"
-          },
-          "fetched_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Fetched At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "year",
-          "source_url",
-          "fetched_at"
-        ],
-        "title": "IncomeOut"
       },
       "IndicatorOut": {
         "properties": {
@@ -1720,9 +1769,9 @@
             "type": "array",
             "title": "Bands"
           },
-          "municipalities_without_income": {
+          "municipalities_without_value": {
             "type": "integer",
-            "title": "Municipalities Without Income"
+            "title": "Municipalities Without Value"
           }
         },
         "type": "object",
@@ -1730,7 +1779,7 @@
           "census",
           "groups",
           "bands",
-          "municipalities_without_income"
+          "municipalities_without_value"
         ],
         "title": "ProfileOut"
       },
@@ -2097,15 +2146,8 @@
           "election": {
             "$ref": "#/components/schemas/ElectionOut"
           },
-          "income": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/IncomeOut"
-              },
-              {
-                "type": "null"
-              }
-            ]
+          "dimension": {
+            "$ref": "#/components/schemas/DimensionOut"
           },
           "municipalities": {
             "type": "integer",
@@ -2145,7 +2187,7 @@
         "required": [
           "territory_id",
           "election",
-          "income",
+          "dimension",
           "municipalities",
           "shown_from_percent",
           "profile",
