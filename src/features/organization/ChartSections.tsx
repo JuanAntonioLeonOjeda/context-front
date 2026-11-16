@@ -28,7 +28,7 @@ export function ExecutiveSection(props: {
         </div>
       ) : (
         // eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics of a list styled without markers (WCAG 1.3.1)
-        <ul role="list" className={styles.tree}>
+        <ul role="list" className={[styles.tree, styles.executive].join(" ")}>
           <li>
             <OrganizationBox box={executive.head} lang={props.lang} />
             {/* eslint-disable-next-line jsx-a11y/no-redundant-roles -- same as above */}
