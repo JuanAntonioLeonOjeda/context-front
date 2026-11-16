@@ -57,16 +57,23 @@
         },
         "competences": [
           {
-            "summary": "Desarrolla, coordina y controla las políticas públicas del Gobierno en cultura, turismo y deporte.",
+            "summary": "Tiene atribuidas las competencias en cultura y deporte.",
+            "legal_basis": "Decreto 264/2023, art. 1",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13461&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en turismo.",
             "legal_basis": "Decreto 264/2023, art. 1",
             "sectors": [
               {
                 "id": "economy",
                 "name": "Economía"
-              },
-              {
-                "id": "education",
-                "name": "Educación"
               }
             ],
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13461&eli=true"
@@ -88,7 +95,7 @@
         },
         "competences": [
           {
-            "summary": "Propone y ejecuta las políticas del Gobierno en digitalización y transformación digital, y coordina las competencias de digitalización de las demás consejerías.",
+            "summary": "Tiene atribuidas las competencias en digitalización y transformación digital, y la coordinación de las que tienen las demás consejerías en esa materia.",
             "legal_basis": "Decreto 261/2023, art. 1.1",
             "sectors": [
               {
@@ -115,7 +122,7 @@
         },
         "competences": [
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en fomento económico, estadística, industria, minas, comercio, consumo, autónomos y economía social.",
+            "summary": "Tiene atribuidas las competencias en fomento económico, estadística, industria, minas, comercio, consumo, autónomos y economía social.",
             "legal_basis": "Decreto 230/2023, art. 1.1",
             "sectors": [
               {
@@ -126,7 +133,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13375&eli=true"
           },
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en hacienda pública, patrimonio, presupuestos, fondos europeos, tributos y precios públicos, tesorería y contratación pública.",
+            "summary": "Tiene atribuidas las competencias en hacienda pública, patrimonio, presupuestos, fondos europeos, tributos y precios públicos, tesorería y contratación pública.",
             "legal_basis": "Decreto 230/2023, art. 1.1",
             "sectors": [
               {
@@ -141,7 +148,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13375&eli=true"
           },
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en recursos humanos, función pública e inspección de los servicios.",
+            "summary": "Tiene atribuidas las competencias en recursos humanos, función pública e inspección de los servicios.",
             "legal_basis": "Decreto 230/2023, art. 1.1",
             "sectors": [
               {
@@ -152,7 +159,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13375&eli=true"
           },
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en trabajo, empleo y prevención de riesgos laborales.",
+            "summary": "Tiene atribuidas las competencias en trabajo, empleo y prevención de riesgos laborales.",
             "legal_basis": "Decreto 230/2023, art. 1.1",
             "sectors": [
               {
@@ -179,7 +186,7 @@
         },
         "competences": [
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en educación, universidades, enseñanzas artísticas, investigación científica e innovación tecnológica.",
+            "summary": "Tiene atribuidas las competencias en educación, universidades, enseñanzas artísticas, investigación científica e innovación tecnológica.",
             "legal_basis": "Decreto 248/2023, art. 1",
             "sectors": [
               {
@@ -206,7 +213,7 @@
         },
         "competences": [
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en servicios sociales, dependencia, discapacidad, infancia, juventud, familia y natalidad.",
+            "summary": "Tiene atribuidas las competencias en servicios sociales, dependencia, discapacidad, infancia, juventud, familia y natalidad.",
             "legal_basis": "Decreto 241/2023, art. 1.1",
             "sectors": [
               {
@@ -217,7 +224,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13396&eli=true"
           },
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en inmigración y cooperación al desarrollo.",
+            "summary": "Tiene atribuidas las competencias en inmigración y cooperación al desarrollo.",
             "legal_basis": "Decreto 241/2023, art. 1.1",
             "sectors": [
               {
@@ -228,7 +235,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13396&eli=true"
           },
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en igualdad, lucha contra la violencia de género y contra la discriminación.",
+            "summary": "Tiene atribuidas las competencias en igualdad, lucha contra la violencia de género y contra la discriminación.",
             "legal_basis": "Decreto 241/2023, art. 1.1",
             "sectors": [
               {
@@ -255,7 +262,7 @@
         },
         "competences": [
           {
-            "summary": "Ejerce las competencias de la Comunidad en medio ambiente, biodiversidad, economía circular, calidad del aire, energía y evaluación ambiental.",
+            "summary": "Tiene atribuidas las competencias en medio ambiente, biodiversidad, economía circular, calidad del aire, energía y evaluación ambiental.",
             "legal_basis": "Decreto 235/2023, art. 1.1",
             "sectors": [
               {
@@ -266,7 +273,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
           },
           {
-            "summary": "Ejerce las competencias de la Comunidad en agricultura, ganadería, alimentación y desarrollo rural.",
+            "summary": "Tiene atribuidas las competencias en agricultura, ganadería, alimentación y desarrollo rural.",
             "legal_basis": "Decreto 235/2023, art. 1.1",
             "sectors": [
               {
@@ -277,7 +284,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
           },
           {
-            "summary": "Ejerce las competencias de la Comunidad en urbanismo, ordenación del territorio y suelo.",
+            "summary": "Tiene atribuidas las competencias en urbanismo, ordenación del territorio y suelo.",
             "legal_basis": "Decreto 235/2023, art. 1.1",
             "sectors": [
               {
@@ -288,12 +295,23 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
           },
           {
-            "summary": "Ejerce las competencias de la Comunidad en seguridad, política interior, protección civil, coordinación de policías locales, emergencias, prevención y extinción de incendios, espectáculos públicos y juego.",
+            "summary": "Tiene atribuidas las competencias en seguridad, política interior, protección civil, coordinación de policías locales, emergencias, prevención y extinción de incendios y espectáculos públicos.",
             "legal_basis": "Decreto 235/2023, art. 1.1",
             "sectors": [
               {
                 "id": "institutional",
                 "name": "Institucional"
+              }
+            ],
+            "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en ordenación y control del juego.",
+            "legal_basis": "Decreto 235/2023, art. 1.1",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
               }
             ],
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13376&eli=true"
@@ -315,7 +333,7 @@
         },
         "competences": [
           {
-            "summary": "Coordina e impulsa la acción del Gobierno entre las consejerías y en sus relaciones con la Asamblea y otras administraciones; lleva la cooperación con el Estado y la Unión Europea, el programa normativo, los procesos electorales, la transparencia y la atención al ciudadano.",
+            "summary": "Tiene atribuidas la coordinación e impulso de la acción del Gobierno entre las consejerías y en sus relaciones con la Asamblea y otras administraciones, la cooperación con el Estado y la Unión Europea, el programa normativo, los procesos electorales, la transparencia y la atención al ciudadano.",
             "legal_basis": "Decreto 229/2023, art. 1.2 y 1.3.a",
             "sectors": [
               {
@@ -326,7 +344,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13374&eli=true"
           },
           {
-            "summary": "Fomenta y coordina las políticas de administración local y de desarrollo local.",
+            "summary": "Tiene atribuidas las competencias en administración local y desarrollo local.",
             "legal_basis": "Decreto 229/2023, art. 1.3.b",
             "sectors": [
               {
@@ -337,7 +355,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13374&eli=true"
           },
           {
-            "summary": "Gestiona los medios personales y materiales de la administración de justicia que ha asumido la Comunidad, y participa en la demarcación y planta judicial.",
+            "summary": "Tiene atribuidas las competencias en justicia: los medios personales y materiales de la administración de justicia que ha asumido la Comunidad y la participación en la demarcación y planta judicial.",
             "legal_basis": "Decreto 229/2023, art. 1.3.c",
             "sectors": [
               {
@@ -364,7 +382,7 @@
         },
         "competences": [
           {
-            "summary": "Propone, desarrolla, coordina y controla las políticas del Gobierno en asistencia sanitaria, atención farmacéutica, salud pública, seguridad alimentaria, salud mental, y ordenación e inspección sanitaria y farmacéutica.",
+            "summary": "Tiene atribuidas las competencias en asistencia sanitaria, atención farmacéutica, salud pública, seguridad alimentaria, salud mental, y ordenación e inspección sanitaria y farmacéutica.",
             "legal_basis": "Decreto 245/2023, art. 1.1",
             "sectors": [
               {
@@ -391,7 +409,7 @@
         },
         "competences": [
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en vivienda, rehabilitación, accesibilidad, calidad de la edificación y patrimonio arquitectónico.",
+            "summary": "Tiene atribuidas las competencias en vivienda, rehabilitación, accesibilidad, calidad de la edificación y patrimonio arquitectónico.",
             "legal_basis": "Decreto 244/2023, art. 1.1",
             "sectors": [
               {
@@ -402,7 +420,7 @@
             "source_url": "https://gestiona.comunidad.madrid/wleg_pub/secure/normativas/contenidoNormativa.jsf?opcion=VerHtml&nmnorma=13403&eli=true"
           },
           {
-            "summary": "Desarrolla, coordina y controla las políticas del Gobierno en transportes, movilidad, carreteras, ferrocarriles e infraestructuras de transporte.",
+            "summary": "Tiene atribuidas las competencias en transportes, movilidad, carreteras, ferrocarriles e infraestructuras de transporte.",
             "legal_basis": "Decreto 244/2023, art. 1.1",
             "sectors": [
               {

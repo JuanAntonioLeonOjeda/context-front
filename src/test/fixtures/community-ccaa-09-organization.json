@@ -18,8 +18,8 @@
       },
       "competences": [
         {
-          "summary": "Té la més alta representació de la Generalitat, dirigeix l'acció del Govern i té la representació ordinària de l'Estat a Catalunya.",
-          "legal_basis": "Estatut d'Autonomia, art. 67.1",
+          "summary": "Tiene la más alta representación de la Generalitat, dirige la acción del Gobierno y tiene la representación ordinaria del Estado en Cataluña.",
+          "legal_basis": "Estatuto de Autonomía, art. 67.1",
           "sectors": [
             {
               "id": "institutional",
@@ -29,8 +29,8 @@
           "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087#a67"
         },
         {
-          "summary": "El Govern dirigeix l'acció política i l'Administració de la Generalitat, i exerceix la funció executiva i la potestat reglamentària.",
-          "legal_basis": "Estatut d'Autonomia, art. 68.1",
+          "summary": "El Gobierno dirige la acción política y la Administración de la Generalitat, y ejerce la función ejecutiva y la potestad reglamentaria.",
+          "legal_basis": "Estatuto de Autonomía, art. 68.1",
           "sectors": [
             {
               "id": "institutional",
@@ -57,7 +57,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de l'agricultura, la ramaderia, la pesca, el desenvolupament del món rural i la indústria agroalimentària.",
+            "summary": "Tiene atribuidas las competencias en agricultura, ganadería, pesca, desarrollo del mundo rural e industria agroalimentaria.",
             "legal_basis": "Decret 133/2024, art. 3.13",
             "sectors": [
               {
@@ -84,7 +84,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de la política econòmica, les entitats de crèdit, el mercat de valors i el sector assegurador.",
+            "summary": "Tiene atribuidas las competencias en política económica, entidades de crédito, mercado de valores, sector asegurador, y juego y apuestas.",
             "legal_basis": "Decret 133/2024, art. 3.2",
             "sectors": [
               {
@@ -95,7 +95,7 @@
             "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
           },
           {
-            "summary": "S'ocupa de les finances públiques, els pressupostos, la gestió dels tributs, el deute públic, el patrimoni, la contractació pública i el joc i les apostes.",
+            "summary": "Tiene atribuidas las competencias en finanzas públicas, presupuestos, gestión de los tributos, deuda pública, patrimonio y contratación pública.",
             "legal_basis": "Decret 133/2024, art. 3.2",
             "sectors": [
               {
@@ -126,7 +126,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de la política educativa no universitària, els centres públics i concertats, el professorat i la formació i qualificació professionals.",
+            "summary": "Tiene atribuidas las competencias en política educativa no universitaria, centros públicos y concertados, profesorado, y formación y cualificación profesionales.",
             "legal_basis": "Decret 133/2024, art. 3.7",
             "sectors": [
               {
@@ -153,7 +153,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa del comerç interior, el consum, el turisme, la indústria, la competència, la innovació i l'emprenedoria.",
+            "summary": "Tiene atribuidas las competencias en comercio interior, consumo, turismo, industria, competencia, innovación y emprendimiento.",
             "legal_basis": "Decret 133/2024, art. 3.9",
             "sectors": [
               {
@@ -164,7 +164,7 @@
             "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
           },
           {
-            "summary": "S'ocupa de les relacions laborals, la inspecció de treball i les polítiques d'ocupació.",
+            "summary": "Tiene atribuidas las competencias en relaciones laborales, inspección de trabajo y políticas de empleo.",
             "legal_basis": "Decret 133/2024, art. 3.9",
             "sectors": [
               {
@@ -191,7 +191,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de les polítiques esportives i del foment de l'activitat física.",
+            "summary": "Tiene atribuidas las competencias en políticas deportivas y fomento de la actividad física.",
             "legal_basis": "Decret 133/2024, art. 3.14",
             "sectors": [
               {
@@ -218,7 +218,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de les polítiques d'igualtat, de dones i contra les violències masclistes, LGTBI+ i de drets humans.",
+            "summary": "Tiene atribuidas las competencias en políticas de igualdad, de mujeres y contra las violencias machistas, LGTBI+ y derechos humanos.",
             "legal_basis": "Decret 133/2024, art. 3.10",
             "sectors": [
               {
@@ -245,7 +245,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de la seguretat ciutadana, el trànsit, les emergències i la protecció civil, la prevenció i extinció d'incendis i els espectacles públics.",
+            "summary": "Tiene atribuidas las competencias en seguridad ciudadana, tráfico, emergencias y protección civil, prevención y extinción de incendios y espectáculos públicos.",
             "legal_basis": "Decret 133/2024, art. 3.3",
             "sectors": [
               {
@@ -272,7 +272,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de la coordinació de l'acció exterior, les relacions amb la Unió Europea, la cooperació al desenvolupament i el foment de la pau.",
+            "summary": "Tiene atribuidas las competencias en coordinación de la acción exterior, relaciones con la Unión Europea, cooperación al desarrollo y fomento de la paz.",
             "legal_basis": "Decret 133/2024, art. 3.11",
             "sectors": [
               {
@@ -299,7 +299,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de la promoció cultural, el patrimoni cultural, els arxius, els museus i les indústries culturals.",
+            "summary": "Tiene atribuidas las competencias en promoción cultural, patrimonio cultural, archivos, museos e industrias culturales.",
             "legal_basis": "Decret 133/2024, art. 3.15",
             "sectors": [
               {
@@ -326,7 +326,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa dels serveis, prestacions i proteccions socials, la renda garantida de ciutadania, la joventut, la gent gran, les famílies, la infància, la discapacitat i la dependència.",
+            "summary": "Tiene atribuidas las competencias en servicios, prestaciones y protecciones sociales, renta garantizada de ciudadanía, juventud, personas mayores, familias, infancia, discapacidad y dependencia.",
             "legal_basis": "Decret 133/2024, art. 3.8",
             "sectors": [
               {
@@ -337,7 +337,7 @@
             "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
           },
           {
-            "summary": "S'ocupa de les polítiques de migracions, refugi i ciutadania.",
+            "summary": "Tiene atribuidas las competencias en migraciones, refugio y ciudadanía.",
             "legal_basis": "Decret 133/2024, art. 3.8",
             "sectors": [
               {
@@ -364,7 +364,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de l'Administració de justícia, els serveis penitenciaris, la justícia juvenil, el dret civil de Catalunya, i els notaris i registradors.",
+            "summary": "Tiene atribuidas las competencias en administración de justicia, servicios penitenciarios, justicia juvenil, derecho civil de Cataluña, notarios y registradores.",
             "legal_basis": "Decret 133/2024, art. 3.4",
             "sectors": [
               {
@@ -375,16 +375,23 @@
             "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
           },
           {
-            "summary": "S'ocupa de la memòria democràtica, els processos electorals, els afers religiosos i les polítiques de qualitat democràtica.",
+            "summary": "Tiene atribuidas las competencias en memoria democrática.",
+            "legal_basis": "Decret 133/2024, art. 3.4",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en procesos electorales, asuntos religiosos y políticas de calidad democrática.",
             "legal_basis": "Decret 133/2024, art. 3.4",
             "sectors": [
               {
                 "id": "institutional",
                 "name": "Institucional"
-              },
-              {
-                "id": "rights",
-                "name": "Derechos"
               }
             ],
             "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
@@ -406,7 +413,7 @@
         },
         "competences": [
           {
-            "summary": "Dona suport al president, exerceix les funcions de secretaria del Govern i l'assessorament jurídic, coordina el Govern, i s'ocupa de la política informativa, les relacions amb el Parlament, la cooperació amb l'administració local, la transparència, l'administració digital i la funció pública.",
+            "summary": "Tiene atribuidas las competencias en apoyo al presidente, secretaría y asesoramiento jurídico del Gobierno, coordinación del Gobierno, política informativa, relaciones con el Parlamento, cooperación con la administración local, transparencia, administración digital y función pública.",
             "legal_basis": "Decret 133/2024, art. 3.1",
             "sectors": [
               {
@@ -433,7 +440,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de la promoció i el foment de la llengua catalana i de la política lingüística del Govern.",
+            "summary": "Tiene atribuidas las competencias en promoción y fomento de la lengua catalana y política lingüística del Gobierno.",
             "legal_basis": "Decret 133/2024, art. 3.16",
             "sectors": [
               {
@@ -460,7 +467,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa del foment de la recerca, les universitats i la qualitat del sistema universitari.",
+            "summary": "Tiene atribuidas las competencias en fomento de la investigación, universidades y calidad del sistema universitario.",
             "legal_basis": "Decret 133/2024, art. 3.12",
             "sectors": [
               {
@@ -487,7 +494,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de la política sanitària, el Servei Català de la Salut i l'Institut Català de la Salut.",
+            "summary": "Tiene atribuidas las competencias en política sanitaria, Servicio Catalán de la Salud e Instituto Catalán de la Salud.",
             "legal_basis": "Decret 133/2024, art. 3.6",
             "sectors": [
               {
@@ -514,7 +521,7 @@
         },
         "competences": [
           {
-            "summary": "S'ocupa de la política territorial, l'urbanisme, el sòl, l'habitatge i la seva rehabilitació, i l'ordenació de l'edificació.",
+            "summary": "Tiene atribuidas las competencias en política territorial, urbanismo, suelo, vivienda y su rehabilitación, y ordenación de la edificación.",
             "legal_basis": "Decret 133/2024, art. 3.5",
             "sectors": [
               {
@@ -525,7 +532,7 @@
             "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
           },
           {
-            "summary": "S'ocupa de les obres públiques, les carreteres, els ferrocarrils, els ports i aeroports, i la mobilitat i el transport.",
+            "summary": "Tiene atribuidas las competencias en obras públicas, carreteras, ferrocarriles, puertos y aeropuertos, y movilidad y transporte.",
             "legal_basis": "Decret 133/2024, art. 3.5",
             "sectors": [
               {
@@ -536,7 +543,7 @@
             "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
           },
           {
-            "summary": "S'ocupa de la qualitat ambiental, el canvi climàtic, l'aigua, els residus, l'energia i el medi natural i la biodiversitat.",
+            "summary": "Tiene atribuidas las competencias en calidad ambiental, cambio climático, agua, residuos, energía, medio natural y biodiversidad.",
             "legal_basis": "Decret 133/2024, art. 3.5",
             "sectors": [
               {
@@ -561,8 +568,8 @@
       "holder": null,
       "competences": [
         {
-          "summary": "Exerceix la potestat legislativa, aprova els pressupostos de la Generalitat i controla i impulsa l'acció política i de govern.",
-          "legal_basis": "Estatut d'Autonomia, art. 55.2",
+          "summary": "Ejerce la potestad legislativa, aprueba los presupuestos de la Generalitat y controla e impulsa la acción política y de gobierno.",
+          "legal_basis": "Estatuto de Autonomía, art. 55.2",
           "sectors": [
             {
               "id": "institutional",
@@ -585,8 +592,8 @@
       "holder": null,
       "competences": [
         {
-          "summary": "És l'òrgan jurisdiccional en què culmina l'organització judicial a Catalunya, sense perjudici de la jurisdicció del Tribunal Suprem.",
-          "legal_basis": "Estatut d'Autonomia, art. 95.1",
+          "summary": "Es el órgano jurisdiccional en que culmina la organización judicial en Cataluña, sin perjuicio de la jurisdicción del Tribunal Supremo.",
+          "legal_basis": "Estatuto de Autonomía, art. 95.1",
           "sectors": [
             {
               "id": "justice",
