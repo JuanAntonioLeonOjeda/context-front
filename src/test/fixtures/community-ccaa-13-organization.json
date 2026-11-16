@@ -1,6 +1,6 @@
 {
   "territory_id": "ccaa-13",
-  "as_of": "2026-11-13",
+  "as_of": "2026-11-16",
   "executive": {
     "status": "complete",
     "head": {
@@ -9,7 +9,7 @@
       "kind": "executive_head",
       "level": "ccaa",
       "dir3_id": null,
-      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#a17",
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#adiecisiete",
       "holder": {
         "name": "Isabel Natividad Díaz Ayuso",
         "post_title": "Presidenta de la Comunidad de Madrid",
@@ -26,7 +26,7 @@
               "name": "Institucional"
             }
           ],
-          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#a17"
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#adiecisiete"
         },
         {
           "summary": "El Gobierno dirige la política de la Comunidad y ejerce las funciones ejecutivas y administrativas y la potestad reglamentaria en lo que el Estatuto no reserva a la Asamblea.",
@@ -37,7 +37,7 @@
               "name": "Institucional"
             }
           ],
-          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#a22"
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#aveintidos"
         }
       ]
     },
@@ -423,7 +423,7 @@
       "kind": "parliament",
       "level": "ccaa",
       "dir3_id": null,
-      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#a9",
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#anoveno",
       "holder": null,
       "competences": [
         {
@@ -435,7 +435,7 @@
               "name": "Institucional"
             }
           ],
-          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#a9"
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#anoveno"
         },
         {
           "summary": "Elige de entre sus miembros a la persona que preside la Comunidad.",
@@ -446,7 +446,7 @@
               "name": "Institucional"
             }
           ],
-          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#a16"
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#adieciseis"
         }
       ]
     }
@@ -458,7 +458,7 @@
       "kind": "judiciary",
       "level": "state",
       "dir3_id": null,
-      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#a45",
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#acuarentaycinco",
       "holder": null,
       "competences": [
         {
@@ -470,7 +470,7 @@
               "name": "Justicia"
             }
           ],
-          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#a45"
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1983-6317#acuarentaycinco"
         }
       ]
     }

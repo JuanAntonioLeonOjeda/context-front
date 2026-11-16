@@ -1,0 +1,695 @@
+{
+  "territory_id": "ccaa-09",
+  "as_of": "2026-11-16",
+  "executive": {
+    "status": "complete",
+    "head": {
+      "id": "ccaa-09-govern",
+      "name": "Presidència de la Generalitat de Catalunya",
+      "kind": "executive_head",
+      "level": "ccaa",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087#a67",
+      "holder": {
+        "name": "Salvador Illa Roca",
+        "post_title": "President de la Generalitat de Catalunya",
+        "since": "2024-08-09",
+        "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-16602"
+      },
+      "competences": [
+        {
+          "summary": "Té la més alta representació de la Generalitat, dirigeix l'acció del Govern i té la representació ordinària de l'Estat a Catalunya.",
+          "legal_basis": "Estatut d'Autonomia, art. 67.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087#a67"
+        },
+        {
+          "summary": "El Govern dirigeix l'acció política i l'Administració de la Generalitat, i exerceix la funció executiva i la potestat reglamentària.",
+          "legal_basis": "Estatut d'Autonomia, art. 68.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087#a68"
+        }
+      ]
+    },
+    "departments": [
+      {
+        "id": "ccaa-09-agricultura",
+        "name": "Departament d'Agricultura, Ramaderia, Pesca i Alimentació",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": null,
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Òscar Ordeig i Molist",
+          "post_title": "Conseller d'Agricultura, Ramaderia, Pesca i Alimentació",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de l'agricultura, la ramaderia, la pesca, el desenvolupament del món rural i la indústria agroalimentària.",
+            "legal_basis": "Decret 133/2024, art. 3.13",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-economia",
+        "name": "Departament d'Economia i Finances",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09037293",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Alícia Romero Llano",
+          "post_title": "Consellera d'Economia i Finances",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de la política econòmica, les entitats de crèdit, el mercat de valors i el sector assegurador.",
+            "legal_basis": "Decret 133/2024, art. 3.2",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          },
+          {
+            "summary": "S'ocupa de les finances públiques, els pressupostos, la gestió dels tributs, el deute públic, el patrimoni, la contractació pública i el joc i les apostes.",
+            "legal_basis": "Decret 133/2024, art. 3.2",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              },
+              {
+                "id": "taxes",
+                "name": "Impuestos"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-educacio",
+        "name": "Departament d'Educació i Formació Professional",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09002976",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Esther Niubó Cidoncha",
+          "post_title": "Consellera d'Educació i Formació Professional",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de la política educativa no universitària, els centres públics i concertats, el professorat i la formació i qualificació professionals.",
+            "legal_basis": "Decret 133/2024, art. 3.7",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-empresa-treball",
+        "name": "Departament d'Empresa i Treball",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09037292",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Miquel Sàmper Rodríguez",
+          "post_title": "Conseller d'Empresa i Treball",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa del comerç interior, el consum, el turisme, la indústria, la competència, la innovació i l'emprenedoria.",
+            "legal_basis": "Decret 133/2024, art. 3.9",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          },
+          {
+            "summary": "S'ocupa de les relacions laborals, la inspecció de treball i les polítiques d'ocupació.",
+            "legal_basis": "Decret 133/2024, art. 3.9",
+            "sectors": [
+              {
+                "id": "work",
+                "name": "Trabajo"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-esports",
+        "name": "Departament d'Esports",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09050673",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Bernardo Álvarez Merino",
+          "post_title": "Conseller d'Esports",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de les polítiques esportives i del foment de l'activitat física.",
+            "legal_basis": "Decret 133/2024, art. 3.14",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-igualtat",
+        "name": "Departament d'Igualtat i Feminisme",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09037372",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Eva Menor Cantador",
+          "post_title": "Consellera d'Igualtat i Feminisme",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de les polítiques d'igualtat, de dones i contra les violències masclistes, LGTBI+ i de drets humans.",
+            "legal_basis": "Decret 133/2024, art. 3.10",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-interior",
+        "name": "Departament d'Interior i Seguretat Pública",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09002979",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Núria Parlon i Gil",
+          "post_title": "Consellera d'Interior i Seguretat Pública",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de la seguretat ciutadana, el trànsit, les emergències i la protecció civil, la prevenció i extinció d'incendis i els espectacles públics.",
+            "legal_basis": "Decret 133/2024, art. 3.3",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-ue-accio-exterior",
+        "name": "Departament d'Unió Europea i Acció Exterior",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09018798",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Jaume Duch Guillot",
+          "post_title": "Conseller d'Unió Europea i Acció Exterior",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de la coordinació de l'acció exterior, les relacions amb la Unió Europea, la cooperació al desenvolupament i el foment de la pau.",
+            "legal_basis": "Decret 133/2024, art. 3.11",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-cultura",
+        "name": "Departament de Cultura",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09002974",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Sònia Hernández Almodóvar",
+          "post_title": "Consellera de Cultura",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de la promoció cultural, el patrimoni cultural, els arxius, els museus i les indústries culturals.",
+            "legal_basis": "Decret 133/2024, art. 3.15",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-drets-socials",
+        "name": "Departament de Drets Socials i Inclusió",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09037192",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Raúl Moreno Montaña",
+          "post_title": "Conseller de Drets Socials i Inclusió",
+          "since": "2026-07-20",
+          "source_url": "https://govern.cat/gov/consell-executiu"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa dels serveis, prestacions i proteccions socials, la renda garantida de ciutadania, la joventut, la gent gran, les famílies, la infància, la discapacitat i la dependència.",
+            "legal_basis": "Decret 133/2024, art. 3.8",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          },
+          {
+            "summary": "S'ocupa de les polítiques de migracions, refugi i ciutadania.",
+            "legal_basis": "Decret 133/2024, art. 3.8",
+            "sectors": [
+              {
+                "id": "migration",
+                "name": "Migración"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-justicia",
+        "name": "Departament de Justícia i Qualitat Democràtica",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09002980",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Ramon Espadaler Parcerisas",
+          "post_title": "Conseller de Justícia i Qualitat Democràtica",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de l'Administració de justícia, els serveis penitenciaris, la justícia juvenil, el dret civil de Catalunya, i els notaris i registradors.",
+            "legal_basis": "Decret 133/2024, art. 3.4",
+            "sectors": [
+              {
+                "id": "justice",
+                "name": "Justicia"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          },
+          {
+            "summary": "S'ocupa de la memòria democràtica, els processos electorals, els afers religiosos i les polítiques de qualitat democràtica.",
+            "legal_basis": "Decret 133/2024, art. 3.4",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              },
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-presidencia",
+        "name": "Departament de la Presidència",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09002971",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Albert Dalmau Miranda",
+          "post_title": "Conseller de la Presidència",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "Dona suport al president, exerceix les funcions de secretaria del Govern i l'assessorament jurídic, coordina el Govern, i s'ocupa de la política informativa, les relacions amb el Parlament, la cooperació amb l'administració local, la transparència, l'administració digital i la funció pública.",
+            "legal_basis": "Decret 133/2024, art. 3.1",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-politica-linguistica",
+        "name": "Departament de Política Lingüística",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09050672",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Francesc Xavier Vila Moreno",
+          "post_title": "Conseller de Política Lingüística",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de la promoció i el foment de la llengua catalana i de la política lingüística del Govern.",
+            "legal_basis": "Decret 133/2024, art. 3.16",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-recerca-universitats",
+        "name": "Departament de Recerca i Universitats",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": null,
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Núria Montserrat Pulido",
+          "post_title": "Consellera de Recerca i Universitats",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa del foment de la recerca, les universitats i la qualitat del sistema universitari.",
+            "legal_basis": "Decret 133/2024, art. 3.12",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-salut",
+        "name": "Departament de Salut",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A09002982",
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Olga Pané Mena",
+          "post_title": "Consellera de Salut",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de la política sanitària, el Servei Català de la Salut i l'Institut Català de la Salut.",
+            "legal_basis": "Decret 133/2024, art. 3.6",
+            "sectors": [
+              {
+                "id": "health",
+                "name": "Sanidad"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-09-territori",
+        "name": "Departament de Territori, Habitatge i Transició Ecològica",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": null,
+        "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf",
+        "holder": {
+          "name": "Sílvia Paneque i Sureda",
+          "post_title": "Consellera de Territori, Habitatge i Transició Ecològica",
+          "since": "2024-08-11",
+          "source_url": "https://www.parlament.cat/document/intrade/422280241"
+        },
+        "competences": [
+          {
+            "summary": "S'ocupa de la política territorial, l'urbanisme, el sòl, l'habitatge i la seva rehabilitació, i l'ordenació de l'edificació.",
+            "legal_basis": "Decret 133/2024, art. 3.5",
+            "sectors": [
+              {
+                "id": "housing",
+                "name": "Vivienda"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          },
+          {
+            "summary": "S'ocupa de les obres públiques, les carreteres, els ferrocarrils, els ports i aeroports, i la mobilitat i el transport.",
+            "legal_basis": "Decret 133/2024, art. 3.5",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          },
+          {
+            "summary": "S'ocupa de la qualitat ambiental, el canvi climàtic, l'aigua, els residus, l'energia i el medi natural i la biodiversitat.",
+            "legal_basis": "Decret 133/2024, art. 3.5",
+            "sectors": [
+              {
+                "id": "environment",
+                "name": "Medio ambiente"
+              }
+            ],
+            "source_url": "https://portaldogc.gencat.cat/utilsEADOP/PDF/9225/2042935.pdf"
+          }
+        ]
+      }
+    ]
+  },
+  "parliaments": [
+    {
+      "id": "ccaa-09-parlament",
+      "name": "Parlament de Catalunya",
+      "kind": "parliament",
+      "level": "ccaa",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087#a55",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Exerceix la potestat legislativa, aprova els pressupostos de la Generalitat i controla i impulsa l'acció política i de govern.",
+          "legal_basis": "Estatut d'Autonomia, art. 55.2",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087#a55"
+        }
+      ]
+    }
+  ],
+  "judiciary": [
+    {
+      "id": "ccaa-09-tsj",
+      "name": "Tribunal Superior de Justícia de Catalunya",
+      "kind": "judiciary",
+      "level": "state",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087#a95",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "És l'òrgan jurisdiccional en què culmina l'organització judicial a Catalunya, sense perjudici de la jurisdicció del Tribunal Suprem.",
+          "legal_basis": "Estatut d'Autonomia, art. 95.1",
+          "sectors": [
+            {
+              "id": "justice",
+              "name": "Justicia"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087#a95"
+        }
+      ]
+    }
+  ],
+  "local": [
+    {
+      "id": "local-ayuntamiento",
+      "name": "Ayuntamiento",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Urbanismo, patrimonio histórico, vivienda de protección pública y rehabilitación de edificios.",
+          "legal_basis": "Ley 7/1985, art. 25.2.a",
+          "sectors": [
+            {
+              "id": "housing",
+              "name": "Vivienda"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Medio ambiente urbano, abastecimiento de agua potable y evacuación y tratamiento de aguas residuales.",
+          "legal_basis": "Ley 7/1985, art. 25.2.b y c",
+          "sectors": [
+            {
+              "id": "environment",
+              "name": "Medio ambiente"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Policía local, protección civil, prevención y extinción de incendios, tráfico, estacionamiento y transporte colectivo urbano.",
+          "legal_basis": "Ley 7/1985, art. 25.2.f y g",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Atención a personas en situación o riesgo de exclusión social y protección de la salubridad pública.",
+          "legal_basis": "Ley 7/1985, art. 25.2.e y j",
+          "sectors": [
+            {
+              "id": "health",
+              "name": "Sanidad"
+            },
+            {
+              "id": "rights",
+              "name": "Derechos"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Promoción de la cultura y del deporte, y vigilancia del cumplimiento de la escolaridad obligatoria con las administraciones educativas.",
+          "legal_basis": "Ley 7/1985, art. 25.2.l, m y n",
+          "sectors": [
+            {
+              "id": "education",
+              "name": "Educación"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        }
+      ]
+    },
+    {
+      "id": "local-diputacion",
+      "name": "Diputación provincial",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a36",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Coordina los servicios municipales, asiste a los municipios (sobre todo a los pequeños) y presta servicios públicos de ámbito supramunicipal.",
+          "legal_basis": "Ley 7/1985, art. 36.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a36"
+        }
+      ]
+    }
+  ]
+}

@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 
 import general from "@/test/fixtures/organization.json";
 import andalucia from "@/test/fixtures/community-ccaa-01-organization.json";
+import canarias from "@/test/fixtures/community-ccaa-05-organization.json";
+import cataluna from "@/test/fixtures/community-ccaa-09-organization.json";
 import madrid from "@/test/fixtures/community-ccaa-13-organization.json";
 import { server } from "@/test/server";
 
@@ -112,6 +114,19 @@ describe("fetchCommunityOrganization", () => {
     expect(chart?.judiciary.map((b) => b.name)).toEqual([
       "Tribunal Superior de Justicia de Madrid",
     ]);
+  });
+
+  it.each([
+    ["ccaa-05", canarias, 12, "Fernando Clavijo Batlle"],
+    ["ccaa-09", cataluna, 16, "Salvador Illa Roca"],
+  ])("reads %s with its head and %i departments", async (id, answer, departments, head) => {
+    serve(`/communities/${id}/organization`, answer);
+
+    const chart = await fetchCommunityOrganization(id);
+
+    expect(chart?.executive.status).toBe("complete");
+    expect(chart?.executive.head?.holder?.name).toBe(head);
+    expect(chart?.executive.departments).toHaveLength(departments);
   });
 
   it("is null when the API knows no such community and throws on any other failure", async () => {

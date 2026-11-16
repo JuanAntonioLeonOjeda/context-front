@@ -1,6 +1,6 @@
 {
   "territory_id": "es",
-  "as_of": "2026-11-13",
+  "as_of": "2026-11-16",
   "executive": {
     "status": "complete",
     "head": {
@@ -936,7 +936,7 @@
     {
       "territory_id": "ccaa-05",
       "name": "Canarias",
-      "executive_status": "no_data"
+      "executive_status": "complete"
     },
     {
       "territory_id": "ccaa-06",
@@ -956,7 +956,7 @@
     {
       "territory_id": "ccaa-09",
       "name": "Cataluña",
-      "executive_status": "no_data"
+      "executive_status": "complete"
     },
     {
       "territory_id": "ccaa-18",
