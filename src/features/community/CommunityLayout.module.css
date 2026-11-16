@@ -38,3 +38,25 @@
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-raised);
 }
+
+/* The way into the community's organigram: a link that looks like one, under the header. */
+.actions {
+  margin: 0 0 var(--space-6);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.chip:hover {
+  background: var(--color-surface);
+  text-decoration: underline;
+}

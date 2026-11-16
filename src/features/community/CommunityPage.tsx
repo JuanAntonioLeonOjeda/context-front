@@ -45,9 +45,19 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
             </div>
             <GovernmentSection government={card.government} />
           </div>
-          <p>
-            <Link to={`/comunidades/${territoryId}/organigrama`}>
+          <p className={styles.actions}>
+            <Link className={styles.chip} to={`/comunidades/${territoryId}/organigrama`}>
               {es.organization.community.link}
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path
+                  d="M12 4v5m0 0H6m6 0h6M6 9v4m12-4v4M4 15h4v4H4zm12 0h4v4h-4zM10 3h4v3h-4z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </Link>
           </p>
           <IndicatorsSection community={card.name} rows={card.indicators} />
