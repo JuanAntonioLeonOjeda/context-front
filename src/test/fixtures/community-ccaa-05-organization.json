@@ -1,0 +1,598 @@
+{
+  "territory_id": "ccaa-05",
+  "as_of": "2026-11-16",
+  "executive": {
+    "status": "complete",
+    "head": {
+      "id": "ccaa-05-gobierno",
+      "name": "Presidencia del Gobierno de Canarias",
+      "kind": "executive_head",
+      "level": "ccaa",
+      "dir3_id": "A05002844",
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-49",
+      "holder": {
+        "name": "Fernando Clavijo Batlle",
+        "post_title": "Presidente de Canarias",
+        "since": "2023-07-13",
+        "source_url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-16293"
+      },
+      "competences": [
+        {
+          "summary": "Designa y separa a la persona titular de la Vicepresidencia y a los demás miembros del Gobierno, dirige y coordina su actuación y ostenta la más alta representación de Canarias y la ordinaria del Estado en ella.",
+          "legal_basis": "Estatuto de Autonomía, art. 49.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-49"
+        },
+        {
+          "summary": "El Gobierno ejerce la dirección política de la Comunidad y de su Administración, las funciones ejecutivas y administrativas y la potestad reglamentaria.",
+          "legal_basis": "Estatuto de Autonomía, art. 50",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-50"
+        },
+        {
+          "summary": "La Presidencia tiene a su cargo los servicios jurídicos del Gobierno, las relaciones con África y las relaciones con el Consejo Económico y Social.",
+          "legal_basis": "Decreto 41/2023, art. 2",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+        }
+      ]
+    },
+    "departments": [
+      {
+        "id": "ccaa-05-agricultura",
+        "name": "Consejería de Agricultura, Ganadería, Pesca y Soberanía Alimentaria",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05033198",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Alejandro Narvay Quintero Castañeda",
+          "post_title": "Consejero de Agricultura, Ganadería, Pesca y Soberanía Alimentaria",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en agricultura, ganadería y pesca.",
+            "legal_basis": "Decreto 41/2023, art. 14",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-bienestar-social",
+        "name": "Consejería de Bienestar Social, Igualdad, Juventud, Infancia y Familias",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05045232",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "María Candelaria Delgado Toledo",
+          "post_title": "Consejera de Bienestar Social, Igualdad, Juventud, Infancia y Familias",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en derechos sociales, igualdad, diversidad, juventud, infancia y familias.",
+            "legal_basis": "Decreto 41/2023, art. 12",
+            "sectors": [
+              {
+                "id": "rights",
+                "name": "Derechos"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-economia",
+        "name": "Consejería de Economía, Industria, Comercio y Autónomos",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05033180",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Manuel Domínguez González",
+          "post_title": "Vicepresidente del Gobierno y Consejero de Economía, Industria, Comercio y Autónomos",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/002.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en promoción y diversificación económica, industria, comercio, consumo y autónomos.",
+            "legal_basis": "Decreto 41/2023, art. 3",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-educacion",
+        "name": "Consejería de Educación, Formación Profesional, Actividad Física y Deportes",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05047932",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Hipólito Alejandro Suárez Nuez",
+          "post_title": "Consejero de Educación, Formación Profesional, Actividad Física y Deportes",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en educación no universitaria, formación profesional y deportes.",
+            "legal_basis": "Decreto 41/2023, art. 7",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-hacienda",
+        "name": "Consejería de Hacienda y Relaciones con la Unión Europea",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05032839",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Matilde Pastora Asián González",
+          "post_title": "Consejera de Hacienda y Relaciones con la Unión Europea",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en hacienda, presupuestos y relaciones con la Unión Europea, e incorpora un comisionado para el Régimen Económico y Fiscal de Canarias.",
+            "legal_basis": "Decreto 41/2023, art. 5",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              },
+              {
+                "id": "taxes",
+                "name": "Impuestos"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-obras-publicas",
+        "name": "Consejería de Obras Públicas, Vivienda y Movilidad",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05032833",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Pablo Rodríguez Valido",
+          "post_title": "Consejero de Obras Públicas, Vivienda y Movilidad",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en vivienda.",
+            "legal_basis": "Decreto 41/2023, art. 4",
+            "sectors": [
+              {
+                "id": "housing",
+                "name": "Vivienda"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en obras públicas y transportes.",
+            "legal_basis": "Decreto 41/2023, art. 4",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-politica-territorial",
+        "name": "Consejería de Política Territorial, Cohesión Territorial y Aguas",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05047663",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Manuel Miranda Medina",
+          "post_title": "Consejero de Política Territorial, Cohesión Territorial y Aguas",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en planificación territorial y aguas.",
+            "legal_basis": "Decreto 41/2023, art. 8",
+            "sectors": [
+              {
+                "id": "environment",
+                "name": "Medio ambiente"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-presidencia",
+        "name": "Consejería de Presidencia, Administraciones Públicas, Justicia y Seguridad",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05033187",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Nieves Lady Barreto Hernández",
+          "post_title": "Consejera de Presidencia, Administraciones Públicas, Justicia y Seguridad",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en administraciones públicas y en seguridad, la reconstrucción de la isla de La Palma, las relaciones con el Parlamento y la Secretaría del Gobierno.",
+            "legal_basis": "Decreto 41/2023, art. 6 y disposiciones adicionales 1 y 2",
+            "sectors": [
+              {
+                "id": "institutional",
+                "name": "Institucional"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en justicia.",
+            "legal_basis": "Decreto 41/2023, art. 6",
+            "sectors": [
+              {
+                "id": "justice",
+                "name": "Justicia"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-sanidad",
+        "name": "Consejería de Sanidad",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05002852",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Esther María Monzón Monzón",
+          "post_title": "Consejera de Sanidad",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en sanidad.",
+            "legal_basis": "Decreto 41/2023, art. 13",
+            "sectors": [
+              {
+                "id": "health",
+                "name": "Sanidad"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-transicion-ecologica",
+        "name": "Consejería de Transición Ecológica y Energía",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05047664",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Mariano Hernández Zapata",
+          "post_title": "Consejero de Transición Ecológica y Energía",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en transición ecológica, lucha contra el cambio climático y energía.",
+            "legal_basis": "Decreto 41/2023, art. 11",
+            "sectors": [
+              {
+                "id": "environment",
+                "name": "Medio ambiente"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-turismo-empleo",
+        "name": "Consejería de Turismo y Empleo",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05030988",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Jéssica del Carmen de León Verdugo",
+          "post_title": "Consejera de Turismo y Empleo",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en turismo.",
+            "legal_basis": "Decreto 41/2023, art. 9",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en empleo.",
+            "legal_basis": "Decreto 41/2023, art. 9",
+            "sectors": [
+              {
+                "id": "work",
+                "name": "Trabajo"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      },
+      {
+        "id": "ccaa-05-universidades-cultura",
+        "name": "Consejería de Universidades, Ciencia e Innovación y Cultura",
+        "kind": "department",
+        "level": "ccaa",
+        "dir3_id": "A05046692",
+        "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html",
+        "holder": {
+          "name": "Migdalia María Machín Tavío",
+          "post_title": "Consejera de Universidades, Ciencia e Innovación y Cultura",
+          "since": "2023-07-14",
+          "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/003.html"
+        },
+        "competences": [
+          {
+            "summary": "Tiene atribuidas las competencias en universidades, cultura y patrimonio cultural.",
+            "legal_basis": "Decreto 41/2023, art. 10",
+            "sectors": [
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          },
+          {
+            "summary": "Tiene atribuidas las competencias en ciencia, investigación, innovación y sociedad de la información.",
+            "legal_basis": "Decreto 41/2023, art. 10",
+            "sectors": [
+              {
+                "id": "economy",
+                "name": "Economía"
+              },
+              {
+                "id": "education",
+                "name": "Educación"
+              }
+            ],
+            "source_url": "https://www.gobiernodecanarias.org/boc/2023/138/001.html"
+          }
+        ]
+      }
+    ]
+  },
+  "parliaments": [
+    {
+      "id": "ccaa-05-parlamento",
+      "name": "Parlamento de Canarias",
+      "kind": "parliament",
+      "level": "ccaa",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-43",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Ejerce la potestad legislativa, aprueba los presupuestos, elige a la persona titular de la Presidencia de Canarias y controla políticamente la acción del Gobierno.",
+          "legal_basis": "Estatuto de Autonomía, art. 43",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-43"
+        }
+      ]
+    }
+  ],
+  "judiciary": [
+    {
+      "id": "ccaa-05-tsj",
+      "name": "Tribunal Superior de Justicia de Canarias",
+      "kind": "judiciary",
+      "level": "state",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-78",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Es el órgano judicial en que culmina la organización judicial en Canarias, sin perjuicio de la jurisdicción del Tribunal Supremo.",
+          "legal_basis": "Estatuto de Autonomía, art. 78.1",
+          "sectors": [
+            {
+              "id": "justice",
+              "name": "Justicia"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-78"
+        }
+      ]
+    }
+  ],
+  "local": [
+    {
+      "id": "local-ayuntamiento",
+      "name": "Ayuntamiento",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Urbanismo, patrimonio histórico, vivienda de protección pública y rehabilitación de edificios.",
+          "legal_basis": "Ley 7/1985, art. 25.2.a",
+          "sectors": [
+            {
+              "id": "housing",
+              "name": "Vivienda"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Medio ambiente urbano, abastecimiento de agua potable y evacuación y tratamiento de aguas residuales.",
+          "legal_basis": "Ley 7/1985, art. 25.2.b y c",
+          "sectors": [
+            {
+              "id": "environment",
+              "name": "Medio ambiente"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Policía local, protección civil, prevención y extinción de incendios, tráfico, estacionamiento y transporte colectivo urbano.",
+          "legal_basis": "Ley 7/1985, art. 25.2.f y g",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Atención a personas en situación o riesgo de exclusión social y protección de la salubridad pública.",
+          "legal_basis": "Ley 7/1985, art. 25.2.e y j",
+          "sectors": [
+            {
+              "id": "health",
+              "name": "Sanidad"
+            },
+            {
+              "id": "rights",
+              "name": "Derechos"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        },
+        {
+          "summary": "Promoción de la cultura y del deporte, y vigilancia del cumplimiento de la escolaridad obligatoria con las administraciones educativas.",
+          "legal_basis": "Ley 7/1985, art. 25.2.l, m y n",
+          "sectors": [
+            {
+              "id": "education",
+              "name": "Educación"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a25"
+        }
+      ]
+    },
+    {
+      "id": "ccaa-05-cabildo",
+      "name": "Cabildo insular",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-65",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Ejerce las competencias propias de la isla, las que se le transfieran o deleguen y colabora en la ejecución de los acuerdos del Gobierno de Canarias.",
+          "legal_basis": "Estatuto de Autonomía, art. 70.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138#ar-70"
+        }
+      ]
+    },
+    {
+      "id": "local-diputacion",
+      "name": "Diputación provincial",
+      "kind": "local",
+      "level": "local",
+      "dir3_id": null,
+      "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a36",
+      "holder": null,
+      "competences": [
+        {
+          "summary": "Coordina los servicios municipales, asiste a los municipios (sobre todo a los pequeños) y presta servicios públicos de ámbito supramunicipal.",
+          "legal_basis": "Ley 7/1985, art. 36.1",
+          "sectors": [
+            {
+              "id": "institutional",
+              "name": "Institucional"
+            }
+          ],
+          "source_url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-5392#a36"
+        }
+      ]
+    }
+  ]
+}

@@ -624,6 +624,81 @@
           }
         }
       }
+    },
+    "/organization": {
+      "get": {
+        "tags": [
+          "organization"
+        ],
+        "summary": "General",
+        "description": "The bodies of a territory with what the law gives each of them, and who holds the\nhead post of its executive and of each department (the president or prime minister, the\nconsejeros or ministers) on the day of the answer, each row with its source.\n\n`executive.status` is `complete` only if the head and every department have a holder in force that\nday; otherwise it is `no_data`, with no head and no departments: the web app says \"sin datos\ntodavía\". Departments are ordered by name, never by importance. No party is given for anyone.",
+        "operationId": "general_organization_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralOrganizationOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/communities/{territory_id}/organization": {
+      "get": {
+        "tags": [
+          "organization"
+        ],
+        "summary": "Community",
+        "description": "The bodies of a territory with what the law gives each of them, and who holds the\nhead post of its executive and of each department (the president or prime minister, the\nconsejeros or ministers) on the day of the answer, each row with its source.\n\n`executive.status` is `complete` only if the head and every department have a holder in force that\nday; otherwise it is `no_data`, with no head and no departments: the web app says \"sin datos\ntodavía\". Departments are ordered by name, never by importance. No party is given for anyone.",
+        "operationId": "community_communities__territory_id__organization_get",
+        "parameters": [
+          {
+            "name": "territory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Territory Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundOut"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -737,6 +812,82 @@
         ],
         "title": "BandOut"
       },
+      "BodyOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "executive_head",
+              "department",
+              "parliament",
+              "judiciary",
+              "local"
+            ],
+            "title": "Kind"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "state",
+              "ccaa",
+              "local"
+            ],
+            "title": "Level"
+          },
+          "dir3_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dir3 Id"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "holder": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HolderOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "competences": {
+            "items": {
+              "$ref": "#/components/schemas/CompetenceOut"
+            },
+            "type": "array",
+            "title": "Competences"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "level",
+          "dir3_id",
+          "source_url",
+          "holder",
+          "competences"
+        ],
+        "title": "BodyOut"
+      },
       "ClassifierOut": {
         "properties": {
           "model_id": {
@@ -824,6 +975,33 @@
         ],
         "title": "CommunityOnMapOut"
       },
+      "CommunityRefOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "executive_status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "no_data"
+            ],
+            "title": "Executive Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "territory_id",
+          "name",
+          "executive_status"
+        ],
+        "title": "CommunityRefOut"
+      },
       "CommunityStoriesOut": {
         "properties": {
           "territory_id": {
@@ -900,6 +1078,37 @@
         ],
         "title": "CommunityTreesOut"
       },
+      "CompetenceOut": {
+        "properties": {
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "legal_basis": {
+            "type": "string",
+            "title": "Legal Basis"
+          },
+          "sectors": {
+            "items": {
+              "$ref": "#/components/schemas/SectorRefOut"
+            },
+            "type": "array",
+            "title": "Sectors"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "summary",
+          "legal_basis",
+          "sectors",
+          "source_url"
+        ],
+        "title": "CompetenceOut"
+      },
       "ComponentStatus": {
         "type": "string",
         "enum": [
@@ -936,6 +1145,97 @@
           "source_url"
         ],
         "title": "ElectionOut"
+      },
+      "ExecutiveOut": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "no_data"
+            ],
+            "title": "Status"
+          },
+          "head": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BodyOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "departments": {
+            "items": {
+              "$ref": "#/components/schemas/BodyOut"
+            },
+            "type": "array",
+            "title": "Departments"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "head",
+          "departments"
+        ],
+        "title": "ExecutiveOut"
+      },
+      "GeneralOrganizationOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "executive": {
+            "$ref": "#/components/schemas/ExecutiveOut"
+          },
+          "parliaments": {
+            "items": {
+              "$ref": "#/components/schemas/BodyOut"
+            },
+            "type": "array",
+            "title": "Parliaments"
+          },
+          "judiciary": {
+            "items": {
+              "$ref": "#/components/schemas/BodyOut"
+            },
+            "type": "array",
+            "title": "Judiciary"
+          },
+          "local": {
+            "items": {
+              "$ref": "#/components/schemas/BodyOut"
+            },
+            "type": "array",
+            "title": "Local"
+          },
+          "communities": {
+            "items": {
+              "$ref": "#/components/schemas/CommunityRefOut"
+            },
+            "type": "array",
+            "title": "Communities"
+          }
+        },
+        "type": "object",
+        "required": [
+          "territory_id",
+          "as_of",
+          "executive",
+          "parliaments",
+          "judiciary",
+          "local",
+          "communities"
+        ],
+        "title": "GeneralOrganizationOut"
       },
       "GovernmentMapOut": {
         "properties": {
@@ -1075,6 +1375,35 @@
           "database"
         ],
         "title": "HealthResponse"
+      },
+      "HolderOut": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "post_title": {
+            "type": "string",
+            "title": "Post Title"
+          },
+          "since": {
+            "type": "string",
+            "format": "date",
+            "title": "Since"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "post_title",
+          "since",
+          "source_url"
+        ],
+        "title": "HolderOut"
       },
       "IncomeOut": {
         "properties": {
@@ -1252,6 +1581,53 @@
         ],
         "title": "NotFoundOut"
       },
+      "OrganizationOut": {
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "title": "Territory Id"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "executive": {
+            "$ref": "#/components/schemas/ExecutiveOut"
+          },
+          "parliaments": {
+            "items": {
+              "$ref": "#/components/schemas/BodyOut"
+            },
+            "type": "array",
+            "title": "Parliaments"
+          },
+          "judiciary": {
+            "items": {
+              "$ref": "#/components/schemas/BodyOut"
+            },
+            "type": "array",
+            "title": "Judiciary"
+          },
+          "local": {
+            "items": {
+              "$ref": "#/components/schemas/BodyOut"
+            },
+            "type": "array",
+            "title": "Local"
+          }
+        },
+        "type": "object",
+        "required": [
+          "territory_id",
+          "as_of",
+          "executive",
+          "parliaments",
+          "judiciary",
+          "local"
+        ],
+        "title": "OrganizationOut"
+      },
       "PartyOut": {
         "properties": {
           "id": {
@@ -1387,6 +1763,24 @@
           "indicator_id"
         ],
         "title": "SectorOut"
+      },
+      "SectorRefOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "SectorRefOut"
       },
       "ShareOut": {
         "properties": {

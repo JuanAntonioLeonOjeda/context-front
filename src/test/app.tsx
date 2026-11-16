@@ -6,6 +6,7 @@ import { routes } from "@/routes/routes";
 import { serveCommunity, type Scenario } from "@/test/community";
 import { serveHealth, type BackendState } from "@/test/health";
 import { serveMapData, type MapEndpoint } from "@/test/map";
+import { serveOrganization } from "@/test/organization";
 import { queryWrapper } from "@/test/query";
 
 export interface AppScenario {
@@ -26,6 +27,7 @@ export function renderApp(path: string, scenario: AppScenario = {}): HTMLElement
     failingTrees: scenario.failingTrees ?? false,
     failingSectors: scenario.failingSectors ?? false,
   });
+  serveOrganization();
   const router = createMemoryRouter(routes, { initialEntries: [path] });
   return render(<RouterProvider router={router} />, { wrapper: queryWrapper() }).container;
 }
