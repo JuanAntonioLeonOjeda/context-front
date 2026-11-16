@@ -5,18 +5,16 @@ import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
 import type { BandView } from "./voter-profile";
-import type { CommunityVoters, DimensionId } from "./voters-api";
-import { useVoterProfile } from "./useVoterProfile";
+import { DIMENSION_IDS, type CommunityVoters, type DimensionId } from "./voters-api";
+import { useVoterProfile, type VoterProfileState } from "./useVoterProfile";
 
 import styles from "./VotersSection.module.css";
 
-const DIMENSIONS: readonly DimensionId[] = ["income", "size", "education"];
-
 /**
  * How the municipalities of a community voted, by band of one dimension at a time (income, the
- * size of the municipality, the education of its people): a card per band with a vertical bar per group, the same numbers in a
- * table, and the note that says how to read it. Every group goes through the same code; the
- * colour is never the only cue, each bar has its name and its figure.
+ * size of the municipality, the education of its people): a card per band with a vertical bar per
+ * group, the same numbers in a table, and the note that says how to read it. Every group goes
+ * through the same code; the colour is never the only cue, each bar has its name and its figure.
  */
 export function VotersSection({ territoryId }: { territoryId: string }): React.JSX.Element | null {
   const [open, setOpen] = useState(true);
@@ -35,8 +33,13 @@ export function VotersSection({ territoryId }: { territoryId: string }): React.J
     />
   );
   const tabs = <DimensionSwitch value={dimension} onChange={setDimension} />;
+  const pending = profile.state === "ready" && profile.pending;
   return (
-    <section aria-labelledby="voters-title" className={styles.section}>
+    <section
+      aria-labelledby="voters-title"
+      aria-busy={pending}
+      className={[styles.section, pending ? styles.pending : ""].join(" ")}
+    >
       {open && profile.state === "ready" && profile.bands !== null ? (
         <Profile voters={profile.voters} bands={profile.bands} heading={heading} tabs={tabs} />
       ) : (
@@ -45,7 +48,10 @@ export function VotersSection({ territoryId }: { territoryId: string }): React.J
           {open && tabs}
         </>
       )}
-      {open && profile.state === "loading" && <p role="status">{texts.loading}</p>}
+      {open && <Status profile={profile} dimension={dimension} />}
+      {open && (profile.state === "loading" || profile.state === "error") && (
+        <p className={styles.note}>{es.voters.method.areas}</p>
+      )}
       {open && profile.state === "error" && (
         <div role="alert">
           <p>{texts.error}</p>
@@ -61,6 +67,25 @@ export function VotersSection({ territoryId }: { territoryId: string }): React.J
   );
 }
 
+/** What a screen reader hears when the profile changes. The element stays in the page all the time,
+ *  because a live region that appears with its text already in it is often not announced; only
+ *  the first load shows its text, the rest is for assistive technology. */
+function Status(props: { profile: VoterProfileState; dimension: DimensionId }): React.JSX.Element {
+  const { profile } = props;
+  const texts = es.voters.section;
+  const loading = profile.state === "loading" || (profile.state === "ready" && profile.pending);
+  const text = loading
+    ? texts.loading
+    : profile.state === "ready"
+      ? formatMessage(texts.loaded, { parameter: es.voters.dimensions[props.dimension].tab })
+      : "";
+  return (
+    <p role="status" className={profile.state === "loading" ? styles.status : styles.statusHidden}>
+      {text}
+    </p>
+  );
+}
+
 /** The parameter the profile is made by: one pressed button among the others. */
 function DimensionSwitch(props: {
   value: DimensionId;
@@ -68,7 +93,7 @@ function DimensionSwitch(props: {
 }): React.JSX.Element {
   return (
     <div role="group" aria-label={es.voters.section.tabs} className={styles.dimensions}>
-      {DIMENSIONS.map((id) => (
+      {DIMENSION_IDS.map((id) => (
         <button
           key={id}
           type="button"
@@ -136,6 +161,7 @@ function NoProfile({ voters }: { voters: CommunityVoters }): React.JSX.Element {
   return (
     <>
       <Intro voters={voters} />
+      <p className={styles.note}>{es.voters.method.areas}</p>
       {voters.noProfileReason !== null && (
         <p>
           {voters.noProfileReason === "no_results"

@@ -303,7 +303,7 @@ export const es = {
           "Hacen falta al menos dos municipios para formar tramos, y esta comunidad no los tiene.",
         tableCaption: "Porcentaje del voto válido de cada tramo de tamaño",
         method:
-          "Los tramos tienen un tamaño fijo en número de electores (menos de 1.500, de 1.500 a 7.999, de 8.000 a 39.999 y 40.000 o más), no un censo parecido: un municipio grande queda solo en su tramo. Los electores son los del censo electoral de la elección, no los habitantes.",
+          "Los tramos tienen un tamaño fijo en número de electores (menos de 1500, de 1500 a 7999, de 8000 a 39.999 y 40.000 o más), no un censo parecido: un municipio grande queda solo en su tramo. Los electores son los del censo electoral de la elección, no los habitantes.",
       },
       education: {
         tab: "Estudios",
@@ -318,7 +318,7 @@ export const es = {
         withoutValue: "Municipios sin dato de estudios, que quedan fuera de los tramos: {count}.",
         tooFew:
           "Hacen falta al menos dos municipios con dato de estudios para formar tramos, y esta comunidad no los tiene.",
-        tableCaption: "Porcentaje del voto válido de cada tramo de estudios",
+        tableCaption: "Porcentaje del voto válido de los municipios de cada tramo de estudios",
         method:
           "Cada tramo reúne municipios enteros, ordenados por el porcentaje de su población de 15 y más años con estudios superiores en {year} (Censo anual de población del INE), de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
       },
@@ -331,9 +331,10 @@ export const es = {
       title: "Cómo votaron los municipios",
       tabs: "Parámetro del perfil",
       loading: "Cargando el perfil de voto…",
+      loaded: "Perfil por {parameter} cargado.",
       error: "No hemos podido cargar el perfil de voto.",
       retry: "Volver a intentarlo",
-      barsOf: "Voto en el {band}",
+      barsOf: "Voto en {band}",
       carousel: {
         label: "Tramos del perfil, se desplazan en horizontal",
         previous: "Tramos anteriores",
@@ -355,7 +356,7 @@ export const es = {
       shares:
         "Los porcentajes son sobre el voto válido de cada tramo. Se muestran las candidaturas con al menos el {percent} % del voto válido de la comunidad, y el resto se suma en «Otras».",
       areas:
-        "El perfil describe zonas, no personas: en un municipio de cualquier tramo vota gente de todo tipo.",
+        "El perfil describe zonas, no personas: en los municipios de cualquier tramo viven y votan personas con todos los niveles de estudios y de renta.",
       sources: "Fuentes:",
       election: "resultados por municipio, Ministerio del Interior",
       // The statistic's page at the INE; the size has none (it is the election's own census).

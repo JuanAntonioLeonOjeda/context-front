@@ -10,7 +10,8 @@ export type VoterProfileState =
   | { state: "loading" }
   | { state: "error"; retry: () => void }
   | { state: "absent" } // the API has no election loaded: the section is not shown
-  | { state: "ready"; voters: CommunityVoters; bands: BandView[] | null };
+  // `pending`: the data shown is the previous dimension's while the new one is fetched.
+  | { state: "ready"; voters: CommunityVoters; bands: BandView[] | null; pending: boolean };
 
 /** A community's voter profile by one dimension with its bars ready to draw; `bands` is null
  *  without a profile. */
@@ -18,6 +19,10 @@ export function useVoterProfile(territoryId: string, by: DimensionId): VoterProf
   const voters = useQuery({
     queryKey: ["community", territoryId, "voters", by],
     queryFn: () => fetchCommunityVoters(territoryId, by),
+    // Switching dimension keeps the profile on screen until the next one arrives, so the buttons
+    // are not destroyed under the keyboard's focus; never another community's.
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[1] === territoryId ? previous : undefined,
   });
   // The same key as the map: the party table is asked for once.
   const parties = useQuery({
@@ -38,12 +43,15 @@ export function useVoterProfile(territoryId: string, by: DimensionId): VoterProf
   if (queries.some((q) => q.isError)) return failed;
   if (!voters.data || !parties.data) return { state: "loading" };
   const { profile } = voters.data;
-  if (profile === null) return { state: "ready", voters: voters.data, bands: null };
+  const pending = voters.isPlaceholderData;
+  if (profile === null) return { state: "ready", voters: voters.data, bands: null, pending };
   try {
     return {
       state: "ready",
       voters: voters.data,
-      bands: bandViews(profile, partyTable(parties.data), by),
+      // By the dimension of the data, which during `pending` is not the one asked for yet.
+      bands: bandViews(profile, partyTable(parties.data), voters.data.dimension),
+      pending,
     };
   } catch (error) {
     // A party the party table does not know is a data error: the section says it could not be

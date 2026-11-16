@@ -186,3 +186,22 @@
   background: var(--color-accent);
   color: var(--color-bg);
 }
+
+/* The previous dimension's profile stays while the next one is fetched. */
+.pending > * {
+  opacity: 0.6;
+}
+
+.status {
+  margin: 0;
+}
+
+/* Said to screen readers, not shown: the region itself is never removed from the page. */
+.statusHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

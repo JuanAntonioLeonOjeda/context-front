@@ -67,7 +67,7 @@ describe("voter profile of a community", () => {
   it("writes each group's name and figure next to its bar, in the API's order", async () => {
     renderSection("ccaa-05");
 
-    const list = within(await firstBand()).getByRole("list", { name: `Voto en el ${FIRST_BAND}` });
+    const list = within(await firstBand()).getByRole("list", { name: `Voto en ${FIRST_BAND}` });
     // Written out: Safari drops the semantics, and the name, of a list styled without markers.
     expect(list).toHaveAttribute("role", "list");
     expect(
@@ -142,7 +142,7 @@ describe("voter profile of a community", () => {
     expect(screen.queryByRole("link", { name: /INE/ })).toBeNull();
     expect(screen.queryByText(/Atlas de distribución de renta/)).toBeNull();
     expect(screen.getByRole("complementary", { name: es.voters.method.title })).toHaveTextContent(
-      "1.500",
+      "de 1500 a 7999",
     );
   });
 
@@ -201,6 +201,33 @@ describe("voter profile of a community", () => {
 
     expect(await screen.findByText(es.voters.dimensions.education.tooFew)).toBeVisible();
     expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+  });
+
+  it("keeps the button pressed on the screen while the next dimension is fetched", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+    server.use(
+      http.get("*/api/communities/:territoryId/voters", async () => {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        return HttpResponse.json(canarias);
+      }),
+    );
+    const size = screen.getByRole("button", { name: es.voters.dimensions.size.tab });
+
+    await userEvent.click(size);
+
+    // The same button, still in the page and still the pressed one: the profile did not unmount.
+    expect(size).toBeInTheDocument();
+    expect(size).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("region", { name: TITLE })).toHaveAttribute("aria-busy", "true");
+    expect(screen.getByRole("status")).toHaveTextContent(es.voters.section.loading);
+  });
+
+  it("says that the profile describes areas even when there is nothing to draw", async () => {
+    renderSection("ccaa-18");
+
+    expect(await screen.findByText(es.voters.dimensions.income.tooFew)).toBeVisible();
+    expect(screen.getByText(/describe zonas, no personas/)).toBeVisible();
   });
 
   it("puts the bands in a row that scrolls sideways, with its own name for the keyboard", async () => {

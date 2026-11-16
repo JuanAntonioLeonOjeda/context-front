@@ -8,6 +8,8 @@ import canariasNews from "@/test/fixtures/community-ccaa-05-news-health.json";
 import canariasVoters from "@/test/fixtures/community-ccaa-05-voters.json";
 import navarraVoters from "@/test/fixtures/community-ccaa-15-voters.json";
 import ceutaVoters from "@/test/fixtures/community-ccaa-18-voters.json";
+import navarraVotersByEducation from "@/test/fixtures/community-ccaa-15-voters-education.json";
+import navarraVotersBySize from "@/test/fixtures/community-ccaa-15-voters-size.json";
 import ceutaVotersByEducation from "@/test/fixtures/community-ccaa-18-voters-education.json";
 import canariasVotersByEducation from "@/test/fixtures/community-ccaa-05-voters-education.json";
 import ceutaVotersBySize from "@/test/fixtures/community-ccaa-18-voters-size.json";
@@ -29,20 +31,23 @@ const VOTERS = new Map<string, object>([
   ["ccaa-15", navarraVoters],
   ["ccaa-18", ceutaVoters],
 ]);
-// The same communities by the size of the municipality (`?by=size`); the others have no capture.
+// The same communities by the size of the municipality (`?by=size`).
 const VOTERS_BY_SIZE = new Map<string, object>([
   ["ccaa-05", canariasVotersBySize],
+  ["ccaa-15", navarraVotersBySize],
   ["ccaa-18", ceutaVotersBySize],
 ]);
 // ... and by the education of their people (`?by=education`).
 const VOTERS_BY_EDUCATION = new Map<string, object>([
   ["ccaa-05", canariasVotersByEducation],
+  ["ccaa-15", navarraVotersByEducation],
   ["ccaa-18", ceutaVotersByEducation],
 ]);
-const VOTERS_BY: Record<string, Map<string, object>> = {
-  size: VOTERS_BY_SIZE,
-  education: VOTERS_BY_EDUCATION,
-};
+const VOTERS_BY = new Map<string, Map<string, object>>([
+  ["income", VOTERS],
+  ["size", VOTERS_BY_SIZE],
+  ["education", VOTERS_BY_EDUCATION],
+]);
 
 const GOVERNMENT = { canarias, cataluna, "canarias-caretaker": caretaker } as const;
 
@@ -88,7 +93,10 @@ export function serveCommunity(
     http.get("*/api/communities/:territoryId/voters", ({ params, request }) => {
       if (options.failingVoters) return HttpResponse.json({ detail: "boom" }, { status: 500 });
       const id = String(params.territoryId);
-      const voters = VOTERS_BY[new URL(request.url).searchParams.get("by") ?? ""] ?? VOTERS;
+      // The real API defaults to income, but the app always says which one: a request without a
+      // known `by` is a bug of the app, and is answered as the real API answers it (422).
+      const voters = VOTERS_BY.get(new URL(request.url).searchParams.get("by") ?? "");
+      if (voters === undefined) return HttpResponse.json({ detail: "bad `by`" }, { status: 422 });
       return voters.has(id)
         ? HttpResponse.json(voters.get(id))
         : HttpResponse.json({ detail: `unknown community ${id}` }, { status: 404 });
