@@ -168,6 +168,41 @@ describe("voter profile of a community", () => {
     expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
   });
 
+  it("switches to the education: five bands in percent, with the census of the INE as source", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+
+    await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.education.tab }));
+
+    expect(
+      await screen.findByRole("heading", {
+        level: 3,
+        name: "Tramo 1 de 5 · menos estudios superiores",
+      }),
+    ).toBeVisible();
+    expect(screen.getByText("De 14,1 % a 24,1 % con estudios superiores")).toBeVisible();
+    expect(screen.getByRole("link", { name: /Censo anual de población/ })).toHaveAttribute(
+      "href",
+      expect.stringContaining("cid=1254736176992"),
+    );
+    expect(screen.queryByText(/Atlas de distribución de renta/)).toBeNull();
+    expect(
+      within(screen.getByRole("complementary", { name: es.voters.method.title })).getByText(
+        /Censo anual de población del INE/,
+      ),
+    ).toBeVisible();
+  });
+
+  it("says that a community of one municipality has no education profile either", async () => {
+    renderSection("ccaa-18");
+    await screen.findByText(es.voters.dimensions.income.tooFew);
+
+    await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.education.tab }));
+
+    expect(await screen.findByText(es.voters.dimensions.education.tooFew)).toBeVisible();
+    expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+  });
+
   it("puts the bands in a row that scrolls sideways, with its own name for the keyboard", async () => {
     renderSection("ccaa-05");
 

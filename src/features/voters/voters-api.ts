@@ -36,7 +36,7 @@ const votersSchema = z.object({
     source_url: z.url(),
   }),
   dimension: z.object({
-    id: z.enum(["income", "size"]),
+    id: z.enum(["income", "size", "education"]),
     unit: z.string(),
     source_url: z.url().nullable(),
     year: z.number().int().nullable(),
@@ -78,13 +78,13 @@ export interface BandShare {
 }
 
 /** What the municipalities are grouped by: the same bands method for each. */
-export type DimensionId = "income" | "size";
+export type DimensionId = "income" | "size" | "education";
 
 export interface VoterBand {
   index: number; // 0 = the lowest values
   municipalities: number;
   censusPercent: number; // of the profile's census: a big city leaves the bands uneven
-  valueMin: number | null; // null: a band no municipality fell in; euros or electors by dimension
+  valueMin: number | null; // null: a band no municipality fell in; euros, electors or percent by dimension
   valueMax: number | null;
   blankPercent: number;
   shares: BandShare[]; // in the order of the profile's groups

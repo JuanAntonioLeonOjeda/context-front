@@ -39,6 +39,13 @@ function highestShare(bands: readonly VoterBand[]): number {
   return Math.max(0, ...bands.flatMap((band) => band.shares.map((share) => share.percent)));
 }
 
+// How a value of the dimension is written: whole euros and electors, a percentage with a decimal.
+const VALUE_FORMAT: Record<DimensionId, Intl.NumberFormat> = {
+  income: numbers,
+  size: numbers,
+  education: one,
+};
+
 function bandName(index: number, total: number, dimension: DimensionId): string {
   const texts = es.voters.dimensions[dimension];
   const name = formatMessage(es.voters.band.name, {
@@ -55,13 +62,14 @@ function bandName(index: number, total: number, dimension: DimensionId): string 
 function rangeText(band: VoterBand, dimension: DimensionId): string | null {
   if (band.valueMin === null || band.valueMax === null) return null;
   const texts = es.voters.dimensions[dimension];
+  const format = VALUE_FORMAT[dimension];
   // A band that is one municipality (a capital with half the census) has one value, not a range.
   if (band.valueMin === band.valueMax) {
-    return formatMessage(texts.single, { value: numbers.format(band.valueMin) });
+    return formatMessage(texts.single, { value: format.format(band.valueMin) });
   }
   return formatMessage(texts.range, {
-    min: numbers.format(band.valueMin),
-    max: numbers.format(band.valueMax),
+    min: format.format(band.valueMin),
+    max: format.format(band.valueMax),
   });
 }
 
