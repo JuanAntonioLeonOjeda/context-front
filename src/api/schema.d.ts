@@ -271,7 +271,9 @@ export interface paths {
          *     bands of one dimension (`by`). `income` (the default): five bands of about the same census, ordered
          *     by the INE's mean net income per person of the election's year (each municipality whole, in the
          *     band where the midpoint of its census falls; a big city can leave a band almost empty). `size`:
-         *     four bands cut at fixed numbers of electors. It describes areas, not people.
+         *     four bands cut at fixed numbers of electors. `education`: five bands of about the same census,
+         *     ordered by the percentage of people aged 15 or over with higher education (INE, Censo anual de
+         *     población). It describes areas, not people.
          *
          *     Without `election`, the latest loaded one. Groups: the parties with at least
          *     `shown_from_percent` % of the community's valid votes (and a candidature that is not in the party
@@ -500,7 +502,7 @@ export interface components {
          * DimensionId
          * @enum {string}
          */
-        DimensionId: "income" | "size";
+        DimensionId: "income" | "size" | "education";
         /** DimensionOut */
         DimensionOut: {
             id: components["schemas"]["DimensionId"];
