@@ -27,6 +27,9 @@ const bandSchema = z.object({
   shares: z.array(z.object({ group_id: z.string(), votes: z.number().int(), percent: z.number() })),
 });
 
+export const DIMENSION_IDS = ["income", "size", "education"] as const;
+export type DimensionId = (typeof DIMENSION_IDS)[number];
+
 const votersSchema = z.object({
   territory_id: z.string(),
   election: z.object({
@@ -36,7 +39,7 @@ const votersSchema = z.object({
     source_url: z.url(),
   }),
   dimension: z.object({
-    id: z.enum(["income", "size", "education"]),
+    id: z.enum(DIMENSION_IDS),
     unit: z.string(),
     source_url: z.url().nullable(),
     year: z.number().int().nullable(),
@@ -78,7 +81,6 @@ export interface BandShare {
 }
 
 /** What the municipalities are grouped by: the same bands method for each. */
-export type DimensionId = "income" | "size" | "education";
 
 export interface VoterBand {
   index: number; // 0 = the lowest values
@@ -120,6 +122,11 @@ export async function fetchCommunityVoters(
     throw new Error(`GET /communities/${territoryId}/voters answered ${String(response.status)}`);
   }
   const parsed = votersSchema.parse(data);
+  // The bands are written in the unit of the dimension the answer says it is: an answer for
+  // another one than asked would put electors under income texts, and nothing would fail.
+  if (parsed.dimension.id !== by) {
+    throw new Error(`asked for ${by} and got ${parsed.dimension.id}`);
+  }
   return {
     electionDay: parsed.election.held_on,
     electionSourceUrl: parsed.election.source_url,
