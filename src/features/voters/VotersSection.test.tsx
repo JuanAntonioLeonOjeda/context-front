@@ -75,14 +75,41 @@ describe("voter profile of a community", () => {
         .getAllByRole("listitem")
         .map((li) => li.textContent),
     ).toEqual([
-      "CC12,5 %",
-      "NC-bc3,5 %",
-      "PP32,7 %",
-      "PSOE34,7 %",
-      "Sumar9,1 %",
-      "Vox5,1 %",
-      "Otras1,6 %",
+      "12,5 %CC",
+      "3,5 %NC-bc",
+      "32,7 %PP",
+      "34,7 %PSOE",
+      "9,1 %Sumar",
+      "5,1 %Vox",
+      "1,6 %Otras",
     ]);
+  });
+
+  it("closes and opens again like the other sections, with the state on the button", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+    expect(screen.getByRole("button", { name: TITLE })).toHaveAttribute("aria-expanded", "true");
+
+    await userEvent.click(screen.getByRole("button", { name: TITLE }));
+
+    expect(screen.getByRole("button", { name: TITLE })).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("heading", { level: 3, name: FIRST_BAND })).toBeNull();
+    expect(screen.queryByRole("region", { name: es.voters.section.carousel.label })).toBeNull();
+    expect(screen.getByRole("heading", { level: 2, name: TITLE })).toBeVisible();
+
+    await userEvent.click(screen.getByRole("button", { name: TITLE }));
+
+    expect(screen.getByRole("button", { name: TITLE })).toHaveAttribute("aria-expanded", "true");
+    expect(await screen.findByRole("heading", { level: 3, name: FIRST_BAND })).toBeVisible();
+  });
+
+  it("puts the bands in a row that scrolls sideways, with its own name for the keyboard", async () => {
+    renderSection("ccaa-05");
+
+    const row = await screen.findByRole("region", { name: es.voters.section.carousel.label });
+
+    expect(row).toHaveAttribute("tabindex", "0");
+    expect(within(row).getAllByRole("heading", { level: 3 })).toHaveLength(5);
   });
 
   it("sizes each bar against the highest share of the profile and colours it from the party table", async () => {
@@ -90,7 +117,7 @@ describe("voter profile of a community", () => {
 
     const band = await firstBand();
     // The highest share of Canarias is 36,0 % (PP, fifth band): 34,7 / 36 = 96,4 %.
-    expect(barOf(band, "PSOE").style.inlineSize).toBe("96.4%");
+    expect(barOf(band, "PSOE").style.blockSize).toBe("96.4%");
     expect(barOf(band, "PSOE")).toHaveStyle({ background: colourOf("psoe") });
     expect(barOf(band, "PP")).toHaveStyle({ background: colourOf("pp") });
     // "Otras" is no party: no colour of its own, the neutral one of the stylesheet.

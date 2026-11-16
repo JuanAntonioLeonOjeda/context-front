@@ -1,4 +1,6 @@
-import { ExternalLink } from "@/features/shell";
+import { useState } from "react";
+
+import { Carousel, ExternalLink, SectionHeading } from "@/features/shell";
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
@@ -15,13 +17,28 @@ import styles from "./VotersSection.module.css";
  */
 export function VotersSection({ territoryId }: { territoryId: string }): React.JSX.Element | null {
   const profile = useVoterProfile(territoryId);
+  const [open, setOpen] = useState(true);
   if (profile.state === "absent") return null;
   const texts = es.voters.section;
+  const heading = (
+    <SectionHeading
+      id="voters-title"
+      title={texts.title}
+      open={open}
+      onToggle={() => {
+        setOpen(!open);
+      }}
+    />
+  );
   return (
     <section aria-labelledby="voters-title" className={styles.section}>
-      <h2 id="voters-title">{texts.title}</h2>
-      {profile.state === "loading" && <p role="status">{texts.loading}</p>}
-      {profile.state === "error" && (
+      {open && profile.state === "ready" && profile.bands !== null ? (
+        <Profile voters={profile.voters} bands={profile.bands} heading={heading} />
+      ) : (
+        heading
+      )}
+      {open && profile.state === "loading" && <p role="status">{texts.loading}</p>}
+      {open && profile.state === "error" && (
         <div role="alert">
           <p>{texts.error}</p>
           <button type="button" onClick={profile.retry}>
@@ -29,59 +46,88 @@ export function VotersSection({ territoryId }: { territoryId: string }): React.J
           </button>
         </div>
       )}
-      {profile.state === "ready" && <Profile voters={profile.voters} bands={profile.bands} />}
+      {profile.state === "ready" && profile.bands === null && <NoProfile voters={profile.voters} />}
     </section>
   );
 }
 
-function Profile(props: { voters: CommunityVoters; bands: BandView[] | null }): React.JSX.Element {
-  const { voters, bands } = props;
-  const date = formatLongDate(voters.electionDay);
+function Profile(props: {
+  voters: CommunityVoters;
+  bands: BandView[];
+  heading: React.JSX.Element;
+}): React.JSX.Element {
+  const { voters, bands, heading } = props;
   const year = voters.incomeYear === null ? null : String(voters.incomeYear);
   return (
     <>
-      <p>
-        {year === null
-          ? formatMessage(es.voters.section.introNoIncome, { date })
-          : formatMessage(es.voters.section.intro, { date, year })}
-      </p>
+      <Carousel
+        heading={heading}
+        intro={<Intro voters={voters} year={year} />}
+        label={es.voters.section.carousel.label}
+        buttonLabels={es.voters.section.carousel}
+      >
+        {/* eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics of a list styled without markers; the explicit role keeps them (WCAG 1.3.1) */}
+        <ol className={styles.bands} role="list">
+          {bands.map((band) => (
+            <li key={band.index}>
+              <Band band={band} />
+            </li>
+          ))}
+        </ol>
+      </Carousel>
+      {voters.profile !== null && voters.profile.municipalitiesWithoutIncome > 0 && (
+        <p className={styles.note}>
+          {formatMessage(es.voters.section.withoutIncome, {
+            count: String(voters.profile.municipalitiesWithoutIncome),
+          })}
+        </p>
+      )}
+      <details className={styles.data}>
+        <summary>{es.voters.table.open}</summary>
+        <DataTable bands={bands} />
+      </details>
+      <Method year={year} shownFromPercent={voters.shownFromPercent} />
+      <Sources voters={voters} />
+    </>
+  );
+}
+
+/** A community with no profile to draw: why, and where the data comes from. */
+function NoProfile({ voters }: { voters: CommunityVoters }): React.JSX.Element {
+  const year = voters.incomeYear === null ? null : String(voters.incomeYear);
+  return (
+    <>
+      <Intro voters={voters} year={year} />
       {voters.noProfileReason !== null && <p>{es.voters.reasons[voters.noProfileReason]}</p>}
-      {bands !== null && (
+      <Sources voters={voters} />
+    </>
+  );
+}
+
+function Intro(props: { voters: CommunityVoters; year: string | null }): React.JSX.Element {
+  const date = formatLongDate(props.voters.electionDay);
+  return (
+    <p>
+      {props.year === null
+        ? formatMessage(es.voters.section.introNoIncome, { date })
+        : formatMessage(es.voters.section.intro, { date, year: props.year })}
+    </p>
+  );
+}
+
+function Sources({ voters }: { voters: CommunityVoters }): React.JSX.Element {
+  return (
+    <p className={styles.note}>
+      {es.voters.method.sources}{" "}
+      <ExternalLink href={voters.electionSourceUrl}>{es.voters.method.election}</ExternalLink>
+      {voters.incomeSourceUrl !== null && (
         <>
-          {/* eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics of a list styled without markers; the explicit role keeps them (WCAG 1.3.1) */}
-          <ol className={styles.bands} role="list">
-            {bands.map((band) => (
-              <li key={band.index}>
-                <Band band={band} />
-              </li>
-            ))}
-          </ol>
-          {voters.profile !== null && voters.profile.municipalitiesWithoutIncome > 0 && (
-            <p className={styles.note}>
-              {formatMessage(es.voters.section.withoutIncome, {
-                count: String(voters.profile.municipalitiesWithoutIncome),
-              })}
-            </p>
-          )}
-          <details className={styles.data}>
-            <summary>{es.voters.table.open}</summary>
-            <DataTable bands={bands} />
-          </details>
-          <Method year={year} shownFromPercent={voters.shownFromPercent} />
+          {"; "}
+          <ExternalLink href={voters.incomeSourceUrl}>{es.voters.method.income}</ExternalLink>
         </>
       )}
-      <p className={styles.note}>
-        {es.voters.method.sources}{" "}
-        <ExternalLink href={voters.electionSourceUrl}>{es.voters.method.election}</ExternalLink>
-        {voters.incomeSourceUrl !== null && (
-          <>
-            {"; "}
-            <ExternalLink href={voters.incomeSourceUrl}>{es.voters.method.income}</ExternalLink>
-          </>
-        )}
-        .
-      </p>
-    </>
+      .
+    </p>
   );
 }
 
@@ -103,19 +149,19 @@ function Band({ band }: { band: BandView }): React.JSX.Element {
           aria-label={formatMessage(es.voters.section.barsOf, { band: band.name })}
         >
           {band.bars.map((bar) => (
-            <li key={bar.groupId} className={styles.barRow}>
-              <span className={styles.barLabel}>{bar.label}</span>
-              {/* The drawing repeats the figure beside it, so it is hidden from screen readers. */}
+            <li key={bar.groupId} className={styles.barColumn}>
+              <span className={styles.barValue}>{bar.percent}</span>
+              {/* The drawing repeats the figure above it, so it is hidden from screen readers. */}
               <span className={styles.track} aria-hidden="true">
                 <span
                   className={styles.bar}
                   style={{
-                    inlineSize: `${String(bar.width)}%`,
+                    blockSize: `${String(bar.width)}%`,
                     ...(bar.colour === null ? {} : { background: bar.colour }),
                   }}
                 />
               </span>
-              <span className={styles.barValue}>{bar.percent}</span>
+              <span className={styles.barLabel}>{bar.label}</span>
             </li>
           ))}
         </ul>

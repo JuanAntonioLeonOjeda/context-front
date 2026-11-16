@@ -288,6 +288,11 @@ export const es = {
       error: "No hemos podido cargar el perfil de voto.",
       retry: "Volver a intentarlo",
       barsOf: "Voto en el {band}",
+      carousel: {
+        label: "Tramos de renta, se desplazan en horizontal",
+        previous: "Tramos anteriores",
+        next: "Tramos siguientes",
+      },
       withoutIncome: "Municipios sin dato de renta, que quedan fuera de los tramos: {count}.",
     },
     reasons: {
