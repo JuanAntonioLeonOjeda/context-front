@@ -26,6 +26,8 @@ function prefersReducedMotion(): boolean {
  */
 export function Carousel(props: {
   heading: React.ReactNode;
+  /** Text between the heading and the row, e.g. what the row shows. */
+  intro?: React.ReactNode;
   label: string;
   /** What the arrows say; the indicators' by default. */
   buttonLabels?: { previous: string; next: string };
@@ -112,6 +114,7 @@ export function Carousel(props: {
           </div>
         )}
       </div>
+      {props.intro}
       <div
         ref={track}
         className={styles.track}

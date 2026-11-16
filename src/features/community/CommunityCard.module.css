@@ -570,33 +570,6 @@
   color: var(--color-text);
 }
 
-/* The heading of a section that closes: the button is the title, the chevron turns with the state. */
-.sectionHeading {
-  margin: 0;
-}
-
-.sectionToggle {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-2);
-  margin-inline-start: calc(-1 * var(--space-2));
-  border: 0;
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-}
-
-.sectionToggle:hover {
-  background: var(--color-bg);
-}
-
-.sectionToggle[aria-expanded="false"] svg {
-  transform: rotate(-90deg);
-}
-
 /* The headline of a tree's card is the button that opens the tree; its chevron turns when open. */
 .treeHeadline {
   display: inline-flex;
