@@ -15,19 +15,20 @@ describe("fetchCommunityVoters", () => {
 
     expect(voters).toMatchObject({
       electionDay: "2023-07-23",
-      incomeYear: 2023,
+      dimension: "income",
+      sourceYear: 2023,
       shownFromPercent: 3,
       noProfileReason: null,
     });
     expect(voters?.electionSourceUrl).toContain("infoelectoral.interior.gob.es");
-    expect(voters?.incomeSourceUrl).toContain("www.ine.es/dyngs/INEbase");
+    expect(voters?.sourceUrl).toContain("www.ine.es/dyngs/INEbase");
     expect(voters?.profile?.bands.map((b) => b.index)).toEqual([0, 1, 2, 3, 4]);
     // The lowest band of Canarias, as the API answered it: 21 municipalities, 19.7 % of the census.
     expect(voters?.profile?.bands[0]).toMatchObject({
       municipalities: 21,
       censusPercent: 19.7,
-      incomeMinEur: 10321,
-      incomeMaxEur: 12079,
+      valueMin: 10321,
+      valueMax: 12079,
       blankPercent: 0.9,
     });
   });
@@ -116,5 +117,48 @@ describe("fetchCommunityVoters", () => {
     );
 
     await expect(fetchCommunityVoters("ccaa-05")).rejects.toThrow();
+  });
+
+  it.each([
+    ["income", "ccaa-05"],
+    ["size", "ccaa-05"],
+    ["education", "ccaa-05"],
+  ] as const)("asks for the %s dimension and reads it back", async (by, id) => {
+    serveCommunity();
+    const asked: (string | null)[] = [];
+    server.events.on("request:start", ({ request }) => {
+      if (request.url.includes("/voters")) asked.push(new URL(request.url).searchParams.get("by"));
+    });
+
+    const voters = await fetchCommunityVoters(id, by);
+
+    server.events.removeAllListeners();
+    expect(asked).toEqual([by]);
+    expect(voters?.dimension).toBe(by);
+    // The size is the election's own census: no INE year and no page of the INE.
+    expect(voters?.sourceYear === null).toBe(by === "size");
+    expect(voters?.sourceUrl === null).toBe(by === "size");
+  });
+
+  it("throws when the answer is for another dimension than the one asked", async () => {
+    serveCommunity();
+    server.use(
+      http.get("*/api/communities/:territoryId/voters", () => HttpResponse.json(canarias)),
+    );
+
+    await expect(fetchCommunityVoters("ccaa-05", "size")).rejects.toThrow(
+      "asked for size and got income",
+    );
+  });
+
+  it("rejects a dimension the app does not know", async () => {
+    serveCommunity();
+    server.use(
+      http.get("*/api/communities/:territoryId/voters", () =>
+        HttpResponse.json({ ...canarias, dimension: { ...canarias.dimension, id: "age" } }),
+      ),
+    );
+
+    await expect(fetchCommunityVoters("ccaa-05", "income")).rejects.toThrow();
   });
 });
