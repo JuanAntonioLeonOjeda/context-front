@@ -560,7 +560,7 @@
           "voters"
         ],
         "summary": "Community",
-        "description": "How the municipalities of a community voted in a general election, grouped in\nbands of one dimension (`by`). `income` (the default): five bands of about the same census, ordered\nby the INE's mean net income per person of the election's year (each municipality whole, in the\nband where the midpoint of its census falls; a big city can leave a band almost empty). `size`:\nfour bands cut at fixed numbers of electors. It describes areas, not people.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least\n`shown_from_percent` % of the community's valid votes (and a candidature that is not in the party\ntable, by its acronym), then \"others\". `profile` is null when fewer than two municipalities have a\nvalue (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded. 422: an\nunknown `by`.",
+        "description": "How the municipalities of a community voted in a general election, grouped in\nbands of one dimension (`by`). `income` (the default): five bands of about the same census, ordered\nby the INE's mean net income per person of the election's year (each municipality whole, in the\nband where the midpoint of its census falls; a big city can leave a band almost empty). `size`:\nfour bands cut at fixed numbers of electors. `education`: five bands of about the same census,\nordered by the percentage of people aged 15 or over with higher education (INE, Censo anual de\npoblación). It describes areas, not people.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least\n`shown_from_percent` % of the community's valid votes (and a candidature that is not in the party\ntable, by its acronym), then \"others\". `profile` is null when fewer than two municipalities have a\nvalue (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded. 422: an\nunknown `by`.",
         "operationId": "community_communities__territory_id__voters_get",
         "parameters": [
           {
@@ -1132,7 +1132,8 @@
         "type": "string",
         "enum": [
           "income",
-          "size"
+          "size",
+          "education"
         ],
         "title": "DimensionId"
       },
