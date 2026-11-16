@@ -268,14 +268,16 @@ export interface paths {
         /**
          * Community
          * @description How the municipalities of a community voted in a general election, grouped in
-         *     five income bands of about the same census (each municipality whole, in the band where the
-         *     midpoint of its census falls; a big city can leave a band almost empty). Income: the INE's mean net
-         *     income per person of the election's year. It describes areas, not people.
+         *     bands of one dimension (`by`). `income` (the default): five bands of about the same census, ordered
+         *     by the INE's mean net income per person of the election's year (each municipality whole, in the
+         *     band where the midpoint of its census falls; a big city can leave a band almost empty). `size`:
+         *     four bands cut at fixed numbers of electors. It describes areas, not people.
          *
          *     Without `election`, the latest loaded one. Groups: the parties with at least
          *     `shown_from_percent` % of the community's valid votes (and a candidature that is not in the party
-         *     table, by its acronym), then "others". `profile` is null when fewer than two municipalities have
-         *     income (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded.
+         *     table, by its acronym), then "others". `profile` is null when fewer than two municipalities have a
+         *     value (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded. 422: an
+         *     unknown `by`.
          */
         get: operations["community_communities__territory_id__voters_get"];
         put?: never;
@@ -368,10 +370,10 @@ export interface components {
             census: number;
             /** Census Percent */
             census_percent: number;
-            /** Income Min Eur */
-            income_min_eur: number | null;
-            /** Income Max Eur */
-            income_max_eur: number | null;
+            /** Value Min */
+            value_min: number | null;
+            /** Value Max */
+            value_max: number | null;
             /** Valid Votes */
             valid_votes: number;
             /** Blank Votes */
@@ -494,6 +496,23 @@ export interface components {
          * @enum {string}
          */
         ComponentStatus: "up" | "down";
+        /**
+         * DimensionId
+         * @enum {string}
+         */
+        DimensionId: "income" | "size";
+        /** DimensionOut */
+        DimensionOut: {
+            id: components["schemas"]["DimensionId"];
+            /** Unit */
+            unit: string;
+            /** Source Url */
+            source_url: string | null;
+            /** Year */
+            year: number | null;
+            /** Fetched At */
+            fetched_at: string | null;
+        };
         /** ElectionOut */
         ElectionOut: {
             /** Id */
@@ -610,18 +629,6 @@ export interface components {
             /** Source Url */
             source_url: string;
         };
-        /** IncomeOut */
-        IncomeOut: {
-            /** Year */
-            year: number;
-            /** Source Url */
-            source_url: string;
-            /**
-             * Fetched At
-             * Format: date-time
-             */
-            fetched_at: string;
-        };
         /** IndicatorOut */
         IndicatorOut: {
             /** Indicator Id */
@@ -735,8 +742,8 @@ export interface components {
             groups: components["schemas"]["GroupOut"][];
             /** Bands */
             bands: components["schemas"]["BandOut"][];
-            /** Municipalities Without Income */
-            municipalities_without_income: number;
+            /** Municipalities Without Value */
+            municipalities_without_value: number;
         };
         /** SectorOut */
         SectorOut: {
@@ -861,7 +868,7 @@ export interface components {
             /** Territory Id */
             territory_id: string;
             election: components["schemas"]["ElectionOut"];
-            income: components["schemas"]["IncomeOut"] | null;
+            dimension: components["schemas"]["DimensionOut"];
             /** Municipalities */
             municipalities: number;
             /** Shown From Percent */
@@ -1236,6 +1243,8 @@ export interface operations {
             query?: {
                 /** @description e.g. congreso-2023-07 */
                 election?: string | null;
+                /** @description The dimension of the bands */
+                by?: components["schemas"]["DimensionId"];
             };
             header?: never;
             path: {

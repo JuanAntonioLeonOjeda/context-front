@@ -103,6 +103,71 @@ describe("voter profile of a community", () => {
     expect(await screen.findByRole("heading", { level: 3, name: FIRST_BAND })).toBeVisible();
   });
 
+  it("offers the dimensions as buttons and starts with the income", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+
+    const group = screen.getByRole("group", { name: es.voters.section.tabs });
+    const income = within(group).getByRole("button", { name: es.voters.dimensions.income.tab });
+    const size = within(group).getByRole("button", { name: es.voters.dimensions.size.tab });
+
+    expect(income).toHaveAttribute("aria-pressed", "true");
+    expect(size).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("switches to the size of the municipality: four bands, in electors, with no INE source", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+
+    await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.size.tab }));
+
+    expect(
+      await screen.findByRole("heading", {
+        level: 3,
+        name: "Tramo 1 de 4 · municipios más pequeños",
+      }),
+    ).toBeVisible();
+    expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual([
+      "Tramo 1 de 4 · municipios más pequeños",
+      "Tramo 2 de 4",
+      "Tramo 3 de 4",
+      "Tramo 4 de 4 · municipios más grandes",
+      es.voters.method.title,
+    ]);
+    expect(screen.getByRole("button", { name: es.voters.dimensions.size.tab })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    expect(screen.getAllByText(/electores$/, { selector: "span" }).length).toBeGreaterThan(0);
+    expect(screen.queryByRole("link", { name: /INE/ })).toBeNull();
+    expect(screen.queryByText(/Atlas de distribución de renta/)).toBeNull();
+    expect(screen.getByRole("complementary", { name: es.voters.method.title })).toHaveTextContent(
+      "1.500",
+    );
+  });
+
+  it("goes back to the income and keeps the bands the API sent for it", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+    await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.size.tab }));
+    await screen.findByRole("heading", { level: 3, name: /municipios más pequeños/ });
+
+    await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.income.tab }));
+
+    expect(await screen.findByRole("heading", { level: 3, name: FIRST_BAND })).toBeVisible();
+    expect(screen.getByRole("link", { name: /INE/ })).toBeVisible();
+  });
+
+  it("says that a community of one municipality has no size profile either", async () => {
+    renderSection("ccaa-18");
+    await screen.findByText(es.voters.dimensions.income.tooFew);
+
+    await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.size.tab }));
+
+    expect(await screen.findByText(es.voters.dimensions.size.tooFew)).toBeVisible();
+    expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+  });
+
   it("puts the bands in a row that scrolls sideways, with its own name for the keyboard", async () => {
     renderSection("ccaa-05");
 
@@ -137,7 +202,7 @@ describe("voter profile of a community", () => {
     await firstBand();
 
     await userEvent.click(screen.getByText(es.voters.table.open));
-    const table = screen.getByRole("table", { name: es.voters.table.caption });
+    const table = screen.getByRole("table", { name: es.voters.dimensions.income.tableCaption });
     expect(
       within(table)
         .getAllByRole("columnheader")
@@ -199,7 +264,7 @@ describe("voter profile of a community", () => {
   it("says why a community of one municipality has no profile, and draws no band", async () => {
     renderSection("ccaa-18");
 
-    expect(await screen.findByText(es.voters.reasons.too_few_municipalities)).toBeVisible();
+    expect(await screen.findByText(es.voters.dimensions.income.tooFew)).toBeVisible();
     expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
     expect(screen.queryByRole("table")).toBeNull();
     expect(screen.queryByText(es.voters.method.title)).toBeNull();
@@ -250,7 +315,10 @@ describe("voter profile of a community", () => {
     serveCommunity();
     server.use(
       http.get("*/api/communities/:territoryId/voters", () =>
-        HttpResponse.json({ ...canarias, income: null }),
+        HttpResponse.json({
+          ...canarias,
+          dimension: { ...canarias.dimension, source_url: null, year: null, fetched_at: null },
+        }),
       ),
     );
     render(<VotersSection territoryId="ccaa-05" />, { wrapper: queryWrapper() });
@@ -268,7 +336,7 @@ describe("voter profile of a community", () => {
         HttpResponse.json({
           ...canarias,
           shown_from_percent: 5,
-          income: { ...canarias.income, source_url: "https://example.org/renta" },
+          dimension: { ...canarias.dimension, source_url: "https://example.org/renta" },
         }),
       ),
     );

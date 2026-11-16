@@ -1,5 +1,5 @@
 /**
- * How a community's municipalities voted, by income band (`GET /communities/{id}/voters`),
+ * How a community's municipalities voted, by band of one dimension (`GET /communities/{id}/voters`),
  * validated at the edge with zod and mapped to the feature's own types here (snake_case stays
  * in the API layer). Every figure comes computed from the backend: nothing is added up or
  * divided in the browser.
@@ -19,8 +19,8 @@ const bandSchema = z.object({
   municipalities: z.number().int(),
   census: z.number().int(),
   census_percent: z.number(),
-  income_min_eur: z.number().nullable(),
-  income_max_eur: z.number().nullable(),
+  value_min: z.number().nullable(),
+  value_max: z.number().nullable(),
   valid_votes: z.number().int(),
   blank_votes: z.number().int(),
   blank_percent: z.number(),
@@ -35,16 +35,20 @@ const votersSchema = z.object({
     source_file: z.string(),
     source_url: z.url(),
   }),
-  income: z
-    .object({ year: z.number().int(), source_url: z.url(), fetched_at: z.iso.datetime() })
-    .nullable(),
+  dimension: z.object({
+    id: z.enum(["income", "size"]),
+    unit: z.string(),
+    source_url: z.url().nullable(),
+    year: z.number().int().nullable(),
+    fetched_at: z.iso.datetime().nullable(),
+  }),
   shown_from_percent: z.number().int(),
   profile: z
     .object({
       census: z.number().int(),
       groups: z.array(groupSchema),
       bands: z.array(bandSchema),
-      municipalities_without_income: z.number().int(),
+      municipalities_without_value: z.number().int(),
     })
     // Every share belongs to a declared group: a figure with no name is never drawn.
     .refine(
@@ -73,36 +77,43 @@ export interface BandShare {
   percent: number; // of the band's valid votes
 }
 
-export interface IncomeBand {
-  index: number; // 0 = the lowest incomes
+/** What the municipalities are grouped by: the same bands method for each. */
+export type DimensionId = "income" | "size";
+
+export interface VoterBand {
+  index: number; // 0 = the lowest values
   municipalities: number;
   censusPercent: number; // of the profile's census: a big city leaves the bands uneven
-  incomeMinEur: number | null; // null: a band no municipality fell in
-  incomeMaxEur: number | null;
+  valueMin: number | null; // null: a band no municipality fell in; euros or electors by dimension
+  valueMax: number | null;
   blankPercent: number;
   shares: BandShare[]; // in the order of the profile's groups
 }
 
 export interface VoterProfile {
   groups: VoteGroup[];
-  bands: IncomeBand[];
-  municipalitiesWithoutIncome: number;
+  bands: VoterBand[];
+  municipalitiesWithoutValue: number;
 }
 
 export interface CommunityVoters {
   electionDay: string; // ISO date
   electionSourceUrl: string;
-  incomeYear: number | null; // null: no income loaded for the election's year
-  incomeSourceUrl: string | null; // the statistic's page at the INE
+  dimension: DimensionId;
+  sourceYear: number | null; // null: the values are the election's own (the size is its census)
+  sourceUrl: string | null; // the statistic's page at the INE, when there is one
   shownFromPercent: number; // a group is shown from this share of the community's valid votes
   profile: VoterProfile | null;
   noProfileReason: "no_results" | "too_few_municipalities" | null;
 }
 
 /** `null` when the API has no election loaded, or no such community (its 404). */
-export async function fetchCommunityVoters(territoryId: string): Promise<CommunityVoters | null> {
+export async function fetchCommunityVoters(
+  territoryId: string,
+  by: DimensionId = "income",
+): Promise<CommunityVoters | null> {
   const { data, response } = await api.GET("/communities/{territory_id}/voters", {
-    params: { path: { territory_id: territoryId } },
+    params: { path: { territory_id: territoryId }, query: { by } },
   });
   if (response.status === 404) return null;
   if (!response.ok) {
@@ -112,8 +123,9 @@ export async function fetchCommunityVoters(territoryId: string): Promise<Communi
   return {
     electionDay: parsed.election.held_on,
     electionSourceUrl: parsed.election.source_url,
-    incomeYear: parsed.income?.year ?? null,
-    incomeSourceUrl: parsed.income?.source_url ?? null,
+    dimension: parsed.dimension.id,
+    sourceYear: parsed.dimension.year,
+    sourceUrl: parsed.dimension.source_url,
     shownFromPercent: parsed.shown_from_percent,
     profile:
       parsed.profile === null
@@ -124,12 +136,12 @@ export async function fetchCommunityVoters(territoryId: string): Promise<Communi
               index: band.index,
               municipalities: band.municipalities,
               censusPercent: band.census_percent,
-              incomeMinEur: band.income_min_eur,
-              incomeMaxEur: band.income_max_eur,
+              valueMin: band.value_min,
+              valueMax: band.value_max,
               blankPercent: band.blank_percent,
               shares: band.shares.map((s) => ({ groupId: s.group_id, percent: s.percent })),
             })),
-            municipalitiesWithoutIncome: parsed.profile.municipalities_without_income,
+            municipalitiesWithoutValue: parsed.profile.municipalities_without_value,
           },
     noProfileReason: parsed.no_profile_reason,
   };

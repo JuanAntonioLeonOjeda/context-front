@@ -1,0 +1,20 @@
+{
+  "territory_id": "ccaa-18",
+  "election": {
+    "id": "congreso-2023-07",
+    "held_on": "2023-07-23",
+    "source_file": "02202307_MUNI.zip",
+    "source_url": "https://infoelectoral.interior.gob.es/es/elecciones-celebradas/area-de-descargas/"
+  },
+  "dimension": {
+    "id": "size",
+    "unit": "electors",
+    "source_url": null,
+    "year": null,
+    "fetched_at": null
+  },
+  "municipalities": 1,
+  "shown_from_percent": 3,
+  "profile": null,
+  "no_profile_reason": "too_few_municipalities"
+}

@@ -15,19 +15,20 @@ describe("fetchCommunityVoters", () => {
 
     expect(voters).toMatchObject({
       electionDay: "2023-07-23",
-      incomeYear: 2023,
+      dimension: "income",
+      sourceYear: 2023,
       shownFromPercent: 3,
       noProfileReason: null,
     });
     expect(voters?.electionSourceUrl).toContain("infoelectoral.interior.gob.es");
-    expect(voters?.incomeSourceUrl).toContain("www.ine.es/dyngs/INEbase");
+    expect(voters?.sourceUrl).toContain("www.ine.es/dyngs/INEbase");
     expect(voters?.profile?.bands.map((b) => b.index)).toEqual([0, 1, 2, 3, 4]);
     // The lowest band of Canarias, as the API answered it: 21 municipalities, 19.7 % of the census.
     expect(voters?.profile?.bands[0]).toMatchObject({
       municipalities: 21,
       censusPercent: 19.7,
-      incomeMinEur: 10321,
-      incomeMaxEur: 12079,
+      valueMin: 10321,
+      valueMax: 12079,
       blankPercent: 0.9,
     });
   });
