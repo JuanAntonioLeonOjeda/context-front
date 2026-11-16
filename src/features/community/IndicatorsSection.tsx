@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
-import { ExternalLink } from "@/features/shell";
+import { Carousel, ExternalLink, SectionHeading } from "@/features/shell";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
 import type { IndicatorRow } from "./community-card";
-import { Carousel } from "./Carousel";
 import { HEIGHT, PLOT, WIDTH } from "./indicator-chart";
-import { SectionHeading } from "./SectionHeading";
 
 import styles from "./CommunityCard.module.css";
 
