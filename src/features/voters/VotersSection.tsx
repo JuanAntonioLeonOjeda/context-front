@@ -121,12 +121,7 @@ function Profile(props: {
     <>
       <Carousel
         heading={props.heading}
-        intro={
-          <>
-            {props.tabs}
-            <Intro voters={voters} />
-          </>
-        }
+        intro={props.tabs}
         label={es.voters.section.carousel.label}
         buttonLabels={es.voters.section.carousel}
       >
@@ -139,6 +134,7 @@ function Profile(props: {
           ))}
         </ol>
       </Carousel>
+      <Intro voters={voters} className={styles.caption} />
       {voters.profile !== null && voters.profile.municipalitiesWithoutValue > 0 && (
         <p className={styles.note}>
           {formatMessage(texts.withoutValue, {
@@ -160,7 +156,6 @@ function Profile(props: {
 function NoProfile({ voters }: { voters: CommunityVoters }): React.JSX.Element {
   return (
     <>
-      <Intro voters={voters} />
       <p className={styles.note}>{es.voters.method.areas}</p>
       {voters.noProfileReason !== null && (
         <p>
@@ -169,16 +164,22 @@ function NoProfile({ voters }: { voters: CommunityVoters }): React.JSX.Element {
             : es.voters.dimensions[voters.dimension].tooFew}
         </p>
       )}
+      <Intro voters={voters} className={styles.caption} />
       <Sources voters={voters} />
     </>
   );
 }
 
-function Intro({ voters }: { voters: CommunityVoters }): React.JSX.Element {
+/** What the profile is: the election and the parameter, in small print at the foot of the bands. */
+function Intro(props: {
+  voters: CommunityVoters;
+  className: string | undefined;
+}): React.JSX.Element {
+  const { voters } = props;
   const texts = es.voters.dimensions[voters.dimension];
   const date = formatLongDate(voters.electionDay);
   return (
-    <p>
+    <p className={props.className}>
       {voters.sourceYear === null
         ? formatMessage(texts.introNoYear, { date })
         : formatMessage(texts.intro, { date, year: String(voters.sourceYear) })}

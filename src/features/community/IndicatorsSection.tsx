@@ -30,7 +30,10 @@ export function IndicatorsSection(props: {
     />
   );
   return (
-    <section aria-labelledby="indicators-title" className={styles.section}>
+    <section
+      aria-labelledby="indicators-title"
+      className={`${styles.section ?? ""} ${styles.graySection ?? ""}`}
+    >
       {open ? (
         <Carousel
           heading={heading}

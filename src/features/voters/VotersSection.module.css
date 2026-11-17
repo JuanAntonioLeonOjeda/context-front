@@ -1,6 +1,9 @@
 /* Every grid here has one column that may shrink (minmax(0, 1fr)): without it the widest child,
    the table, would set the width of the whole section and push the page sideways on a phone. */
 .section {
+  /* The texts of every section of the page in the same gray (see CommunityCard.module.css). */
+  --color-text-muted: var(--color-text-gray);
+  color: var(--color-text-gray);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
@@ -44,6 +47,12 @@
 
 .bandName {
   font-size: var(--text-md);
+  color: var(--color-text);
+}
+
+/* What the profile is, in small print at the foot of the bands. */
+.caption {
+  font-size: var(--text-sm);
 }
 
 .bandFacts {
@@ -161,8 +170,8 @@
   font-size: var(--text-md);
 }
 
-/* The parameter of the profile: a row of buttons, the pressed one filled; the state is in
-   `aria-pressed`, not in the colour alone. */
+/* The parameter of the profile: a row of capsules like the sectors of the news, the pressed one
+   filled; the state is in `aria-pressed`, not in the colour alone. */
 .dimensions {
   display: inline-flex;
   flex-wrap: wrap;
@@ -184,7 +193,7 @@
 .dimensions button[aria-pressed="true"] {
   border-color: var(--color-accent);
   background: var(--color-accent);
-  color: var(--color-bg);
+  color: var(--color-on-accent); /* the pair whose contrast tokens.test.ts checks */
 }
 
 /* The previous dimension's profile stays while the next one is fetched. */

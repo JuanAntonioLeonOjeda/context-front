@@ -309,6 +309,17 @@ describe("voter profile of a community", () => {
     expect(screen.getByRole("status")).toHaveTextContent(es.voters.section.loading);
   });
 
+  it("is titled the voter profile and says what it is in small print after the bands", async () => {
+    renderSection("ccaa-05");
+    const band = await firstBand();
+
+    expect(screen.getByRole("button", { name: "Perfil de votante" })).toBeVisible();
+    const intro = screen.getByText(/^Cómo votaron los municipios de la comunidad/);
+    // After the last band, not between the buttons and the bands.
+    expect(band.compareDocumentPosition(intro) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(intro).toHaveClass(/caption/);
+  });
+
   it("offers the five parameters, the last one named by the place of birth and not by an origin", async () => {
     renderSection("ccaa-05");
     await firstBand();

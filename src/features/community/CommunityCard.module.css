@@ -73,20 +73,33 @@
   white-space: nowrap;
 }
 
+/* The sectors of the news and the parameters of the voter profile are the same control: capsules,
+   the current one filled (see VotersSection.module.css). */
 .sectors {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
+  gap: var(--space-2);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.sectors a[aria-current="page"] {
-  color: var(--color-text);
+.sectors a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  color: inherit;
   font-weight: 700;
   text-decoration: none;
-  border-bottom: 2px solid var(--color-accent);
+}
+
+.sectors a[aria-current="page"] {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent); /* the pair whose contrast tokens.test.ts checks */
 }
 
 /* The news of one day: a row of equal cards inside a Carousel, which scrolls when they do not
@@ -558,12 +571,15 @@
   font: inherit;
 }
 
-/* The news section: its texts in a gray a little darker than the muted one, headlines and links
-   aside. Overriding the token here keeps the indicators, which share some classes, as they were. */
-.newsSection {
-  composes: section;
+/* The texts of the sections of the community page (statistics, voter profile, trees and news) in
+   a gray a little darker than the muted one, headlines and links aside. */
+.graySection {
   --color-text-muted: var(--color-text-gray);
   color: var(--color-text-gray);
+}
+
+.newsSection {
+  composes: section graySection;
 }
 
 .newsSection .newsHeadline {
