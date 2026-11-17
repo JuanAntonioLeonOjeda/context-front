@@ -11,7 +11,13 @@ import ceutaVoters from "@/test/fixtures/community-ccaa-18-voters.json";
 import navarraVotersByEducation from "@/test/fixtures/community-ccaa-15-voters-education.json";
 import navarraVotersBySize from "@/test/fixtures/community-ccaa-15-voters-size.json";
 import ceutaVotersByEducation from "@/test/fixtures/community-ccaa-18-voters-education.json";
+import canariasVotersByAge from "@/test/fixtures/community-ccaa-05-voters-age.json";
+import canariasVotersByBornAbroad from "@/test/fixtures/community-ccaa-05-voters-born_abroad.json";
 import canariasVotersByEducation from "@/test/fixtures/community-ccaa-05-voters-education.json";
+import ceutaVotersByAge from "@/test/fixtures/community-ccaa-18-voters-age.json";
+import ceutaVotersByBornAbroad from "@/test/fixtures/community-ccaa-18-voters-born_abroad.json";
+import navarraVotersByAge from "@/test/fixtures/community-ccaa-15-voters-age.json";
+import navarraVotersByBornAbroad from "@/test/fixtures/community-ccaa-15-voters-born_abroad.json";
 import ceutaVotersBySize from "@/test/fixtures/community-ccaa-18-voters-size.json";
 import canariasVotersBySize from "@/test/fixtures/community-ccaa-05-voters-size.json";
 import trees from "@/test/fixtures/community-trees-education.json";
@@ -43,10 +49,24 @@ const VOTERS_BY_EDUCATION = new Map<string, object>([
   ["ccaa-15", navarraVotersByEducation],
   ["ccaa-18", ceutaVotersByEducation],
 ]);
+// ... and by their age and by their place of birth (`?by=age`, `?by=born_abroad`). Only the
+// municipalities of 500 people or more have a value: Navarra has 152 without one.
+const VOTERS_BY_AGE = new Map<string, object>([
+  ["ccaa-05", canariasVotersByAge],
+  ["ccaa-15", navarraVotersByAge],
+  ["ccaa-18", ceutaVotersByAge],
+]);
+const VOTERS_BY_BORN_ABROAD = new Map<string, object>([
+  ["ccaa-05", canariasVotersByBornAbroad],
+  ["ccaa-15", navarraVotersByBornAbroad],
+  ["ccaa-18", ceutaVotersByBornAbroad],
+]);
 const VOTERS_BY = new Map<string, Map<string, object>>([
   ["income", VOTERS],
   ["size", VOTERS_BY_SIZE],
   ["education", VOTERS_BY_EDUCATION],
+  ["age", VOTERS_BY_AGE],
+  ["born_abroad", VOTERS_BY_BORN_ABROAD],
 ]);
 
 const GOVERNMENT = { canarias, cataluna, "canarias-caretaker": caretaker } as const;
