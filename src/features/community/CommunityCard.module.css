@@ -558,12 +558,15 @@
   font: inherit;
 }
 
-/* The news section: its texts in a gray a little darker than the muted one, headlines and links
-   aside. Overriding the token here keeps the indicators, which share some classes, as they were. */
-.newsSection {
-  composes: section;
+/* The texts of the sections of the community page (statistics, voter profile, trees and news) in
+   a gray a little darker than the muted one, headlines and links aside. */
+.graySection {
   --color-text-muted: var(--color-text-gray);
   color: var(--color-text-gray);
+}
+
+.newsSection {
+  composes: section graySection;
 }
 
 .newsSection .newsHeadline {

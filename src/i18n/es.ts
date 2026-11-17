@@ -365,7 +365,7 @@ export const es = {
       percent: "{value} %",
     },
     section: {
-      title: "Cómo votaron los municipios",
+      title: "Perfil de votante",
       tabs: "Parámetro del perfil",
       loading: "Cargando el perfil de voto…",
       loaded: "Perfil por {parameter} cargado.",
