@@ -47,4 +47,10 @@ describe("base styles", () => {
       );
     }
   });
+
+  it("lets the figure above a bar wrap on a phone, with its two lines reserved, so seven columns do not touch", () => {
+    const phone = votersCss.slice(votersCss.indexOf("@media (max-width: 26rem)"));
+
+    expect(phone).toMatch(/\.barValue \{[^}]*white-space: normal[^}]*min-block-size: 2\.2em/);
+  });
 });
