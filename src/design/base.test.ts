@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 // Read from disk, as tokens.test.ts does: Vitest does not return the text of a stylesheet.
 const baseCss = readFileSync("src/design/base.css", "utf8");
 const headingCss = readFileSync("src/features/shell/SectionHeading.module.css", "utf8");
+const cardCss = readFileSync("src/features/community/CommunityCard.module.css", "utf8");
+const votersCss = readFileSync("src/features/voters/VotersSection.module.css", "utf8");
 const grayCss = [
   "src/features/community/CommunityCard.module.css",
   "src/features/voters/VotersSection.module.css",
@@ -28,6 +30,21 @@ describe("base styles", () => {
     expect(headingCss).toMatch(/\.sectionToggle \{[^}]*color: var\(--color-text-gray\)/);
     for (const css of grayCss) {
       expect(css).toMatch(/--color-text-muted: var\(--color-text-gray\)/);
+    }
+  });
+
+  it("draws the tabs of the voter profile and the news sectors as capsules, the current one filled", () => {
+    for (const [css, tab, current] of [
+      [votersCss, /\.dimensions button \{/, /\.dimensions button\[aria-pressed="true"\] \{/],
+      [cardCss, /\.sectors a \{/, /\.sectors a\[aria-current="page"\] \{/],
+    ] as const) {
+      expect(css).toMatch(tab);
+      expect(css).toMatch(current);
+      expect(css).toContain("border-radius: 999px");
+      const filled = css.slice(css.search(current));
+      expect(filled).toMatch(
+        /^[^}]*background: var\(--color-accent\)[^}]*color: var\(--color-on-accent\)/,
+      );
     }
   });
 });

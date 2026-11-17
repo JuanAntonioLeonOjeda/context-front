@@ -170,33 +170,30 @@
   font-size: var(--text-md);
 }
 
-/* The parameter of the profile: a row of buttons that look like the sectors of the news, the
-   pressed one in bold with the accent line under it; the state is in `aria-pressed`, not in the
-   style alone. */
+/* The parameter of the profile: a row of capsules like the sectors of the news, the pressed one
+   filled; the state is in `aria-pressed`, not in the colour alone. */
 .dimensions {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
+  gap: var(--space-2);
 }
 
 .dimensions button {
   min-block-size: 2.75rem;
-  padding: 0;
-  border: 0;
-  border-block-end: 2px solid transparent;
-  border-radius: 0;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
   background: transparent;
-  color: var(--color-accent);
+  color: inherit;
   font: inherit;
-  text-decoration: underline;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .dimensions button[aria-pressed="true"] {
-  color: var(--color-text);
-  font-weight: 700;
-  text-decoration: none;
-  border-block-end-color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent); /* the pair whose contrast tokens.test.ts checks */
 }
 
 /* The previous dimension's profile stays while the next one is fetched. */
