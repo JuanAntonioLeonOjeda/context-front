@@ -102,4 +102,14 @@ describe("IndicatorsSection", () => {
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });
+
+  it("takes the gray texts of the other sections of the page", () => {
+    render(
+      <IndicatorsSection community="Canarias" rows={indicatorRows([{ ...withData, series }])} />,
+    );
+
+    expect(screen.getByRole("region", { name: es.community.indicators.title })).toHaveClass(
+      /graySection/,
+    );
+  });
 });

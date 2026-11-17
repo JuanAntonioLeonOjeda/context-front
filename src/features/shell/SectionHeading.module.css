@@ -12,7 +12,7 @@
   border: 0;
   border-radius: var(--radius-md);
   background: transparent;
-  color: inherit;
+  color: var(--color-text-gray); /* every section's title, whatever the section's own colours */
   font: inherit;
   cursor: pointer;
 }
