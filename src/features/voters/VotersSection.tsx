@@ -192,6 +192,8 @@ function statisticLabel(dimension: DimensionId): string | null {
   switch (dimension) {
     case "income":
     case "education":
+    case "age":
+    case "born_abroad":
       return es.voters.method.statistic[dimension];
     case "size":
       return null;

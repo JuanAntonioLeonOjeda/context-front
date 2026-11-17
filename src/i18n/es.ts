@@ -322,6 +322,42 @@ export const es = {
         method:
           "Cada tramo reúne municipios enteros, ordenados por el porcentaje de su población de 15 y más años con estudios superiores en {year} (Censo anual de población del INE), de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
       },
+      age: {
+        tab: "Edad",
+        lowest: "menores",
+        highest: "mayores",
+        range: "De {min} % a {max} % con 70 años o más",
+        single: "{value} % con 70 años o más",
+        intro:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según el porcentaje de su población de 15 y más años que tiene 70 años o más en {year}.",
+        introNoYear:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
+        withoutValue:
+          "Municipios sin dato de edad, que quedan fuera de los tramos: {count}. Solo hay dato en los de 500 habitantes o más.",
+        tooFew:
+          "Hacen falta al menos dos municipios con dato de edad para formar tramos, y esta comunidad no los tiene.",
+        tableCaption: "Porcentaje del voto válido de los municipios de cada tramo de edad",
+        method:
+          "Cada tramo reúne municipios enteros, ordenados por el porcentaje de su población de 15 y más años con 70 años o más en {year} (Censo anual de población del INE), de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
+      },
+      born_abroad: {
+        tab: "Origen",
+        lowest: "menos extranjeros",
+        highest: "más extranjeros",
+        range: "De {min} % a {max} % de extranjeros",
+        single: "{value} % de extranjeros",
+        intro:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}, agrupados en tramos según el porcentaje de su población de 15 y más años nacida en el extranjero en {year}.",
+        introNoYear:
+          "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
+        withoutValue:
+          "Municipios sin dato de origen, que quedan fuera de los tramos: {count}. Solo hay dato en los de 500 habitantes o más.",
+        tooFew:
+          "Hacen falta al menos dos municipios con dato de origen para formar tramos, y esta comunidad no los tiene.",
+        tableCaption: "Porcentaje del voto válido de los municipios de cada tramo de origen",
+        method:
+          "Cada tramo reúne municipios enteros, ordenados por el porcentaje de su población de 15 y más años nacida en el extranjero en {year} (Censo anual de población del INE), de modo que los tramos sumen un censo parecido. Es el lugar de nacimiento, no la nacionalidad. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
+      },
     },
     profile: {
       others: "Otras",
@@ -364,6 +400,8 @@ export const es = {
         income: "renta por municipio, INE (Atlas de distribución de renta de los hogares)",
         education:
           "estudios por municipio, INE (Censo anual de población, nivel de estudios completados)",
+        age: "edad por municipio, INE (Censo anual de población, edad)",
+        born_abroad: "origen por municipio, INE (Censo anual de población, país de nacimiento)",
       },
     },
   },

@@ -193,6 +193,74 @@ describe("voter profile of a community", () => {
     ).toBeVisible();
   });
 
+  it("switches to the age: five bands, the share of 70 or more, with the census of the INE as source", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+
+    await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.age.tab }));
+
+    expect(
+      await screen.findByRole("heading", { level: 3, name: "Tramo 1 de 5 · menores" }),
+    ).toBeVisible();
+    expect(screen.getByRole("heading", { level: 3, name: "Tramo 5 de 5 · mayores" })).toBeVisible();
+    expect(screen.getByText("De 7,3 % a 11,1 % con 70 años o más")).toBeVisible();
+    expect(screen.getByRole("link", { name: /edad por municipio/ })).toHaveAttribute(
+      "href",
+      expect.stringContaining("cid=1254736176992"),
+    );
+    expect(screen.queryByText(/Atlas de distribución de renta/)).toBeNull();
+  });
+
+  it("switches to the origin: the share of foreigners, said to be the place of birth", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+
+    await userEvent.click(
+      screen.getByRole("button", { name: es.voters.dimensions.born_abroad.tab }),
+    );
+
+    expect(
+      await screen.findByRole("heading", { level: 3, name: "Tramo 1 de 5 · menos extranjeros" }),
+    ).toBeVisible();
+    expect(screen.getByText("De 2,7 % a 12,0 % de extranjeros")).toBeVisible();
+    expect(screen.getByRole("link", { name: /origen por municipio/ })).toBeVisible();
+    expect(
+      within(screen.getByRole("complementary", { name: es.voters.method.title })).getByText(
+        /Es el lugar de nacimiento, no la nacionalidad/,
+      ),
+    ).toBeVisible();
+  });
+
+  it.each(["age", "born_abroad"] as const)(
+    "counts the %s of the municipalities under 500 inhabitants apart, and says why",
+    async (dimension) => {
+      renderSection("ccaa-15");
+      await firstBand();
+
+      await userEvent.click(
+        screen.getByRole("button", { name: es.voters.dimensions[dimension].tab }),
+      );
+
+      const note = await screen.findByText(/que quedan fuera de los tramos: 152/);
+      expect(note).toHaveTextContent("Solo hay dato en los de 500 habitantes o más.");
+    },
+  );
+
+  it.each(["age", "born_abroad"] as const)(
+    "says that a community of one municipality has no %s profile",
+    async (dimension) => {
+      renderSection("ccaa-18");
+      await screen.findByText(es.voters.dimensions.income.tooFew);
+
+      await userEvent.click(
+        screen.getByRole("button", { name: es.voters.dimensions[dimension].tab }),
+      );
+
+      expect(await screen.findByText(es.voters.dimensions[dimension].tooFew)).toBeVisible();
+      expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+    },
+  );
+
   it("says that a community of one municipality has no education profile either", async () => {
     renderSection("ccaa-18");
     await screen.findByText(es.voters.dimensions.income.tooFew);
@@ -422,6 +490,16 @@ describe("voter profile of a community", () => {
       document.documentElement.setAttribute("data-theme", theme);
       const container = renderSection(territoryId);
       await screen.findByText(/elecciones generales del/);
+
+      expect(await axeViolations(container)).toEqual([]);
+    });
+
+    it.each(["age", "born_abroad"] as const)("has no axe violations on the %s tab", async (id) => {
+      document.documentElement.setAttribute("data-theme", theme);
+      const container = renderSection("ccaa-15");
+      await firstBand();
+      await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions[id].tab }));
+      await screen.findByText(/que quedan fuera de los tramos/);
 
       expect(await axeViolations(container)).toEqual([]);
     });
