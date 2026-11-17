@@ -123,6 +123,8 @@ describe("fetchCommunityVoters", () => {
     ["income", "ccaa-05"],
     ["size", "ccaa-05"],
     ["education", "ccaa-05"],
+    ["age", "ccaa-05"],
+    ["born_abroad", "ccaa-05"],
   ] as const)("asks for the %s dimension and reads it back", async (by, id) => {
     serveCommunity();
     const asked: (string | null)[] = [];

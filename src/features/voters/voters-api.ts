@@ -27,7 +27,7 @@ const bandSchema = z.object({
   shares: z.array(z.object({ group_id: z.string(), votes: z.number().int(), percent: z.number() })),
 });
 
-export const DIMENSION_IDS = ["income", "size", "education"] as const;
+export const DIMENSION_IDS = ["income", "size", "education", "age", "born_abroad"] as const;
 export type DimensionId = (typeof DIMENSION_IDS)[number];
 
 const votersSchema = z.object({
