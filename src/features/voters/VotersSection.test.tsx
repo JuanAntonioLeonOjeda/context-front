@@ -223,13 +223,31 @@ describe("voter profile of a community", () => {
       await screen.findByRole("heading", { level: 3, name: "Tramo 1 de 5 · menos extranjeros" }),
     ).toBeVisible();
     expect(screen.getByText("De 2,7 % a 12,0 % de extranjeros")).toBeVisible();
-    expect(screen.getByRole("link", { name: /origen por municipio/ })).toBeVisible();
+    expect(screen.getByRole("link", { name: /origen por municipio/ })).toHaveAttribute(
+      "href",
+      expect.stringContaining("cid=1254736176992"),
+    );
     expect(
       within(screen.getByRole("complementary", { name: es.voters.method.title })).getByText(
         /Es el lugar de nacimiento, no la nacionalidad/,
       ),
     ).toBeVisible();
   });
+
+  it.each(["age", "born_abroad"] as const)(
+    "does not say that municipalities are left out when none is (%s, Canarias)",
+    async (dimension) => {
+      renderSection("ccaa-05");
+      await firstBand();
+
+      await userEvent.click(
+        screen.getByRole("button", { name: es.voters.dimensions[dimension].tab }),
+      );
+      await screen.findByRole("heading", { level: 3, name: /^Tramo 1 de 5/ });
+
+      expect(screen.queryByText(/que quedan fuera de los tramos/)).toBeNull();
+    },
+  );
 
   it.each(["age", "born_abroad"] as const)(
     "counts the %s of the municipalities under 500 inhabitants apart, and says why",
