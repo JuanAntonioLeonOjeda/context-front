@@ -211,7 +211,7 @@ describe("voter profile of a community", () => {
     expect(screen.queryByText(/Atlas de distribución de renta/)).toBeNull();
   });
 
-  it("switches to the origin: the share of foreigners, said to be the place of birth", async () => {
+  it("switches to the place of birth: the share of foreigners, said to be the place of birth", async () => {
     renderSection("ccaa-05");
     await firstBand();
 
@@ -223,7 +223,7 @@ describe("voter profile of a community", () => {
       await screen.findByRole("heading", { level: 3, name: "Tramo 1 de 5 · menos extranjeros" }),
     ).toBeVisible();
     expect(screen.getByText("De 2,7 % a 12,0 % de extranjeros")).toBeVisible();
-    expect(screen.getByRole("link", { name: /origen por municipio/ })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /lugar de nacimiento por municipio/ })).toHaveAttribute(
       "href",
       expect.stringContaining("cid=1254736176992"),
     );
@@ -307,6 +307,29 @@ describe("voter profile of a community", () => {
     expect(size).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("region", { name: TITLE })).toHaveAttribute("aria-busy", "true");
     expect(screen.getByRole("status")).toHaveTextContent(es.voters.section.loading);
+  });
+
+  it("offers the five parameters, the last one named by the place of birth and not by an origin", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+
+    const group = screen.getByRole("group", { name: es.voters.section.tabs });
+
+    expect(
+      within(group)
+        .getAllByRole("button")
+        .map((b) => b.textContent),
+    ).toEqual(["Renta", "Tamaño", "Estudios", "Edad", "Nacimiento"]);
+  });
+
+  it("says that the bands hold people of any age and place of birth, on every tab", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+
+    await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.age.tab }));
+
+    const method = await screen.findByRole("complementary", { name: es.voters.method.title });
+    expect(method).toHaveTextContent("personas de cualquier edad y lugar de nacimiento");
   });
 
   it("says that the profile describes areas even when there is nothing to draw", async () => {

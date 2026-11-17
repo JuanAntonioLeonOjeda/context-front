@@ -341,7 +341,7 @@ export const es = {
           "Cada tramo reúne municipios enteros, ordenados por el porcentaje de su población de 15 y más años con 70 años o más en {year} (Censo anual de población del INE), de modo que los tramos sumen un censo parecido. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
       },
       born_abroad: {
-        tab: "Origen",
+        tab: "Nacimiento",
         lowest: "menos extranjeros",
         highest: "más extranjeros",
         range: "De {min} % a {max} % de extranjeros",
@@ -351,10 +351,11 @@ export const es = {
         introNoYear:
           "Cómo votaron los municipios de la comunidad en las elecciones generales del {date}.",
         withoutValue:
-          "Municipios sin dato de origen, que quedan fuera de los tramos: {count}. Solo hay dato en los de 500 habitantes o más.",
+          "Municipios sin dato de lugar de nacimiento, que quedan fuera de los tramos: {count}. Solo hay dato en los de 500 habitantes o más.",
         tooFew:
-          "Hacen falta al menos dos municipios con dato de origen para formar tramos, y esta comunidad no los tiene.",
-        tableCaption: "Porcentaje del voto válido de los municipios de cada tramo de origen",
+          "Hacen falta al menos dos municipios con dato de lugar de nacimiento para formar tramos, y esta comunidad no los tiene.",
+        tableCaption:
+          "Porcentaje del voto válido de los municipios de cada tramo de lugar de nacimiento",
         method:
           "Cada tramo reúne municipios enteros, ordenados por el porcentaje de su población de 15 y más años nacida en el extranjero en {year} (Censo anual de población del INE), de modo que los tramos sumen un censo parecido. Es el lugar de nacimiento, no la nacionalidad. Un municipio grande puede dejar un tramo casi vacío; por eso se indica qué parte del censo reúne cada uno.",
       },
@@ -392,7 +393,7 @@ export const es = {
       shares:
         "Los porcentajes son sobre el voto válido de cada tramo. Se muestran las candidaturas con al menos el {percent} % del voto válido de la comunidad, y el resto se suma en «Otras».",
       areas:
-        "El perfil describe zonas, no personas: en los municipios de cualquier tramo viven y votan personas con todos los niveles de estudios y de renta.",
+        "El perfil describe zonas, no personas: en los municipios de cualquier tramo viven y votan personas de cualquier edad y lugar de nacimiento, con todos los niveles de estudios y de renta.",
       sources: "Fuentes:",
       election: "resultados por municipio, Ministerio del Interior",
       // The statistic's page at the INE; the size has none (it is the election's own census).
@@ -401,7 +402,8 @@ export const es = {
         education:
           "estudios por municipio, INE (Censo anual de población, nivel de estudios completados)",
         age: "edad por municipio, INE (Censo anual de población, edad)",
-        born_abroad: "origen por municipio, INE (Censo anual de población, país de nacimiento)",
+        born_abroad:
+          "lugar de nacimiento por municipio, INE (Censo anual de población, país de nacimiento)",
       },
     },
   },
