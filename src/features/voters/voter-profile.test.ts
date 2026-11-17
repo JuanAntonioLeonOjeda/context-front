@@ -172,6 +172,36 @@ describe("bandViews by the size of the municipality", () => {
   });
 });
 
+describe("bandViews by the age and the place of birth of the municipalities", () => {
+  const profile: VoterProfile = {
+    groups: PROFILE.groups,
+    municipalitiesWithoutValue: 0,
+    bands: [
+      band(0, [["pp", 40]], { valueMin: 7.315, valueMax: 11.093 }),
+      band(1, [["pp", 50]], { valueMin: 20, valueMax: 20.04 }),
+      band(2, [["pp", 30]], { valueMin: 29.334, valueMax: 60.082 }),
+    ],
+  };
+
+  it("names the ends of the age by the older and the younger and writes the share of 70 or more", () => {
+    const views = bandViews(profile, TABLE, "age");
+
+    expect(views[0]?.name).toBe("Tramo 1 de 3 · menores");
+    expect(views[2]?.name).toBe("Tramo 3 de 3 · mayores");
+    expect(views[0]?.range).toBe("De 7,3 % a 11,1 % con 70 años o más");
+    expect(views[1]?.range).toBe("20,0 % con 70 años o más");
+  });
+
+  it("names the ends of the origin by the foreigners and writes their share", () => {
+    const views = bandViews(profile, TABLE, "born_abroad");
+
+    expect(views[0]?.name).toBe("Tramo 1 de 3 · menos extranjeros");
+    expect(views[2]?.name).toBe("Tramo 3 de 3 · más extranjeros");
+    expect(views[0]?.range).toBe("De 7,3 % a 11,1 % de extranjeros");
+    expect(views[1]?.range).toBe("20,0 % de extranjeros");
+  });
+});
+
 describe("bandViews by the education of the municipalities", () => {
   const educated: VoterProfile = {
     groups: PROFILE.groups,

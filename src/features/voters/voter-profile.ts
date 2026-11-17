@@ -44,6 +44,8 @@ const VALUE_FORMAT: Record<DimensionId, Intl.NumberFormat> = {
   income: numbers,
   size: numbers,
   education: one,
+  age: one,
+  born_abroad: one,
 };
 
 function bandName(index: number, total: number, dimension: DimensionId): string {

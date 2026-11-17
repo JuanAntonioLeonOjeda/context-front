@@ -1,0 +1,302 @@
+{
+  "territory_id": "ccaa-05",
+  "election": {
+    "id": "congreso-2023-07",
+    "held_on": "2023-07-23",
+    "source_file": "02202307_MUNI.zip",
+    "source_url": "https://infoelectoral.interior.gob.es/es/elecciones-celebradas/area-de-descargas/"
+  },
+  "dimension": {
+    "id": "age",
+    "unit": "percent",
+    "source_url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176992&menu=resultados&idp=1254735572981",
+    "year": 2023,
+    "fetched_at": "2026-11-16T21:36:03.338507Z"
+  },
+  "municipalities": 88,
+  "shown_from_percent": 3,
+  "profile": {
+    "census": 1617233,
+    "groups": [
+      {
+        "id": "coalicion-canaria",
+        "kind": "party",
+        "label": "CC"
+      },
+      {
+        "id": "lista:NC-bc",
+        "kind": "candidature",
+        "label": "NC-bc"
+      },
+      {
+        "id": "pp",
+        "kind": "party",
+        "label": "PP"
+      },
+      {
+        "id": "psoe",
+        "kind": "party",
+        "label": "PSOE"
+      },
+      {
+        "id": "sumar",
+        "kind": "party",
+        "label": "Sumar"
+      },
+      {
+        "id": "vox",
+        "kind": "party",
+        "label": "Vox"
+      },
+      {
+        "id": "otras",
+        "kind": "others",
+        "label": null
+      }
+    ],
+    "bands": [
+      {
+        "index": 0,
+        "municipalities": 15,
+        "census": 339734,
+        "census_percent": 21.0,
+        "value_min": 7.315,
+        "value_max": 11.093,
+        "valid_votes": 191794,
+        "blank_votes": 1420,
+        "blank_percent": 0.7,
+        "shares": [
+          {
+            "group_id": "coalicion-canaria",
+            "votes": 20713,
+            "percent": 10.8
+          },
+          {
+            "group_id": "lista:NC-bc",
+            "votes": 9771,
+            "percent": 5.1
+          },
+          {
+            "group_id": "pp",
+            "votes": 52617,
+            "percent": 27.4
+          },
+          {
+            "group_id": "psoe",
+            "votes": 63248,
+            "percent": 33.0
+          },
+          {
+            "group_id": "sumar",
+            "votes": 20353,
+            "percent": 10.6
+          },
+          {
+            "group_id": "vox",
+            "votes": 20864,
+            "percent": 10.9
+          },
+          {
+            "group_id": "otras",
+            "votes": 2808,
+            "percent": 1.5
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "municipalities": 14,
+        "census": 287248,
+        "census_percent": 17.8,
+        "value_min": 11.179,
+        "value_max": 13.961,
+        "valid_votes": 181631,
+        "blank_votes": 1233,
+        "blank_percent": 0.7,
+        "shares": [
+          {
+            "group_id": "coalicion-canaria",
+            "votes": 18498,
+            "percent": 10.2
+          },
+          {
+            "group_id": "lista:NC-bc",
+            "votes": 11333,
+            "percent": 6.2
+          },
+          {
+            "group_id": "pp",
+            "votes": 51237,
+            "percent": 28.2
+          },
+          {
+            "group_id": "psoe",
+            "votes": 58214,
+            "percent": 32.1
+          },
+          {
+            "group_id": "sumar",
+            "votes": 17396,
+            "percent": 9.6
+          },
+          {
+            "group_id": "vox",
+            "votes": 21489,
+            "percent": 11.8
+          },
+          {
+            "group_id": "otras",
+            "votes": 2231,
+            "percent": 1.2
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "municipalities": 18,
+        "census": 343421,
+        "census_percent": 21.2,
+        "value_min": 13.975,
+        "value_max": 15.749,
+        "valid_votes": 230061,
+        "blank_votes": 2176,
+        "blank_percent": 0.9,
+        "shares": [
+          {
+            "group_id": "coalicion-canaria",
+            "votes": 33000,
+            "percent": 14.3
+          },
+          {
+            "group_id": "lista:NC-bc",
+            "votes": 9814,
+            "percent": 4.3
+          },
+          {
+            "group_id": "pp",
+            "votes": 73107,
+            "percent": 31.8
+          },
+          {
+            "group_id": "psoe",
+            "votes": 75834,
+            "percent": 33.0
+          },
+          {
+            "group_id": "sumar",
+            "votes": 26511,
+            "percent": 11.5
+          },
+          {
+            "group_id": "vox",
+            "votes": 5796,
+            "percent": 2.5
+          },
+          {
+            "group_id": "otras",
+            "votes": 3823,
+            "percent": 1.7
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "municipalities": 3,
+        "census": 328631,
+        "census_percent": 20.3,
+        "value_min": 15.793,
+        "value_max": 15.948,
+        "valid_votes": 208225,
+        "blank_votes": 1282,
+        "blank_percent": 0.6,
+        "shares": [
+          {
+            "group_id": "coalicion-canaria",
+            "votes": 11076,
+            "percent": 5.3
+          },
+          {
+            "group_id": "lista:NC-bc",
+            "votes": 11870,
+            "percent": 5.7
+          },
+          {
+            "group_id": "pp",
+            "votes": 59620,
+            "percent": 28.6
+          },
+          {
+            "group_id": "psoe",
+            "votes": 72242,
+            "percent": 34.7
+          },
+          {
+            "group_id": "sumar",
+            "votes": 22283,
+            "percent": 10.7
+          },
+          {
+            "group_id": "vox",
+            "votes": 27201,
+            "percent": 13.1
+          },
+          {
+            "group_id": "otras",
+            "votes": 2651,
+            "percent": 1.3
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "municipalities": 38,
+        "census": 318199,
+        "census_percent": 19.7,
+        "value_min": 16.052,
+        "value_max": 27.032,
+        "valid_votes": 204988,
+        "blank_votes": 2000,
+        "blank_percent": 1.0,
+        "shares": [
+          {
+            "group_id": "coalicion-canaria",
+            "votes": 31420,
+            "percent": 15.3
+          },
+          {
+            "group_id": "lista:NC-bc",
+            "votes": 2740,
+            "percent": 1.3
+          },
+          {
+            "group_id": "pp",
+            "votes": 72852,
+            "percent": 35.5
+          },
+          {
+            "group_id": "psoe",
+            "votes": 69819,
+            "percent": 34.1
+          },
+          {
+            "group_id": "sumar",
+            "votes": 20809,
+            "percent": 10.2
+          },
+          {
+            "group_id": "vox",
+            "votes": 1672,
+            "percent": 0.8
+          },
+          {
+            "group_id": "otras",
+            "votes": 3676,
+            "percent": 1.8
+          }
+        ]
+      }
+    ],
+    "municipalities_without_value": 0
+  },
+  "no_profile_reason": null
+}

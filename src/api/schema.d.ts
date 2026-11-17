@@ -273,7 +273,13 @@ export interface paths {
          *     band where the midpoint of its census falls; a big city can leave a band almost empty). `size`:
          *     four bands cut at fixed numbers of electors. `education`: five bands of about the same census,
          *     ordered by the percentage of people aged 15 or over with higher education (INE, Censo anual de
-         *     población). It describes areas, not people.
+         *     población). `age`: the same bands, by the percentage of people aged 15 or over who are 70 or
+         *     older. `born_abroad`: the same bands, by the percentage of people aged 15 or over born abroad.
+         *     Age and place of birth exist only for the municipalities of 500 inhabitants or more; the smaller
+         *     ones are counted in `municipalities_without_value`. It describes areas, not people: a band is a
+         *     group of municipalities, and its shares say how those municipalities voted, not how their
+         *     residents with higher education, of an age, born in one place or with any income voted
+         *     (ecological fallacy). It says nothing about the voters of a party.
          *
          *     Without `election`, the latest loaded one. Groups: the parties with at least
          *     `shown_from_percent` % of the community's valid votes (and a candidature that is not in the party
@@ -502,7 +508,7 @@ export interface components {
          * DimensionId
          * @enum {string}
          */
-        DimensionId: "income" | "size" | "education";
+        DimensionId: "income" | "size" | "education" | "age" | "born_abroad";
         /** DimensionOut */
         DimensionOut: {
             id: components["schemas"]["DimensionId"];
