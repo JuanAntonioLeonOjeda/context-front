@@ -4,6 +4,8 @@ repositories:
   related: []
 environment:
   start: "pnpm dev"
+  secrets:
+    - ANTHROPIC_API_KEY
   services:
     app:
       port: 3000
