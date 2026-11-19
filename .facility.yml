@@ -1,0 +1,14 @@
+version: 1
+repositories:
+  primary: "github.com/JuanAntonioLeonOjeda/context-front"
+  related: []
+environment:
+  start: "nohup pnpm dev --host 0.0.0.0 --port 3000 > /tmp/dev.log 2>&1 &"
+  ready: "curl --fail --silent http://127.0.0.1:3000/"
+  secrets:
+    - ANTHROPIC_API_KEY
+  services:
+    app:
+      port: 3000
+      protocol: http
+      websocket: true
