@@ -42,6 +42,7 @@ describe("useCommunityNews", () => {
     });
     if (result.current.state !== "ready") throw new Error("not ready");
     expect(Object.keys(result.current.news.items[0] ?? {}).sort()).toEqual([
+      "articleId",
       "headline",
       "outletId",
       "outletName",

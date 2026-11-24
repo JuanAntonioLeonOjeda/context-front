@@ -20,6 +20,7 @@ const newsSchema = z.object({
   until: z.iso.date(),
   items: z.array(
     z.object({
+      article_id: z.number(),
       outlet_id: z.string(),
       outlet_name: z.string(),
       headline: z.string(),
@@ -32,6 +33,7 @@ const newsSchema = z.object({
 });
 
 export interface NewsItem {
+  articleId: number; // where its related news are asked for
   outletId: string;
   outletName: string;
   headline: string;
@@ -72,6 +74,7 @@ export async function fetchCommunityNews(
     until: parsed.until,
     // The API sends them newest first, ties by outlet id; the list keeps that order.
     items: parsed.items.map((item) => ({
+      articleId: item.article_id,
       outletId: item.outlet_id,
       outletName: item.outlet_name,
       headline: item.headline,

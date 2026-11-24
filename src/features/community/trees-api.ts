@@ -13,6 +13,7 @@ const treesSchema = z.object({
   sector_id: z.string(),
   items: z.array(
     z.object({
+      article_id: z.number(),
       outlet_id: z.string(),
       outlet_name: z.string(),
       headline: z.string(),
@@ -42,6 +43,7 @@ export async function fetchCommunityTrees(
   }
   // The API sends them newest first, ties by outlet id; the list keeps that order.
   return treesSchema.parse(data).items.map((item) => ({
+    articleId: item.article_id,
     outletId: item.outlet_id,
     outletName: item.outlet_name,
     headline: item.headline,

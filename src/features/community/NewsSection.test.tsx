@@ -302,3 +302,93 @@ describe("range of days of the news", () => {
     expect(screen.queryByRole("button", { name: es.community.news.range.reset })).toBeNull();
   });
 });
+
+describe("related news of a news item", () => {
+  async function openRelated(headline: RegExp): Promise<HTMLElement> {
+    const section = await newsSection();
+    await newsLoaded();
+    const button = within(section).getByRole("button", {
+      name: new RegExp(`^Noticias relacionadas con «${headline.source}`),
+    });
+    await userEvent.click(button);
+    expect(button).toHaveAttribute("aria-expanded", "true");
+    return screen.findByRole("group", { name: /^Noticias anteriores parecidas a/ });
+  }
+
+  it("opens the earlier news most alike in text, by day, each with how alike it is", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+
+    const panel = await openRelated(/EN DIRECTO \| El Parlamento rechaza/);
+
+    expect(
+      await within(panel).findByRole("heading", { name: "14 de octubre de 2026" }),
+    ).toBeVisible();
+    expect(within(panel).getByRole("heading", { name: "13 de octubre de 2026" })).toBeVisible();
+    // The item asked for is not repeated: only the earlier ones, with the API's similarity.
+    expect(within(panel).getAllByRole("link")).toHaveLength(4);
+    expect(within(panel).getByText(/Canarias7, \d\d:\d\d · parecido: 0,92/)).toBeVisible();
+    expect(within(panel).getByText(/hasta 8 días\. Parecido no significa/)).toBeVisible();
+    expect(within(panel).getAllByRole("link")[0]).toHaveAttribute("target", "_blank");
+  });
+
+  it("says when there is nothing alike enough, with the window the API used", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+
+    const panel = await openRelated(/Muere un hombre apuñalado/);
+
+    expect(
+      await within(panel).findByText(
+        "No hay noticias anteriores lo bastante parecidas en los 14 días previos.",
+      ),
+    ).toBeVisible();
+    expect(within(panel).queryAllByRole("link")).toHaveLength(0);
+  });
+
+  it("closes the panel with the same button, and opens one item at a time", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+    await openRelated(/Muere un hombre apuñalado/);
+    const section = await newsSection();
+
+    await userEvent.click(
+      within(section).getByRole("button", {
+        name: /^Noticias relacionadas con «Condenan al Servicio Canario de Salud/,
+      }),
+    );
+
+    expect(screen.getAllByRole("group", { name: /^Noticias anteriores parecidas a/ })).toHaveLength(
+      1,
+    );
+    const button = within(section).getByRole("button", {
+      name: /^Noticias relacionadas con «Condenan al Servicio Canario de Salud/,
+    });
+    await userEvent.click(button);
+    expect(button).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("group", { name: /^Noticias anteriores parecidas a/ })).toBeNull();
+  });
+
+  it("says when the related news could not be loaded and lets the reader try again", async () => {
+    renderApp("/comunidades/ccaa-05?sector=health");
+    server.use(
+      http.get("*/api/articles/:articleId/related", () =>
+        HttpResponse.json({ detail: "boom" }, { status: 500 }),
+      ),
+    );
+
+    const panel = await openRelated(/Muere un hombre apuñalado/);
+
+    expect(await within(panel).findByRole("alert")).toHaveTextContent(es.stories.related.error);
+    serveCommunity();
+    await userEvent.click(within(panel).getByRole("button", { name: es.stories.related.retry }));
+    expect(
+      await within(panel).findByText(/No hay noticias anteriores lo bastante parecidas/),
+    ).toBeVisible();
+  });
+
+  it("has no axe violations with a panel open", async () => {
+    const container = renderApp("/comunidades/ccaa-05?sector=health");
+    const panel = await openRelated(/EN DIRECTO \| El Parlamento rechaza/);
+    await within(panel).findByRole("heading", { name: "13 de octubre de 2026" });
+
+    expect(await axeViolations(container)).toEqual([]);
+  });
+});

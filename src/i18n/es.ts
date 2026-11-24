@@ -408,6 +408,19 @@ export const es = {
     },
   },
   stories: {
+    related: {
+      button: "Noticias relacionadas",
+      buttonOf: "Noticias relacionadas con «{headline}»",
+      panelLabel: "Noticias anteriores parecidas a «{headline}»",
+      title: "Noticias anteriores parecidas",
+      similarity: "parecido: {value}",
+      empty: "No hay noticias anteriores lo bastante parecidas en los {days} días previos.",
+      method:
+        "Se busca la noticia anterior más parecida por su texto, luego la anterior a esa, y así hasta {maxDays} días. Parecido no significa que una cause la otra, y puede haber errores.",
+      loading: "Buscando noticias relacionadas…",
+      error: "No hemos podido cargar las noticias relacionadas.",
+      retry: "Volver a intentarlo",
+    },
     tree: {
       title: "Noticias relacionadas",
       back: "Volver",
