@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
 import { Carousel, ExternalLink, SectionHeading } from "@/features/shell";
-import { treePath } from "@/features/stories";
+import { RelatedNewsView, treePath } from "@/features/stories";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
@@ -66,6 +66,8 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
     else next.set(SEARCH_PARAM, value);
     setParams(next, { preventScrollReset: true, replace: true });
   };
+  // One related-news panel open at a time, under the day of its item.
+  const [openArticle, setOpenArticle] = useState<number | null>(null);
   const rows = news.state === "ready" ? newsRows(news.news.items) : [];
   const shown = rows.filter((row) => matchesQuery(query, row.headline, row.outlet));
 
@@ -165,25 +167,51 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
                 </EmptyState>
               ) : (
                 <div className={styles.timeline}>
-                  {groupByDay(shown).map((day) => (
-                    <section key={day.day} aria-labelledby={`news-day-${day.day}`}>
-                      <Carousel
-                        heading={
-                          <h3 id={`news-day-${day.day}`} className={styles.newsDay}>
-                            {day.label}
-                          </h3>
-                        }
-                        label={formatMessage(es.community.news.carousel.label, { date: day.label })}
-                        buttonLabels={es.community.news.carousel}
-                      >
-                        <ol className={styles.news}>
-                          {day.rows.map((row) => (
-                            <NewsItemView key={row.key} row={row} />
-                          ))}
-                        </ol>
-                      </Carousel>
-                    </section>
-                  ))}
+                  {groupByDay(shown).map((day) => {
+                    const opened = day.rows.find((row) => row.articleId === openArticle);
+                    return (
+                      <section key={day.day} aria-labelledby={`news-day-${day.day}`}>
+                        <Carousel
+                          heading={
+                            <h3 id={`news-day-${day.day}`} className={styles.newsDay}>
+                              {day.label}
+                            </h3>
+                          }
+                          label={formatMessage(es.community.news.carousel.label, {
+                            date: day.label,
+                          })}
+                          buttonLabels={es.community.news.carousel}
+                        >
+                          <ol className={styles.news}>
+                            {day.rows.map((row) => (
+                              <NewsItemView
+                                key={row.key}
+                                row={row}
+                                open={row.articleId === openArticle}
+                                onToggle={() => {
+                                  setOpenArticle(
+                                    row.articleId === openArticle ? null : row.articleId,
+                                  );
+                                }}
+                              />
+                            ))}
+                          </ol>
+                        </Carousel>
+                        {opened && (
+                          <div
+                            id={relatedPanelId(opened.articleId)}
+                            className={styles.treePanel}
+                            role="group"
+                            aria-label={formatMessage(es.stories.related.panelLabel, {
+                              headline: opened.headline,
+                            })}
+                          >
+                            <RelatedNewsView articleId={opened.articleId} />
+                          </div>
+                        )}
+                      </section>
+                    );
+                  })}
                 </div>
               )}
             </>
@@ -194,7 +222,16 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
   );
 }
 
-function NewsItemView({ row }: { row: NewsRow }): React.JSX.Element {
+function relatedPanelId(articleId: number): string {
+  return `related-panel-${String(articleId)}`;
+}
+
+function NewsItemView(props: {
+  row: NewsRow;
+  open: boolean;
+  onToggle: () => void;
+}): React.JSX.Element {
+  const { row } = props;
   return (
     <li>
       <article className={styles.newsItem}>
@@ -209,6 +246,16 @@ function NewsItemView({ row }: { row: NewsRow }): React.JSX.Element {
             <SourceIcon />
             {es.community.news.source}
           </ExternalLink>
+          <button
+            type="button"
+            className={styles.newsActionGhost}
+            aria-expanded={props.open}
+            aria-controls={relatedPanelId(row.articleId)}
+            aria-label={formatMessage(es.stories.related.buttonOf, { headline: row.headline })}
+            onClick={props.onToggle}
+          >
+            {es.stories.related.button}
+          </button>
           {row.treeStoryId !== null && (
             <Link
               to={treePath(row.treeStoryId)}

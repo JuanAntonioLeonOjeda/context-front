@@ -1,0 +1,41 @@
+/* The related news of one item: days and their items, in the gray of the community sections. */
+.related {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.related > * {
+  margin: 0;
+}
+
+.title {
+  font-size: var(--text-md);
+}
+
+.day {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.items {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.items > li {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.meta {
+  color: var(--color-text-muted);
+}
+
+.note {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
