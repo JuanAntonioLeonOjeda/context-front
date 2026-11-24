@@ -23,6 +23,8 @@ import canariasVotersBySize from "@/test/fixtures/community-ccaa-05-voters-size.
 import trees from "@/test/fixtures/community-trees-education.json";
 import catalunaNews from "@/test/fixtures/community-ccaa-09-news-health.json";
 import parties from "@/test/fixtures/parties.json";
+import relatedByArticle from "@/test/fixtures/articles-related.json";
+import unknownArticle from "@/test/fixtures/article-unknown-related.json";
 import sectors from "@/test/fixtures/sectors.json";
 import tree37 from "@/test/fixtures/story-37-tree.json";
 import unknown from "@/test/fixtures/community-unknown-governments.json";
@@ -110,6 +112,11 @@ export function serveCommunity(
     http.get("*/api/communities/:territoryId/news", ({ params }) =>
       HttpResponse.json(params.territoryId === "ccaa-09" ? catalunaNews : canariasNews),
     ),
+    // The related news of the articles of the news fixtures, captured from the API (404 otherwise).
+    http.get("*/api/articles/:articleId/related", ({ params }) => {
+      const found = (relatedByArticle as Record<string, object>)[String(params.articleId)];
+      return found ? HttpResponse.json(found) : HttpResponse.json(unknownArticle, { status: 404 });
+    }),
     http.get("*/api/communities/:territoryId/voters", ({ params, request }) => {
       if (options.failingVoters) return HttpResponse.json({ detail: "boom" }, { status: 500 });
       const id = String(params.territoryId);

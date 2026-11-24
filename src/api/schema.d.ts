@@ -258,6 +258,37 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/articles/{article_id}/related": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Chain
+         * @description The news related to a news item: from it, the most similar earlier news item, then the most
+         *     similar earlier than that one, and so on. Similar means alike in text (cosine similarity of the
+         *     sentence vectors of headline and lead); it does not say that one caused the other.
+         *
+         *     A step must be at least `step_threshold` to the step before it and `origin_threshold` to the news
+         *     item asked for, within `window_days` before the step; the same outlet publishing the same news
+         *     again is left out; the chain covers at most `max_days` days. The values are provisional and come
+         *     with every answer.
+         *
+         *     **Order:** days newest first; inside a day, the order in which the items joined the chain. The
+         *     first item of the first day is the news item asked for (`similarity` null). An item no worker has
+         *     embedded yet has no related news. 404: no article with that id.
+         */
+        get: operations["chain_articles__article_id__related_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/communities/{territory_id}/voters": {
         parameters: {
             query?: never;
@@ -274,12 +305,12 @@ export interface paths {
          *     four bands cut at fixed numbers of electors. `education`: five bands of about the same census,
          *     ordered by the percentage of people aged 15 or over with higher education (INE, Censo anual de
          *     población). `age`: the same bands, by the percentage of people aged 15 or over who are 70 or
-         *     older. `born_abroad`: the same bands, by the percentage of people aged 15 or over born abroad.
-         *     Age and place of birth exist only for the municipalities of 500 inhabitants or more; the smaller
-         *     ones are counted in `municipalities_without_value`. It describes areas, not people: a band is a
-         *     group of municipalities, and its shares say how those municipalities voted, not how their
-         *     residents with higher education, of an age, born in one place or with any income voted
-         *     (ecological fallacy). It says nothing about the voters of a party.
+         *     older. `born_abroad`: the same bands, by the percentage of people aged 15 or over born abroad
+         *     (place of birth, not nationality). Age and place of birth exist only for the municipalities of 500
+         *     inhabitants or more; the smaller ones are counted in `municipalities_without_value`. It describes
+         *     areas, not people: a band is a group of municipalities, and its shares say how those
+         *     municipalities voted, not how their residents with higher education, of an age, born in one
+         *     place or with any income voted (ecological fallacy). It says nothing about the voters of a party.
          *
          *     Without `election`, the latest loaded one. Groups: the parties with at least
          *     `shown_from_percent` % of the community's valid votes (and a candidature that is not in the party
@@ -673,6 +704,8 @@ export interface components {
         };
         /** NewsItemOut */
         NewsItemOut: {
+            /** Article Id */
+            article_id: number;
             /** Outlet Id */
             outlet_id: string;
             /** Outlet Name */
@@ -752,6 +785,55 @@ export interface components {
             bands: components["schemas"]["BandOut"][];
             /** Municipalities Without Value */
             municipalities_without_value: number;
+        };
+        /** RelatedDayOut */
+        RelatedDayOut: {
+            /**
+             * Day
+             * Format: date
+             */
+            day: string;
+            /** Items */
+            items: components["schemas"]["RelatedItemOut"][];
+        };
+        /** RelatedItemOut */
+        RelatedItemOut: {
+            /** Article Id */
+            article_id: number;
+            /** Outlet Id */
+            outlet_id: string;
+            /** Outlet Name */
+            outlet_name: string;
+            /** Headline */
+            headline: string;
+            /** Url */
+            url: string;
+            /**
+             * Published At
+             * Format: date-time
+             */
+            published_at: string;
+            /** Similarity */
+            similarity: number | null;
+        };
+        /** RelatedNewsOut */
+        RelatedNewsOut: {
+            /** Article Id */
+            article_id: number;
+            settings: components["schemas"]["RelatedSettingsOut"];
+            /** Days */
+            days: components["schemas"]["RelatedDayOut"][];
+        };
+        /** RelatedSettingsOut */
+        RelatedSettingsOut: {
+            /** Step Threshold */
+            step_threshold: number;
+            /** Origin Threshold */
+            origin_threshold: number;
+            /** Window Days */
+            window_days: number;
+            /** Max Days */
+            max_days: number;
         };
         /** SectorOut */
         SectorOut: {
@@ -1233,6 +1315,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StoryTreeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chain_articles__article_id__related_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                article_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RelatedNewsOut"];
                 };
             };
             /** @description Validation Error */

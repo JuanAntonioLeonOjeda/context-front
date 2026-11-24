@@ -554,13 +554,56 @@
         }
       }
     },
+    "/articles/{article_id}/related": {
+      "get": {
+        "tags": [
+          "stories"
+        ],
+        "summary": "Chain",
+        "description": "The news related to a news item: from it, the most similar earlier news item, then the most\nsimilar earlier than that one, and so on. Similar means alike in text (cosine similarity of the\nsentence vectors of headline and lead); it does not say that one caused the other.\n\nA step must be at least `step_threshold` to the step before it and `origin_threshold` to the news\nitem asked for, within `window_days` before the step; the same outlet publishing the same news\nagain is left out; the chain covers at most `max_days` days. The values are provisional and come\nwith every answer.\n\n**Order:** days newest first; inside a day, the order in which the items joined the chain. The\nfirst item of the first day is the news item asked for (`similarity` null). An item no worker has\nembedded yet has no related news. 404: no article with that id.",
+        "operationId": "chain_articles__article_id__related_get",
+        "parameters": [
+          {
+            "name": "article_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Article Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelatedNewsOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/communities/{territory_id}/voters": {
       "get": {
         "tags": [
           "voters"
         ],
         "summary": "Community",
-        "description": "How the municipalities of a community voted in a general election, grouped in\nbands of one dimension (`by`). `income` (the default): five bands of about the same census, ordered\nby the INE's mean net income per person of the election's year (each municipality whole, in the\nband where the midpoint of its census falls; a big city can leave a band almost empty). `size`:\nfour bands cut at fixed numbers of electors. `education`: five bands of about the same census,\nordered by the percentage of people aged 15 or over with higher education (INE, Censo anual de\npoblación). `age`: the same bands, by the percentage of people aged 15 or over who are 70 or\nolder. `born_abroad`: the same bands, by the percentage of people aged 15 or over born abroad.\nAge and place of birth exist only for the municipalities of 500 inhabitants or more; the smaller\nones are counted in `municipalities_without_value`. It describes areas, not people: a band is a\ngroup of municipalities, and its shares say how those municipalities voted, not how their\nresidents with higher education, of an age, born in one place or with any income voted\n(ecological fallacy). It says nothing about the voters of a party.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least\n`shown_from_percent` % of the community's valid votes (and a candidature that is not in the party\ntable, by its acronym), then \"others\". `profile` is null when fewer than two municipalities have a\nvalue (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded. 422: an\nunknown `by`.",
+        "description": "How the municipalities of a community voted in a general election, grouped in\nbands of one dimension (`by`). `income` (the default): five bands of about the same census, ordered\nby the INE's mean net income per person of the election's year (each municipality whole, in the\nband where the midpoint of its census falls; a big city can leave a band almost empty). `size`:\nfour bands cut at fixed numbers of electors. `education`: five bands of about the same census,\nordered by the percentage of people aged 15 or over with higher education (INE, Censo anual de\npoblación). `age`: the same bands, by the percentage of people aged 15 or over who are 70 or\nolder. `born_abroad`: the same bands, by the percentage of people aged 15 or over born abroad\n(place of birth, not nationality). Age and place of birth exist only for the municipalities of 500\ninhabitants or more; the smaller ones are counted in `municipalities_without_value`. It describes\nareas, not people: a band is a group of municipalities, and its shares say how those\nmunicipalities voted, not how their residents with higher education, of an age, born in one\nplace or with any income voted (ecological fallacy). It says nothing about the voters of a party.\n\nWithout `election`, the latest loaded one. Groups: the parties with at least\n`shown_from_percent` % of the community's valid votes (and a candidature that is not in the party\ntable, by its acronym), then \"others\". `profile` is null when fewer than two municipalities have a\nvalue (Ceuta, Melilla). 404: the community does not exist, or no such election is loaded. 422: an\nunknown `by`.",
         "operationId": "community_communities__territory_id__voters_get",
         "parameters": [
           {
@@ -1572,6 +1615,10 @@
       },
       "NewsItemOut": {
         "properties": {
+          "article_id": {
+            "type": "integer",
+            "title": "Article Id"
+          },
           "outlet_id": {
             "type": "string",
             "title": "Outlet Id"
@@ -1610,6 +1657,7 @@
         },
         "type": "object",
         "required": [
+          "article_id",
           "outlet_id",
           "outlet_name",
           "headline",
@@ -1785,6 +1833,132 @@
           "municipalities_without_value"
         ],
         "title": "ProfileOut"
+      },
+      "RelatedDayOut": {
+        "properties": {
+          "day": {
+            "type": "string",
+            "format": "date",
+            "title": "Day"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RelatedItemOut"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "day",
+          "items"
+        ],
+        "title": "RelatedDayOut"
+      },
+      "RelatedItemOut": {
+        "properties": {
+          "article_id": {
+            "type": "integer",
+            "title": "Article Id"
+          },
+          "outlet_id": {
+            "type": "string",
+            "title": "Outlet Id"
+          },
+          "outlet_name": {
+            "type": "string",
+            "title": "Outlet Name"
+          },
+          "headline": {
+            "type": "string",
+            "title": "Headline"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Published At"
+          },
+          "similarity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Similarity"
+          }
+        },
+        "type": "object",
+        "required": [
+          "article_id",
+          "outlet_id",
+          "outlet_name",
+          "headline",
+          "url",
+          "published_at",
+          "similarity"
+        ],
+        "title": "RelatedItemOut"
+      },
+      "RelatedNewsOut": {
+        "properties": {
+          "article_id": {
+            "type": "integer",
+            "title": "Article Id"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/RelatedSettingsOut"
+          },
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/RelatedDayOut"
+            },
+            "type": "array",
+            "title": "Days"
+          }
+        },
+        "type": "object",
+        "required": [
+          "article_id",
+          "settings",
+          "days"
+        ],
+        "title": "RelatedNewsOut"
+      },
+      "RelatedSettingsOut": {
+        "properties": {
+          "step_threshold": {
+            "type": "number",
+            "title": "Step Threshold"
+          },
+          "origin_threshold": {
+            "type": "number",
+            "title": "Origin Threshold"
+          },
+          "window_days": {
+            "type": "integer",
+            "title": "Window Days"
+          },
+          "max_days": {
+            "type": "integer",
+            "title": "Max Days"
+          }
+        },
+        "type": "object",
+        "required": [
+          "step_threshold",
+          "origin_threshold",
+          "window_days",
+          "max_days"
+        ],
+        "title": "RelatedSettingsOut"
       },
       "SectorOut": {
         "properties": {

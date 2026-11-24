@@ -1,0 +1,539 @@
+{
+  "973": {
+    "article_id": 973,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 973,
+            "outlet_id": "canarias7",
+            "outlet_name": "Canarias7",
+            "headline": "Muere un hombre apuñalado por su compañero de piso en Lanzarote",
+            "url": "https://www.canarias7.es/sucesos/muere-apunalado-hombre-reyerta-companero-piso-lanzarote-20261013093223-nt.html",
+            "published_at": "2026-10-13T08:53:00Z",
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "977": {
+    "article_id": 977,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 977,
+            "outlet_id": "canarias7",
+            "outlet_name": "Canarias7",
+            "headline": "Asamblea7Islas denuncia la presencia de palomas en la cafetería del Hospital Doctor Negrín de Gran Canaria",
+            "url": "https://www.canarias7.es/sociedad/salud/asamblea7islas-denuncia-presencia-palomas-cafeteria-hospital-doctor-20261013103357-nt.html",
+            "published_at": "2026-10-13T08:33:58Z",
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "981": {
+    "article_id": 981,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 981,
+            "outlet_id": "canarias7",
+            "outlet_name": "Canarias7",
+            "headline": "La pintura enseña su carácter terapéutico en la sexta edición de la exposición 'Arte y Salud Mental'",
+            "url": "https://www.canarias7.es/sociedad/salud/pintura-ensena-caracter-terapeutico-sexta-edicion-exposicion-20261013094417-nt.html",
+            "published_at": "2026-10-13T07:44:18Z",
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "1034": {
+    "article_id": 1034,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 1034,
+            "outlet_id": "diario-de-avisos",
+            "outlet_name": "Diario de Avisos",
+            "headline": "Médicos y enfermeros de Atención Primaria en Tenerife usan sus coches para atender a pacientes: “No es admisible”",
+            "url": "https://diariodeavisos.elespanol.com/2026/10/medicos-enfermeros-tenerife-falta-medios/",
+            "published_at": "2026-10-12T23:00:00Z",
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "2421": {
+    "article_id": 2421,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 2421,
+            "outlet_id": "el-confidencial",
+            "outlet_name": "El Confidencial",
+            "headline": "Herido tras sufrir un accidente de tráfico en la TF-1, a la altura de Arona (Tenerife)",
+            "url": "https://www.elconfidencial.com/espana/2026-10-13/motorista-herido-accidente-arona-1tps-1tna_4444034/",
+            "published_at": "2026-10-13T14:09:00Z",
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "3007": {
+    "article_id": 3007,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 3007,
+            "outlet_id": "rtvc",
+            "outlet_name": "Radio Televisión Canaria",
+            "headline": "Canarias impulsa programas sociales, asistenciales y sanitarios en Venezuela",
+            "url": "https://rtvc.es/gobierno-canarias-impulsa-programas-venezuela-13-octubre-2026/",
+            "published_at": "2026-10-13T14:11:30Z",
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "5195": {
+    "article_id": 5195,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-11",
+        "items": [
+          {
+            "article_id": 5195,
+            "outlet_id": "rtvc",
+            "outlet_name": "Radio Televisión Canaria",
+            "headline": "Un herido tras caerse del ‘quad’ en el que circulaba en Lanzarote",
+            "url": "https://rtvc.es/herido-caerse-quad-circulaba-lanzarote-11-octubre-2026/",
+            "published_at": "2026-10-11T17:38:07Z",
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "6216": {
+    "article_id": 6216,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 6216,
+            "outlet_id": "rtvc",
+            "outlet_name": "Radio Televisión Canaria",
+            "headline": "Canarias refuerza su colaboración con entidades financieras para garantizar las ayudas a los canarios en Venezuela",
+            "url": "https://rtvc.es/canarias-refuerza-su-colaboracion-con-entidades-financieras-para-garantizar-las-ayudas-a-los-canarios-en-venezuela/",
+            "published_at": "2026-10-13T16:52:43Z",
+            "similarity": null
+          },
+          {
+            "article_id": 3007,
+            "outlet_id": "rtvc",
+            "outlet_name": "Radio Televisión Canaria",
+            "headline": "Canarias impulsa programas sociales, asistenciales y sanitarios en Venezuela",
+            "url": "https://rtvc.es/gobierno-canarias-impulsa-programas-venezuela-13-octubre-2026/",
+            "published_at": "2026-10-13T14:11:30Z",
+            "similarity": 0.891
+          }
+        ]
+      }
+    ]
+  },
+  "6371": {
+    "article_id": 6371,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 6371,
+            "outlet_id": "diario-de-avisos",
+            "outlet_name": "Diario de Avisos",
+            "headline": "Condenan al Servicio Canario de la Salud por la muerte de una mujer tras no activarse el ‘código ictus’",
+            "url": "https://diariodeavisos.elespanol.com/2026/10/servicio-canario-salud-condena-fallo-informatico-ictus/",
+            "published_at": "2026-10-13T20:30:19Z",
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "6692": {
+    "article_id": 6692,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-14",
+        "items": [
+          {
+            "article_id": 6692,
+            "outlet_id": "abc",
+            "outlet_name": "ABC",
+            "headline": "Condenan al Servicio Canario de Salud por enviar a casa sin hacer pruebas a una mujer que murió horas después por un ictus",
+            "url": "https://www.abc.es/espana/canarias/condenan-servicio-canario-salud-enviar-casa-pruebas-20261014100740-nt.html",
+            "published_at": "2026-10-14T08:07:40Z",
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 6371,
+            "outlet_id": "diario-de-avisos",
+            "outlet_name": "Diario de Avisos",
+            "headline": "Condenan al Servicio Canario de la Salud por la muerte de una mujer tras no activarse el ‘código ictus’",
+            "url": "https://diariodeavisos.elespanol.com/2026/10/servicio-canario-salud-condena-fallo-informatico-ictus/",
+            "published_at": "2026-10-13T20:30:19Z",
+            "similarity": 0.807
+          }
+        ]
+      }
+    ]
+  },
+  "8294": {
+    "article_id": 8294,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-14",
+        "items": [
+          {
+            "article_id": 8294,
+            "outlet_id": "rtvc",
+            "outlet_name": "Radio Televisión Canaria",
+            "headline": "EN DIRECTO | El Parlamento rechaza tramitar la ley del PSOE que regula la residencialización en zonas turísticas",
+            "url": "https://rtvc.es/pleno-del-parlamento-de-canarias-sesion-miercoles-14-octubre-2026/",
+            "published_at": "2026-10-14T09:44:08Z",
+            "similarity": null
+          },
+          {
+            "article_id": 8310,
+            "outlet_id": "canarias7",
+            "outlet_name": "Canarias7",
+            "headline": "El Parlamento de Canarias rechaza tramitar una ley del PSOE para regular la residencialización en zonas turísticas",
+            "url": "https://www.canarias7.es/politica/parlamento-canarias-rechaza-tramitar-ley-psoe-regular-20261014113642-nt.html",
+            "published_at": "2026-10-14T09:36:42Z",
+            "similarity": 0.922
+          },
+          {
+            "article_id": 8412,
+            "outlet_id": "diario-de-avisos",
+            "outlet_name": "Diario de Avisos",
+            "headline": "El Parlamento de Canarias rechaza tramitar la ley para regular viviendas en zonas turísticas",
+            "url": "https://diariodeavisos.elespanol.com/2026/10/rechazo-ley-residencializacion-zonas-turisticas-canarias/",
+            "published_at": "2026-10-14T09:33:17Z",
+            "similarity": 0.897
+          }
+        ]
+      },
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 6377,
+            "outlet_id": "diario-de-avisos",
+            "outlet_name": "Diario de Avisos",
+            "headline": "Canarias pide a la UE limitar la compra y el alquiler de viviendas a extranjeros no residentes",
+            "url": "https://diariodeavisos.elespanol.com/2026/10/canarias-pide-eu-limitar-compra-vivienda-extanjeros/",
+            "published_at": "2026-10-13T15:41:26Z",
+            "similarity": 0.735
+          },
+          {
+            "article_id": 916,
+            "outlet_id": "canarias7",
+            "outlet_name": "Canarias7",
+            "headline": "El pleno del Parlamento de Canarias, en directo: la vivienda y la migración centran el debate",
+            "url": "https://www.canarias7.es/politica/pleno-parlamento-canarias-directo-vivienda-migracion-centran-20261013103519-nt.html",
+            "published_at": "2026-10-13T12:32:55Z",
+            "similarity": 0.706
+          }
+        ]
+      }
+    ]
+  },
+  "23442": {
+    "article_id": 23442,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-19",
+        "items": [
+          {
+            "article_id": 23442,
+            "outlet_id": "el-pais",
+            "outlet_name": "El País",
+            "headline": "Un grupo de 200 profesores corta la autovía A-3 en el inicio del cuarto día de huelga educativa de Madrid",
+            "url": "https://elpais.com/espana/madrid/2026-10-19/un-grupo-de-200-profesores-corta-la-autovia-a-3-en-el-inicio-del-cuarto-dia-de-huelga-educativa-de-madrid.html",
+            "published_at": "2026-10-19T08:17:57Z",
+            "similarity": null
+          },
+          {
+            "article_id": 23805,
+            "outlet_id": "la-razon",
+            "outlet_name": "La Razón",
+            "headline": "Los docentes en huelga cortan la vía de servicio de la A-3 de entrada a Madrid",
+            "url": "https://www.larazon.es/madrid/docentes-huelga-cortan-via-servicio-entrada-madrid_202610196ad5c55bbafd3d73636516e6.html",
+            "published_at": "2026-10-19T07:23:07Z",
+            "similarity": 0.922
+          }
+        ]
+      },
+      {
+        "day": "2026-10-13",
+        "items": [
+          {
+            "article_id": 5997,
+            "outlet_id": "la-vanguardia",
+            "outlet_name": "La Vanguardia",
+            "headline": "La huelga de profesores en Madrid: convocantes, manifestaciones y reivindicaciones",
+            "url": "https://www.lavanguardia.com/local/madrid/20261013/11657899/huelga-profesores-madrid-convocantes-manifestaciones-reivindicaciones.html",
+            "published_at": "2026-10-13T13:22:27Z",
+            "similarity": 0.833
+          }
+        ]
+      }
+    ]
+  },
+  "38511": {
+    "article_id": 38511,
+    "settings": {
+      "step_threshold": 0.7,
+      "origin_threshold": 0.65,
+      "window_days": 14,
+      "max_days": 8
+    },
+    "days": [
+      {
+        "day": "2026-10-22",
+        "items": [
+          {
+            "article_id": 38511,
+            "outlet_id": "abc",
+            "outlet_name": "ABC",
+            "headline": "Ayuso, ante las amenazas de la izquierda: «No me van a callar ni amedrentar»",
+            "url": "https://www.abc.es/espana/madrid/ayuso-ante-amenazas-izquierda-van-callar-amedrentar-20261022112643-nt.html",
+            "published_at": "2026-10-22T14:58:09Z",
+            "similarity": null
+          },
+          {
+            "article_id": 38612,
+            "outlet_id": "okdiario",
+            "outlet_name": "OKdiario",
+            "headline": "La izquierda monta una bronca para no dejar hablar a Ayuso y su nº 2 espeta a Bergerot: «¡Cállate, verdulera!»",
+            "url": "https://okdiario.com/madrid/izquierda-monta-bronca-no-dejar-hablar-ayuso-no-2-espeta-bergerot-callate-verdulera-20606959",
+            "published_at": "2026-10-22T10:24:50Z",
+            "similarity": 0.886
+          }
+        ]
+      },
+      {
+        "day": "2026-10-19",
+        "items": [
+          {
+            "article_id": 28030,
+            "outlet_id": "okdiario",
+            "outlet_name": "OKdiario",
+            "headline": "Ayuso en ‘Horizonte’ sobre su escrache: «Sánchez piensa que si él no puede pisar la calle nosotros tampoco»",
+            "url": "https://okdiario.com/espana/ayuso-horizonte-sobre-escrache-sanchez-piensa-que-si-no-puede-pisar-calle-nosotros-tampoco-20585516",
+            "published_at": "2026-10-19T20:04:15Z",
+            "similarity": 0.838
+          }
+        ]
+      },
+      {
+        "day": "2026-10-17",
+        "items": [
+          {
+            "article_id": 20418,
+            "outlet_id": "abc",
+            "outlet_name": "ABC",
+            "headline": "Habla el socialista palentino expulsado de la lista al Congreso por Ferraz: «La persona que va a encabezar la candidatura no se lo merece»",
+            "url": "https://www.abc.es/espana/castilla-leon/habla-socialista-palentino-expulsado-lista-congreso-ferraz-20261017133807-nt.html",
+            "published_at": "2026-10-17T11:42:17Z",
+            "similarity": 0.802
+          },
+          {
+            "article_id": 20478,
+            "outlet_id": "okdiario",
+            "outlet_name": "OKdiario",
+            "headline": "Feijóo tacha de «coalición de desesperados» el pacto entre Sánchez y Colau en el Senado: «Da cuenta de la situación del PSOE»",
+            "url": "https://okdiario.com/espana/feijoo-tacha-coalicion-desesperados-pacto-sanchez-colau-senado-da-cuenta-situacion-del-psoe-20570963",
+            "published_at": "2026-10-17T09:15:12Z",
+            "similarity": 0.796
+          }
+        ]
+      },
+      {
+        "day": "2026-10-16",
+        "items": [
+          {
+            "article_id": 19346,
+            "outlet_id": "abc",
+            "outlet_name": "ABC",
+            "headline": "El PSOE reta a Núñez a exigir a Feijóo que el agua de Castilla-La Mancha «no se toca»",
+            "url": "https://www.abc.es/espana/castilla-la-mancha/toledo/talavera/psoe-reta-nunez-exigir-feijoo-agua-castillala-20261016144032-nt.html",
+            "published_at": "2026-10-16T12:40:33Z",
+            "similarity": 0.8
+          }
+        ]
+      },
+      {
+        "day": "2026-10-14",
+        "items": [
+          {
+            "article_id": 7708,
+            "outlet_id": "abc",
+            "outlet_name": "ABC",
+            "headline": "Núñez acusa a los diputados del Page de votar en contra de que «Ceuta es España»",
+            "url": "https://www.abc.es/espana/castilla-la-mancha/nunez-acusa-diputados-page-votar-ceuta-espana-20261014123301-nt.html",
+            "published_at": "2026-10-14T10:36:05Z",
+            "similarity": 0.803
+          }
+        ]
+      },
+      {
+        "day": "2026-10-12",
+        "items": [
+          {
+            "article_id": 464,
+            "outlet_id": "okdiario",
+            "outlet_name": "OKdiario",
+            "headline": "El PP tras los abucheos a Sánchez en el 12-O: «De nada sirven los desahogos si después no se va a votar»",
+            "url": "https://okdiario.com/espana/pp-abucheos-sanchez-12-o-nada-sirven-desahogos-si-despues-no-va-votar-20532159",
+            "published_at": "2026-10-12T11:14:41Z",
+            "similarity": 0.764
+          },
+          {
+            "article_id": 3069,
+            "outlet_id": "3cat",
+            "outlet_name": "3Cat",
+            "headline": "La gestualitat política marca un 12-O escalfat per la precampanya i amb escridassada a Sánchez",
+            "url": "https://www.3cat.cat/3catinfo/els-detalls-dun-dia-de-la-hispanitat-marcat-per-la-precampanya-ceuta-i-lhabitatge/noticia/3433611/",
+            "published_at": "2026-10-12T05:18:50Z",
+            "similarity": 0.776
+          }
+        ]
+      },
+      {
+        "day": "2026-10-11",
+        "items": [
+          {
+            "article_id": 886,
+            "outlet_id": "la-vanguardia",
+            "outlet_name": "La Vanguardia",
+            "headline": "Feijóo arranca su precampaña de las elecciones del 29-N con una demostración de fortaleza en Madrid",
+            "url": "https://www.lavanguardia.com/politica/20261011/11656082/feijoo-arranca-precampana-elecciones-29-n-demostracion-fortaleza-madrid.html",
+            "published_at": "2026-10-11T04:00:00Z",
+            "similarity": 0.74
+          }
+        ]
+      },
+      {
+        "day": "2026-10-10",
+        "items": [
+          {
+            "article_id": 903,
+            "outlet_id": "la-vanguardia",
+            "outlet_name": "La Vanguardia",
+            "headline": "Llorca lidera una comitiva para arropar a Feijóo en su primer mitin en pleno debate de su candidatura",
+            "url": "https://www.lavanguardia.com/local/valencia/20261010/11655399/llorca-lidera-comitiva-arropar-feijoo-primer-mitin-pleno-debate-candidatura.html",
+            "published_at": "2026-10-10T03:30:00Z",
+            "similarity": 0.766
+          }
+        ]
+      }
+    ]
+  }
+}
