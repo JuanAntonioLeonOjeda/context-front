@@ -4,6 +4,7 @@
   "since": "2026-09-15",
   "items": [
     {
+      "article_id": 8294,
       "outlet_id": "rtvc",
       "outlet_name": "Radio Televisión Canaria",
       "headline": "EN DIRECTO | El Parlamento rechaza tramitar la ley del PSOE que regula la residencialización en zonas turísticas",
@@ -16,6 +17,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 6692,
       "outlet_id": "abc",
       "outlet_name": "ABC",
       "headline": "Condenan al Servicio Canario de Salud por enviar a casa sin hacer pruebas a una mujer que murió horas después por un ictus",
@@ -28,6 +30,7 @@
       "tree_story_id": 37
     },
     {
+      "article_id": 6371,
       "outlet_id": "diario-de-avisos",
       "outlet_name": "Diario de Avisos",
       "headline": "Condenan al Servicio Canario de la Salud por la muerte de una mujer tras no activarse el ‘código ictus’",
@@ -40,6 +43,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 6216,
       "outlet_id": "rtvc",
       "outlet_name": "Radio Televisión Canaria",
       "headline": "Canarias refuerza su colaboración con entidades financieras para garantizar las ayudas a los canarios en Venezuela",
@@ -52,6 +56,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 3007,
       "outlet_id": "rtvc",
       "outlet_name": "Radio Televisión Canaria",
       "headline": "Canarias impulsa programas sociales, asistenciales y sanitarios en Venezuela",
@@ -64,6 +69,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 2421,
       "outlet_id": "el-confidencial",
       "outlet_name": "El Confidencial",
       "headline": "Herido tras sufrir un accidente de tráfico en la TF-1, a la altura de Arona (Tenerife)",
@@ -76,6 +82,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 973,
       "outlet_id": "canarias7",
       "outlet_name": "Canarias7",
       "headline": "Muere un hombre apuñalado por su compañero de piso en Lanzarote",
@@ -88,6 +95,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 977,
       "outlet_id": "canarias7",
       "outlet_name": "Canarias7",
       "headline": "Asamblea7Islas denuncia la presencia de palomas en la cafetería del Hospital Doctor Negrín de Gran Canaria",
@@ -100,6 +108,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 981,
       "outlet_id": "canarias7",
       "outlet_name": "Canarias7",
       "headline": "La pintura enseña su carácter terapéutico en la sexta edición de la exposición 'Arte y Salud Mental'",
@@ -112,6 +121,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 1034,
       "outlet_id": "diario-de-avisos",
       "outlet_name": "Diario de Avisos",
       "headline": "Médicos y enfermeros de Atención Primaria en Tenerife usan sus coches para atender a pacientes: “No es admisible”",
@@ -124,6 +134,7 @@
       "tree_story_id": null
     },
     {
+      "article_id": 5195,
       "outlet_id": "rtvc",
       "outlet_name": "Radio Televisión Canaria",
       "headline": "Un herido tras caerse del ‘quad’ en el que circulaba en Lanzarote",

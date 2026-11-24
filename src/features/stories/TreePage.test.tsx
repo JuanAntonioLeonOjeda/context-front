@@ -7,6 +7,15 @@ import { renderApp } from "@/test/app";
 import { axeViolations } from "@/test/axe";
 
 describe("tree of related news", () => {
+  it("is titled the tree of news, not the related news of an item (another feature)", async () => {
+    renderApp("/arbol/37");
+
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "Árbol de noticias" }),
+    ).toBeVisible();
+    expect(document.title).toMatch(/^Árbol de noticias · /);
+  });
+
   it("shows every story of the tree as a card, nested under the one it continues", async () => {
     renderApp("/arbol/37");
 

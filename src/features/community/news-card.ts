@@ -9,6 +9,7 @@ import type { NewsItem } from "./news-api";
 
 export interface NewsRow {
   key: string;
+  articleId: number;
   day: string; // ISO date in Spain, for grouping
   outlet: string; // "Outlet, 11:44"
   headline: string;
@@ -60,6 +61,7 @@ export function groupByDay<T extends { day: string }>(rows: readonly T[]): NewsD
 export function newsRows(items: readonly NewsItem[]): NewsRow[] {
   return items.map((item) => ({
     key: item.url,
+    articleId: item.articleId,
     day: newsDay(item.publishedAt),
     outlet: formatMessage(es.community.news.outletAndTime, {
       outlet: item.outletName,

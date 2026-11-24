@@ -141,7 +141,7 @@ export const es = {
     },
     filters: { legend: "Filtros" },
     trees: {
-      title: "Árbol de noticias",
+      title: "Noticias relacionadas",
       sectorNav: "Sector del árbol de noticias",
       note: "Cada elemento es un árbol de noticias relacionadas y muestra la más reciente de esta comunidad en el sector. Pulsa sobre ella para ver el árbol completo.",
       empty: "No hay árboles de noticias de {sector} en esta comunidad.",
@@ -408,8 +408,21 @@ export const es = {
     },
   },
   stories: {
+    related: {
+      button: "Noticias relacionadas",
+      buttonOf: "Noticias relacionadas con «{headline}»",
+      panelLabel: "Noticias anteriores parecidas a «{headline}»",
+      title: "Noticias anteriores parecidas",
+      similarity: "parecido: {value}",
+      empty: "No hay noticias anteriores lo bastante parecidas en los {days} días previos.",
+      method:
+        "Se busca la noticia anterior más parecida por su texto, luego la anterior a esa, y así hasta {maxDays} días. Parecido no significa que una cause la otra, y puede haber errores.",
+      loading: "Buscando noticias relacionadas…",
+      error: "No hemos podido cargar las noticias relacionadas.",
+      retry: "Volver a intentarlo",
+    },
     tree: {
-      title: "Noticias relacionadas",
+      title: "Árbol de noticias",
       back: "Volver",
       reading:
         "Cada tarjeta es una historia: muestra el titular de la primera noticia publicada y, al desplegarla, los de los demás medios que cuentan el mismo suceso. El tiempo avanza de izquierda a derecha: cada rama continúa la historia anterior a la que se parece más.",

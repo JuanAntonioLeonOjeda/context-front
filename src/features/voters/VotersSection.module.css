@@ -90,6 +90,16 @@
   white-space: nowrap;
 }
 
+/* On a phone seven columns are about 37 px wide and "12,5 %" does not fit: the figure and its sign
+   go on two lines, and two lines are always reserved so the bars still start at one height. */
+@media (max-width: 26rem) {
+  .barValue {
+    white-space: normal;
+    min-block-size: 2.2em;
+    line-height: 1.1;
+  }
+}
+
 .track {
   display: flex;
   align-items: flex-end;

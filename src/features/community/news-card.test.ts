@@ -5,6 +5,7 @@ import { formatNewsTime, groupByDay, newsDay, newsRows } from "./news-card";
 
 function item(publishedAt = "2026-10-14T09:44:08Z"): NewsItem {
   return {
+    articleId: 1,
     outletId: "rtvc",
     outletName: "Radio Televisión Canaria",
     headline: "Un titular",
@@ -20,6 +21,7 @@ describe("newsRows", () => {
 
     expect(row).toEqual({
       key: "https://rtvc.es/1",
+      articleId: 1,
       day: "2026-10-14",
       outlet: "Radio Televisión Canaria, 11:44",
       headline: "Un titular",
