@@ -156,6 +156,42 @@ describe("news of a community", () => {
   });
 });
 
+describe("bodies with competence of a news item", () => {
+  it("names them under the headline, each a link to its chart, and says when it is shared", async () => {
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
+    await newsSection();
+    await newsLoaded();
+
+    const shared = screen.getByRole("list", {
+      name: /^Organismos con competencia en «Asamblea7Islas denuncia/,
+    });
+    expect(shared.parentElement).toHaveTextContent(/^Competencia compartida/);
+    expect(
+      within(shared)
+        .getAllByRole("link")
+        .map((link) => [link.textContent, link.getAttribute("href")]),
+    ).toEqual([
+      ["Ministerio de Sanidad", "/organigrama"],
+      ["Consejería de Sanidad", "/comunidades/ccaa-05/organigrama"],
+    ]);
+    const own = screen.getAllByRole("list", {
+      name: /^Organismos con competencia en «Condenan al Servicio Canario de Salud/,
+    })[0];
+    expect(own?.parentElement).toHaveTextContent(/^Competencia(?! compartida)/);
+  });
+
+  it("says nothing about competence on an item no chart reaches", async () => {
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
+    const section = await newsSection();
+    await newsLoaded();
+
+    const cards = within(section).getAllByRole("article");
+    const withBodies = cards.filter((card) => within(card).queryByText(/^Competencia/) !== null);
+    expect(withBodies).toHaveLength(5);
+    expect(cards.length).toBeGreaterThan(withBodies.length);
+  });
+});
+
 describe("actions of a news item", () => {
   it("gives each news item two actions with an icon that is hidden from assistive technology", async () => {
     renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");

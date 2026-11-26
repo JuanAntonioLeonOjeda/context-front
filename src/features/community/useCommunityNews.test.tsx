@@ -31,7 +31,7 @@ describe("useCommunityNews", () => {
     expect(times).toEqual([...times].sort().reverse());
   });
 
-  it("never carries a lead or a party: the mapped items hold only outlet, headline, link and date", async () => {
+  it("never carries a lead or a party: outlet, headline, link, date and the bodies with competence", async () => {
     serveCommunity();
     const { result } = renderHook(() => useCommunityNews("ccaa-05", "health", NO_RANGE), {
       wrapper: queryWrapper(),
@@ -43,6 +43,7 @@ describe("useCommunityNews", () => {
     if (result.current.state !== "ready") throw new Error("not ready");
     expect(Object.keys(result.current.news.items[0] ?? {}).sort()).toEqual([
       "articleId",
+      "competentBodies",
       "headline",
       "outletId",
       "outletName",

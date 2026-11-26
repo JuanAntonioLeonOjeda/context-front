@@ -8,6 +8,7 @@ import { formatMessage } from "@/i18n/format";
 
 import { searchWith } from "./search-params";
 import { groupByDay, newsRows, type NewsRow } from "./news-card";
+import { CompetenceView } from "./CompetenceView";
 import { EmptyState } from "./EmptyState";
 import { NewsTrees } from "./NewsTrees";
 import { SearchBox } from "./SearchBox";
@@ -200,7 +201,7 @@ function NewsFinder({
   const indicator = useSectorIndicator(territoryId, sector);
   // One related-news panel open at a time, under the day of its item.
   const [openArticle, setOpenArticle] = useState<number | null>(null);
-  const rows = news.state === "ready" ? newsRows(news.news.items) : [];
+  const rows = news.state === "ready" ? newsRows(news.news.items, sector) : [];
   const shown = rows.filter((row) => matchesQuery(query, row.headline, row.outlet));
 
   return (
@@ -342,6 +343,9 @@ function NewsItemView(props: {
       <article className={styles.newsItem}>
         <small className={styles.downloaded}>{row.outlet}</small>
         <h4 className={styles.newsHeadline}>{row.headline}</h4>
+        {row.competence !== null && (
+          <CompetenceView line={row.competence} headline={row.headline} />
+        )}
         <div className={styles.newsActions}>
           <ExternalLink
             href={row.url}

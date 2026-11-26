@@ -161,6 +161,11 @@ export const es = {
     },
     news: {
       title: "Noticias",
+      competence: {
+        label: "Competencia",
+        shared: "Competencia compartida",
+        listOf: "Organismos con competencia en «{headline}»",
+      },
       views: {
         label: "Qué quieres ver",
         buscador: {

@@ -752,3 +752,37 @@
 .viewSwitch > a {
   flex: none;
 }
+
+/* The bodies with competence in a news item's topic (ADR-0027): a quiet line under the headline,
+   the label in the section's gray and each body a link to its chart, separated by a dot. */
+.competence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.competenceLabel {
+  color: var(--color-text-muted);
+}
+
+.competenceLabel::after {
+  content: ":";
+}
+
+.competence ul {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.competence li {
+  display: inline;
+}
+
+.competence li + li::before {
+  content: " · ";
+  color: var(--color-text-muted);
+}
