@@ -13,7 +13,8 @@
         "model_id": "composite",
         "model_version": "communities=rules@d74a59205b94;sectors=setfit@d33978f5b50f;levels=rules@d74a59205b94"
       },
-      "tree_story_id": 384
+      "tree_story_id": 384,
+      "competent_bodies": []
     },
     {
       "article_id": 23442,
@@ -26,7 +27,33 @@
         "model_id": "composite",
         "model_version": "communities=rules@d74a59205b94;sectors=setfit@d33978f5b50f;levels=rules@d74a59205b94"
       },
-      "tree_story_id": 213
+      "tree_story_id": 213,
+      "competent_bodies": [
+        {
+          "body_id": "es-ciencia",
+          "name": "Ministerio de Ciencia, Innovación y Universidades",
+          "level": "state",
+          "territory_id": "es",
+          "sector_id": "education",
+          "shared": true
+        },
+        {
+          "body_id": "es-educacion",
+          "name": "Ministerio de Educación, Formación Profesional y Deportes",
+          "level": "state",
+          "territory_id": "es",
+          "sector_id": "education",
+          "shared": true
+        },
+        {
+          "body_id": "ccaa-13-educacion",
+          "name": "Consejería de Educación, Ciencia y Universidades",
+          "level": "ccaa",
+          "territory_id": "ccaa-13",
+          "sector_id": "education",
+          "shared": true
+        }
+      ]
     }
   ]
 }

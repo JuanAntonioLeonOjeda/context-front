@@ -12,12 +12,13 @@ function item(publishedAt = "2026-10-14T09:44:08Z"): NewsItem {
     url: "https://rtvc.es/1",
     publishedAt,
     treeStoryId: null,
+    competentBodies: [],
   };
 }
 
 describe("newsRows", () => {
   it("gives outlet and time in Spain, headline and link, and nothing about a party", () => {
-    const [row] = newsRows([item()]);
+    const [row] = newsRows([item()], "health");
 
     expect(row).toEqual({
       key: "https://rtvc.es/1",
@@ -27,6 +28,7 @@ describe("newsRows", () => {
       headline: "Un titular",
       url: "https://rtvc.es/1",
       treeStoryId: null,
+      competence: null,
     });
   });
 });
@@ -49,7 +51,7 @@ describe("the day and the hour in Spain", () => {
 
 describe("groupByDay", () => {
   const at = (publishedAt: string): ReturnType<typeof newsRows>[number] =>
-    newsRows([item(publishedAt)])[0] as never;
+    newsRows([item(publishedAt)], "health")[0] as never;
 
   it("groups consecutive rows of the same day and keeps the order it was given", () => {
     const rows = [

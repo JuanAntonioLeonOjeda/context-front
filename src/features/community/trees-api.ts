@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import { api } from "@/api/client";
 
-import type { NewsItem, Sector } from "./news-api";
+import { competentBodies, competentBodySchema, type NewsItem, type Sector } from "./news-api";
 
 const treesSchema = z.object({
   territory_id: z.string(),
@@ -21,6 +21,7 @@ const treesSchema = z.object({
       published_at: z.iso.datetime(),
       classified_by: z.object({ model_id: z.string(), model_version: z.string() }),
       tree_story_id: z.number(),
+      competent_bodies: z.array(competentBodySchema),
     }),
   ),
 });
@@ -50,5 +51,6 @@ export async function fetchCommunityTrees(
     url: item.url,
     publishedAt: item.published_at,
     storyId: item.tree_story_id,
+    competentBodies: competentBodies(item.competent_bodies),
   }));
 }

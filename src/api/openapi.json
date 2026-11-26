@@ -310,7 +310,7 @@
           "news"
         ],
         "summary": "Community",
-        "description": "The news of a range of days (Spain time) that the active classifier placed in this community and\nsector. Without dates: the last 7 days, today included. With `date_from` and/or\n`date_to` (ISO dates, both included): that range, of at most 31 days. At most\n5 per outlet and day (its newest).\n\nNothing is deleted: any day the collector ran can be asked for. A day it did not run, or before the\nportal began collecting, answers an empty list, not an error.\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nNo item names a party (ADR-0018): who governs the community is in\n`/communities/{territory_id}/governments`.",
+        "description": "The news of a range of days (Spain time) that the active classifier placed in this community and\nsector. Without dates: the last 7 days, today included. With `date_from` and/or\n`date_to` (ISO dates, both included): that range, of at most 31 days. At most\n5 per outlet and day (its newest).\n\nNothing is deleted: any day the collector ran can be asked for. A day it did not run, or before the\nportal began collecting, answers an empty list, not an error.\n\n**Order:** publication time, newest first; ties by outlet id. The order never depends on an\noutlet's size, audience or line.\n\nNo item names a party (ADR-0018): who governs the community is in\n`/communities/{territory_id}/governments`. Each item names instead the bodies with competence in\nits topic (ADR-0027), from its whole classification: `shared` is true when the item had no level of\ngovernment and the competence table's levels were used.",
         "operationId": "community_communities__territory_id__news_get",
         "parameters": [
           {
@@ -1163,6 +1163,57 @@
         ],
         "title": "CompetenceOut"
       },
+      "CompetentBodyOut": {
+        "properties": {
+          "body_id": {
+            "type": "string",
+            "title": "Body Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "state",
+              "ccaa",
+              "local"
+            ],
+            "title": "Level"
+          },
+          "territory_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Territory Id"
+          },
+          "sector_id": {
+            "type": "string",
+            "title": "Sector Id"
+          },
+          "shared": {
+            "type": "boolean",
+            "title": "Shared"
+          }
+        },
+        "type": "object",
+        "required": [
+          "body_id",
+          "name",
+          "level",
+          "territory_id",
+          "sector_id",
+          "shared"
+        ],
+        "title": "CompetentBodyOut",
+        "description": "A body with competence in the item's topic: a fact of the body, never of a person or a\nparty (ADR-0027)."
+      },
       "ComponentStatus": {
         "type": "string",
         "enum": [
@@ -1653,6 +1704,13 @@
               }
             ],
             "title": "Tree Story Id"
+          },
+          "competent_bodies": {
+            "items": {
+              "$ref": "#/components/schemas/CompetentBodyOut"
+            },
+            "type": "array",
+            "title": "Competent Bodies"
           }
         },
         "type": "object",
@@ -1664,7 +1722,8 @@
           "url",
           "published_at",
           "classified_by",
-          "tree_story_id"
+          "tree_story_id",
+          "competent_bodies"
         ],
         "title": "NewsItemOut"
       },

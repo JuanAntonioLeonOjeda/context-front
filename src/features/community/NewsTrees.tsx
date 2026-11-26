@@ -5,6 +5,8 @@ import { StoryTreeView } from "@/features/stories";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
+import { competenceLine, type CompetenceLine } from "./competence-line";
+import { CompetenceView } from "./CompetenceView";
 import { EmptyState } from "./EmptyState";
 import type { NewsFilters } from "./NewsSection";
 import { SearchBox } from "./SearchBox";
@@ -21,9 +23,10 @@ interface TreeRow {
   day: string; // ISO date in Spain, for grouping
   outlet: string; // "Outlet, 11:44"
   entry: TreeEntry;
+  competence: CompetenceLine | null; // the bodies with competence, for the sector shown
 }
 
-function treeRows(entries: readonly TreeEntry[]): TreeRow[] {
+function treeRows(entries: readonly TreeEntry[], sector: string): TreeRow[] {
   return entries.map((entry) => ({
     day: newsDay(entry.publishedAt),
     outlet: formatMessage(es.community.news.outletAndTime, {
@@ -31,6 +34,7 @@ function treeRows(entries: readonly TreeEntry[]): TreeRow[] {
       time: formatNewsTime(entry.publishedAt),
     }),
     entry,
+    competence: competenceLine(entry.competentBodies, sector),
   }));
 }
 
@@ -48,7 +52,7 @@ export function NewsTrees({
 }): React.JSX.Element {
   const { params, sector, query, setQuery } = filters;
   const trees = useCommunityTrees(territoryId, sector);
-  const rows = trees.state === "ready" ? treeRows(trees.trees) : [];
+  const rows = trees.state === "ready" ? treeRows(trees.trees, sector) : [];
   const shown = rows.filter((row) => matchesQuery(query, row.entry.headline, row.outlet));
   // One tree open at a time: the page does not fill with horizontal trees.
   const [openStory, setOpenStory] = useState<number | null>(null);
@@ -154,7 +158,7 @@ function panelId(entry: TreeEntry): string {
 
 /** One tree, closed: its newest news; the headline opens the tree and its chevron says which way. */
 function TreeCard(props: { row: TreeRow; open: boolean; onToggle: () => void }): React.JSX.Element {
-  const { entry, outlet } = props.row;
+  const { entry, outlet, competence } = props.row;
   return (
     <li>
       <article className={styles.newsItem}>
@@ -171,6 +175,7 @@ function TreeCard(props: { row: TreeRow; open: boolean; onToggle: () => void }):
             <ChevronIcon />
           </button>
         </h4>
+        {competence !== null && <CompetenceView line={competence} headline={entry.headline} />}
         <div className={styles.newsActions}>
           <ExternalLink
             href={entry.url}

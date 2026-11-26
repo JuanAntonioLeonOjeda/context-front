@@ -14,7 +14,8 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": []
     },
     {
       "article_id": 6692,
@@ -27,7 +28,17 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": 37
+      "tree_story_id": 37,
+      "competent_bodies": [
+        {
+          "body_id": "ccaa-05-sanidad",
+          "name": "Consejería de Sanidad",
+          "level": "ccaa",
+          "territory_id": "ccaa-05",
+          "sector_id": "health",
+          "shared": false
+        }
+      ]
     },
     {
       "article_id": 6371,
@@ -40,7 +51,17 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": [
+        {
+          "body_id": "ccaa-05-sanidad",
+          "name": "Consejería de Sanidad",
+          "level": "ccaa",
+          "territory_id": "ccaa-05",
+          "sector_id": "health",
+          "shared": false
+        }
+      ]
     },
     {
       "article_id": 6216,
@@ -53,7 +74,8 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": []
     },
     {
       "article_id": 3007,
@@ -66,7 +88,17 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": [
+        {
+          "body_id": "ccaa-05-sanidad",
+          "name": "Consejería de Sanidad",
+          "level": "ccaa",
+          "territory_id": "ccaa-05",
+          "sector_id": "health",
+          "shared": false
+        }
+      ]
     },
     {
       "article_id": 2421,
@@ -79,7 +111,8 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": []
     },
     {
       "article_id": 973,
@@ -92,7 +125,8 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": []
     },
     {
       "article_id": 977,
@@ -105,7 +139,25 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": [
+        {
+          "body_id": "es-sanidad",
+          "name": "Ministerio de Sanidad",
+          "level": "state",
+          "territory_id": "es",
+          "sector_id": "health",
+          "shared": true
+        },
+        {
+          "body_id": "ccaa-05-sanidad",
+          "name": "Consejería de Sanidad",
+          "level": "ccaa",
+          "territory_id": "ccaa-05",
+          "sector_id": "health",
+          "shared": true
+        }
+      ]
     },
     {
       "article_id": 981,
@@ -118,7 +170,8 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": []
     },
     {
       "article_id": 1034,
@@ -131,7 +184,25 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": [
+        {
+          "body_id": "es-sanidad",
+          "name": "Ministerio de Sanidad",
+          "level": "state",
+          "territory_id": "es",
+          "sector_id": "health",
+          "shared": true
+        },
+        {
+          "body_id": "ccaa-05-sanidad",
+          "name": "Consejería de Sanidad",
+          "level": "ccaa",
+          "territory_id": "ccaa-05",
+          "sector_id": "health",
+          "shared": true
+        }
+      ]
     },
     {
       "article_id": 5195,
@@ -144,7 +215,8 @@
         "model_id": "rules",
         "model_version": "d74a59205b94"
       },
-      "tree_story_id": null
+      "tree_story_id": null,
+      "competent_bodies": []
     }
   ],
   "until": "2026-10-14"
