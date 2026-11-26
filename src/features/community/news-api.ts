@@ -13,6 +13,38 @@ import type { NewsRange } from "./news-range";
 export const SECTORS = ["education", "health", "housing", "justice", "work"] as const;
 export type Sector = (typeof SECTORS)[number];
 
+/** A body with competence in an item's topic (ADR-0027): a fact of the body, never of a party. */
+export const competentBodySchema = z.object({
+  body_id: z.string(),
+  name: z.string(),
+  level: z.enum(["state", "ccaa", "local"]),
+  territory_id: z.string().nullable(),
+  sector_id: z.string(),
+  shared: z.boolean(),
+});
+
+export interface CompetentBody {
+  bodyId: string;
+  name: string;
+  level: "state" | "ccaa" | "local";
+  territoryId: string | null; // null for a generic local body
+  sectorId: string; // the sector of the item that led to it
+  shared: boolean; // the item had no level of government: the competence table's were used
+}
+
+export function competentBodies(
+  bodies: readonly z.infer<typeof competentBodySchema>[],
+): CompetentBody[] {
+  return bodies.map((b) => ({
+    bodyId: b.body_id,
+    name: b.name,
+    level: b.level,
+    territoryId: b.territory_id,
+    sectorId: b.sector_id,
+    shared: b.shared,
+  }));
+}
+
 const newsSchema = z.object({
   territory_id: z.string(),
   sector_id: z.string(),
@@ -28,6 +60,7 @@ const newsSchema = z.object({
       published_at: z.iso.datetime(),
       classified_by: z.object({ model_id: z.string(), model_version: z.string() }),
       tree_story_id: z.number().nullable(),
+      competent_bodies: z.array(competentBodySchema),
     }),
   ),
 });
@@ -40,6 +73,7 @@ export interface NewsItem {
   url: string;
   publishedAt: string; // ISO instant
   treeStoryId: number | null; // the story whose tree of related news this item belongs to
+  competentBodies: CompetentBody[]; // by sector, then State, community and local, then name
 }
 
 export interface CommunityNews {
@@ -81,6 +115,7 @@ export async function fetchCommunityNews(
       url: item.url,
       publishedAt: item.published_at,
       treeStoryId: item.tree_story_id,
+      competentBodies: competentBodies(item.competent_bodies),
     })),
   };
 }

@@ -1,10 +1,12 @@
 /**
  * What the news list shows, as text. Pure: the API's values in, formatted rows out. An item
- * names no party (ADR-0018): outlet, time, headline and link.
+ * names no party (ADR-0018): outlet, time, headline and link, and the bodies with competence in
+ * its topic (ADR-0027).
  */
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
+import { competenceLine, type CompetenceLine } from "./competence-line";
 import type { NewsItem } from "./news-api";
 
 export interface NewsRow {
@@ -15,6 +17,7 @@ export interface NewsRow {
   headline: string;
   url: string;
   treeStoryId: number | null;
+  competence: CompetenceLine | null; // the bodies with competence, for the sector shown
 }
 
 // The day and the hour a reader in Spain sees.
@@ -58,7 +61,7 @@ export function groupByDay<T extends { day: string }>(rows: readonly T[]): NewsD
   return days;
 }
 
-export function newsRows(items: readonly NewsItem[]): NewsRow[] {
+export function newsRows(items: readonly NewsItem[], sector: string): NewsRow[] {
   return items.map((item) => ({
     key: item.url,
     articleId: item.articleId,
@@ -70,5 +73,6 @@ export function newsRows(items: readonly NewsItem[]): NewsRow[] {
     headline: item.headline,
     url: item.url,
     treeStoryId: item.treeStoryId,
+    competence: competenceLine(item.competentBodies, sector),
   }));
 }

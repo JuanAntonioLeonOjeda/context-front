@@ -164,7 +164,9 @@ export interface paths {
          *     outlet's size, audience or line.
          *
          *     No item names a party (ADR-0018): who governs the community is in
-         *     `/communities/{territory_id}/governments`.
+         *     `/communities/{territory_id}/governments`. Each item names instead the bodies with competence in
+         *     its topic (ADR-0027), from its whole classification: `shared` is true when the item had no level of
+         *     government and the competence table's levels were used.
          */
         get: operations["community_communities__territory_id__news_get"];
         put?: never;
@@ -531,6 +533,28 @@ export interface components {
             source_url: string;
         };
         /**
+         * CompetentBodyOut
+         * @description A body with competence in the item's topic: a fact of the body, never of a person or a
+         *     party (ADR-0027).
+         */
+        CompetentBodyOut: {
+            /** Body Id */
+            body_id: string;
+            /** Name */
+            name: string;
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "state" | "ccaa" | "local";
+            /** Territory Id */
+            territory_id: string | null;
+            /** Sector Id */
+            sector_id: string;
+            /** Shared */
+            shared: boolean;
+        };
+        /**
          * ComponentStatus
          * @enum {string}
          */
@@ -722,6 +746,8 @@ export interface components {
             classified_by: components["schemas"]["ClassifierOut"];
             /** Tree Story Id */
             tree_story_id: number | null;
+            /** Competent Bodies */
+            competent_bodies: components["schemas"]["CompetentBodyOut"][];
         };
         /** NotFoundOut */
         NotFoundOut: {
