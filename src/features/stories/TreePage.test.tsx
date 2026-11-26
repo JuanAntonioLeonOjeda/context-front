@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { es } from "@/i18n/es";
+import { formatMessage } from "@/i18n/format";
 import { renderApp } from "@/test/app";
 import { axeViolations } from "@/test/axe";
 
@@ -112,12 +113,19 @@ describe("tree of related news", () => {
 
   it("says how the relations were made and that they can be wrong, without a cause", async () => {
     renderApp("/arbol/37");
+    const info = await screen.findByRole("button", {
+      name: formatMessage(es.app.shell.info.open, { topic: es.stories.tree.title }),
+    });
+    expect(screen.queryByText(es.stories.tree.reading)).toBeNull();
 
-    expect(await screen.findByText(es.stories.tree.reading)).toBeVisible();
+    await userEvent.click(info);
+
+    const dialog = screen.getByRole("dialog", { name: es.stories.tree.title });
+    expect(within(dialog).getByText(es.stories.tree.reading)).toBeVisible();
     expect(
-      screen.getByText(/umbral provisional \(similitud mínima 0,75 y hasta 14 días/),
+      within(dialog).getByText(/umbral provisional \(similitud mínima 0,75 y hasta 14 días/),
     ).toBeVisible();
-    expect(screen.getByText(/solo dice «parecida y posterior», no su causa/)).toBeVisible();
+    expect(within(dialog).getByText(/solo dice «parecida y posterior», no su causa/)).toBeVisible();
   });
 
   it("names no party and shows no lead", async () => {

@@ -50,11 +50,6 @@
   color: var(--color-text);
 }
 
-/* What the profile is, in small print at the foot of the bands. */
-.caption {
-  font-size: var(--text-sm);
-}
-
 .bandFacts {
   display: flex;
   flex-wrap: wrap;
@@ -164,20 +159,6 @@
 .table thead th {
   color: var(--color-text-muted);
   font-size: var(--text-sm);
-}
-
-.method {
-  display: grid;
-  gap: var(--space-2);
-  max-width: 70ch;
-}
-
-.method > * {
-  margin-block: 0;
-}
-
-.method h3 {
-  font-size: var(--text-md);
 }
 
 /* The parameter of the profile: a row of capsules like the sectors of the news, the pressed one

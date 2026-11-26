@@ -75,6 +75,7 @@ export function TreesSection({ territoryId }: { territoryId: string }): React.JS
         onToggle={() => {
           setOpen(!open);
         }}
+        info={<p>{es.community.trees.note}</p>}
       />
       {open && (
         <>
@@ -107,7 +108,6 @@ export function TreesSection({ territoryId }: { territoryId: string }): React.JS
               />
             </div>
           </fieldset>
-          <p className={styles.newsNote}>{es.community.trees.note}</p>
           {trees.state === "error" && (
             <div role="alert">
               <p>{es.community.trees.error}</p>

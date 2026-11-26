@@ -5,8 +5,9 @@
   justify-self: start;
 }
 
-.note {
-  max-width: 46rem;
+.info {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .scroll {

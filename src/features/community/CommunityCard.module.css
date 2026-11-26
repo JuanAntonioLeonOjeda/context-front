@@ -170,11 +170,6 @@
   font-weight: 700;
 }
 
-/* The explanations above the list stay a readable line; the list itself uses the width. */
-.newsNote {
-  max-width: none; /* the notes run to the end of the section, not to a column in the middle of it */
-}
-
 /* The indicators: a row of cards, one per measure, each wide enough for its chart to be read. The
    cards keep their width and the row scrolls when they do not fit (see Carousel). Equal cards
    are the right shape: the five measures are peers, none leads. */

@@ -24,3 +24,10 @@
 .sectionToggle[aria-expanded="false"] svg {
   transform: rotate(-90deg);
 }
+
+/* The title and its "i" button side by side. */
+.headingRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}

@@ -1,0 +1,61 @@
+/* A round "i" beside a title, quiet until it is pointed at; the target is 44 px for touch. */
+.infoButton {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-gray);
+  cursor: pointer;
+}
+
+.infoButton:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.dialog {
+  width: min(36rem, calc(100vw - 2 * var(--space-4)));
+  max-height: calc(100vh - 2 * var(--space-8));
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-raised);
+}
+
+.dialog::backdrop {
+  background: var(--color-text);
+  opacity: 0.45;
+}
+
+.header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.header h2 {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.body {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.body p,
+.body h3 {
+  margin: 0;
+}
+
+.body h3 {
+  font-size: var(--text-md);
+}

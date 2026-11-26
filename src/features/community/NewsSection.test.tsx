@@ -4,6 +4,7 @@ import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
 
 import { es } from "@/i18n/es";
+import { formatMessage } from "@/i18n/format";
 import { renderApp } from "@/test/app";
 import { axeViolations } from "@/test/axe";
 import { serveCommunity } from "@/test/community";
@@ -112,10 +113,18 @@ describe("news of a community", () => {
     });
   });
 
-  it("says how the news are classified", async () => {
+  it("says how the news are classified in the section's window, not on the screen", async () => {
     renderApp("/comunidades/ccaa-05");
+    const info = await screen.findByRole("button", {
+      name: formatMessage(es.app.shell.info.open, { topic: es.community.news.title }),
+    });
+    expect(screen.queryByText(es.community.news.range.note)).toBeNull();
 
-    expect(await screen.findByText(es.community.news.method)).toBeVisible();
+    await userEvent.click(info);
+
+    const dialog = screen.getByRole("dialog", { name: es.community.news.title });
+    expect(within(dialog).getByText(es.community.news.method)).toBeVisible();
+    expect(within(dialog).getByText(es.community.news.range.note)).toBeVisible();
   });
 
   it("shows an error with a retry in the section when the news cannot be loaded", async () => {
@@ -230,7 +239,6 @@ describe("range of days of the news", () => {
     expect(
       within(section).queryByRole("button", { name: es.community.news.range.reset }),
     ).toBeNull();
-    expect(within(section).getByText(es.community.news.range.note)).toBeVisible();
   });
 
   it("asks for the days chosen and goes back to the default with the button", async () => {
@@ -327,7 +335,16 @@ describe("related news of a news item", () => {
     // The item asked for is not repeated: only the earlier ones, with the API's similarity.
     expect(within(panel).getAllByRole("link")).toHaveLength(4);
     expect(within(panel).getByText(/Canarias7, \d\d:\d\d · parecido: 0,92/)).toBeVisible();
-    expect(within(panel).getByText(/hasta 8 días\. Parecido no significa/)).toBeVisible();
+    await userEvent.click(
+      within(panel).getByRole("button", {
+        name: formatMessage(es.app.shell.info.open, { topic: es.stories.related.title }),
+      }),
+    );
+    expect(
+      within(screen.getByRole("dialog", { name: es.stories.related.title })).getByText(
+        /hasta 8 días\. Parecido no significa/,
+      ),
+    ).toBeVisible();
     expect(within(panel).getAllByRole("link")[0]).toHaveAttribute("target", "_blank");
   });
 

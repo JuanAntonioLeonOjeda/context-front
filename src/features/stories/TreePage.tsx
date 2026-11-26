@@ -1,7 +1,7 @@
 import { useId, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import { ExternalLink } from "@/features/shell";
+import { ExternalLink, InfoButton } from "@/features/shell";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
@@ -49,14 +49,19 @@ export function StoryTreeView({ storyId }: { storyId: number }): React.JSX.Eleme
       {tree.state === "not-found" && <p>{es.stories.tree.notFound}</p>}
       {tree.state === "ready" && (
         <>
-          <p className={styles.note}>{es.stories.tree.reading}</p>
-          <p className={styles.note}>{es.stories.tree.moreHint}</p>
-          <p className={styles.note}>
-            {formatMessage(es.stories.tree.method, {
-              threshold: tree.tree.linkThreshold.toLocaleString("es"),
-              days: String(tree.tree.linkWindowDays),
-            })}
-          </p>
+          {/* How to read the tree, in a window: the tree keeps the screen. */}
+          <div className={styles.info}>
+            <InfoButton topic={es.stories.tree.title}>
+              <p>{es.stories.tree.reading}</p>
+              <p>{es.stories.tree.moreHint}</p>
+              <p>
+                {formatMessage(es.stories.tree.method, {
+                  threshold: tree.tree.linkThreshold.toLocaleString("es"),
+                  days: String(tree.tree.linkWindowDays),
+                })}
+              </p>
+            </InfoButton>
+          </div>
           <div
             className={styles.scroll}
             role="region"

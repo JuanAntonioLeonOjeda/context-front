@@ -14,6 +14,10 @@ export const es = {
         light: "claro",
         dark: "oscuro",
       },
+      info: {
+        open: "Cómo leer: {topic}",
+        close: "Cerrar",
+      },
     },
     footer: {
       sources: {
@@ -389,7 +393,6 @@ export const es = {
       noValue: "Sin dato",
     },
     method: {
-      title: "Cómo leerlo",
       shares:
         "Los porcentajes son sobre el voto válido de cada tramo. Se muestran las candidaturas con al menos el {percent} % del voto válido de la comunidad, y el resto se suma en «Otras».",
       areas:

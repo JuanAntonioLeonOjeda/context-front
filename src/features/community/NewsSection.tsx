@@ -80,6 +80,12 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
         onToggle={() => {
           setOpen(!open);
         }}
+        info={
+          <>
+            <p>{es.community.news.range.note}</p>
+            <p>{es.community.news.method}</p>
+          </>
+        }
       />
       {open && (
         <>
@@ -141,8 +147,6 @@ export function NewsSection({ territoryId }: { territoryId: string }): React.JSX
             </div>
           </fieldset>
           {indicator !== null && <SectorIndicator sector={sectorName} row={indicator} />}
-          <p className={styles.newsNote}>{es.community.news.range.note}</p>
-          <p className={styles.newsNote}>{es.community.news.method}</p>
           {news.state === "error" && (
             <div role="alert">
               <p>{es.community.news.error}</p>
