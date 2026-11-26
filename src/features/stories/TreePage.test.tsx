@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { es } from "@/i18n/es";
+import { formatMessage } from "@/i18n/format";
 import { renderApp } from "@/test/app";
 import { axeViolations } from "@/test/axe";
 
@@ -16,108 +17,114 @@ describe("tree of related news", () => {
     expect(document.title).toMatch(/^Árbol de noticias · /);
   });
 
-  it("shows every story of the tree as a card, nested under the one it continues", async () => {
+  /** The node buttons of the graph, in the order a reader goes through them. */
+  async function nodes(): Promise<HTMLElement[]> {
+    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
+    return within(region).getAllByRole("button");
+  }
+
+  function first(buttons: HTMLElement[], index = 0): HTMLElement {
+    const button = buttons[index];
+    if (!button) throw new Error("no node rendered");
+    return button;
+  }
+
+  it("shows every story of the tree as a node, oldest first", async () => {
+    renderApp("/arbol/37");
+
+    const buttons = await nodes();
+    expect(buttons).toHaveLength(6);
+    expect(buttons.map((b) => b.getAttribute("aria-expanded"))).toEqual(Array(6).fill("false"));
+    // The root (story 4, 12 October) first; the fixture's nodes come oldest first too.
+    expect(first(buttons)).toHaveTextContent(/^12 oct/);
+  });
+
+  it("shows the headline of the first article under each node, and no link until one is opened", async () => {
     renderApp("/arbol/37");
 
     const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
-    expect(within(region).getAllByRole("article")).toHaveLength(6);
-    // The root has the other cards as descendants; the leaves have none.
-    const root = region.querySelector("ul > li");
-    expect(root?.querySelectorAll("li > ul > li")).not.toHaveLength(0);
+    expect(within(region).queryAllByRole("link")).toHaveLength(0);
+    expect(first(await nodes())).toHaveTextContent(/3 noticias$/);
   });
 
-  it("shows only the headline of the first article of each story until it is opened", async () => {
-    renderApp("/arbol/37");
-
-    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
-    for (const card of within(region).getAllByRole("article")) {
-      expect(within(card).getAllByRole("link")).toHaveLength(1);
-    }
-    expect(within(region).queryAllByRole("heading")).toHaveLength(0);
-  });
-
-  it("marks which cards have something to unfold, so a lone headline is never cut", async () => {
-    renderApp("/arbol/37");
-
-    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
-    for (const card of within(region).getAllByRole("article")) {
-      const hasButton = within(card).queryByRole("button") !== null;
-      expect(card).toHaveAttribute("data-expandable", String(hasButton));
-    }
-  });
-
-  it("unfolds the headlines of the other outlets on click and folds them on a second click", async () => {
+  it("opens all the news of a story on click and closes them on a second click", async () => {
     const user = userEvent.setup();
     renderApp("/arbol/37");
-    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
-    const [card] = within(region).getAllByRole("article");
-    if (!card) throw new Error("no card rendered");
-    const toggle = within(card).getByRole("button", { name: /^Desplegar \(\d medios? más\)$/ });
-    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    const node = first(await nodes());
 
-    await user.click(toggle);
+    await user.click(node);
 
-    const folded = within(card).getByRole("button", { name: es.stories.tree.fold });
-    expect(folded).toHaveAttribute("aria-expanded", "true");
-    expect(within(card).getAllByRole("link").length).toBeGreaterThan(1);
-    for (const link of within(card).getAllByRole("link")) {
+    expect(node).toHaveAttribute("aria-expanded", "true");
+    const list = screen.getByRole("list", { name: /^Noticias de la historia «/ });
+    // The news appear as the graph places them, a frame after the click.
+    expect(await within(list).findAllByRole("link")).toHaveLength(3);
+    for (const link of within(list).getAllByRole("link")) {
       expect(link).toHaveAttribute("href", expect.stringMatching(/^https?:\/\//));
     }
 
-    await user.click(folded);
+    await user.click(node);
 
-    expect(within(card).getByRole("button", { name: /^Desplegar/ })).toHaveAttribute(
-      "aria-expanded",
-      "false",
-    );
-    expect(within(card).getAllByRole("link")).toHaveLength(1);
+    expect(node).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("list", { name: /^Noticias de la historia «/ })).toBeNull();
   });
 
-  it("does not unfold on hover: only the button does", async () => {
+  it("keeps one story open at a time, and Escape closes it", async () => {
     const user = userEvent.setup();
     renderApp("/arbol/37");
-    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
-    const [card] = within(region).getAllByRole("article");
-    if (!card) throw new Error("no card rendered");
+    const buttons = await nodes();
 
-    await user.hover(card);
+    await user.click(first(buttons, 0));
+    await user.click(first(buttons, 1));
 
-    expect(within(card).getAllByRole("link")).toHaveLength(1);
+    expect(first(buttons, 0)).toHaveAttribute("aria-expanded", "false");
+    expect(first(buttons, 1)).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getAllByRole("list", { name: /^Noticias de la historia «/ })).toHaveLength(1);
+
+    await user.keyboard("{Escape}");
+
+    expect(screen.queryByRole("list", { name: /^Noticias de la historia «/ })).toBeNull();
   });
 
-  it("opens with the keyboard too", async () => {
+  it("does not open on hover: only a click or a key does", async () => {
     const user = userEvent.setup();
     renderApp("/arbol/37");
-    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
-    const [card] = within(region).getAllByRole("article");
-    if (!card) throw new Error("no card rendered");
-    within(card)
-      .getByRole("button", { name: /^Desplegar/ })
-      .focus();
+    const node = first(await nodes());
 
+    await user.hover(node);
+    expect(node).toHaveAttribute("aria-expanded", "false");
+
+    node.focus();
     await user.keyboard("{Enter}");
-
-    expect(within(card).getAllByRole("link").length).toBeGreaterThan(1);
+    expect(node).toHaveAttribute("aria-expanded", "true");
   });
 
-  it("links each headline to its outlet and says when each story began", async () => {
+  it("says in each node which story it continues and how alike, as its line does", async () => {
     renderApp("/arbol/37");
+    const buttons = await nodes();
 
-    const region = await screen.findByRole("region", { name: es.stories.tree.regionLabel });
-    for (const link of within(region).getAllByRole("link")) {
-      expect(link).toHaveAttribute("href", expect.stringMatching(/^https?:\/\//));
+    expect(first(buttons)).not.toHaveTextContent(/Continúa/);
+    for (const button of buttons.slice(1)) {
+      expect(button).toHaveTextContent(
+        /Continúa la historia «.+»\. Relación con la anterior: 0,\d+\.$/,
+      );
     }
-    expect(within(region).getAllByText(/^Desde el \d+ de \w+ de 2026, \d\d:\d\d$/)).toHaveLength(6);
   });
 
   it("says how the relations were made and that they can be wrong, without a cause", async () => {
     renderApp("/arbol/37");
+    const info = await screen.findByRole("button", {
+      name: formatMessage(es.app.shell.info.open, { topic: es.stories.tree.title }),
+    });
+    expect(screen.queryByText(es.stories.tree.reading)).toBeNull();
 
-    expect(await screen.findByText(es.stories.tree.reading)).toBeVisible();
+    await userEvent.click(info);
+
+    const dialog = screen.getByRole("dialog", { name: es.stories.tree.title });
+    expect(within(dialog).getByText(es.stories.tree.reading)).toBeVisible();
     expect(
-      screen.getByText(/umbral provisional \(similitud mínima 0,75 y hasta 14 días/),
+      within(dialog).getByText(/umbral provisional \(similitud mínima 0,75 y hasta 14 días/),
     ).toBeVisible();
-    expect(screen.getByText(/solo dice «parecida y posterior», no su causa/)).toBeVisible();
+    expect(within(dialog).getByText(/solo dice «parecida y posterior», no su causa/)).toBeVisible();
   });
 
   it("names no party and shows no lead", async () => {
@@ -149,7 +156,7 @@ describe("tree of related news", () => {
 
   it("is reached from a news item's 'ver árbol' and has no axe violations", async () => {
     const user = userEvent.setup();
-    const container = renderApp("/comunidades/ccaa-05?sector=health");
+    const container = renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     const button = await screen.findByRole("link", {
       name: /Ver árbol de noticias relacionadas/,
     });

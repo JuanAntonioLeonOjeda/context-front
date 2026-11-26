@@ -1,17 +1,21 @@
+import { InfoButton } from "./InfoButton";
+
 import styles from "./SectionHeading.module.css";
 
 /**
  * The title of a section that can be closed and opened again: the heading holds the button, so
  * the section is still found by its heading and the state is on the control (`aria-expanded`),
- * not in an icon alone.
+ * not in an icon alone. With `info`, an "i" button beside the title opens the section's
+ * explanations in a modal; it sits outside the heading, so the heading's name stays the title.
  */
 export function SectionHeading(props: {
   id: string;
   title: string;
   open: boolean;
   onToggle: () => void;
+  info?: React.ReactNode;
 }): React.JSX.Element {
-  return (
+  const heading = (
     <h2 id={props.id} className={styles.sectionHeading}>
       <button
         type="button"
@@ -36,5 +40,12 @@ export function SectionHeading(props: {
         </svg>
       </button>
     </h2>
+  );
+  if (props.info === undefined) return heading;
+  return (
+    <div className={styles.headingRow}>
+      {heading}
+      <InfoButton topic={props.title}>{props.info}</InfoButton>
+    </div>
   );
 }

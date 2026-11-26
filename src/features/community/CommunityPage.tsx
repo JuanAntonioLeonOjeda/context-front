@@ -7,7 +7,6 @@ import { CommunityFlag } from "./CommunityFlag";
 import { GovernmentSection } from "./GovernmentSection";
 import { IndicatorsSection } from "./IndicatorsSection";
 import { NewsSection } from "./NewsSection";
-import { TreesSection } from "./TreesSection";
 import { useCommunityCard } from "./useCommunityCard";
 
 import styles from "./CommunityLayout.module.css";
@@ -62,7 +61,6 @@ export function CommunityPage({ territoryId }: { territoryId: string }): React.J
           </p>
           <IndicatorsSection community={card.name} rows={card.indicators} />
           <VotersSection territoryId={territoryId} />
-          <TreesSection territoryId={territoryId} />
           <NewsSection territoryId={territoryId} />
         </>
       )}

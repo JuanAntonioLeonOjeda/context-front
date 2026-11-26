@@ -14,6 +14,10 @@ export const es = {
         light: "claro",
         dark: "oscuro",
       },
+      info: {
+        open: "Cómo leer: {topic}",
+        close: "Cerrar",
+      },
     },
     footer: {
       sources: {
@@ -141,7 +145,6 @@ export const es = {
     },
     filters: { legend: "Filtros" },
     trees: {
-      title: "Noticias relacionadas",
       sectorNav: "Sector del árbol de noticias",
       note: "Cada elemento es un árbol de noticias relacionadas y muestra la más reciente de esta comunidad en el sector. Pulsa sobre ella para ver el árbol completo.",
       empty: "No hay árboles de noticias de {sector} en esta comunidad.",
@@ -158,6 +161,21 @@ export const es = {
     },
     news: {
       title: "Noticias",
+      views: {
+        label: "Qué quieres ver",
+        buscador: {
+          title: "Buscador de noticias",
+          description:
+            "Las noticias de los últimos días por sector, con sus fechas y un buscador; de cada una puedes ver las anteriores que se le parecen.",
+          goTo: "Ir al buscador de noticias",
+        },
+        arbol: {
+          title: "Árbol de noticias",
+          description:
+            "Cómo continúan las historias en el tiempo: cada árbol une lo que contaron varios medios y las historias que vinieron después.",
+          goTo: "Ir al árbol de noticias",
+        },
+      },
       search: {
         label: "Buscar",
         placeholder: "Escribe un titular o un medio",
@@ -389,7 +407,6 @@ export const es = {
       noValue: "Sin dato",
     },
     method: {
-      title: "Cómo leerlo",
       shares:
         "Los porcentajes son sobre el voto válido de cada tramo. Se muestran las candidaturas con al menos el {percent} % del voto válido de la comunidad, y el resto se suma en «Otras».",
       areas:
@@ -425,7 +442,7 @@ export const es = {
       title: "Árbol de noticias",
       back: "Volver",
       reading:
-        "Cada tarjeta es una historia: muestra el titular de la primera noticia publicada y, al desplegarla, los de los demás medios que cuentan el mismo suceso. El tiempo avanza de izquierda a derecha: cada rama continúa la historia anterior a la que se parece más.",
+        "Cada círculo es una historia: debajo, el titular de la primera noticia publicada; cuantas más noticias la cuentan, más grande es. Las más antiguas quedan a la izquierda y las más recientes a la derecha, y cada línea une una historia con la anterior a la que más se parece.",
       method:
         "Las historias y las relaciones las calcula un modelo de similitud de textos, con un umbral provisional (similitud mínima {threshold} y hasta {days} días entre una historia y la siguiente). Pueden contener errores. Una relación solo dice «parecida y posterior», no su causa.",
       regionLabel: "Árbol de historias relacionadas, se desplaza en horizontal",
@@ -435,7 +452,11 @@ export const es = {
       sameOutletOne: "1 noticia más de este medio",
       unfold: "Desplegar ({more})",
       fold: "Plegar",
-      moreHint: "Pulsa «Desplegar» en una tarjeta para ver el titular de los demás medios.",
+      moreHint:
+        "Pulsa un círculo para ver todas las noticias de esa historia; las líneas unen cada historia con la anterior a la que continúa, con su parecido.",
+      articles: { one: "{count} noticia", other: "{count} noticias" },
+      articlesOf: "Noticias de la historia «{headline}»",
+      continues: "Continúa la historia «{headline}». {similarity}.",
       started: "Desde el {date}, {time}",
       similarity: "Relación con la anterior: {value}",
       loading: "Cargando el árbol…",
