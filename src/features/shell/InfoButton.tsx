@@ -92,8 +92,26 @@ export function InfoButton(props: { topic: string; children: React.ReactNode }):
           <>
             <div className={styles.header}>
               <h2 id={titleId}>{props.topic}</h2>
-              <button type="button" popoverTarget={boxId} popoverTargetAction="hide">
-                {es.app.shell.info.close}
+              <button
+                type="button"
+                className={styles.close}
+                aria-label={es.app.shell.info.close}
+                popoverTarget={boxId}
+                popoverTargetAction="hide"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
               </button>
             </div>
             <div className={styles.body}>{props.children}</div>
