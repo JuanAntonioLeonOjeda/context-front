@@ -40,7 +40,7 @@ const PAGES: PageCase[] = [
   },
   {
     name: "a community card",
-    path: "/comunidades/ccaa-05",
+    path: "/comunidades/ccaa-05?vista=buscador",
     loaded: async () => {
       await screen.findByRole("heading", { name: "Tasa de paro" });
       return newsLoaded();
@@ -48,7 +48,7 @@ const PAGES: PageCase[] = [
   },
   {
     name: "a community card whose sector has no news",
-    path: "/comunidades/ccaa-09",
+    path: "/comunidades/ccaa-09?vista=buscador",
     scenario: { community: "cataluna" },
     loaded: () => screen.findByText(/No hay noticias de educación/),
   },

@@ -4,6 +4,7 @@ import { http, HttpResponse } from "msw";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { es } from "@/i18n/es";
+import { formatMessage } from "@/i18n/format";
 import { axeViolations } from "@/test/axe";
 import { serveCommunity } from "@/test/community";
 import canarias from "@/test/fixtures/community-ccaa-05-voters.json";
@@ -15,6 +16,13 @@ import { VotersSection } from "./VotersSection";
 
 const TITLE = es.voters.section.title;
 const FIRST_BAND = "Tramo 1 de 5 · rentas más bajas";
+const INFO = formatMessage(es.app.shell.info.open, { topic: TITLE });
+
+/** The section's "i" window, opened: where the notes on how to read the profile are. */
+async function openExplanation(): Promise<HTMLElement> {
+  await userEvent.click(screen.getByRole("button", { name: INFO }));
+  return screen.getByRole("dialog", { name: TITLE });
+}
 
 function renderSection(
   territoryId: string,
@@ -57,7 +65,6 @@ describe("voter profile of a community", () => {
       "Tramo 3 de 5",
       "Tramo 4 de 5",
       "Tramo 5 de 5 · rentas más altas",
-      es.voters.method.title,
     ]);
     expect(band).toHaveTextContent("De 10.321 a 12.079 € por persona");
     expect(band).toHaveTextContent("21 municipios · 19,7 % del censo");
@@ -132,7 +139,6 @@ describe("voter profile of a community", () => {
       "Tramo 2 de 4",
       "Tramo 3 de 4",
       "Tramo 4 de 4 · municipios más grandes",
-      es.voters.method.title,
     ]);
     expect(screen.getByRole("button", { name: es.voters.dimensions.size.tab })).toHaveAttribute(
       "aria-pressed",
@@ -141,9 +147,7 @@ describe("voter profile of a community", () => {
     expect(screen.getAllByText(/electores$/, { selector: "span" }).length).toBeGreaterThan(0);
     expect(screen.queryByRole("link", { name: /INE/ })).toBeNull();
     expect(screen.queryByText(/Atlas de distribución de renta/)).toBeNull();
-    expect(screen.getByRole("complementary", { name: es.voters.method.title })).toHaveTextContent(
-      "de 1500 a 7999",
-    );
+    expect(await openExplanation()).toHaveTextContent("de 1500 a 7999");
   });
 
   it("goes back to the income and keeps the bands the API sent for it", async () => {
@@ -187,9 +191,7 @@ describe("voter profile of a community", () => {
     );
     expect(screen.queryByText(/Atlas de distribución de renta/)).toBeNull();
     expect(
-      within(screen.getByRole("complementary", { name: es.voters.method.title })).getByText(
-        /Censo anual de población del INE/,
-      ),
+      within(await openExplanation()).getByText(/Censo anual de población del INE/),
     ).toBeVisible();
   });
 
@@ -228,9 +230,7 @@ describe("voter profile of a community", () => {
       expect.stringContaining("cid=1254736176992"),
     );
     expect(
-      within(screen.getByRole("complementary", { name: es.voters.method.title })).getByText(
-        /Es el lugar de nacimiento, no la nacionalidad/,
-      ),
+      within(await openExplanation()).getByText(/Es el lugar de nacimiento, no la nacionalidad/),
     ).toBeVisible();
   });
 
@@ -309,15 +309,25 @@ describe("voter profile of a community", () => {
     expect(screen.getByRole("status")).toHaveTextContent(es.voters.section.loading);
   });
 
-  it("is titled the voter profile and says what it is in small print after the bands", async () => {
+  it("is titled the voter profile and says what it is in its window, not on the screen", async () => {
     renderSection("ccaa-05");
-    const band = await firstBand();
+    await firstBand();
 
     expect(screen.getByRole("button", { name: "Perfil de votante" })).toBeVisible();
-    const intro = screen.getByText(/^Cómo votaron los municipios de la comunidad/);
-    // After the last band, not between the buttons and the bands.
-    expect(band.compareDocumentPosition(intro) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(intro).toHaveClass(/caption/);
+    expect(screen.queryByText(/^Cómo votaron los municipios de la comunidad/)).toBeNull();
+    expect(
+      within(await openExplanation()).getByText(/^Cómo votaron los municipios de la comunidad/),
+    ).toBeVisible();
+  });
+
+  it("closes the window with its Close button", async () => {
+    renderSection("ccaa-05");
+    await firstBand();
+    const dialog = await openExplanation();
+
+    await userEvent.click(within(dialog).getByRole("button", { name: es.app.shell.info.close }));
+
+    expect(screen.queryByRole("dialog")).toBeNull();
   });
 
   it("offers the five parameters, the last one named by the place of birth and not by an origin", async () => {
@@ -338,16 +348,18 @@ describe("voter profile of a community", () => {
     await firstBand();
 
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.age.tab }));
+    await screen.findByRole("heading", { level: 3, name: "Tramo 1 de 5 · menores" });
 
-    const method = await screen.findByRole("complementary", { name: es.voters.method.title });
-    expect(method).toHaveTextContent("personas de cualquier edad y lugar de nacimiento");
+    expect(await openExplanation()).toHaveTextContent(
+      "personas de cualquier edad y lugar de nacimiento",
+    );
   });
 
   it("says that the profile describes areas even when there is nothing to draw", async () => {
     renderSection("ccaa-18");
 
     expect(await screen.findByText(es.voters.dimensions.income.tooFew)).toBeVisible();
-    expect(screen.getByText(/describe zonas, no personas/)).toBeVisible();
+    expect(within(await openExplanation()).getByText(/describe zonas, no personas/)).toBeVisible();
   });
 
   it("puts the bands in a row that scrolls sideways, with its own name for the keyboard", async () => {
@@ -428,8 +440,8 @@ describe("voter profile of a community", () => {
     await firstBand();
 
     const section = screen.getByRole("region", { name: TITLE });
-    expect(section).toHaveTextContent("elecciones generales del 23 de julio de 2023");
-    const method = within(section).getByRole("complementary", { name: es.voters.method.title });
+    const method = await openExplanation();
+    expect(method).toHaveTextContent("elecciones generales del 23 de julio de 2023");
     expect(method).toHaveTextContent("renta neta media por persona de 2023");
     expect(method).toHaveTextContent("describe zonas, no personas");
     expect(method).toHaveTextContent("al menos el 3 %");
@@ -449,7 +461,8 @@ describe("voter profile of a community", () => {
     expect(await screen.findByText(es.voters.dimensions.income.tooFew)).toBeVisible();
     expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
     expect(screen.queryByRole("table")).toBeNull();
-    expect(screen.queryByText(es.voters.method.title)).toBeNull();
+    // No bands, so nothing on how they are made or what the percentages are.
+    expect(await openExplanation()).not.toHaveTextContent("al menos el");
   });
 
   it("shows nothing at all when the API has no election for the community", async () => {
@@ -504,8 +517,9 @@ describe("voter profile of a community", () => {
       ),
     );
     render(<VotersSection territoryId="ccaa-05" />, { wrapper: queryWrapper() });
+    await firstBand();
 
-    const method = await screen.findByRole("complementary", { name: es.voters.method.title });
+    const method = await openExplanation();
     expect(method).toHaveTextContent("describe zonas, no personas");
     expect(method).toHaveTextContent("al menos el 3 %");
     expect(method).not.toHaveTextContent("renta neta media por persona de");
@@ -523,8 +537,9 @@ describe("voter profile of a community", () => {
       ),
     );
     render(<VotersSection territoryId="ccaa-05" />, { wrapper: queryWrapper() });
+    await firstBand();
 
-    const method = await screen.findByRole("complementary", { name: es.voters.method.title });
+    const method = await openExplanation();
     expect(method).toHaveTextContent("al menos el 5 %");
     expect(method).not.toHaveTextContent("{percent}");
     expect(screen.getByRole("link", { name: /INE/ })).toHaveAttribute(
@@ -541,7 +556,16 @@ describe("voter profile of a community", () => {
     it.each(["ccaa-05", "ccaa-18"])("has no axe violations (%s)", async (territoryId) => {
       document.documentElement.setAttribute("data-theme", theme);
       const container = renderSection(territoryId);
-      await screen.findByText(/elecciones generales del/);
+      await screen.findByRole("link", { name: /Ministerio del Interior/ });
+
+      expect(await axeViolations(container)).toEqual([]);
+    });
+
+    it("has no axe violations with the window open", async () => {
+      document.documentElement.setAttribute("data-theme", theme);
+      const container = renderSection("ccaa-05");
+      await firstBand();
+      await openExplanation();
 
       expect(await axeViolations(container)).toEqual([]);
     });

@@ -30,6 +30,7 @@ export function VotersSection({ territoryId }: { territoryId: string }): React.J
       onToggle={() => {
         setOpen(!open);
       }}
+      info={<Explanation profile={profile} />}
     />
   );
   const tabs = <DimensionSwitch value={dimension} onChange={setDimension} />;
@@ -49,9 +50,6 @@ export function VotersSection({ territoryId }: { territoryId: string }): React.J
         </>
       )}
       {open && <Status profile={profile} dimension={dimension} />}
-      {open && (profile.state === "loading" || profile.state === "error") && (
-        <p className={styles.note}>{es.voters.method.areas}</p>
-      )}
       {open && profile.state === "error" && (
         <div role="alert">
           <p>{texts.error}</p>
@@ -134,7 +132,6 @@ function Profile(props: {
           ))}
         </ol>
       </Carousel>
-      <Intro voters={voters} className={styles.caption} />
       {voters.profile !== null && voters.profile.municipalitiesWithoutValue > 0 && (
         <p className={styles.note}>
           {formatMessage(texts.withoutValue, {
@@ -146,7 +143,6 @@ function Profile(props: {
         <summary>{es.voters.table.open}</summary>
         <DataTable bands={bands} caption={texts.tableCaption} />
       </details>
-      <Method voters={voters} />
       <Sources voters={voters} />
     </>
   );
@@ -156,7 +152,6 @@ function Profile(props: {
 function NoProfile({ voters }: { voters: CommunityVoters }): React.JSX.Element {
   return (
     <>
-      <p className={styles.note}>{es.voters.method.areas}</p>
       {voters.noProfileReason !== null && (
         <p>
           {voters.noProfileReason === "no_results"
@@ -164,22 +159,17 @@ function NoProfile({ voters }: { voters: CommunityVoters }): React.JSX.Element {
             : es.voters.dimensions[voters.dimension].tooFew}
         </p>
       )}
-      <Intro voters={voters} className={styles.caption} />
       <Sources voters={voters} />
     </>
   );
 }
 
-/** What the profile is: the election and the parameter, in small print at the foot of the bands. */
-function Intro(props: {
-  voters: CommunityVoters;
-  className: string | undefined;
-}): React.JSX.Element {
-  const { voters } = props;
+/** What the profile is: the election and the parameter. */
+function Intro({ voters }: { voters: CommunityVoters }): React.JSX.Element {
   const texts = es.voters.dimensions[voters.dimension];
   const date = formatLongDate(voters.electionDay);
   return (
-    <p className={props.className}>
+    <p>
       {voters.sourceYear === null
         ? formatMessage(texts.introNoYear, { date })
         : formatMessage(texts.intro, { date, year: String(voters.sourceYear) })}
@@ -303,17 +293,26 @@ function DataTable(props: { bands: readonly BandView[]; caption: string }): Reac
   );
 }
 
-function Method({ voters }: { voters: CommunityVoters }): React.JSX.Element {
+/** How to read the profile, in the section's "i" window: what it is, how the bands are made and
+ *  what the percentages are, once the data says them; that it describes areas, always. */
+function Explanation({ profile }: { profile: VoterProfileState }): React.JSX.Element {
   const { method } = es.voters;
+  if (profile.state !== "ready") return <p>{method.areas}</p>;
+  const { voters } = profile;
   const texts = es.voters.dimensions[voters.dimension];
+  const hasBands = profile.bands !== null;
   // The note about the bands names the year of the values: without a year it is left out.
   const hasYear = voters.sourceYear !== null || !texts.method.includes("{year}");
   return (
-    <aside aria-labelledby="voters-method-title" className={styles.method}>
-      <h3 id="voters-method-title">{method.title}</h3>
-      {hasYear && <p>{formatMessage(texts.method, { year: String(voters.sourceYear ?? "") })}</p>}
-      <p>{formatMessage(method.shares, { percent: String(voters.shownFromPercent) })}</p>
+    <>
+      <Intro voters={voters} />
+      {hasBands && hasYear && (
+        <p>{formatMessage(texts.method, { year: String(voters.sourceYear ?? "") })}</p>
+      )}
+      {hasBands && (
+        <p>{formatMessage(method.shares, { percent: String(voters.shownFromPercent) })}</p>
+      )}
       <p>{method.areas}</p>
-    </aside>
+    </>
   );
 }

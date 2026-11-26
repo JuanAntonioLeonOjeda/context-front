@@ -50,11 +50,6 @@
   color: var(--color-text);
 }
 
-/* What the profile is, in small print at the foot of the bands. */
-.caption {
-  font-size: var(--text-sm);
-}
-
 .bandFacts {
   display: flex;
   flex-wrap: wrap;
@@ -166,20 +161,6 @@
   font-size: var(--text-sm);
 }
 
-.method {
-  display: grid;
-  gap: var(--space-2);
-  max-width: 70ch;
-}
-
-.method > * {
-  margin-block: 0;
-}
-
-.method h3 {
-  font-size: var(--text-md);
-}
-
 /* The parameter of the profile: a row of capsules like the sectors of the news, the pressed one
    filled; the state is in `aria-pressed`, not in the colour alone. */
 .dimensions {
@@ -189,13 +170,16 @@
 }
 
 .dimensions button {
-  min-block-size: 2.75rem;
-  padding: var(--space-2) var(--space-4);
+  /* Smaller than the section's title: a filter, not a heading. 32 px is above the 24 px minimum
+     target of WCAG 2.2 AA. */
+  min-block-size: 2rem;
+  padding: var(--space-1) var(--space-3);
   border: 1px solid var(--color-border-strong);
   border-radius: 999px;
   background: transparent;
   color: inherit;
   font: inherit;
+  font-size: var(--text-sm);
   font-weight: 700;
   cursor: pointer;
 }

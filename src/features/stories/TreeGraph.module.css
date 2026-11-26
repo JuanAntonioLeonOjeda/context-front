@@ -1,0 +1,175 @@
+/* The graph: the lines are an SVG underneath, the nodes are buttons placed over it by the layout
+   (graph-layout.ts). Sizes and places come from the layout; colours from the tokens, so both
+   themes work. */
+.graph {
+  position: relative;
+}
+
+.edges {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.edge {
+  fill: none;
+  stroke: var(--color-border-strong);
+  stroke-width: 2;
+}
+
+.edgeLabel {
+  fill: var(--color-text-muted);
+  font-size: 0.75rem;
+  paint-order: stroke;
+  stroke: var(--color-bg);
+  stroke-width: 4;
+}
+
+.nodes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.node {
+  position: absolute;
+}
+
+/* The whole node is the button: the circle, the day, the headline and how many news. */
+.nodeButton {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  width: 100%;
+  padding: 0 0 var(--space-1);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  text-align: center;
+  cursor: grab;
+  /* A press on a story drags it instead of scrolling the page (touch). */
+  touch-action: none;
+}
+
+.nodeButton:active {
+  cursor: grabbing;
+}
+
+.circle {
+  box-sizing: border-box;
+  border: 3px solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-surface);
+  transition: transform 120ms ease;
+}
+
+/* The story the tree grows from is filled; the others are rings. */
+.node[data-root="true"] .circle {
+  background: var(--color-accent);
+}
+
+.nodeButton:hover .circle,
+.node[data-open="true"] .circle {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 0 4px var(--color-bg),
+    0 0 0 6px var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circle {
+    transition: none;
+  }
+}
+
+/* The texts of a node hide the lines that pass behind them, so a headline is never crossed. */
+.day,
+.headline,
+.count {
+  padding-inline: var(--space-1);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.day,
+.count {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.headline {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* The news of an open story: small nodes around it, placed by the graph. The open story and its
+   news sit over the other stories. */
+.node[data-open="true"] {
+  z-index: 2;
+}
+
+.news {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.newsNode {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.newsCircle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.newsNode .outlet,
+.newsHeadline {
+  padding-inline: var(--space-1);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+/* Cut at two lines on the screen; the link's name is still the whole headline. */
+.newsHeadline {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.newsEdge {
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+.outlet {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
