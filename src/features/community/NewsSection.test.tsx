@@ -22,7 +22,7 @@ async function newsSection(): Promise<HTMLElement> {
 
 describe("news of a community", () => {
   it("lists the headlines linking to the outlet, with outlet and date, and never a lead", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
 
     const section = await newsSection();
     await newsLoaded();
@@ -36,7 +36,7 @@ describe("news of a community", () => {
   });
 
   it("groups the news by day, newest day first, each day under its own heading", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
 
     const section = await newsSection();
     await newsLoaded();
@@ -48,7 +48,7 @@ describe("news of a community", () => {
   });
 
   it("names no party next to a news item: no responsible, no confidence, no colour stripe", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
 
     const section = await newsSection();
     await newsLoaded();
@@ -57,7 +57,7 @@ describe("news of a community", () => {
   });
 
   it("starts with the first sector and marks the chosen one, from the URL", async () => {
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=buscador");
 
     const nav = await screen.findByRole("navigation", { name: es.community.news.sectorNav });
     expect(
@@ -73,7 +73,7 @@ describe("news of a community", () => {
 
   it("changes the sector with a link, asks the API for it and keeps the focus on the link", async () => {
     const asked: (string | null)[] = [];
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=buscador");
     await newsLoaded(); // the first sector is loaded
     server.use(
       http.get("*/api/communities/:territoryId/news", ({ request }) => {
@@ -99,13 +99,13 @@ describe("news of a community", () => {
   });
 
   it("falls back to the first sector when the URL names one that does not exist", async () => {
-    renderApp("/comunidades/ccaa-05?sector=transporte");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=transporte");
 
     expect(await sectorLink("Educación")).toHaveAttribute("aria-current", "page");
   });
 
   it("says a sector has no news instead of leaving a blank", async () => {
-    renderApp("/comunidades/ccaa-09", { community: "cataluna" });
+    renderApp("/comunidades/ccaa-09?vista=buscador", { community: "cataluna" });
 
     expect(await screen.findByText(/No hay noticias de educación en este periodo/)).toBeVisible();
     await waitFor(() => {
@@ -114,7 +114,7 @@ describe("news of a community", () => {
   });
 
   it("says how the news are classified in the section's window, not on the screen", async () => {
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=buscador");
     const info = await screen.findByRole("button", {
       name: formatMessage(es.app.shell.info.open, { topic: es.community.news.title }),
     });
@@ -129,7 +129,7 @@ describe("news of a community", () => {
 
   it("shows an error with a retry in the section when the news cannot be loaded", async () => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=buscador");
     server.use(
       http.get("*/api/communities/:territoryId/news", () =>
         HttpResponse.json({ detail: "boom" }, { status: 500 }),
@@ -149,7 +149,7 @@ describe("news of a community", () => {
   });
 
   it("has no axe violations", async () => {
-    const container = renderApp("/comunidades/ccaa-05?sector=health");
+    const container = renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
 
     await newsLoaded();
     expect(await axeViolations(container)).toEqual([]);
@@ -158,7 +158,7 @@ describe("news of a community", () => {
 
 describe("actions of a news item", () => {
   it("gives each news item two actions with an icon that is hidden from assistive technology", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
 
     const section = await newsSection();
     await newsLoaded();
@@ -176,7 +176,7 @@ describe("actions of a news item", () => {
 describe("search of the news", () => {
   it("filters the list as the reader types, by headline, ignoring case and accents", async () => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     const section = await newsSection();
     await newsLoaded();
     expect(section.querySelectorAll("ol > li")).toHaveLength(11);
@@ -194,7 +194,7 @@ describe("search of the news", () => {
 
   it("also looks at the outlet, the secondary text of the card", async () => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     const section = await newsSection();
     await newsLoaded();
 
@@ -210,7 +210,7 @@ describe("search of the news", () => {
 
   it("says nothing matches, with what was typed, and keeps the search in the URL", async () => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05?sector=health&buscar=zzzz");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health&buscar=zzzz");
     const section = await newsSection();
     await newsLoaded();
 
@@ -227,7 +227,7 @@ describe("search of the news", () => {
 
 describe("range of days of the news", () => {
   it("shows in the fields the days the API resolved when none was chosen, and no way back", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     const section = await newsSection();
 
     await waitFor(() => {
@@ -244,7 +244,7 @@ describe("range of days of the news", () => {
   it("asks for the days chosen and goes back to the default with the button", async () => {
     const asked: Record<string, string | null>[] = [];
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     await newsLoaded();
     server.use(
       http.get("*/api/communities/:territoryId/news", ({ request }) => {
@@ -281,7 +281,9 @@ describe("range of days of the news", () => {
   });
 
   it("moves the other day when the first one is set after the last", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health&desde=2026-10-01&hasta=2026-10-05");
+    renderApp(
+      "/comunidades/ccaa-05?vista=buscador&sector=health&desde=2026-10-01&hasta=2026-10-05",
+    );
     await newsLoaded();
 
     fireEvent.change(screen.getByLabelText(es.community.news.range.from), {
@@ -294,7 +296,9 @@ describe("range of days of the news", () => {
   });
 
   it("reads the days from the URL and keeps the sector", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health&desde=2026-10-05&hasta=2026-10-07");
+    renderApp(
+      "/comunidades/ccaa-05?vista=buscador&sector=health&desde=2026-10-05&hasta=2026-10-07",
+    );
 
     await newsLoaded();
     expect(screen.getByLabelText(es.community.news.range.from)).toHaveValue("2026-10-05");
@@ -304,7 +308,7 @@ describe("range of days of the news", () => {
   });
 
   it("ignores a day in the URL that is not a date", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health&desde=ayer");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health&desde=ayer");
 
     await newsLoaded();
     expect(screen.queryByRole("button", { name: es.community.news.range.reset })).toBeNull();
@@ -324,7 +328,7 @@ describe("related news of a news item", () => {
   }
 
   it("opens the earlier news most alike in text, by day, each with how alike it is", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
 
     const panel = await openRelated(/EN DIRECTO \| El Parlamento rechaza/);
 
@@ -349,7 +353,7 @@ describe("related news of a news item", () => {
   });
 
   it("says when there is nothing alike enough, with the window the API used", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
 
     const panel = await openRelated(/Muere un hombre apuñalado/);
 
@@ -362,7 +366,7 @@ describe("related news of a news item", () => {
   });
 
   it("closes the panel with the same button, and opens one item at a time", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     await openRelated(/Muere un hombre apuñalado/);
     const section = await newsSection();
 
@@ -384,7 +388,7 @@ describe("related news of a news item", () => {
   });
 
   it("says when the related news could not be loaded and lets the reader try again", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     server.use(
       http.get("*/api/articles/:articleId/related", () =>
         HttpResponse.json({ detail: "boom" }, { status: 500 }),
@@ -402,7 +406,7 @@ describe("related news of a news item", () => {
   });
 
   it("has no axe violations with a panel open", async () => {
-    const container = renderApp("/comunidades/ccaa-05?sector=health");
+    const container = renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     const panel = await openRelated(/EN DIRECTO \| El Parlamento rechaza/);
     await within(panel).findByRole("heading", { name: "13 de octubre de 2026" });
 

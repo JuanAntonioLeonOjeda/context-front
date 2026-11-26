@@ -145,7 +145,6 @@ export const es = {
     },
     filters: { legend: "Filtros" },
     trees: {
-      title: "Noticias relacionadas",
       sectorNav: "Sector del árbol de noticias",
       note: "Cada elemento es un árbol de noticias relacionadas y muestra la más reciente de esta comunidad en el sector. Pulsa sobre ella para ver el árbol completo.",
       empty: "No hay árboles de noticias de {sector} en esta comunidad.",
@@ -162,6 +161,21 @@ export const es = {
     },
     news: {
       title: "Noticias",
+      views: {
+        label: "Qué quieres ver",
+        buscador: {
+          title: "Buscador de noticias",
+          description:
+            "Las noticias de los últimos días por sector, con sus fechas y un buscador; de cada una puedes ver las anteriores que se le parecen.",
+          goTo: "Ir al buscador de noticias",
+        },
+        arbol: {
+          title: "Árbol de noticias",
+          description:
+            "Cómo continúan las historias en el tiempo: cada árbol une lo que contaron varios medios y las historias que vinieron después.",
+          goTo: "Ir al árbol de noticias",
+        },
+      },
       search: {
         label: "Buscar",
         placeholder: "Escribe un titular o un medio",

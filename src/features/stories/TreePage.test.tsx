@@ -156,7 +156,7 @@ describe("tree of related news", () => {
 
   it("is reached from a news item's 'ver árbol' and has no axe violations", async () => {
     const user = userEvent.setup();
-    const container = renderApp("/comunidades/ccaa-05?sector=health");
+    const container = renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
     const button = await screen.findByRole("link", {
       name: /Ver árbol de noticias relacionadas/,
     });

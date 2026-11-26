@@ -8,7 +8,7 @@ import { axeViolations } from "@/test/axe";
 import { server } from "@/test/server";
 
 async function treesSection(): Promise<HTMLElement> {
-  return screen.findByRole("region", { name: es.community.trees.title });
+  return screen.findByRole("region", { name: es.community.news.title });
 }
 
 async function treesLoaded(): Promise<HTMLElement> {
@@ -21,7 +21,7 @@ async function treesLoaded(): Promise<HTMLElement> {
 
 describe("trees of news of a community", () => {
   it("lists one card per tree with its newest news: outlet, hour and headline, by day", async () => {
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=arbol");
 
     const section = await treesLoaded();
     const entries = within(section).getAllByRole("article");
@@ -33,8 +33,8 @@ describe("trees of news of a community", () => {
     expect(section).not.toHaveTextContent(/Responsable|Confianza/);
   });
 
-  it("has its own sector filter, starting at the first sector, and no dates", async () => {
-    renderApp("/comunidades/ccaa-05?sector-arbol=health&sector=housing");
+  it("shares the sector of the finder, from the URL, and has no dates", async () => {
+    renderApp("/comunidades/ccaa-05?vista=arbol&sector=health");
 
     const section = await treesLoaded();
     const nav = within(section).getByRole("navigation", { name: es.community.trees.sectorNav });
@@ -45,23 +45,27 @@ describe("trees of news of a community", () => {
     expect(within(section).queryByLabelText(es.community.news.range.from)).toBeNull();
   });
 
-  it("asks the API for the sector chosen and keeps the news sector as it was", async () => {
+  it("asks the API for the sector chosen and keeps it when going to the finder", async () => {
     const asked: (string | null)[] = [];
     server.events.on("request:start", ({ request }) => {
       if (request.url.includes("/trees"))
         asked.push(new URL(request.url).searchParams.get("sector"));
     });
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05?sector=housing");
+    renderApp("/comunidades/ccaa-05?vista=arbol");
     const section = await treesLoaded();
 
     await user.click(within(section).getByRole("link", { name: "Vivienda" }));
     await waitFor(() => {
       expect(asked).toContain("housing");
     });
+    await user.click(
+      within(section).getByRole("link", { name: es.community.news.views.buscador.goTo }),
+    );
 
-    const news = await screen.findByRole("region", { name: es.community.news.title });
-    const newsNav = within(news).getByRole("navigation", { name: es.community.news.sectorNav });
+    const newsNav = await within(section).findByRole("navigation", {
+      name: es.community.news.sectorNav,
+    });
     expect(within(newsNav).getByRole("link", { name: "Vivienda" })).toHaveAttribute(
       "aria-current",
       "page",
@@ -71,7 +75,7 @@ describe("trees of news of a community", () => {
 
   it("opens the whole tree under the entry on click and closes it on the next", async () => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=arbol");
     const section = await treesLoaded();
     const headline = within(section).getByRole("button", { name: /Ayuso, ante las amenazas/ });
     expect(headline).toHaveAttribute("aria-expanded", "false");
@@ -92,7 +96,7 @@ describe("trees of news of a community", () => {
 
   it("keeps one tree open at a time", async () => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=arbol");
     const section = await treesLoaded();
     const first = within(section).getByRole("button", { name: /Ayuso, ante las amenazas/ });
     const second = within(section).getByRole("button", { name: /Un grupo de 200 profesores/ });
@@ -105,7 +109,7 @@ describe("trees of news of a community", () => {
   });
 
   it("says a sector has no trees instead of leaving a blank", async () => {
-    renderApp("/comunidades/ccaa-09", { community: "cataluna" });
+    renderApp("/comunidades/ccaa-09?vista=arbol", { community: "cataluna" });
 
     const message = await screen.findByText(/No hay árboles de noticias de educación/);
     expect(message).toBeVisible();
@@ -115,7 +119,7 @@ describe("trees of news of a community", () => {
   });
 
   it("shows an error with a retry in the section when the trees cannot be loaded", async () => {
-    renderApp("/comunidades/ccaa-05", { failingTrees: true });
+    renderApp("/comunidades/ccaa-05?vista=arbol", { failingTrees: true });
 
     const alert = await within(await treesSection()).findByRole("alert");
     expect(alert).toHaveTextContent(es.community.trees.error);
@@ -124,7 +128,7 @@ describe("trees of news of a community", () => {
 
   it("has no axe violations, closed or open", async () => {
     const user = userEvent.setup();
-    const container = renderApp("/comunidades/ccaa-05");
+    const container = renderApp("/comunidades/ccaa-05?vista=arbol");
     const section = await treesLoaded();
     expect(await axeViolations(container)).toEqual([]);
 
@@ -138,7 +142,7 @@ describe("trees of news of a community", () => {
 describe("search of the trees", () => {
   it("filters the cards as the reader types, by headline or outlet, ignoring accents", async () => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=arbol");
     const section = await treesLoaded();
     expect(within(section).getAllByRole("article")).toHaveLength(2);
     const box = within(section).getByRole("searchbox", { name: es.community.trees.search.label });
@@ -157,9 +161,9 @@ describe("search of the trees", () => {
     ).toBeVisible();
   });
 
-  it("says nothing matches and does not touch the search of the news", async () => {
+  it("says nothing matches, and the finder keeps what was typed", async () => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05?buscar=algo");
+    renderApp("/comunidades/ccaa-05?vista=arbol");
     const section = await treesLoaded();
 
     await user.type(within(section).getByRole("searchbox"), "zzzz");
@@ -167,19 +171,58 @@ describe("search of the trees", () => {
     expect(
       within(section).getByText(/Ningún árbol de noticias de educación coincide con «zzzz»/),
     ).toBeVisible();
-    const news = await screen.findByRole("region", { name: es.community.news.title });
-    expect(within(news).getByRole("searchbox")).toHaveValue("algo");
+    await user.click(
+      within(section).getByRole("link", { name: es.community.news.views.buscador.goTo }),
+    );
+    expect(await within(section).findByRole("searchbox")).toHaveValue("zzzz");
+  });
+});
+
+describe("the two parts of the news", () => {
+  it("offers the finder and the trees before one is chosen, each saying what it does", async () => {
+    renderApp("/comunidades/ccaa-05");
+
+    const section = await treesSection();
+    const chooser = within(section).getByRole("navigation", {
+      name: es.community.news.views.label,
+    });
+    const links = within(chooser).getAllByRole("link");
+    expect(links.map((l) => l.textContent)).toEqual([
+      es.community.news.views.buscador.title + es.community.news.views.buscador.description,
+      es.community.news.views.arbol.title + es.community.news.views.arbol.description,
+    ]);
+    // Nothing is fetched or filtered until a part is chosen.
+    expect(within(section).queryByRole("searchbox")).toBeNull();
+  });
+
+  it("shows the part chosen with the way to the other at the top", async () => {
+    const user = userEvent.setup();
+    renderApp("/comunidades/ccaa-05");
+    const section = await treesSection();
+
+    await user.click(
+      within(section).getByRole("link", {
+        name: new RegExp(`^${es.community.news.views.arbol.title}`),
+      }),
+    );
+
+    expect(await within(section).findByText(es.community.news.views.arbol.title)).toBeVisible();
+    expect(
+      within(section).getByRole("link", { name: es.community.news.views.buscador.goTo }),
+    ).toBeVisible();
+    expect(
+      within(section).queryByRole("navigation", { name: es.community.news.views.label }),
+    ).toBeNull();
   });
 });
 
 describe("sections that close", () => {
   it.each([
     ["the INE data", es.community.indicators.title],
-    ["the trees of news", es.community.trees.title],
     ["the news", es.community.news.title],
   ])("%s closes and opens again from its heading", async (_name, title) => {
     const user = userEvent.setup();
-    renderApp("/comunidades/ccaa-05");
+    renderApp("/comunidades/ccaa-05?vista=arbol");
     // The button is found again each time: closing moves the heading out of the carousel.
     const toggle = (): HTMLElement => screen.getByRole("button", { name: title });
     await screen.findByRole("button", { name: title });

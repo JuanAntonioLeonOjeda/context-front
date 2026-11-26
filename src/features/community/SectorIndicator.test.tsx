@@ -14,7 +14,7 @@ async function newsSection(): Promise<HTMLElement> {
 
 describe("the sector's indicator next to the news", () => {
   it("shows the latest value, its period and the INE table of the sector's indicator", async () => {
-    renderApp("/comunidades/ccaa-05?sector=education");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=education");
 
     const section = await newsSection();
     const figure = await within(section).findByRole("group", { name: EDUCATION });
@@ -27,7 +27,7 @@ describe("the sector's indicator next to the news", () => {
   });
 
   it("shows the indicator of the chosen sector, not another one", async () => {
-    renderApp("/comunidades/ccaa-05?sector=work");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=work");
 
     const section = await newsSection();
     const figure = await within(section).findByRole("group", {
@@ -38,7 +38,7 @@ describe("the sector's indicator next to the news", () => {
   });
 
   it("shows nothing for a sector without an indicator", async () => {
-    renderApp("/comunidades/ccaa-05?sector=health");
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=health");
 
     const section = await newsSection();
     await newsLoaded();
@@ -48,7 +48,7 @@ describe("the sector's indicator next to the news", () => {
   });
 
   it("shows nothing, and still the news, when the sectors cannot be read", async () => {
-    renderApp("/comunidades/ccaa-05?sector=education", { failingSectors: true });
+    renderApp("/comunidades/ccaa-05?vista=buscador&sector=education", { failingSectors: true });
 
     const section = await newsSection();
     await newsLoaded();
@@ -60,7 +60,7 @@ describe("the sector's indicator next to the news", () => {
   });
 
   it("has no accessibility violations", async () => {
-    const container = renderApp("/comunidades/ccaa-05?sector=education");
+    const container = renderApp("/comunidades/ccaa-05?vista=buscador&sector=education");
 
     const section = await newsSection();
     await within(section).findByRole("group", { name: EDUCATION });

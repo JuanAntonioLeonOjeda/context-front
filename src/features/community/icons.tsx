@@ -1,11 +1,17 @@
 /** Small line icons for the news actions: drawn here, `currentColor`, hidden from assistive tech
  *  (the text next to them says what the action is). */
-function Icon({ children }: { children: React.ReactNode }): React.JSX.Element {
+function Icon({
+  children,
+  size = 18,
+}: {
+  children: React.ReactNode;
+  size?: number;
+}): React.JSX.Element {
   return (
     <svg
       viewBox="0 0 24 24"
-      width="18"
-      height="18"
+      width={size}
+      height={size}
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -31,9 +37,9 @@ export function SourceIcon(): React.JSX.Element {
 }
 
 /** A root that branches to the right: the tree of related news. */
-export function TreeIcon(): React.JSX.Element {
+export function TreeIcon({ size }: { size?: number }): React.JSX.Element {
   return (
-    <Icon>
+    <Icon {...(size === undefined ? {} : { size })}>
       <circle cx="5" cy="12" r="2.5" />
       <circle cx="19" cy="6" r="2.5" />
       <circle cx="19" cy="18" r="2.5" />
@@ -70,5 +76,15 @@ export function EmptyIcon(): React.JSX.Element {
       <path d="M22 12h-6l-2 3h-4l-2-3H2" />
       <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
     </svg>
+  );
+}
+
+/** A magnifying glass: the news finder. */
+export function SearchIcon({ size }: { size?: number }): React.JSX.Element {
+  return (
+    <Icon {...(size === undefined ? {} : { size })}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4.5 4.5" />
+    </Icon>
   );
 }
