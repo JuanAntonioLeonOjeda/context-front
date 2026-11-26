@@ -1,0 +1,185 @@
+/* The voter profile's line chart. Lines 2 px, points r 4 with a ring of the surface so they stay
+   clear where lines cross; gridlines a hairline, recessive. A group's colour is set on its element
+   as `color` and every mark of it draws with `currentColor`; "Otras" and a list outside the party
+   table have none and take the neutral gray. Text is always in text colours, never a party's. */
+.figure {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  min-width: 0;
+}
+
+.chart {
+  position: relative;
+  min-width: 0;
+  border-radius: var(--radius-md);
+}
+
+.chart:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.chart svg {
+  display: block;
+  overflow: visible;
+}
+
+.grid {
+  stroke: var(--color-border);
+  stroke-width: 1;
+}
+
+.tick,
+.bandLabel {
+  fill: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+
+.tick {
+  text-anchor: end;
+}
+
+.bandShort {
+  fill: var(--color-text);
+  font-weight: 700;
+}
+
+/* A band's share of the census: a faint wash behind the lines, never louder than them. */
+.census,
+.censusSwatch {
+  fill: var(--color-text-muted);
+  background: var(--color-text-muted);
+  opacity: 0.14;
+}
+
+.censusSwatch {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 3px;
+  opacity: 0.35;
+}
+
+.crosshair {
+  stroke: var(--color-border-strong);
+  stroke-width: 1;
+}
+
+.series[data-neutral="true"],
+.legend li[data-neutral="true"],
+.tooltip li[data-neutral="true"] {
+  color: var(--color-border-strong);
+}
+
+.line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.point {
+  fill: currentColor;
+  stroke: var(--color-bg);
+  stroke-width: 2;
+}
+
+.leader {
+  stroke: currentColor;
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.endLabel {
+  fill: var(--color-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* The strips that answer the pointer: a whole band, not a 2 px line. */
+.hit {
+  fill: transparent;
+  cursor: crosshair;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.legend li,
+.tooltip li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* A short stroke of the line's colour: the legend mirrors the mark. */
+.key {
+  display: inline-block;
+  width: 1rem;
+  height: 3px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.legendName,
+.tooltipName {
+  color: var(--color-text);
+}
+
+.tooltip {
+  position: absolute;
+  top: var(--space-2);
+  z-index: 2;
+  min-width: 13rem;
+  margin-left: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-raised);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  pointer-events: none;
+}
+
+/* Past the middle the box opens to the left of the band, so it never leaves the chart. */
+.tooltip[data-flip="true"] {
+  translate: -100% 0;
+  margin-left: calc(-1 * var(--space-3));
+}
+
+.tooltip p {
+  margin: 0;
+}
+
+.tooltipTitle {
+  font-weight: 700;
+}
+
+.tooltipFact {
+  color: var(--color-text-muted);
+}
+
+.tooltip ul {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tooltipValue {
+  margin-left: auto;
+  color: var(--color-text);
+  padding-left: var(--space-3);
+  font-variant-numeric: tabular-nums;
+}

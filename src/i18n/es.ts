@@ -280,6 +280,7 @@ export const es = {
   voters: {
     band: {
       name: "Tramo {number} de {total}",
+      short: "Tramo {number}",
       withEnd: "{name} · {end}",
       size: "{municipalities} · {census}",
       municipalities: "{count} municipios",
@@ -389,11 +390,13 @@ export const es = {
       loaded: "Perfil por {parameter} cargado.",
       error: "No hemos podido cargar el perfil de voto.",
       retry: "Volver a intentarlo",
-      barsOf: "Voto en {band}",
-      carousel: {
-        label: "Tramos del perfil, se desplazan en horizontal",
-        previous: "Tramos anteriores",
-        next: "Tramos siguientes",
+      chart: {
+        label:
+          "Gráfica del voto por tramo: una línea por candidatura. Las flechas recorren los tramos; los mismos datos están en la tabla.",
+        legend: "Candidaturas",
+        census: "Parte del censo (barras)",
+        lines:
+          "Cada línea une el voto de una candidatura en tramos seguidos: dice hacia dónde cambia de un tramo al siguiente, no lo que hay entre ellos. La barra de fondo de cada tramo es su parte del censo, en la misma escala.",
       },
     },
     reasons: {
@@ -402,6 +405,7 @@ export const es = {
     table: {
       open: "Ver los datos en tabla",
       band: "Tramo",
+      range: "Valores",
       size: "Municipios y censo",
       scroll: "Tabla de datos, se desplaza en horizontal",
       noValue: "Sin dato",

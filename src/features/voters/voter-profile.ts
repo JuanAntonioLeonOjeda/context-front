@@ -13,6 +13,7 @@ export interface BarView {
   groupId: string;
   label: string; // the party's short name, the list's acronym, or "Otras"
   percent: string; // "34,7 %"
+  share: number; // 34.7, as the API sent it: where the line passes
   width: number; // 0–100: the share against the highest share of the whole profile
   colour: string | null; // the party's colour from the party table; null: neutral
 }
@@ -20,6 +21,10 @@ export interface BarView {
 export interface BandView {
   index: number;
   name: string; // "Tramo 1 de 5 · rentas más bajas"
+  short: string; // "Tramo 1", under the chart's axis
+  end: string | null; // "rentas más bajas" for the first band, "rentas más altas" for the last
+  census: string; // "19,7 % del censo"
+  censusShare: number; // 19.7, as the API sent it: the height of the band's bar behind the lines
   range: string | null; // "De 10.321 a 12.079 € por persona"; null: no municipality in the band
   size: string; // "21 municipios · 19,7 % del censo"
   blank: string | null; // "Voto en blanco: 0,9 %"
@@ -59,6 +64,13 @@ function bandName(index: number, total: number, dimension: DimensionId): string 
     return formatMessage(es.voters.band.withEnd, { name, end: texts.highest });
   }
   return name;
+}
+
+function endOf(index: number, total: number, dimension: DimensionId): string | null {
+  const texts = es.voters.dimensions[dimension];
+  if (index === 0) return texts.lowest;
+  if (index === total - 1) return texts.highest;
+  return null;
 }
 
 function rangeText(band: VoterBand, dimension: DimensionId): string | null {
@@ -116,6 +128,7 @@ function bars(
         groupId: group.id,
         label: groupLabel(group, party),
         percent: percent(share.percent),
+        share: share.percent,
         width: highest === 0 ? 0 : Math.round((share.percent / highest) * 1000) / 10,
         // Only a party has a colour; a candidature outside the table and "Otras" are neutral.
         colour: party?.colour ?? null,
@@ -136,6 +149,10 @@ export function bandViews(
     return {
       index: band.index,
       name: bandName(band.index, profile.bands.length, dimension),
+      short: formatMessage(es.voters.band.short, { number: String(band.index + 1) }),
+      end: endOf(band.index, profile.bands.length, dimension),
+      census: formatMessage(es.voters.band.censusShare, { percent: percent(band.censusPercent) }),
+      censusShare: band.censusPercent,
       range: rangeText(band, dimension),
       size: sizeText(band),
       blank: isEmpty

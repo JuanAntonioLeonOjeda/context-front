@@ -1,20 +1,21 @@
 import { useState } from "react";
 
-import { Carousel, ExternalLink, SectionHeading } from "@/features/shell";
+import { ExternalLink, SectionHeading } from "@/features/shell";
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
 import type { BandView } from "./voter-profile";
 import { DIMENSION_IDS, type CommunityVoters, type DimensionId } from "./voters-api";
 import { useVoterProfile, type VoterProfileState } from "./useVoterProfile";
+import { VoterLineChart } from "./VoterLineChart";
 
 import styles from "./VotersSection.module.css";
 
 /**
  * How the municipalities of a community voted, by band of one dimension at a time (income, the
- * size of the municipality, the education of its people): a card per band with a vertical bar per
- * group, the same numbers in a table, and the note that says how to read it. Every group goes
- * through the same code; the colour is never the only cue, each bar has its name and its figure.
+ * size of the municipality, the education of its people): one line chart with a line per group
+ * through the bands, the same numbers in a table, and the note that says how to read it. Every
+ * group goes through the same code; the colour is never the only cue, each line has its name.
  */
 export function VotersSection({ territoryId }: { territoryId: string }): React.JSX.Element | null {
   const [open, setOpen] = useState(true);
@@ -117,21 +118,9 @@ function Profile(props: {
   const texts = es.voters.dimensions[voters.dimension];
   return (
     <>
-      <Carousel
-        heading={props.heading}
-        intro={props.tabs}
-        label={es.voters.section.carousel.label}
-        buttonLabels={es.voters.section.carousel}
-      >
-        {/* eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics of a list styled without markers; the explicit role keeps them (WCAG 1.3.1) */}
-        <ol className={styles.bands} role="list">
-          {bands.map((band) => (
-            <li key={band.index}>
-              <Band band={band} />
-            </li>
-          ))}
-        </ol>
-      </Carousel>
+      {props.heading}
+      {props.tabs}
+      <VoterLineChart bands={bands} />
       {voters.profile !== null && voters.profile.municipalitiesWithoutValue > 0 && (
         <p className={styles.note}>
           {formatMessage(texts.withoutValue, {
@@ -208,47 +197,7 @@ function Sources({ voters }: { voters: CommunityVoters }): React.JSX.Element {
   );
 }
 
-function Band({ band }: { band: BandView }): React.JSX.Element {
-  return (
-    <div className={styles.band}>
-      <h3 className={styles.bandName}>{band.name}</h3>
-      <p className={styles.bandFacts}>
-        {band.range !== null && <span>{band.range}</span>}
-        <span>{band.size}</span>
-      </p>
-      {band.bars.length === 0 ? (
-        <p className={styles.note}>{es.voters.band.empty}</p>
-      ) : (
-        // eslint-disable-next-line jsx-a11y/no-redundant-roles -- Safari drops the list semantics, and the list's name with them, of a list styled without markers (WCAG 1.3.1)
-        <ul
-          role="list"
-          className={styles.bars}
-          aria-label={formatMessage(es.voters.section.barsOf, { band: band.name })}
-        >
-          {band.bars.map((bar) => (
-            <li key={bar.groupId} className={styles.barColumn}>
-              <span className={styles.barValue}>{bar.percent}</span>
-              {/* The drawing repeats the figure above it, so it is hidden from screen readers. */}
-              <span className={styles.track} aria-hidden="true">
-                <span
-                  className={styles.bar}
-                  style={{
-                    blockSize: `${String(bar.width)}%`,
-                    ...(bar.colour === null ? {} : { background: bar.colour }),
-                  }}
-                />
-              </span>
-              <span className={styles.barLabel}>{bar.label}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      {band.blank !== null && <p className={styles.note}>{band.blank}</p>}
-    </div>
-  );
-}
-
-/** The same numbers as the bars: a row per band, a column per group in the same order. */
+/** The same numbers as the lines: a row per band, a column per group in the same order. */
 function DataTable(props: { bands: readonly BandView[]; caption: string }): React.JSX.Element {
   const { bands } = props;
   const columns = bands.find((band) => band.bars.length > 0)?.bars ?? [];
@@ -266,6 +215,7 @@ function DataTable(props: { bands: readonly BandView[]; caption: string }): Reac
         <thead>
           <tr>
             <th scope="col">{es.voters.table.band}</th>
+            <th scope="col">{es.voters.table.range}</th>
             <th scope="col">{es.voters.table.size}</th>
             {columns.map((column) => (
               <th key={column.groupId} scope="col">
@@ -278,6 +228,7 @@ function DataTable(props: { bands: readonly BandView[]; caption: string }): Reac
           {bands.map((band) => (
             <tr key={band.index}>
               <th scope="row">{band.name}</th>
+              <td>{band.range ?? es.voters.table.noValue}</td>
               <td>{band.size}</td>
               {columns.map((column) => (
                 <td key={column.groupId}>
@@ -309,6 +260,7 @@ function Explanation({ profile }: { profile: VoterProfileState }): React.JSX.Ele
       {hasBands && hasYear && (
         <p>{formatMessage(texts.method, { year: String(voters.sourceYear ?? "") })}</p>
       )}
+      {hasBands && <p>{es.voters.section.chart.lines}</p>}
       {hasBands && (
         <p>{formatMessage(method.shares, { percent: String(voters.shownFromPercent) })}</p>
       )}
