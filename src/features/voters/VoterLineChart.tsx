@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { es } from "@/i18n/es";
 
-import { lineChart, type LineSeries } from "./line-chart";
+import { END_LABEL_GAP_PX, lineChart, type LineSeries } from "./line-chart";
 import type { BandView } from "./voter-profile";
 
 import styles from "./VoterLineChart.module.css";
@@ -78,6 +78,7 @@ export function VoterLineChart({ bands }: { bands: readonly BandView[] }): React
           ))}
           {model.columns.map((column) => {
             const band = bands.find((b) => b.index === column.band);
+            if (band === undefined) return null;
             return (
               <text
                 key={column.band}
@@ -86,18 +87,19 @@ export function VoterLineChart({ bands }: { bands: readonly BandView[] }): React
                 y={model.plot.bottom + 18}
                 textAnchor="middle"
               >
-                <tspan className={styles.bandShort}>{band?.short}</tspan>
-                {band?.end !== null && band?.end !== undefined && (
+                <tspan className={styles.bandShort}>{band.short}</tspan>
+                {!model.compact && band.end !== null && (
                   <tspan x={column.x} dy="1.25em">
                     {band.end}
                   </tspan>
                 )}
                 <tspan x={column.x} dy="1.25em">
-                  {band?.census}
+                  {model.compact ? band.censusShort : band.census}
                 </tspan>
               </text>
             );
           })}
+          {model.compact && <AxisEnds bands={bands} model={model} />}
           {/* Behind the lines: each band's share of the census, on the same axis. */}
           {model.columns.map((column) => (
             <rect
@@ -120,7 +122,11 @@ export function VoterLineChart({ bands }: { bands: readonly BandView[] }): React
             />
           )}
           {model.series.map((series) => (
-            <Line key={series.groupId} series={series} labelX={model.plot.right + 12} />
+            <Line
+              key={series.groupId}
+              series={series}
+              labelX={model.plot.right + END_LABEL_GAP_PX}
+            />
           ))}
           {model.columns.map((column) => (
             <rect
@@ -154,6 +160,31 @@ function censusBarWidth(model: ReturnType<typeof lineChart>): number {
   const columns = model.columns.length;
   const room = (model.plot.right - model.plot.left) / Math.max(1, columns - 1);
   return Math.min(56, room / 3);
+}
+
+/** On a narrow chart, the dimension's ends once: under the first band at the left edge of the
+ *  plot, under the last at its right edge, on the line below the bands' names. */
+function AxisEnds(props: {
+  bands: readonly BandView[];
+  model: ReturnType<typeof lineChart>;
+}): React.JSX.Element {
+  const first = props.bands.find((b) => b.bars.length > 0);
+  const last = [...props.bands].reverse().find((b) => b.bars.length > 0);
+  const y = props.model.plot.bottom + 18 + 2 * 15;
+  return (
+    <>
+      {first?.end !== undefined && first.end !== null && (
+        <text className={styles.bandLabel} x={props.model.plot.left - 16} y={y}>
+          {`← ${first.end}`}
+        </text>
+      )}
+      {last?.end !== undefined && last.end !== null && last !== first && (
+        <text className={styles.bandLabel} x={props.model.plot.right + 16} y={y} textAnchor="end">
+          {`${last.end} →`}
+        </text>
+      )}
+    </>
+  );
 }
 
 function colourOf(series: LineSeries): string | undefined {
