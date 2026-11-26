@@ -183,7 +183,7 @@ describe("community page", () => {
   it("shows the voter profile by income between the INE data and the news", async () => {
     renderAt("/comunidades/ccaa-05");
 
-    await screen.findByRole("heading", { name: "Tramo 1 de 5 · rentas más bajas" });
+    await screen.findByRole("list", { name: es.voters.section.chart.legend });
     const titles = [
       es.community.indicators.title,
       es.voters.section.title,
@@ -211,7 +211,7 @@ describe("community page", () => {
   it("has no axe violations", async () => {
     const container = renderAt("/comunidades/ccaa-05");
     await screen.findByRole("heading", { name: "Tasa de paro" });
-    await screen.findByRole("heading", { name: "Tramo 1 de 5 · rentas más bajas" });
+    await screen.findByRole("list", { name: es.voters.section.chart.legend });
 
     expect(await axeViolations(container)).toEqual([]);
   });

@@ -32,12 +32,36 @@ function renderSection(
   return render(<VotersSection territoryId={territoryId} />, { wrapper: queryWrapper() }).container;
 }
 
-/** The card of the lowest band: the list item that holds its heading. */
+const LEGEND = es.voters.section.chart.legend;
+
+/** The row of the lowest band in the table under the chart, once the chart is drawn. The table is
+ *  in a closed disclosure until the reader opens it, hence `hidden`. */
 async function firstBand(): Promise<HTMLElement> {
-  const heading = await screen.findByRole("heading", { level: 3, name: FIRST_BAND });
-  const card = heading.closest("li");
-  if (!card) throw new Error("the band's heading is not in a list item");
-  return card;
+  await screen.findByRole("list", { name: LEGEND });
+  const header = await screen.findByRole("rowheader", { name: FIRST_BAND, hidden: true });
+  const row = header.closest("tr");
+  if (!row) throw new Error("the band's name is not in a table row");
+  return row;
+}
+
+/** The names of the bands, in the table's order (the chart's, left to right). */
+function bandNames(): (string | null)[] {
+  return screen.getAllByRole("rowheader", { hidden: true }).map((h) => h.textContent);
+}
+
+/** The colour a group's line is drawn with: its legend entry carries it. */
+function lineColour(label: string): string {
+  const entry = within(screen.getByRole("list", { name: LEGEND }))
+    .getByText(label)
+    .closest("li");
+  if (!entry) throw new Error(`no legend entry for ${label}`);
+  return entry.style.color;
+}
+
+/** "#1d84ce" as the browser writes a colour back: "rgb(29, 132, 206)". */
+function hexToRgb(hex: string): string {
+  const [r, g, b] = [1, 3, 5].map((i) => Number.parseInt(hex.slice(i, i + 2), 16));
+  return `rgb(${String(r)}, ${String(g)}, ${String(b)})`;
 }
 
 function colourOf(id: string): string {
@@ -46,20 +70,17 @@ function colourOf(id: string): string {
   return party.colour_hex;
 }
 
-/** The bar drawn in the row of `label`, inside one band. */
-function barOf(band: HTMLElement, label: string): HTMLElement {
-  const row = within(band).getByText(label).closest("li");
-  const bar = row?.querySelector<HTMLElement>("[aria-hidden='true'] > span");
-  if (!bar) throw new Error(`no bar for ${label}`);
-  return bar;
+/** The chart: it takes the focus, and the arrow keys move through the bands. */
+function chart(): HTMLElement {
+  return screen.getByRole("group", { name: es.voters.section.chart.label });
 }
 
 describe("voter profile of a community", () => {
-  it("draws one row per income band, lowest incomes first, with its income and its census", async () => {
+  it("draws one line per group through the five income bands, lowest incomes first", async () => {
     renderSection("ccaa-05");
 
     const band = await firstBand();
-    expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual([
+    expect(bandNames()).toEqual([
       FIRST_BAND,
       "Tramo 2 de 5",
       "Tramo 3 de 5",
@@ -68,28 +89,61 @@ describe("voter profile of a community", () => {
     ]);
     expect(band).toHaveTextContent("De 10.321 a 12.079 € por persona");
     expect(band).toHaveTextContent("21 municipios · 19,7 % del censo");
-    expect(band).toHaveTextContent("Voto en blanco: 0,9 %");
   });
 
-  it("writes each group's name and figure next to its bar, in the API's order", async () => {
+  it("names every group in the legend, in the API's order, so the colour is never the only cue", async () => {
     renderSection("ccaa-05");
+    await firstBand();
 
-    const list = within(await firstBand()).getByRole("list", { name: `Voto en ${FIRST_BAND}` });
+    const legend = screen.getByRole("list", { name: LEGEND });
     // Written out: Safari drops the semantics, and the name, of a list styled without markers.
-    expect(list).toHaveAttribute("role", "list");
+    expect(legend).toHaveAttribute("role", "list");
     expect(
-      within(list)
+      within(legend)
         .getAllByRole("listitem")
         .map((li) => li.textContent),
     ).toEqual([
-      "12,5 %CC",
-      "3,5 %NC-bc",
-      "32,7 %PP",
-      "34,7 %PSOE",
-      "9,1 %Sumar",
-      "5,1 %Vox",
-      "1,6 %Otras",
+      es.voters.section.chart.census,
+      "CC",
+      "NC-bc",
+      "PP",
+      "PSOE",
+      "Sumar",
+      "Vox",
+      "Otras",
     ]);
+  });
+
+  it("shows every group's share in a band, highest first, as the arrow keys go through them", async () => {
+    const user = userEvent.setup();
+    renderSection("ccaa-05");
+    await firstBand();
+
+    chart().focus();
+
+    const first = await screen.findByText(FIRST_BAND, { selector: "p" });
+    const box = first.parentElement;
+    if (!box) throw new Error("no tooltip");
+    expect(box).toHaveTextContent("21 municipios · 19,7 % del censo");
+    expect(box).toHaveTextContent("Voto en blanco: 0,9 %");
+    expect(
+      within(box)
+        .getAllByRole("listitem")
+        .map((li) => li.textContent),
+    ).toEqual([
+      "PSOE34,7 %",
+      "PP32,7 %",
+      "CC12,5 %",
+      "Sumar9,1 %",
+      "Vox5,1 %",
+      "NC-bc3,5 %",
+      "Otras1,6 %",
+    ]);
+
+    await user.keyboard("{ArrowRight}");
+
+    expect(screen.getByText("Tramo 2 de 5", { selector: "p" })).toBeVisible();
+    expect(screen.queryByText(FIRST_BAND, { selector: "p" })).toBeNull();
   });
 
   it("closes and opens again like the other sections, with the state on the button", async () => {
@@ -100,14 +154,15 @@ describe("voter profile of a community", () => {
     await userEvent.click(screen.getByRole("button", { name: TITLE }));
 
     expect(screen.getByRole("button", { name: TITLE })).toHaveAttribute("aria-expanded", "false");
-    expect(screen.queryByRole("heading", { level: 3, name: FIRST_BAND })).toBeNull();
-    expect(screen.queryByRole("region", { name: es.voters.section.carousel.label })).toBeNull();
+    expect(screen.queryByRole("list", { name: LEGEND })).toBeNull();
     expect(screen.getByRole("heading", { level: 2, name: TITLE })).toBeVisible();
 
     await userEvent.click(screen.getByRole("button", { name: TITLE }));
 
     expect(screen.getByRole("button", { name: TITLE })).toHaveAttribute("aria-expanded", "true");
-    expect(await screen.findByRole("heading", { level: 3, name: FIRST_BAND })).toBeVisible();
+    expect(
+      await screen.findByRole("rowheader", { name: FIRST_BAND, hidden: true }),
+    ).toBeInTheDocument();
   });
 
   it("offers the dimensions as buttons and starts with the income", async () => {
@@ -129,12 +184,12 @@ describe("voter profile of a community", () => {
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.size.tab }));
 
     expect(
-      await screen.findByRole("heading", {
-        level: 3,
+      await screen.findByRole("rowheader", {
         name: "Tramo 1 de 4 · municipios más pequeños",
+        hidden: true,
       }),
-    ).toBeVisible();
-    expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual([
+    ).toBeInTheDocument();
+    expect(bandNames()).toEqual([
       "Tramo 1 de 4 · municipios más pequeños",
       "Tramo 2 de 4",
       "Tramo 3 de 4",
@@ -144,7 +199,8 @@ describe("voter profile of a community", () => {
       "aria-pressed",
       "true",
     );
-    expect(screen.getAllByText(/electores$/, { selector: "span" }).length).toBeGreaterThan(0);
+    // The bands' values are in electors: the table's column of values says so.
+    expect(screen.getAllByText(/electores$/, { selector: "td" }).length).toBeGreaterThan(0);
     expect(screen.queryByRole("link", { name: /INE/ })).toBeNull();
     expect(screen.queryByText(/Atlas de distribución de renta/)).toBeNull();
     expect(await openExplanation()).toHaveTextContent("de 1500 a 7999");
@@ -154,11 +210,13 @@ describe("voter profile of a community", () => {
     renderSection("ccaa-05");
     await firstBand();
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.size.tab }));
-    await screen.findByRole("heading", { level: 3, name: /municipios más pequeños/ });
+    await screen.findByRole("rowheader", { name: /municipios más pequeños/, hidden: true });
 
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.income.tab }));
 
-    expect(await screen.findByRole("heading", { level: 3, name: FIRST_BAND })).toBeVisible();
+    expect(
+      await screen.findByRole("rowheader", { name: FIRST_BAND, hidden: true }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /INE/ })).toBeVisible();
   });
 
@@ -169,7 +227,7 @@ describe("voter profile of a community", () => {
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.size.tab }));
 
     expect(await screen.findByText(es.voters.dimensions.size.tooFew)).toBeVisible();
-    expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+    expect(screen.queryByRole("list", { name: LEGEND })).toBeNull();
   });
 
   it("switches to the education: five bands in percent, with the census of the INE as source", async () => {
@@ -179,12 +237,12 @@ describe("voter profile of a community", () => {
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.education.tab }));
 
     expect(
-      await screen.findByRole("heading", {
-        level: 3,
+      await screen.findByRole("rowheader", {
         name: "Tramo 1 de 5 · menos estudios superiores",
+        hidden: true,
       }),
-    ).toBeVisible();
-    expect(screen.getByText("De 14,1 % a 24,1 % con estudios superiores")).toBeVisible();
+    ).toBeInTheDocument();
+    expect(screen.getByText("De 14,1 % a 24,1 % con estudios superiores")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Censo anual de población/ })).toHaveAttribute(
       "href",
       expect.stringContaining("cid=1254736176992"),
@@ -202,10 +260,12 @@ describe("voter profile of a community", () => {
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.age.tab }));
 
     expect(
-      await screen.findByRole("heading", { level: 3, name: "Tramo 1 de 5 · menores" }),
-    ).toBeVisible();
-    expect(screen.getByRole("heading", { level: 3, name: "Tramo 5 de 5 · mayores" })).toBeVisible();
-    expect(screen.getByText("De 7,3 % a 11,1 % con 70 años o más")).toBeVisible();
+      await screen.findByRole("rowheader", { name: "Tramo 1 de 5 · menores", hidden: true }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("rowheader", { name: "Tramo 5 de 5 · mayores", hidden: true }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("De 7,3 % a 11,1 % con 70 años o más")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /edad por municipio/ })).toHaveAttribute(
       "href",
       expect.stringContaining("cid=1254736176992"),
@@ -222,9 +282,12 @@ describe("voter profile of a community", () => {
     );
 
     expect(
-      await screen.findByRole("heading", { level: 3, name: "Tramo 1 de 5 · menos extranjeros" }),
-    ).toBeVisible();
-    expect(screen.getByText("De 2,7 % a 12,0 % de extranjeros")).toBeVisible();
+      await screen.findByRole("rowheader", {
+        name: "Tramo 1 de 5 · menos extranjeros",
+        hidden: true,
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("De 2,7 % a 12,0 % de extranjeros")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /lugar de nacimiento por municipio/ })).toHaveAttribute(
       "href",
       expect.stringContaining("cid=1254736176992"),
@@ -243,7 +306,7 @@ describe("voter profile of a community", () => {
       await userEvent.click(
         screen.getByRole("button", { name: es.voters.dimensions[dimension].tab }),
       );
-      await screen.findByRole("heading", { level: 3, name: /^Tramo 1 de 5/ });
+      await screen.findByRole("rowheader", { name: /^Tramo 1 de 5/, hidden: true });
 
       expect(screen.queryByText(/que quedan fuera de los tramos/)).toBeNull();
     },
@@ -275,7 +338,7 @@ describe("voter profile of a community", () => {
       );
 
       expect(await screen.findByText(es.voters.dimensions[dimension].tooFew)).toBeVisible();
-      expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+      expect(screen.queryByRole("list", { name: LEGEND })).toBeNull();
     },
   );
 
@@ -286,7 +349,7 @@ describe("voter profile of a community", () => {
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.education.tab }));
 
     expect(await screen.findByText(es.voters.dimensions.education.tooFew)).toBeVisible();
-    expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+    expect(screen.queryByRole("list", { name: LEGEND })).toBeNull();
   });
 
   it("keeps the button pressed on the screen while the next dimension is fetched", async () => {
@@ -348,7 +411,7 @@ describe("voter profile of a community", () => {
     await firstBand();
 
     await userEvent.click(screen.getByRole("button", { name: es.voters.dimensions.age.tab }));
-    await screen.findByRole("heading", { level: 3, name: "Tramo 1 de 5 · menores" });
+    await screen.findByRole("rowheader", { name: "Tramo 1 de 5 · menores", hidden: true });
 
     expect(await openExplanation()).toHaveTextContent(
       "personas de cualquier edad y lugar de nacimiento",
@@ -362,33 +425,22 @@ describe("voter profile of a community", () => {
     expect(within(await openExplanation()).getByText(/describe zonas, no personas/)).toBeVisible();
   });
 
-  it("puts the bands in a row that scrolls sideways, with its own name for the keyboard", async () => {
+  it("colours each party's line from the party table, and the rest in the neutral colour", async () => {
     renderSection("ccaa-05");
+    await firstBand();
 
-    const row = await screen.findByRole("region", { name: es.voters.section.carousel.label });
-
-    expect(row).toHaveAttribute("tabindex", "0");
-    expect(within(row).getAllByRole("heading", { level: 3 })).toHaveLength(5);
-  });
-
-  it("sizes each bar against the highest share of the profile and colours it from the party table", async () => {
-    renderSection("ccaa-05");
-
-    const band = await firstBand();
-    // The highest share of Canarias is 36,0 % (PP, fifth band): 34,7 / 36 = 96,4 %.
-    expect(barOf(band, "PSOE").style.blockSize).toBe("96.4%");
-    expect(barOf(band, "PSOE")).toHaveStyle({ background: colourOf("psoe") });
-    expect(barOf(band, "PP")).toHaveStyle({ background: colourOf("pp") });
+    expect(lineColour("PSOE")).toBe(hexToRgb(colourOf("psoe")));
+    expect(lineColour("PP")).toBe(hexToRgb(colourOf("pp")));
     // "Otras" is no party: no colour of its own, the neutral one of the stylesheet.
-    expect(barOf(band, "Otras").style.background).toBe("");
+    expect(lineColour("Otras")).toBe("");
   });
 
   it("draws a candidature that is not in the party table in the neutral colour, with its acronym", async () => {
     renderSection("ccaa-15");
+    await firstBand();
 
-    const band = await firstBand();
-    expect(barOf(band, "U.P.N.").style.background).toBe("");
-    expect(barOf(band, "PSOE")).toHaveStyle({ background: colourOf("psoe") });
+    expect(lineColour("U.P.N.")).toBe("");
+    expect(lineColour("PSOE")).toBe(hexToRgb(colourOf("psoe")));
   });
 
   it("gives the same numbers in a table, a row per band and a column per group", async () => {
@@ -403,6 +455,7 @@ describe("voter profile of a community", () => {
         .map((th) => th.textContent),
     ).toEqual([
       "Tramo",
+      "Valores",
       "Municipios y censo",
       "CC",
       "NC-bc",
@@ -418,6 +471,7 @@ describe("voter profile of a community", () => {
         .getAllByRole("cell")
         .map((td) => td.textContent),
     ).toEqual([
+      "De 10.321 a 12.079 € por persona",
       "21 municipios · 19,7 % del censo",
       "12,5 %",
       "3,5 %",
@@ -459,7 +513,7 @@ describe("voter profile of a community", () => {
     renderSection("ccaa-18");
 
     expect(await screen.findByText(es.voters.dimensions.income.tooFew)).toBeVisible();
-    expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+    expect(screen.queryByRole("list", { name: LEGEND })).toBeNull();
     expect(screen.queryByRole("table")).toBeNull();
     // No bands, so nothing on how they are made or what the percentages are.
     expect(await openExplanation()).not.toHaveTextContent("al menos el");
@@ -490,7 +544,7 @@ describe("voter profile of a community", () => {
     renderSection("ccaa-05", { failingParties: true });
 
     expect(await screen.findByRole("alert")).toHaveTextContent(es.voters.section.error);
-    expect(screen.queryByRole("heading", { level: 3 })).toBeNull();
+    expect(screen.queryByRole("list", { name: LEGEND })).toBeNull();
   });
 
   it("shows nothing, not an error, when there is no election even if the party table fails", async () => {
