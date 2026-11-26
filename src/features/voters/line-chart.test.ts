@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import {
   axisTop,
+  END_LABEL_GAP_PX,
+  rightRoom,
   LABEL_GAP_PX,
   lineChart,
   MARGIN,
@@ -28,6 +30,7 @@ function band(index: number, bars: BarView[]): BandView {
     short: `Tramo ${String(index + 1)}`,
     end: null,
     census: "20 % del censo",
+    censusShort: "20 %",
     censusShare: 20,
     range: null,
     size: "",
@@ -113,6 +116,29 @@ describe("lineChart", () => {
     ]);
     expect(series[0]?.points.map((p) => p.band)).toEqual([0, 2]);
     expect(series[0]?.path).toMatch(/^M [\d.]+ [\d.]+ L [\d.]+ [\d.]+$/);
+  });
+});
+
+describe("rightRoom", () => {
+  it("is as wide as the longest name at the end of a line, so the chart reaches the edge", () => {
+    const bands = [band(0, [bar("pp", 30), bar("sumar", 20)])];
+
+    // "SUMAR": five characters of the names' font, after the gap from the line.
+    expect(rightRoom(bands)).toBe(END_LABEL_GAP_PX + 5 * 8);
+    expect(lineChart(bands, SIZE).plot.right).toBe(SIZE.width - rightRoom(bands));
+  });
+
+  it("makes room for half the widest line under the last band when that needs more", () => {
+    const last = { ...band(0, [bar("pp", 30)]), census: "19,7 % del censo electoral" };
+
+    expect(rightRoom([last])).toBe(Math.ceil((26 * 6.5) / 2));
+  });
+
+  it("is compact when the bands are too close for three lines of text each", () => {
+    const bands = [0, 1, 2, 3, 4].map((i) => band(i, [bar("pp", 30)]));
+
+    expect(lineChart(bands, { width: 360, height: 300 }).compact).toBe(true);
+    expect(lineChart(bands, { width: 1000, height: 300 }).compact).toBe(false);
   });
 });
 

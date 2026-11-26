@@ -49,14 +49,25 @@ export interface BandColumn {
 
 export interface LineChartModel {
   plot: { left: number; right: number; top: number; bottom: number };
+  // The bands are too close for three lines of text each: under a band only its name and its
+  // share of the census; the dimension's two ends go once, under the two ends of the axis.
+  compact: boolean;
   ticks: Tick[];
   columns: BandColumn[];
   series: LineSeries[];
 }
 
-// Room for the axis' figures at the left, the names at the end of the lines at the right and the
-// bands' names (three short lines) under the axis.
-export const MARGIN = { left: 44, right: 104, top: 12, bottom: 64 };
+// Room for the axis' figures at the left and the bands' names (three short lines) under the axis.
+// The room at the right is measured from the names at the end of the lines (`rightRoom`), so the
+// chart reaches the edge of its box on a phone as it does at the left.
+export const MARGIN = { left: 44, top: 12, bottom: 64 };
+export const END_LABEL_GAP_PX = 12; // from the end of a line to its name
+// Text is not measured in a pure function: an average glyph width of each font size, a little
+// generous so a name is never cut. 0.8rem bold for the names, 0.75rem for the bands' lines.
+const NAME_CHAR_PX = 8;
+// Below this room between two bands, "rentas más bajas" and "19,7 % del censo" would overlap.
+export const COMPACT_BELOW_PX = 120;
+const BAND_CHAR_PX = 6.5;
 export const LABEL_GAP_PX = 16; // two names at the end of the lines are never closer than this
 
 /** The top of the vertical axis: the highest share rounded up to the next ten, at least ten. */
@@ -68,7 +79,7 @@ export function lineChart(all: readonly BandView[], size: ChartSize): LineChartM
   const bands = all.filter((band) => band.bars.length > 0);
   const plot = {
     left: MARGIN.left,
-    right: size.width - MARGIN.right,
+    right: size.width - rightRoom(bands),
     top: MARGIN.top,
     bottom: size.height - MARGIN.bottom,
   };
@@ -97,7 +108,23 @@ export function lineChart(all: readonly BandView[], size: ChartSize): LineChartM
   }));
   const series = seriesOf(bands, xs, yOf);
   spreadLabels(series, plot.top, plot.bottom);
-  return { plot, ticks, columns, series };
+  const spacing = bands.length > 1 ? (plot.right - plot.left) / (bands.length - 1) : Infinity;
+  return { plot, compact: spacing < COMPACT_BELOW_PX, ticks, columns, series };
+}
+
+/**
+ * The room at the right of the plot: the longest name at the end of a line, or half the widest line
+ * under the last band (its text is centred on the band), whichever needs more.
+ */
+export function rightRoom(bands: readonly BandView[]): number {
+  const names = bands.flatMap((b) => b.bars.map((bar) => bar.label.length));
+  const nameRoom = END_LABEL_GAP_PX + Math.max(0, ...names) * NAME_CHAR_PX;
+  const last = bands.at(-1);
+  // The widest line is the census's, also when the chart is compact (the end words then go
+  // under the axis' end, right-aligned, inside the plot).
+  const lines = last === undefined ? [] : [last.short, last.census];
+  const bandRoom = (Math.max(0, ...lines.map((line) => line.length)) * BAND_CHAR_PX) / 2;
+  return Math.ceil(Math.max(nameRoom, bandRoom));
 }
 
 /** One series per group, in the API's order (the order of the first band that has bars). */
