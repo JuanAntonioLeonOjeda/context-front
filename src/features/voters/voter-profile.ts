@@ -24,6 +24,7 @@ export interface BandView {
   short: string; // "Tramo 1", under the chart's axis
   end: string | null; // "rentas más bajas" for the first band, "rentas más altas" for the last
   census: string; // "19,7 % del censo"
+  censusShort: string; // "19,7 %", under a band where the chart is narrow
   censusShare: number; // 19.7, as the API sent it: the height of the band's bar behind the lines
   range: string | null; // "De 10.321 a 12.079 € por persona"; null: no municipality in the band
   size: string; // "21 municipios · 19,7 % del censo"
@@ -152,6 +153,7 @@ export function bandViews(
       short: formatMessage(es.voters.band.short, { number: String(band.index + 1) }),
       end: endOf(band.index, profile.bands.length, dimension),
       census: formatMessage(es.voters.band.censusShare, { percent: percent(band.censusPercent) }),
+      censusShort: percent(band.censusPercent),
       censusShare: band.censusPercent,
       range: rangeText(band, dimension),
       size: sizeText(band),
