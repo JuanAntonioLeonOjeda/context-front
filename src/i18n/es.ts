@@ -428,7 +428,7 @@ export const es = {
       title: "Árbol de noticias",
       back: "Volver",
       reading:
-        "Cada tarjeta es una historia: muestra el titular de la primera noticia publicada y, al desplegarla, los de los demás medios que cuentan el mismo suceso. El tiempo avanza de izquierda a derecha: cada rama continúa la historia anterior a la que se parece más.",
+        "Cada círculo es una historia: debajo, el titular de la primera noticia publicada; cuantas más noticias la cuentan, más grande es. Las más antiguas quedan a la izquierda y las más recientes a la derecha, y cada línea une una historia con la anterior a la que más se parece.",
       method:
         "Las historias y las relaciones las calcula un modelo de similitud de textos, con un umbral provisional (similitud mínima {threshold} y hasta {days} días entre una historia y la siguiente). Pueden contener errores. Una relación solo dice «parecida y posterior», no su causa.",
       regionLabel: "Árbol de historias relacionadas, se desplaza en horizontal",
@@ -438,7 +438,11 @@ export const es = {
       sameOutletOne: "1 noticia más de este medio",
       unfold: "Desplegar ({more})",
       fold: "Plegar",
-      moreHint: "Pulsa «Desplegar» en una tarjeta para ver el titular de los demás medios.",
+      moreHint:
+        "Pulsa un círculo para ver todas las noticias de esa historia; las líneas unen cada historia con la anterior a la que continúa, con su parecido.",
+      articles: { one: "{count} noticia", other: "{count} noticias" },
+      articlesOf: "Noticias de la historia «{headline}»",
+      continues: "Continúa la historia «{headline}». {similarity}.",
       started: "Desde el {date}, {time}",
       similarity: "Relación con la anterior: {value}",
       loading: "Cargando el árbol…",

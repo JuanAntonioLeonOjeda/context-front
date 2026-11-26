@@ -1,46 +1,25 @@
 /**
- * The shape and the text of the tree. Pure: the API's nodes in, nested branches out. A node has no
- * title of its own: a card shows the headline of the first article published (an objective rule, not
- * a choice of outlet) and the other outlets' headlines unfold on request.
+ * The text of a node of the tree. Pure. A node has no title of its own: it shows the headline of
+ * the first article published (an objective rule, not a choice of outlet), and all the articles
+ * of the story when it is opened.
  */
 import { es } from "@/i18n/es";
 import { formatLongDate, formatMessage } from "@/i18n/format";
 
 import type { TreeArticle, TreeNodeData } from "./tree-api";
 
-export interface Branch {
-  node: TreeNodeData;
-  children: Branch[]; // oldest first, as the nodes come
-}
-
 /** The path of the page that shows the tree a story belongs to. */
 export function treePath(storyId: number): string {
   return `/arbol/${String(storyId)}`;
 }
 
-/** Nests the nodes under their parents. A tree has one root and no node without a known parent. */
-export function buildTree(nodes: readonly TreeNodeData[]): Branch {
-  const branches = new Map<number, Branch>(
-    nodes.map((node) => [node.storyId, { node, children: [] }]),
-  );
-  let root: Branch | undefined;
-  for (const branch of branches.values()) {
-    const parentId = branch.node.parentStoryId;
-    if (parentId === null) {
-      if (root) throw new Error("the tree has more than one root");
-      root = branch;
-      continue;
-    }
-    const parent = branches.get(parentId);
-    if (!parent) throw new Error(`story ${String(parentId)} is not in the tree`);
-    parent.children.push(branch);
-  }
-  if (!root) throw new Error("the tree has no root");
-  return root;
-}
-
 // The day and the hour a reader in Spain sees.
 const spainDay = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Madrid" });
+const spainShortDay = new Intl.DateTimeFormat("es", {
+  day: "numeric",
+  month: "short",
+  timeZone: "Europe/Madrid",
+});
 const spainTime = new Intl.DateTimeFormat("es", {
   hour: "2-digit",
   minute: "2-digit",
@@ -50,6 +29,7 @@ const spainTime = new Intl.DateTimeFormat("es", {
 
 export interface NodeText {
   started: string; // "Desde el 12 de octubre de 2026, 13:46"
+  day: string; // "12 oct", under the node of the graph
   link: string | null; // "Relación con la anterior: 0,77", null for the root
   first: TreeArticle; // the first article published: the one the card shows
   rest: TreeArticle[]; // the others, as the API sends them (by outlet id)
@@ -91,6 +71,7 @@ export function nodeText(node: TreeNodeData): NodeText {
       date: formatLongDate(spainDay.format(started)),
       time: spainTime.format(started),
     }),
+    day: spainShortDay.format(started),
     link:
       node.linkSimilarity === null
         ? null

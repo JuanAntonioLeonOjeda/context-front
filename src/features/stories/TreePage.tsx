@@ -1,11 +1,10 @@
-import { useId, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import { ExternalLink, InfoButton } from "@/features/shell";
+import { InfoButton } from "@/features/shell";
 import { es } from "@/i18n/es";
 import { formatMessage } from "@/i18n/format";
 
-import { buildTree, nodeText, type Branch } from "./story-tree";
+import { TreeGraph } from "./TreeGraph";
 import { useStoryTree } from "./useStoryTree";
 
 import styles from "./TreePage.module.css";
@@ -69,64 +68,10 @@ export function StoryTreeView({ storyId }: { storyId: number }): React.JSX.Eleme
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scrollable region must be reachable by keyboard
             tabIndex={0}
           >
-            <ul className={styles.tree}>
-              <BranchView branch={buildTree(tree.tree.nodes)} />
-            </ul>
+            <TreeGraph nodes={tree.tree.nodes} />
           </div>
         </>
       )}
     </>
-  );
-}
-
-function BranchView({ branch }: { branch: Branch }): React.JSX.Element {
-  const text = nodeText(branch.node);
-  const [open, setOpen] = useState(false);
-  const listId = useId();
-  return (
-    <li className={styles.branch}>
-      <article className={styles.node} data-open={open} data-expandable={text.rest.length > 0}>
-        <small className={styles.meta}>{text.started}</small>
-        {text.link !== null && <small className={styles.meta}>{text.link}</small>}
-        <span className={styles.outlet}>{text.first.outletName}</span>
-        <ExternalLink href={text.first.url} className={styles.headline}>
-          {text.first.headline}
-        </ExternalLink>
-        {text.rest.length > 0 && (
-          <>
-            <button
-              type="button"
-              className={styles.more}
-              aria-expanded={open}
-              aria-controls={listId}
-              onClick={() => {
-                setOpen(!open);
-              }}
-            >
-              {open
-                ? es.stories.tree.fold
-                : formatMessage(es.stories.tree.unfold, { more: text.moreOutlets })}
-            </button>
-            {open && (
-              <ul id={listId} className={styles.articles}>
-                {text.rest.map((article) => (
-                  <li key={article.url}>
-                    <span className={styles.outlet}>{article.outletName}</span>
-                    <ExternalLink href={article.url}>{article.headline}</ExternalLink>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </>
-        )}
-      </article>
-      {branch.children.length > 0 && (
-        <ul className={styles.children}>
-          {branch.children.map((child) => (
-            <BranchView key={child.node.storyId} branch={child} />
-          ))}
-        </ul>
-      )}
-    </li>
   );
 }
